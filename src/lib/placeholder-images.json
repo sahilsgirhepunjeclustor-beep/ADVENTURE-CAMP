@@ -1,0 +1,16 @@
+{
+  "placeholderImages": [
+    {
+      "id": "logo-icon",
+      "description": "TrailWise Icon Logo - Mountain and Compass",
+      "imageUrl": "https://picsum.photos/seed/trailwise-logo/512/512",
+      "imageHint": "mountain compass logo icon"
+    },
+    {
+      "id": "brand-text",
+      "description": "TrailWise Brand Typography",
+      "imageUrl": "https://picsum.photos/seed/trailwise-brand/400/100",
+      "imageHint": "trailwise brand typography"
+    }
+  ]
+}
