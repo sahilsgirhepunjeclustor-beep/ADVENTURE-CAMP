@@ -207,17 +207,38 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
         <div className="absolute top-0 right-0 w-96 h-full bg-white/5 skew-x-[-20deg] translate-x-32 pointer-events-none" />
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      {/* --- Upgraded Stats Grid with Larger Typography --- */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
         {mainStats.map(s => (
-          <div key={s.label} className={cn("bg-white rounded-[20px] border-t-[6px] shadow-sm hover:shadow-md transition-all p-5", s.color)}>
-            <div className="flex justify-between items-start mb-4">
-              <span className="text-[8px] font-medium text-slate-600 uppercase tracking-widest leading-none">{s.label}</span>
-              <span className={cn("text-lg opacity-40 grayscale", s.shake && "animate-shake opacity-100 grayscale-0")}>{s.icon}</span>
+          <div 
+            key={s.label} 
+            className={cn(
+              "bg-white rounded-[24px] border-t-[8px] shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between min-h-[140px]", 
+              s.color
+            )}
+          >
+            <div className="flex justify-between items-start mb-3">
+              {/* Increased label size from text-[8px] to text-xs (12px) for structural visibility */}
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider leading-tight">
+                {s.label}
+              </span>
+              {/* Slightly scaled up the icon size for symmetry */}
+              <span className={cn("text-2xl opacity-50 grayscale", s.shake && "animate-shake opacity-100 grayscale-0")}>
+                {s.icon}
+              </span>
             </div>
+            
             <div>
-              <div className={cn("text-xl font-medium text-slate-900 tracking-tight mb-1", s.shake && "text-orange-600")}>{s.value}</div>
-              <div className={cn("text-[9px] font-medium uppercase flex items-center gap-1", s.trend.includes('+') ? "text-green-500" : "text-slate-500")}>
-                {s.trend.includes('+') && <TrendingUp size={10} />} {s.trend}
+              {/* Significantly boosted value typography from text-xl to text-3xl */}
+              <div className={cn(
+                "text-3xl font-bold text-slate-900 tracking-tight mb-2", 
+                s.shake && "text-orange-600"
+              )}>
+                {s.value}
+              </div>
+              {/* Adjusted trend text size slightly to match the layout scale */}
+              <div className={cn("text-[11px] font-medium uppercase flex items-center gap-1", s.trend.includes('+') ? "text-green-600" : "text-slate-500")}>
+                {s.trend.includes('+') && <TrendingUp size={12} />} {s.trend}
               </div>
             </div>
           </div>

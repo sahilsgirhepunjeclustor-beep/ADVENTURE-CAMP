@@ -27,7 +27,9 @@ import {
   CreditCard,
   Hash,
   Briefcase,
-  ShieldCheck
+  ShieldCheck,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 import { cn, uid, compressImage } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
@@ -45,6 +47,8 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
   const [role, setRole] = useState<Role>('user');
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Core User Fields
   const [email, setEmail] = useState('');
@@ -93,7 +97,6 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
     reader.onloadend = async () => {
       let data = reader.result as string;
       
-      // Compress if it's an image to save storage quota
       if (file.type.startsWith('image/')) {
         data = await compressImage(data, 1200, 0.5);
       }
@@ -282,7 +285,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
        <h1 className="text-[32px] font-medium text-[#0d2a1d] tracking-tight mb-1">Adventure Camp</h1>
        <div className="flex items-center gap-3 w-full max-w-[280px]">
           <div className="flex-1 h-[1px] bg-slate-100" />
-          <span className="text-[9px] font-medium text-[#f43f5e] uppercase tracking-[0.2em] whitespace-nowrap">
+          <span className="text-[9px] font-medium text-green-800 uppercase tracking-[0.2em] whitespace-nowrap">
             {mode === 'forgot-password' || mode === 'find-email' ? 'Security Protocol' : 'Camp Organiser Platform'}
           </span>
           <div className="flex-1 h-[1px] bg-slate-100" />
@@ -298,7 +301,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
       <div className="absolute top-[40%] left-[20%] w-[20%] h-[20%] bg-green-50/5 rounded-full blur-[80px] pointer-events-none" />
 
       <div className="w-full max-w-[650px] z-10 animate-in fade-in zoom-in duration-700">
-        <div className="bg-white rounded-[32px] shadow-2xl overflow-hidden flex flex-col">
+        <div className="bg-white/90 backdrop-blur-md rounded-[32px] shadow-2xl overflow-hidden flex flex-col">
           
           {renderBranding()}
 
@@ -309,7 +312,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                  <button 
                    onClick={() => { setMode('login'); setError(null); setSuccess(null); }} 
                    className={cn(
-                     "flex-1 py-2.5 rounded-[12px] text-sm font-medium uppercase tracking-tight transition-all",
+                     "flex-1 py-2.5 rounded-[12px] text-sm font-bold uppercase tracking-tight transition-all",
                      mode === 'login' ? "bg-white text-[#166534] shadow-sm" : "text-slate-400 hover:text-slate-600"
                    )}
                  >
@@ -318,7 +321,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                  <button 
                    onClick={() => { setMode('signup'); setError(null); setSuccess(null); }} 
                    className={cn(
-                     "flex-1 py-2.5 rounded-[12px] text-sm font-medium uppercase tracking-tight transition-all",
+                     "flex-1 py-2.5 rounded-[12px] text-sm font-bold uppercase tracking-tight transition-all",
                      mode === 'signup' ? "bg-white text-[#166534] shadow-sm" : "text-slate-400 hover:text-slate-600"
                    )}
                  >
@@ -329,32 +332,41 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
           )}
 
           <div className="px-10 pb-12">
-            {error && <Alert variant="destructive" className="rounded-2xl border-none bg-red-50 mb-6"><AlertDescription className="text-[11px] font-medium">{error}</AlertDescription></Alert>}
-            {success && <Alert className="rounded-2xl border-none bg-green-50 mb-6"><AlertDescription className="text-[11px] font-medium text-green-700">{success}</AlertDescription></Alert>}
+            {error && <Alert variant="destructive" className="rounded-2xl border-none bg-red-50 mb-6"><AlertDescription className="text-xs font-medium">{error}</AlertDescription></Alert>}
+            {success && <Alert className="rounded-2xl border-none bg-green-50 mb-6"><AlertDescription className="text-xs font-medium text-green-700">{success}</AlertDescription></Alert>}
 
             {mode === 'login' && (
               <form onSubmit={handleLogin} className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
                  <div className="space-y-2">
-                    <Label className="text-[10px] font-medium uppercase text-slate-700">Email</Label>
-                    <Input 
-                      type="email" 
-                      value={email} 
-                      onChange={e => setEmail(e.target.value)} 
-                      className="h-12 rounded-xl border-slate-200 bg-white font-medium text-slate-900 text-sm placeholder:text-slate-400 placeholder:font-normal" 
-                      placeholder="admin@gmail.com"
-                      required 
-                    />
+                    <Label className="text-sm font-black uppercase text-slate-900">Email</Label>
+                    <div className="relative group">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                      <Input 
+                        type="email" 
+                        value={email} 
+                        onChange={e => setEmail(e.target.value)} 
+                        className="h-12 rounded-xl border-slate-200 bg-white font-medium text-slate-900 text-sm placeholder:text-slate-400 placeholder:font-normal pl-10" 
+                        placeholder="admin@gmail.com"
+                        required 
+                      />
+                    </div>
                  </div>
                  <div className="space-y-2">
-                    <Label className="text-[10px] font-medium uppercase text-slate-700">Password</Label>
-                    <Input 
-                      type="password" 
-                      value={password} 
-                      onChange={e => setPassword(e.target.value)} 
-                      className="h-12 rounded-xl border-slate-200 bg-white font-medium text-slate-900 text-sm placeholder:text-slate-400 placeholder:font-normal" 
-                      placeholder="••••••"
-                      required 
-                    />
+                    <Label className="text-sm font-black uppercase text-slate-900">Password</Label>
+                    <div className="relative group">
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                      <Input 
+                        type={showPassword ? 'text' : 'password'} 
+                        value={password} 
+                        onChange={e => setPassword(e.target.value)} 
+                        className="h-12 rounded-xl border-slate-200 bg-white font-medium text-slate-900 text-sm placeholder:text-slate-400 placeholder:font-normal pl-10 pr-12" 
+                        placeholder="••••••"
+                        required 
+                      />
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-green-500 transition-colors">
+                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                      </button>
+                    </div>
                  </div>
 
                  <div className="pt-4 flex flex-col space-y-6">
@@ -376,29 +388,39 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
 
             {mode === 'signup' && (
               <form onSubmit={handleSignup} className="space-y-8 animate-in fade-in slide-in-from-top-4 duration-500 max-h-[60vh] overflow-y-auto no-scrollbar pr-1 custom-scrollbar">
-                {/* Personal Information Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <Label className="text-[10px] font-medium uppercase text-slate-700">First Name *</Label>
-                    <Input value={firstName} onChange={e => setFirstName(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400" placeholder="First Name" required />
+                    <Label className="text-sm font-black uppercase text-slate-900">First Name *</Label>
+                    <div className="relative group">
+                      <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                      <Input value={firstName} onChange={e => setFirstName(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10" placeholder="First Name" required />
+                    </div>
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-[10px] font-medium uppercase text-slate-700">Last Name</Label>
-                    <Input value={lastName} onChange={e => setLastName(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400" placeholder="Last Name" />
+                    <Label className="text-sm font-black uppercase text-slate-900">Last Name</Label>
+                    <div className="relative group">
+                      <UserIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                      <Input value={lastName} onChange={e => setLastName(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10" placeholder="Last Name" />
+                    </div>
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-[10px] font-medium uppercase text-slate-700">Email *</Label>
-                    <Input type="email" value={email} onChange={e => setEmail(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400" placeholder="email@example.com" required />
+                    <Label className="text-sm font-black uppercase text-slate-900">Email *</Label>
+                     <div className="relative group">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                      <Input type="email" value={email} onChange={e => setEmail(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10" placeholder="email@example.com" required />
+                    </div>
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-[10px] font-medium uppercase text-slate-700">Phone</Label>
-                    <Input value={phone} onChange={e => setPhone(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400" placeholder="+91" />
+                    <Label className="text-sm font-black uppercase text-slate-900">Phone</Label>
+                    <div className="relative group">
+                      <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                      <Input value={phone} onChange={e => setPhone(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10" placeholder="+91" />
+                    </div>
                   </div>
                 </div>
 
-                {/* Role Selection Tiles */}
                 <div className="space-y-3">
-                   <Label className="text-[10px] font-medium uppercase text-slate-700">Select Identity Role *</Label>
+                   <Label className="text-sm font-black uppercase text-slate-900">Select Identity Role *</Label>
                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {[
                         { id: 'user', label: 'User', icon: UserIcon },
@@ -427,74 +449,73 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                    </div>
                 </div>
 
-                {/* Organizer Specific Intelligence */}
                 {role === 'organizer' && (
                   <div className="space-y-8 animate-in fade-in slide-in-from-top-2 duration-500 border-t border-slate-50 pt-6">
                     <div className="flex items-center gap-2 mb-4">
                        <Briefcase size={16} className="text-[#22c55e]" />
-                       <h3 className="text-xs font-medium uppercase tracking-tight text-slate-900">Business Registry Protocol</h3>
+                       <h3 className="text-sm font-medium uppercase tracking-tight text-slate-900">Business Registry Protocol</h3>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-medium uppercase text-slate-700">Company Legal Name *</Label>
+                        <Label className="text-sm font-black uppercase text-slate-900">Company Legal Name *</Label>
                         <Input value={businessName} onChange={e => setBusinessName(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm" required />
                       </div>
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-medium uppercase text-slate-700">GST Identification (GSTIN) *</Label>
+                        <Label className="text-sm font-black uppercase text-slate-900">GST Identification (GSTIN) *</Label>
                         <Input value={gstNumber} onChange={e => setGstNumber(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm" placeholder="GSTIN Number" required />
                       </div>
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-medium uppercase text-slate-700">Permanent Account Number (PAN) *</Label>
+                        <Label className="text-sm font-black uppercase text-slate-900">Permanent Account Number (PAN) *</Label>
                         <Input value={panNumber} onChange={e => setPanNumber(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm" placeholder="PAN Number" required />
                       </div>
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-medium uppercase text-slate-700">Business License / Reg. No *</Label>
+                        <Label className="text-sm font-black uppercase text-slate-900">Business License / Reg. No *</Label>
                         <Input value={regNumber} onChange={e => setRegNumber(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm" placeholder="License Number" required />
                       </div>
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-medium uppercase text-slate-700">Established Year *</Label>
+                        <Label className="text-sm font-black uppercase text-slate-900">Established Year *</Label>
                         <Input value={established} onChange={e => setEstablished(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm" required />
                       </div>
                       <div className="space-y-1.5">
-                        <Label className="text-[10px] font-medium uppercase text-slate-700">HQ State *</Label>
+                        <Label className="text-sm font-black uppercase text-slate-900">HQ State *</Label>
                         <Input value={stateName} onChange={e => setStateName(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm" required />
                       </div>
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label className="text-[10px] font-medium uppercase text-slate-700">Business HQ Address *</Label>
+                      <Label className="text-sm font-black uppercase text-slate-900">Business HQ Address *</Label>
                       <Input value={businessAddress} onChange={e => setBusinessAddress(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm" required />
                     </div>
 
                     <div className="space-y-6 pt-2">
                        <div className="flex items-center gap-2">
                           <CreditCard size={16} className="text-[#22c55e]" />
-                          <h3 className="text-xs font-medium uppercase tracking-tight text-slate-900">Settlement Account (Bank Details)</h3>
+                          <h3 className="text-sm font-medium uppercase tracking-tight text-slate-900">Settlement Account (Bank Details)</h3>
                        </div>
                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div className="space-y-1.5">
-                            <Label className="text-[10px] font-medium uppercase text-slate-700">Bank Name *</Label>
+                            <Label className="text-sm font-black uppercase text-slate-900">Bank Name *</Label>
                             <Input value={bankName} onChange={e => setBankName(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm" required />
                           </div>
                           <div className="space-y-1.5">
-                            <Label className="text-[10px] font-medium uppercase text-slate-700">Account Number *</Label>
+                            <Label className="text-sm font-black uppercase text-slate-900">Account Number *</Label>
                             <Input value={bankAccount} onChange={e => setBankAccount(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm" required />
                           </div>
                           <div className="space-y-1.5">
-                            <Label className="text-[10px] font-medium uppercase text-slate-700">IFSC Code *</Label>
+                            <Label className="text-sm font-black uppercase text-slate-900">IFSC Code *</Label>
                             <Input value={ifscCode} onChange={e => setIfscCode(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm uppercase" required />
                           </div>
                        </div>
                     </div>
 
                     <div className="space-y-3">
-                       <Label className="text-[10px] font-medium uppercase text-slate-700">Activities Offered *</Label>
+                       <Label className="text-sm font-black uppercase text-slate-900">Activities Offered *</Label>
                        <div className="grid grid-cols-2 gap-2">
                           {['Trekking', 'River Rafting', 'Bonfire', 'Camping'].map(a => (
                             <div key={a} className="flex items-center gap-2">
                                <Checkbox id={a} checked={activities.includes(a)} onCheckedChange={() => toggleActivity(a)} className="h-4 w-4 rounded-md" />
-                               <Label htmlFor={a} className="text-[10px] font-medium text-slate-600 uppercase cursor-pointer">{a}</Label>
+                               <Label htmlFor={a} className="text-sm font-medium text-slate-800 uppercase cursor-pointer">{a}</Label>
                             </div>
                           ))}
                        </div>
@@ -503,7 +524,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                     <div className="space-y-4">
                        <div className="flex items-center gap-2">
                           <ShieldCheck size={16} className="text-[#22c55e]" />
-                          <Label className="text-xs font-medium uppercase text-slate-900">Registry Verification Assets (Mandatory) *</Label>
+                          <Label className="text-sm font-medium uppercase text-slate-900">Registry Verification Assets (Mandatory) *</Label>
                        </div>
                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           {[
@@ -532,12 +553,38 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-50 pt-6">
                   <div className="space-y-1.5">
-                    <Label className="text-[10px] font-medium uppercase text-slate-700">Set Access Key *</Label>
-                    <Input type="password" value={password} onChange={e => setPassword(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400" placeholder="••••••••" required />
+                    <Label className="text-sm font-black uppercase text-slate-900">Set Access Key *</Label>
+                    <div className="relative group">
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                      <Input 
+                        type={showPassword ? 'text' : 'password'} 
+                        value={password} 
+                        onChange={e => setPassword(e.target.value)} 
+                        className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10 pr-12" 
+                        placeholder="••••••••" 
+                        required 
+                      />
+                      <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-green-500 transition-colors">
+                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                      </button>
+                    </div>
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-[10px] font-medium uppercase text-slate-700">Sync Key *</Label>
-                    <Input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400" placeholder="••••••••" required />
+                    <Label className="text-sm font-black uppercase text-slate-900">Sync Key *</Label>
+                    <div className="relative group">
+                      <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                      <Input 
+                        type={showConfirmPassword ? 'text' : 'password'} 
+                        value={confirmPassword} 
+                        onChange={e => setConfirmPassword(e.target.value)} 
+                        className="h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10 pr-12" 
+                        placeholder="••••••••" 
+                        required 
+                      />
+                      <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-green-500 transition-colors">
+                        {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                      </button>
+                    </div>
                   </div>
                 </div>
 
@@ -561,15 +608,18 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
 
                 <form onSubmit={handleForgotPassword} className="space-y-6">
                    <div className="space-y-2">
-                      <Label className="text-[10px] font-medium uppercase text-slate-700">Registered Email</Label>
-                      <Input 
-                        type="email" 
-                        value={email} 
-                        onChange={e => setEmail(e.target.value)} 
-                        className="h-12 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400" 
-                        placeholder="email@example.com"
-                        required 
-                      />
+                      <Label className="text-sm font-black uppercase text-slate-900">Registered Email</Label>
+                      <div className="relative group">
+                        <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                        <Input 
+                          type="email" 
+                          value={email} 
+                          onChange={e => setEmail(e.target.value)} 
+                          className="h-12 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10" 
+                          placeholder="email@example.com"
+                          required 
+                        />
+                      </div>
                    </div>
                    <Button type="submit" className="w-full h-12 bg-[#22c55e] hover:bg-[#16a34a] text-white font-medium uppercase text-xs rounded-xl shadow-lg border-none">
                       Request Reset Link
@@ -605,15 +655,18 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
 
                 <form onSubmit={handleFindAccount} className="space-y-6">
                    <div className="space-y-2">
-                      <Label className="text-[10px] font-medium uppercase text-slate-700">Registered Mobile Number</Label>
-                      <Input 
-                        type="tel" 
-                        value={phone} 
-                        onChange={e => setPhone(e.target.value)} 
-                        className="h-12 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400" 
-                        placeholder="+91"
-                        required 
-                      />
+                      <Label className="text-sm font-black uppercase text-slate-900">Registered Mobile Number</Label>
+                      <div className="relative group">
+                        <Smartphone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
+                        <Input 
+                          type="tel" 
+                          value={phone} 
+                          onChange={e => setPhone(e.target.value)} 
+                          className="h-12 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10" 
+                          placeholder="+91"
+                          required 
+                        />
+                      </div>
                    </div>
                    <Button type="submit" className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-medium uppercase text-xs rounded-xl shadow-lg border-none">
                       Locate My Account

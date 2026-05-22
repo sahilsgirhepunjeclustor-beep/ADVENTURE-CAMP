@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: 38 40% 96%;
+    --background: 140 20% 94%;
     --foreground: 140 40% 10%;
     --card: 0 0% 100%;
     --card-foreground: 140 40% 10%;
@@ -15,7 +15,7 @@
     --secondary: 140 20% 90%;
     --secondary-foreground: 140 40% 20%;
     --muted: 140 10% 90%;
-    --muted-foreground: 140 15% 45%;
+    --muted-foreground: 140 15% 40%;
     --accent: 149 75% 25%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
@@ -26,7 +26,7 @@
     --radius: 1rem;
     
     --chart-1: 149 75% 35%;
-    --chart-2: 25 95% 53%;
+    --chart-2: 25 95% 40%;
     --chart-3: 199 89% 48%;
     --chart-4: 47 95% 50%;
     --chart-5: 149 40% 60%;
@@ -39,7 +39,7 @@
   }
   body {
     font-family: 'Cambria Math', Cambria, Georgia, serif;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 1.5;
     @apply bg-background text-foreground font-normal antialiased;
   }

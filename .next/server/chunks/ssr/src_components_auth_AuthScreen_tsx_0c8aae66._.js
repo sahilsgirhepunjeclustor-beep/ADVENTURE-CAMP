@@ -17,6 +17,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield.js [app-ssr] (ecmascript) <export default as Shield>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/building-2.js [app-ssr] (ecmascript) <export default as Building2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-check.js [app-ssr] (ecmascript) <export default as CheckCircle2>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/lock.js [app-ssr] (ecmascript) <export default as Lock>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/mail.js [app-ssr] (ecmascript) <export default as Mail>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$smartphone$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Smartphone$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/smartphone.js [app-ssr] (ecmascript) <export default as Smartphone>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mountain$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mountain$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/mountain.js [app-ssr] (ecmascript) <export default as Mountain>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-left.js [app-ssr] (ecmascript) <export default as ArrowLeft>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/search.js [app-ssr] (ecmascript) <export default as Search>");
@@ -25,6 +28,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$hash$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Hash$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/hash.js [app-ssr] (ecmascript) <export default as Hash>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$briefcase$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Briefcase$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/briefcase.js [app-ssr] (ecmascript) <export default as Briefcase>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldCheck$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield-check.js [app-ssr] (ecmascript) <export default as ShieldCheck>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/eye.js [app-ssr] (ecmascript) <export default as Eye>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/eye-off.js [app-ssr] (ecmascript) <export default as EyeOff>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/utils.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/hooks/use-toast.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$checkbox$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/checkbox.tsx [app-ssr] (ecmascript)");
@@ -47,6 +52,8 @@ function AuthScreen({ onLogin }) {
     const [role, setRole] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('user');
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [success, setSuccess] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [showPassword, setShowPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [showConfirmPassword, setShowConfirmPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     // Core User Fields
     const [email, setEmail] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const [password, setPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
@@ -90,7 +97,6 @@ function AuthScreen({ onLogin }) {
         const reader = new FileReader();
         reader.onloadend = async ()=>{
             let data = reader.result;
-            // Compress if it's an image to save storage quota
             if (file.type.startsWith('image/')) {
                 data = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["compressImage"])(data, 1200, 0.5);
             }
@@ -266,12 +272,12 @@ function AuthScreen({ onLogin }) {
                         alt: "Logo"
                     }, void 0, false, {
                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                        lineNumber: 280,
+                        lineNumber: 283,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                    lineNumber: 279,
+                    lineNumber: 282,
                     columnNumber: 8
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -279,7 +285,7 @@ function AuthScreen({ onLogin }) {
                     children: "Adventure Camp"
                 }, void 0, false, {
                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                    lineNumber: 282,
+                    lineNumber: 285,
                     columnNumber: 8
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -289,34 +295,34 @@ function AuthScreen({ onLogin }) {
                             className: "flex-1 h-[1px] bg-slate-100"
                         }, void 0, false, {
                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                            lineNumber: 284,
+                            lineNumber: 287,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            className: "text-[9px] font-medium text-[#f43f5e] uppercase tracking-[0.2em] whitespace-nowrap",
+                            className: "text-[9px] font-medium text-green-800 uppercase tracking-[0.2em] whitespace-nowrap",
                             children: mode === 'forgot-password' || mode === 'find-email' ? 'Security Protocol' : 'Camp Organiser Platform'
                         }, void 0, false, {
                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                            lineNumber: 285,
+                            lineNumber: 288,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex-1 h-[1px] bg-slate-100"
                         }, void 0, false, {
                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                            lineNumber: 288,
+                            lineNumber: 291,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                    lineNumber: 283,
+                    lineNumber: 286,
                     columnNumber: 8
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-            lineNumber: 278,
+            lineNumber: 281,
             columnNumber: 5
         }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -326,27 +332,27 @@ function AuthScreen({ onLogin }) {
                 className: "absolute top-[15%] left-[5%] w-[35%] h-[35%] bg-green-900/30 rounded-full blur-[100px] pointer-events-none"
             }, void 0, false, {
                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                lineNumber: 296,
+                lineNumber: 299,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "absolute bottom-[10%] right-[10%] w-[30%] h-[30%] bg-green-800/20 rounded-full blur-[120px] pointer-events-none"
             }, void 0, false, {
                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                lineNumber: 297,
+                lineNumber: 300,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "absolute top-[40%] left-[20%] w-[20%] h-[20%] bg-green-50/5 rounded-full blur-[80px] pointer-events-none"
             }, void 0, false, {
                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                lineNumber: 298,
+                lineNumber: 301,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full max-w-[650px] z-10 animate-in fade-in zoom-in duration-700",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-white rounded-[32px] shadow-2xl overflow-hidden flex flex-col",
+                    className: "bg-white/90 backdrop-blur-md rounded-[32px] shadow-2xl overflow-hidden flex flex-col",
                     children: [
                         renderBranding(),
                         (mode === 'login' || mode === 'signup') && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -360,11 +366,11 @@ function AuthScreen({ onLogin }) {
                                             setError(null);
                                             setSuccess(null);
                                         },
-                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex-1 py-2.5 rounded-[12px] text-sm font-medium uppercase tracking-tight transition-all", mode === 'login' ? "bg-white text-[#166534] shadow-sm" : "text-slate-400 hover:text-slate-600"),
+                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex-1 py-2.5 rounded-[12px] text-sm font-bold uppercase tracking-tight transition-all", mode === 'login' ? "bg-white text-[#166534] shadow-sm" : "text-slate-400 hover:text-slate-600"),
                                         children: "Login"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                        lineNumber: 309,
+                                        lineNumber: 312,
                                         columnNumber: 18
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -373,22 +379,22 @@ function AuthScreen({ onLogin }) {
                                             setError(null);
                                             setSuccess(null);
                                         },
-                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex-1 py-2.5 rounded-[12px] text-sm font-medium uppercase tracking-tight transition-all", mode === 'signup' ? "bg-white text-[#166534] shadow-sm" : "text-slate-400 hover:text-slate-600"),
+                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("flex-1 py-2.5 rounded-[12px] text-sm font-bold uppercase tracking-tight transition-all", mode === 'signup' ? "bg-white text-[#166534] shadow-sm" : "text-slate-400 hover:text-slate-600"),
                                         children: "Sign Up"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                        lineNumber: 318,
+                                        lineNumber: 321,
                                         columnNumber: 18
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                lineNumber: 308,
+                                lineNumber: 311,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                            lineNumber: 307,
+                            lineNumber: 310,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -398,31 +404,31 @@ function AuthScreen({ onLogin }) {
                                     variant: "destructive",
                                     className: "rounded-2xl border-none bg-red-50 mb-6",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$alert$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AlertDescription"], {
-                                        className: "text-[11px] font-medium",
+                                        className: "text-xs font-medium",
                                         children: error
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                        lineNumber: 332,
+                                        lineNumber: 335,
                                         columnNumber: 103
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                    lineNumber: 332,
+                                    lineNumber: 335,
                                     columnNumber: 23
                                 }, this),
                                 success && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$alert$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Alert"], {
                                     className: "rounded-2xl border-none bg-green-50 mb-6",
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$alert$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AlertDescription"], {
-                                        className: "text-[11px] font-medium text-green-700",
+                                        className: "text-xs font-medium text-green-700",
                                         children: success
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                        lineNumber: 333,
+                                        lineNumber: 336,
                                         columnNumber: 85
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                    lineNumber: 333,
+                                    lineNumber: 336,
                                     columnNumber: 25
                                 }, this),
                                 mode === 'login' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -433,58 +439,112 @@ function AuthScreen({ onLogin }) {
                                             className: "space-y-2",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                    className: "text-[10px] font-medium uppercase text-slate-700",
+                                                    className: "text-sm font-black uppercase text-slate-900",
                                                     children: "Email"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 338,
+                                                    lineNumber: 341,
                                                     columnNumber: 21
                                                 }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                    type: "email",
-                                                    value: email,
-                                                    onChange: (e)=>setEmail(e.target.value),
-                                                    className: "h-12 rounded-xl border-slate-200 bg-white font-medium text-slate-900 text-sm placeholder:text-slate-400 placeholder:font-normal",
-                                                    placeholder: "admin@gmail.com",
-                                                    required: true
-                                                }, void 0, false, {
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "relative group",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__["Mail"], {
+                                                            className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 343,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                            type: "email",
+                                                            value: email,
+                                                            onChange: (e)=>setEmail(e.target.value),
+                                                            className: "h-12 rounded-xl border-slate-200 bg-white font-medium text-slate-900 text-sm placeholder:text-slate-400 placeholder:font-normal pl-10",
+                                                            placeholder: "admin@gmail.com",
+                                                            required: true
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 344,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 339,
+                                                    lineNumber: 342,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 337,
+                                            lineNumber: 340,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "space-y-2",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                    className: "text-[10px] font-medium uppercase text-slate-700",
+                                                    className: "text-sm font-black uppercase text-slate-900",
                                                     children: "Password"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 349,
+                                                    lineNumber: 355,
                                                     columnNumber: 21
                                                 }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                    type: "password",
-                                                    value: password,
-                                                    onChange: (e)=>setPassword(e.target.value),
-                                                    className: "h-12 rounded-xl border-slate-200 bg-white font-medium text-slate-900 text-sm placeholder:text-slate-400 placeholder:font-normal",
-                                                    placeholder: "••••••",
-                                                    required: true
-                                                }, void 0, false, {
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "relative group",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__["Lock"], {
+                                                            className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 357,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                            type: showPassword ? 'text' : 'password',
+                                                            value: password,
+                                                            onChange: (e)=>setPassword(e.target.value),
+                                                            className: "h-12 rounded-xl border-slate-200 bg-white font-medium text-slate-900 text-sm placeholder:text-slate-400 placeholder:font-normal pl-10 pr-12",
+                                                            placeholder: "••••••",
+                                                            required: true
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 358,
+                                                            columnNumber: 23
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                            type: "button",
+                                                            onClick: ()=>setShowPassword(!showPassword),
+                                                            className: "absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-green-500 transition-colors",
+                                                            children: showPassword ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__["EyeOff"], {
+                                                                size: 16
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                lineNumber: 367,
+                                                                columnNumber: 41
+                                                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__["Eye"], {
+                                                                size: 16
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                lineNumber: 367,
+                                                                columnNumber: 64
+                                                            }, this)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 366,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 350,
+                                                    lineNumber: 356,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 348,
+                                            lineNumber: 354,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -498,7 +558,7 @@ function AuthScreen({ onLogin }) {
                                                         children: "Login"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                        lineNumber: 362,
+                                                        lineNumber: 374,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -508,24 +568,24 @@ function AuthScreen({ onLogin }) {
                                                         children: "Forgot password?"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                        lineNumber: 365,
+                                                        lineNumber: 377,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                lineNumber: 361,
+                                                lineNumber: 373,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 360,
+                                            lineNumber: 372,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                    lineNumber: 336,
+                                    lineNumber: 339,
                                     columnNumber: 15
                                 }, this),
                                 mode === 'signup' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -539,128 +599,192 @@ function AuthScreen({ onLogin }) {
                                                     className: "space-y-1.5",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                            className: "text-sm font-black uppercase text-slate-900",
                                                             children: "First Name *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 382,
+                                                            lineNumber: 393,
                                                             columnNumber: 21
                                                         }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                            value: firstName,
-                                                            onChange: (e)=>setFirstName(e.target.value),
-                                                            className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400",
-                                                            placeholder: "First Name",
-                                                            required: true
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 383,
-                                                            columnNumber: 21
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 381,
-                                                    columnNumber: 19
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "space-y-1.5",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
-                                                            children: "Last Name"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 386,
-                                                            columnNumber: 21
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                            value: lastName,
-                                                            onChange: (e)=>setLastName(e.target.value),
-                                                            className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400",
-                                                            placeholder: "Last Name"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 387,
-                                                            columnNumber: 21
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 385,
-                                                    columnNumber: 19
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "space-y-1.5",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
-                                                            children: "Email *"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 390,
-                                                            columnNumber: 21
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                            type: "email",
-                                                            value: email,
-                                                            onChange: (e)=>setEmail(e.target.value),
-                                                            className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400",
-                                                            placeholder: "email@example.com",
-                                                            required: true
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 391,
-                                                            columnNumber: 21
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 389,
-                                                    columnNumber: 19
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "space-y-1.5",
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
-                                                            children: "Phone"
-                                                        }, void 0, false, {
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "relative group",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
+                                                                    className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 395,
+                                                                    columnNumber: 23
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                                    value: firstName,
+                                                                    onChange: (e)=>setFirstName(e.target.value),
+                                                                    className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10",
+                                                                    placeholder: "First Name",
+                                                                    required: true
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 396,
+                                                                    columnNumber: 23
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
                                                             lineNumber: 394,
                                                             columnNumber: 21
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                            value: phone,
-                                                            onChange: (e)=>setPhone(e.target.value),
-                                                            className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400",
-                                                            placeholder: "+91"
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                    lineNumber: 392,
+                                                    columnNumber: 19
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "space-y-1.5",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
+                                                            className: "text-sm font-black uppercase text-slate-900",
+                                                            children: "Last Name"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 395,
+                                                            lineNumber: 400,
+                                                            columnNumber: 21
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "relative group",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
+                                                                    className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 402,
+                                                                    columnNumber: 23
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                                    value: lastName,
+                                                                    onChange: (e)=>setLastName(e.target.value),
+                                                                    className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10",
+                                                                    placeholder: "Last Name"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 403,
+                                                                    columnNumber: 23
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 401,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 393,
+                                                    lineNumber: 399,
+                                                    columnNumber: 19
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "space-y-1.5",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
+                                                            className: "text-sm font-black uppercase text-slate-900",
+                                                            children: "Email *"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 407,
+                                                            columnNumber: 21
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "relative group",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__["Mail"], {
+                                                                    className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 409,
+                                                                    columnNumber: 23
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                                    type: "email",
+                                                                    value: email,
+                                                                    onChange: (e)=>setEmail(e.target.value),
+                                                                    className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10",
+                                                                    placeholder: "email@example.com",
+                                                                    required: true
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 410,
+                                                                    columnNumber: 23
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 408,
+                                                            columnNumber: 22
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                    lineNumber: 406,
+                                                    columnNumber: 19
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "space-y-1.5",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
+                                                            className: "text-sm font-black uppercase text-slate-900",
+                                                            children: "Phone"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 414,
+                                                            columnNumber: 21
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "relative group",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$smartphone$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Smartphone$3e$__["Smartphone"], {
+                                                                    className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 416,
+                                                                    columnNumber: 23
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                                    value: phone,
+                                                                    onChange: (e)=>setPhone(e.target.value),
+                                                                    className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10",
+                                                                    placeholder: "+91"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 417,
+                                                                    columnNumber: 23
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                            lineNumber: 415,
+                                                            columnNumber: 21
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                    lineNumber: 413,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 380,
+                                            lineNumber: 391,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "space-y-3",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                    className: "text-[10px] font-medium uppercase text-slate-700",
+                                                    className: "text-sm font-black uppercase text-slate-900",
                                                     children: "Select Identity Role *"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 401,
+                                                    lineNumber: 423,
                                                     columnNumber: 20
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -691,12 +815,12 @@ function AuthScreen({ onLogin }) {
                                                                         size: 14
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                        lineNumber: 417,
+                                                                        lineNumber: 439,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 416,
+                                                                    lineNumber: 438,
                                                                     columnNumber: 28
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -704,7 +828,7 @@ function AuthScreen({ onLogin }) {
                                                                     children: r.label
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 419,
+                                                                    lineNumber: 441,
                                                                     columnNumber: 28
                                                                 }, this),
                                                                 role === r.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -713,29 +837,29 @@ function AuthScreen({ onLogin }) {
                                                                         size: 8
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                        lineNumber: 422,
+                                                                        lineNumber: 444,
                                                                         columnNumber: 33
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 421,
+                                                                    lineNumber: 443,
                                                                     columnNumber: 30
                                                                 }, this)
                                                             ]
                                                         }, r.id, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 408,
+                                                            lineNumber: 430,
                                                             columnNumber: 25
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 402,
+                                                    lineNumber: 424,
                                                     columnNumber: 20
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 400,
+                                            lineNumber: 422,
                                             columnNumber: 17
                                         }, this),
                                         role === 'organizer' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -749,21 +873,21 @@ function AuthScreen({ onLogin }) {
                                                             className: "text-[#22c55e]"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 434,
+                                                            lineNumber: 455,
                                                             columnNumber: 24
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                            className: "text-xs font-medium uppercase tracking-tight text-slate-900",
+                                                            className: "text-sm font-medium uppercase tracking-tight text-slate-900",
                                                             children: "Business Registry Protocol"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 435,
+                                                            lineNumber: 456,
                                                             columnNumber: 24
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 433,
+                                                    lineNumber: 454,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -773,11 +897,11 @@ function AuthScreen({ onLogin }) {
                                                             className: "space-y-1.5",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                    className: "text-[10px] font-medium uppercase text-slate-700",
+                                                                    className: "text-sm font-black uppercase text-slate-900",
                                                                     children: "Company Legal Name *"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 440,
+                                                                    lineNumber: 461,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -787,24 +911,24 @@ function AuthScreen({ onLogin }) {
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 441,
+                                                                    lineNumber: 462,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 439,
+                                                            lineNumber: 460,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "space-y-1.5",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                    className: "text-[10px] font-medium uppercase text-slate-700",
+                                                                    className: "text-sm font-black uppercase text-slate-900",
                                                                     children: "GST Identification (GSTIN) *"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 444,
+                                                                    lineNumber: 465,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -815,24 +939,24 @@ function AuthScreen({ onLogin }) {
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 445,
+                                                                    lineNumber: 466,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 443,
+                                                            lineNumber: 464,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "space-y-1.5",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                    className: "text-[10px] font-medium uppercase text-slate-700",
+                                                                    className: "text-sm font-black uppercase text-slate-900",
                                                                     children: "Permanent Account Number (PAN) *"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 448,
+                                                                    lineNumber: 469,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -843,24 +967,24 @@ function AuthScreen({ onLogin }) {
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 449,
+                                                                    lineNumber: 470,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 447,
+                                                            lineNumber: 468,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "space-y-1.5",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                    className: "text-[10px] font-medium uppercase text-slate-700",
+                                                                    className: "text-sm font-black uppercase text-slate-900",
                                                                     children: "Business License / Reg. No *"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 452,
+                                                                    lineNumber: 473,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -871,24 +995,24 @@ function AuthScreen({ onLogin }) {
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 453,
+                                                                    lineNumber: 474,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 451,
+                                                            lineNumber: 472,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "space-y-1.5",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                    className: "text-[10px] font-medium uppercase text-slate-700",
+                                                                    className: "text-sm font-black uppercase text-slate-900",
                                                                     children: "Established Year *"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 456,
+                                                                    lineNumber: 477,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -898,24 +1022,24 @@ function AuthScreen({ onLogin }) {
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 457,
+                                                                    lineNumber: 478,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 455,
+                                                            lineNumber: 476,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "space-y-1.5",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                    className: "text-[10px] font-medium uppercase text-slate-700",
+                                                                    className: "text-sm font-black uppercase text-slate-900",
                                                                     children: "HQ State *"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 460,
+                                                                    lineNumber: 481,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -925,30 +1049,30 @@ function AuthScreen({ onLogin }) {
                                                                     required: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 461,
+                                                                    lineNumber: 482,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 459,
+                                                            lineNumber: 480,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 438,
+                                                    lineNumber: 459,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "space-y-1.5",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                            className: "text-sm font-black uppercase text-slate-900",
                                                             children: "Business HQ Address *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 466,
+                                                            lineNumber: 487,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -958,13 +1082,13 @@ function AuthScreen({ onLogin }) {
                                                             required: true
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 467,
+                                                            lineNumber: 488,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 465,
+                                                    lineNumber: 486,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -978,21 +1102,21 @@ function AuthScreen({ onLogin }) {
                                                                     className: "text-[#22c55e]"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 472,
+                                                                    lineNumber: 493,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                                    className: "text-xs font-medium uppercase tracking-tight text-slate-900",
+                                                                    className: "text-sm font-medium uppercase tracking-tight text-slate-900",
                                                                     children: "Settlement Account (Bank Details)"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 473,
+                                                                    lineNumber: 494,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 471,
+                                                            lineNumber: 492,
                                                             columnNumber: 24
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1002,11 +1126,11 @@ function AuthScreen({ onLogin }) {
                                                                     className: "space-y-1.5",
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                                            className: "text-sm font-black uppercase text-slate-900",
                                                                             children: "Bank Name *"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                            lineNumber: 477,
+                                                                            lineNumber: 498,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1016,24 +1140,24 @@ function AuthScreen({ onLogin }) {
                                                                             required: true
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                            lineNumber: 478,
+                                                                            lineNumber: 499,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 476,
+                                                                    lineNumber: 497,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                     className: "space-y-1.5",
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                                            className: "text-sm font-black uppercase text-slate-900",
                                                                             children: "Account Number *"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                            lineNumber: 481,
+                                                                            lineNumber: 502,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1043,24 +1167,24 @@ function AuthScreen({ onLogin }) {
                                                                             required: true
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                            lineNumber: 482,
+                                                                            lineNumber: 503,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 480,
+                                                                    lineNumber: 501,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                     className: "space-y-1.5",
                                                                     children: [
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                                            className: "text-sm font-black uppercase text-slate-900",
                                                                             children: "IFSC Code *"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                            lineNumber: 485,
+                                                                            lineNumber: 506,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1070,36 +1194,36 @@ function AuthScreen({ onLogin }) {
                                                                             required: true
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                            lineNumber: 486,
+                                                                            lineNumber: 507,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 484,
+                                                                    lineNumber: 505,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 475,
+                                                            lineNumber: 496,
                                                             columnNumber: 24
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 470,
+                                                    lineNumber: 491,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "space-y-3",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                            className: "text-sm font-black uppercase text-slate-900",
                                                             children: "Activities Offered *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 492,
+                                                            lineNumber: 513,
                                                             columnNumber: 24
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1119,33 +1243,33 @@ function AuthScreen({ onLogin }) {
                                                                             className: "h-4 w-4 rounded-md"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                            lineNumber: 496,
+                                                                            lineNumber: 517,
                                                                             columnNumber: 32
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
                                                                             htmlFor: a,
-                                                                            className: "text-[10px] font-medium text-slate-600 uppercase cursor-pointer",
+                                                                            className: "text-sm font-medium text-slate-800 uppercase cursor-pointer",
                                                                             children: a
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                            lineNumber: 497,
+                                                                            lineNumber: 518,
                                                                             columnNumber: 32
                                                                         }, this)
                                                                     ]
                                                                 }, a, true, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 495,
+                                                                    lineNumber: 516,
                                                                     columnNumber: 29
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 493,
+                                                            lineNumber: 514,
                                                             columnNumber: 24
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 491,
+                                                    lineNumber: 512,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1159,21 +1283,21 @@ function AuthScreen({ onLogin }) {
                                                                     className: "text-[#22c55e]"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 505,
+                                                                    lineNumber: 526,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                                    className: "text-xs font-medium uppercase text-slate-900",
+                                                                    className: "text-sm font-medium uppercase text-slate-900",
                                                                     children: "Registry Verification Assets (Mandatory) *"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 506,
+                                                                    lineNumber: 527,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 504,
+                                                            lineNumber: 525,
                                                             columnNumber: 24
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1213,14 +1337,14 @@ function AuthScreen({ onLogin }) {
                                                                                 className: "text-[#22c55e] mb-1.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                                lineNumber: 520,
+                                                                                lineNumber: 541,
                                                                                 columnNumber: 47
                                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(item.icon, {
                                                                                 size: 18,
                                                                                 className: "text-slate-300 mb-1.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                                lineNumber: 520,
+                                                                                lineNumber: 541,
                                                                                 columnNumber: 110
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1228,7 +1352,7 @@ function AuthScreen({ onLogin }) {
                                                                                 children: item.doc ? item.doc.name : item.label
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                                lineNumber: 521,
+                                                                                lineNumber: 542,
                                                                                 columnNumber: 35
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1237,35 +1361,35 @@ function AuthScreen({ onLogin }) {
                                                                                 onChange: (e)=>handleFileUpload(e, item.setter)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                                lineNumber: 524,
+                                                                                lineNumber: 545,
                                                                                 columnNumber: 35
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                        lineNumber: 516,
+                                                                        lineNumber: 537,
                                                                         columnNumber: 32
                                                                     }, this)
                                                                 }, item.label, false, {
                                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                                    lineNumber: 515,
+                                                                    lineNumber: 536,
                                                                     columnNumber: 29
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 508,
+                                                            lineNumber: 529,
                                                             columnNumber: 24
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 503,
+                                                    lineNumber: 524,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 432,
+                                            lineNumber: 453,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1275,64 +1399,140 @@ function AuthScreen({ onLogin }) {
                                                     className: "space-y-1.5",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                            className: "text-sm font-black uppercase text-slate-900",
                                                             children: "Set Access Key *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 535,
+                                                            lineNumber: 556,
                                                             columnNumber: 21
                                                         }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                            type: "password",
-                                                            value: password,
-                                                            onChange: (e)=>setPassword(e.target.value),
-                                                            className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400",
-                                                            placeholder: "••••••••",
-                                                            required: true
-                                                        }, void 0, false, {
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "relative group",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__["Lock"], {
+                                                                    className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 558,
+                                                                    columnNumber: 23
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                                    type: showPassword ? 'text' : 'password',
+                                                                    value: password,
+                                                                    onChange: (e)=>setPassword(e.target.value),
+                                                                    className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10 pr-12",
+                                                                    placeholder: "••••••••",
+                                                                    required: true
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 559,
+                                                                    columnNumber: 23
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                    type: "button",
+                                                                    onClick: ()=>setShowPassword(!showPassword),
+                                                                    className: "absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-green-500 transition-colors",
+                                                                    children: showPassword ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__["EyeOff"], {
+                                                                        size: 16
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                        lineNumber: 568,
+                                                                        columnNumber: 41
+                                                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__["Eye"], {
+                                                                        size: 16
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                        lineNumber: 568,
+                                                                        columnNumber: 64
+                                                                    }, this)
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 567,
+                                                                    columnNumber: 23
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 536,
+                                                            lineNumber: 557,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 534,
+                                                    lineNumber: 555,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "space-y-1.5",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                            className: "text-sm font-black uppercase text-slate-900",
                                                             children: "Sync Key *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 539,
+                                                            lineNumber: 573,
                                                             columnNumber: 21
                                                         }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                            type: "password",
-                                                            value: confirmPassword,
-                                                            onChange: (e)=>setConfirmPassword(e.target.value),
-                                                            className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400",
-                                                            placeholder: "••••••••",
-                                                            required: true
-                                                        }, void 0, false, {
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "relative group",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$lock$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Lock$3e$__["Lock"], {
+                                                                    className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 575,
+                                                                    columnNumber: 23
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                                    type: showConfirmPassword ? 'text' : 'password',
+                                                                    value: confirmPassword,
+                                                                    onChange: (e)=>setConfirmPassword(e.target.value),
+                                                                    className: "h-11 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10 pr-12",
+                                                                    placeholder: "••••••••",
+                                                                    required: true
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 576,
+                                                                    columnNumber: 23
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                                    type: "button",
+                                                                    onClick: ()=>setShowConfirmPassword(!showConfirmPassword),
+                                                                    className: "absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-green-500 transition-colors",
+                                                                    children: showConfirmPassword ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2d$off$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__EyeOff$3e$__["EyeOff"], {
+                                                                        size: 16
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                        lineNumber: 585,
+                                                                        columnNumber: 48
+                                                                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$eye$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Eye$3e$__["Eye"], {
+                                                                        size: 16
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                        lineNumber: 585,
+                                                                        columnNumber: 71
+                                                                    }, this)
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 584,
+                                                                    columnNumber: 23
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 540,
+                                                            lineNumber: 574,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 538,
+                                                    lineNumber: 572,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 533,
+                                            lineNumber: 554,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1343,18 +1543,18 @@ function AuthScreen({ onLogin }) {
                                                 children: "Create Registry"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                lineNumber: 545,
+                                                lineNumber: 592,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 544,
+                                            lineNumber: 591,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                    lineNumber: 378,
+                                    lineNumber: 390,
                                     columnNumber: 15
                                 }, this),
                                 mode === 'forgot-password' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1369,12 +1569,12 @@ function AuthScreen({ onLogin }) {
                                                         size: 28
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                        lineNumber: 556,
+                                                        lineNumber: 603,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 555,
+                                                    lineNumber: 602,
                                                     columnNumber: 20
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -1382,7 +1582,7 @@ function AuthScreen({ onLogin }) {
                                                     children: "Identity Recovery"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 558,
+                                                    lineNumber: 605,
                                                     columnNumber: 20
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1390,13 +1590,13 @@ function AuthScreen({ onLogin }) {
                                                     children: "Enter your email to reset access key"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 559,
+                                                    lineNumber: 606,
                                                     columnNumber: 20
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 554,
+                                            lineNumber: 601,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -1407,29 +1607,45 @@ function AuthScreen({ onLogin }) {
                                                     className: "space-y-2",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                            className: "text-sm font-black uppercase text-slate-900",
                                                             children: "Registered Email"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 564,
+                                                            lineNumber: 611,
                                                             columnNumber: 23
                                                         }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                            type: "email",
-                                                            value: email,
-                                                            onChange: (e)=>setEmail(e.target.value),
-                                                            className: "h-12 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400",
-                                                            placeholder: "email@example.com",
-                                                            required: true
-                                                        }, void 0, false, {
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "relative group",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__["Mail"], {
+                                                                    className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 613,
+                                                                    columnNumber: 25
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                                    type: "email",
+                                                                    value: email,
+                                                                    onChange: (e)=>setEmail(e.target.value),
+                                                                    className: "h-12 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10",
+                                                                    placeholder: "email@example.com",
+                                                                    required: true
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 614,
+                                                                    columnNumber: 25
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 565,
+                                                            lineNumber: 612,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 563,
+                                                    lineNumber: 610,
                                                     columnNumber: 20
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1438,13 +1654,13 @@ function AuthScreen({ onLogin }) {
                                                     children: "Request Reset Link"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 574,
+                                                    lineNumber: 624,
                                                     columnNumber: 20
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 562,
+                                            lineNumber: 609,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1462,14 +1678,14 @@ function AuthScreen({ onLogin }) {
                                                             size: 14
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 584,
+                                                            lineNumber: 634,
                                                             columnNumber: 22
                                                         }, this),
                                                         " Forgot email? Find my account"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 580,
+                                                    lineNumber: 630,
                                                     columnNumber: 20
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1484,26 +1700,26 @@ function AuthScreen({ onLogin }) {
                                                             size: 14
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 590,
+                                                            lineNumber: 640,
                                                             columnNumber: 22
                                                         }, this),
                                                         " Back to Login"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 586,
+                                                    lineNumber: 636,
                                                     columnNumber: 20
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 579,
+                                            lineNumber: 629,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                    lineNumber: 553,
+                                    lineNumber: 600,
                                     columnNumber: 15
                                 }, this),
                                 mode === 'find-email' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1518,12 +1734,12 @@ function AuthScreen({ onLogin }) {
                                                         size: 28
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                        lineNumber: 600,
+                                                        lineNumber: 650,
                                                         columnNumber: 23
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 599,
+                                                    lineNumber: 649,
                                                     columnNumber: 20
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -1531,7 +1747,7 @@ function AuthScreen({ onLogin }) {
                                                     children: "Account Identification"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 602,
+                                                    lineNumber: 652,
                                                     columnNumber: 20
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1539,13 +1755,13 @@ function AuthScreen({ onLogin }) {
                                                     children: "Find your registry email via phone"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 603,
+                                                    lineNumber: 653,
                                                     columnNumber: 20
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 598,
+                                            lineNumber: 648,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -1556,29 +1772,45 @@ function AuthScreen({ onLogin }) {
                                                     className: "space-y-2",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
-                                                            className: "text-[10px] font-medium uppercase text-slate-700",
+                                                            className: "text-sm font-black uppercase text-slate-900",
                                                             children: "Registered Mobile Number"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 608,
+                                                            lineNumber: 658,
                                                             columnNumber: 23
                                                         }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
-                                                            type: "tel",
-                                                            value: phone,
-                                                            onChange: (e)=>setPhone(e.target.value),
-                                                            className: "h-12 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400",
-                                                            placeholder: "+91",
-                                                            required: true
-                                                        }, void 0, false, {
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "relative group",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$smartphone$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Smartphone$3e$__["Smartphone"], {
+                                                                    className: "absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 660,
+                                                                    columnNumber: 25
+                                                                }, this),
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
+                                                                    type: "tel",
+                                                                    value: phone,
+                                                                    onChange: (e)=>setPhone(e.target.value),
+                                                                    className: "h-12 rounded-xl border-slate-200 font-medium text-slate-900 text-sm placeholder:text-slate-400 pl-10",
+                                                                    placeholder: "+91",
+                                                                    required: true
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/components/auth/AuthScreen.tsx",
+                                                                    lineNumber: 661,
+                                                                    columnNumber: 25
+                                                                }, this)
+                                                            ]
+                                                        }, void 0, true, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                            lineNumber: 609,
+                                                            lineNumber: 659,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 607,
+                                                    lineNumber: 657,
                                                     columnNumber: 20
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1587,13 +1819,13 @@ function AuthScreen({ onLogin }) {
                                                     children: "Locate My Account"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                    lineNumber: 618,
+                                                    lineNumber: 671,
                                                     columnNumber: 20
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 606,
+                                            lineNumber: 656,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1610,48 +1842,48 @@ function AuthScreen({ onLogin }) {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                        lineNumber: 628,
+                                                        lineNumber: 681,
                                                         columnNumber: 22
                                                     }, this),
                                                     " Back to Login"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                                lineNumber: 624,
+                                                lineNumber: 677,
                                                 columnNumber: 20
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                            lineNumber: 623,
+                                            lineNumber: 676,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                                    lineNumber: 597,
+                                    lineNumber: 647,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                            lineNumber: 331,
+                            lineNumber: 334,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                    lineNumber: 301,
+                    lineNumber: 304,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/auth/AuthScreen.tsx",
-                lineNumber: 300,
+                lineNumber: 303,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/auth/AuthScreen.tsx",
-        lineNumber: 294,
+        lineNumber: 297,
         columnNumber: 5
     }, this);
 }

@@ -324,7 +324,7 @@ img, video {
 }
 
 :root {
-  --background: 38 40% 96%;
+  --background: 140 20% 94%;
   --foreground: 140 40% 10%;
   --card: 0 0% 100%;
   --card-foreground: 140 40% 10%;
@@ -335,7 +335,7 @@ img, video {
   --secondary: 140 20% 90%;
   --secondary-foreground: 140 40% 20%;
   --muted: 140 10% 90%;
-  --muted-foreground: 140 15% 45%;
+  --muted-foreground: 140 15% 40%;
   --accent: 149 75% 25%;
   --accent-foreground: 0 0% 100%;
   --destructive: 0 84.2% 60.2%;
@@ -345,7 +345,7 @@ img, video {
   --ring: 149 75% 35%;
   --radius: 1rem;
   --chart-1: 149 75% 35%;
-  --chart-2: 25 95% 53%;
+  --chart-2: 25 95% 40%;
   --chart-3: 199 89% 48%;
   --chart-4: 47 95% 50%;
   --chart-5: 149 40% 60%;
@@ -361,7 +361,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: Cambria Math, Cambria, Georgia, serif;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 1.5;
 }
@@ -1167,6 +1167,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .min-h-svh {
   min-height: 100svh;
+}
+
+.min-h-\[140px\] {
+  min-height: 140px;
 }
 
 .w-0 {
@@ -3024,6 +3028,10 @@ h1, h2, h3, h4, h5, h6 {
   padding-right: 2.5rem;
 }
 
+.pr-12 {
+  padding-right: 3rem;
+}
+
 .pr-2 {
   padding-right: .5rem;
 }
@@ -3279,6 +3287,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: .1em;
 }
 
+.tracking-wider {
+  letter-spacing: .05em;
+}
+
 .text-\[\#0891b2\] {
   --tw-text-opacity: 1;
   color: rgba(8, 145, 178, var(--tw-text-opacity, 1));
@@ -3297,11 +3309,6 @@ h1, h2, h3, h4, h5, h6 {
 .text-\[\#22c55e\] {
   --tw-text-opacity: 1;
   color: rgba(34, 197, 94, var(--tw-text-opacity, 1));
-}
-
-.text-\[\#f43f5e\] {
-  --tw-text-opacity: 1;
-  color: rgba(244, 63, 94, var(--tw-text-opacity, 1));
 }
 
 .text-accent-foreground {
@@ -3432,6 +3439,11 @@ h1, h2, h3, h4, h5, h6 {
 .text-green-700 {
   --tw-text-opacity: 1;
   color: rgba(21, 128, 61, var(--tw-text-opacity, 1));
+}
+
+.text-green-800 {
+  --tw-text-opacity: 1;
+  color: rgba(22, 101, 52, var(--tw-text-opacity, 1));
 }
 
 .text-green-900 {
@@ -4598,6 +4610,11 @@ h1, h2, h3, h4, h5, h6 {
   color: hsl(var(--foreground));
 }
 
+.hover\:text-green-500:hover {
+  --tw-text-opacity: 1;
+  color: rgba(34, 197, 94, var(--tw-text-opacity, 1));
+}
+
 .hover\:text-orange-400:hover {
   --tw-text-opacity: 1;
   color: rgba(251, 146, 60, var(--tw-text-opacity, 1));
@@ -4814,6 +4831,11 @@ h1, h2, h3, h4, h5, h6 {
   --tw-shadow: 0 0 rgba(0, 0, 0, 0);
   --tw-shadow-colored: 0 0 rgba(0, 0, 0, 0);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 rgba(0, 0, 0, 0)), var(--tw-ring-shadow, 0 0 rgba(0, 0, 0, 0)), var(--tw-shadow);
+}
+
+.group:focus-within .group-focus-within\:text-green-500 {
+  --tw-text-opacity: 1;
+  color: rgba(34, 197, 94, var(--tw-text-opacity, 1));
 }
 
 .group\/menu-item:focus-within .group-focus-within\/menu-item\:opacity-100 {
