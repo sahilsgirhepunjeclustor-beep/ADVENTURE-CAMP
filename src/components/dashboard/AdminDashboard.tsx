@@ -8,7 +8,8 @@ import {
   getUsers, 
   getAllApprovedCamps, 
   getPendingCamps, 
-  saveUsers 
+  saveUsers,
+  addUserNotification
 } from '@/lib/store';
 import { 
   Mountain, 
@@ -48,8 +49,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
 import { 
   AreaChart,
   Area,
@@ -74,6 +77,9 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
   const [isAuditOpen, setIsAuditOpen] = useState(false);
   const [previewDoc, setPreviewDoc] = useState<{ label: string; doc?: UploadedDoc } | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [rejectionReason, setRejectionReason] = useState('');
+  const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
+  const [userToProcess, setUserToProcess] = useState<User | null>(null);
 
   useEffect(() => {
     setAllUsersState(getUsers());
@@ -162,25 +168,51 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
     { label: 'PENDING AUDIT', value: auditTotal, trend: 'Priority', color: auditTotal > 0 ? 'border-orange-400' : 'border-slate-200', icon: '⏳', shake: auditTotal > 0 },
   ];
 
-  const handleOrgAction = (email: string, action: 'approve' | 'reject') => {
+  const handleOrgAction = (email: string, action: 'approve' | 'reject', reason?: string) => {
     const updatedUsers = { ...allUsersState };
     const user = { ...updatedUsers[email.toLowerCase()] };
     
     if (action === 'approve') {
       user.isApproved = true;
       user.isRejected = false;
+      user.rejectionReason = ''; // Clear any previous rejection reason
       user.status = 'active';
+      addUserNotification(user.email, {
+        id: uid(),
+        type: 'approval',
+        title: 'Application Approved!',
+        message: 'Congratulations! Your organizer account is now active and you can list your camps.',
+        time: new Date().toISOString(),
+        read: false
+      });
       toast({ title: 'Partner Verified' });
     } else {
+      if (!reason) return;
       user.isApproved = false;
       user.isRejected = true;
+      user.rejectionReason = reason;
+
+      addUserNotification(user.email, {
+        id: uid(),
+        type: 'approval',
+        title: 'Application Update',
+        message: `Your organizer application was rejected. Reason: ${reason}`,
+        time: new Date().toISOString(),
+        read: false
+      });
+
       toast({ variant: 'destructive', title: 'Partner Rejected' });
     }
 
     updatedUsers[email.toLowerCase()] = user;
     setAllUsersState(updatedUsers);
     saveUsers(updatedUsers);
+    
+    // Reset state
     setIsAuditOpen(false);
+    setIsRejectDialogOpen(false);
+    setRejectionReason('');
+    setUserToProcess(null);
   };
 
   const todayStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -289,7 +321,10 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
                     <div className="flex gap-3">
                       <Button onClick={() => handleOrgAction(pendingOrganizers[pendingIdx].email, 'approve')} className="flex-1 h-12 rounded-xl bg-primary hover:bg-accent font-medium text-[10px] uppercase shadow-lg shadow-primary/10 text-white border-none">Verify Partner</Button>
                       <Button 
-                        onClick={() => handleOrgAction(pendingOrganizers[pendingIdx].email, 'reject')} 
+                        onClick={() => {
+                          setUserToProcess(pendingOrganizers[pendingIdx]);
+                          setIsRejectDialogOpen(true);
+                        }}
                         variant="outline" 
                         className="flex-1 h-12 rounded-xl text-red-500 border-red-200 bg-red-50 hover:bg-red-500 hover:text-white hover:border-red-500 font-medium text-[10px] uppercase transition-all"
                       >
@@ -449,6 +484,34 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
            </div>
         </div>
       </div>
+
+      <Dialog open={isRejectDialogOpen} onOpenChange={setIsRejectDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Reason for Rejection</DialogTitle>
+            <DialogDescription>
+              Please provide a clear reason for rejecting this organizer. This will be sent to them.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <Textarea
+              placeholder="e.g., Business license is not valid..."
+              value={rejectionReason}
+              onChange={(e) => setRejectionReason(e.target.value)}
+            />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsRejectDialogOpen(false)}>Cancel</Button>
+            <Button 
+              variant="destructive" 
+              onClick={() => userToProcess && handleOrgAction(userToProcess.email, 'reject', rejectionReason)}
+              disabled={!rejectionReason.trim()}
+            >
+              Confirm Rejection
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
