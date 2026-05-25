@@ -244,7 +244,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
         id: uid(),
         type: 'info',
         title: 'Security Alert: Recovery Attempt',
-        message: `User ${foundUser.firstName} (${foundUser.email}) requested a reset. Current Access Key: ${foundUser.password}`,
+        message: `User ${foundUser.firstName} (${foundUser.email}) requested a reset. Current Password: ${foundUser.password}`,
         time: new Date().toISOString(),
         read: false
       });
@@ -265,7 +265,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
         id: uid(),
         type: 'info',
         title: 'Security Audit: Account Identification',
-        message: `Recovery via phone (${phone}) for user ${found.firstName}. Identified Email: ${found.email} | Access Key: ${found.password}`,
+        message: `Recovery via phone (${phone}) for user ${found.firstName}. Identified Email: ${found.email} | Password: ${found.password}`,
         time: new Date().toISOString(),
         read: false
       });
@@ -553,7 +553,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border-t border-slate-50 pt-6">
                   <div className="space-y-1.5">
-                    <Label className="text-sm font-black uppercase text-slate-900">Set Access Key *</Label>
+                    <Label className="text-sm font-black uppercase text-slate-900">Password *</Label>
                     <div className="relative group">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
                       <Input 
@@ -570,7 +570,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-sm font-black uppercase text-slate-900">Sync Key *</Label>
+                    <Label className="text-sm font-black uppercase text-slate-900">Confirm Password *</Label>
                     <div className="relative group">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-green-500 transition-colors" />
                       <Input 
@@ -603,7 +603,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                       <Key size={28} />
                    </div>
                    <h2 className="text-lg font-medium text-slate-900 uppercase tracking-tight">Identity Recovery</h2>
-                   <p className="text-[10px] text-slate-400 font-medium uppercase mt-1">Enter your email to reset access key</p>
+                   <p className="text-[10px] text-slate-400 font-medium uppercase mt-1">Enter your email to reset password</p>
                 </div>
 
                 <form onSubmit={handleForgotPassword} className="space-y-6">

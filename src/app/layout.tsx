@@ -1,7 +1,10 @@
 
 import type {Metadata} from 'next';
+import { Inter } from 'next/font/google';
 // @ts-ignore - CSS side-effect imports are handled by Next.js at build time
 import './globals.css';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'TrailWise | Professional Expedition Platform',
@@ -15,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased bg-background text-foreground text-base">
+      <body className={`${inter.className} font-sans antialiased bg-background text-foreground text-base`}>
         {children}
       </body>
     </html>
