@@ -1,5 +1,20 @@
+/**
+ * @file AdminMemberships.tsx
+ * @description This component allows administrators to manage membership plans and subscribers.
+ * It provides functionalities to create, view, and toggle the status of membership plans. It also lists
+ * all subscribers, allowing admins to search for them and manage their membership status (approve/revoke).
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for application-specific type definitions (MembershipPlan, User)
+ * @requires @/lib/store - for data persistence and retrieval functions
+ * @requires @/lib/utils - for utility functions like formatting and unique ID generation
+ * @requires @/components/ui/* - for various UI components (Button, Badge, Dialog, etc.)
+ */
+
 "use client";
 
+// Import necessary libraries, types, and components
 import React, { useState, useMemo, useEffect } from 'react';
 import { MembershipPlan, User } from '@/lib/types';
 import { getMembershipPlans, saveMembershipPlans, getUsers, saveUsers } from '@/lib/store';
@@ -7,15 +22,15 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
 import { fmt, fmtDate, cn, uid } from '@/lib/utils';
-import { 
-  Gem, 
-  Plus, 
-  Trash2, 
-  CheckCircle2, 
-  XCircle, 
-  Pencil, 
-  Search, 
-  Users, 
+import {
+  Gem,
+  Plus,
+  Trash2,
+  CheckCircle2,
+  XCircle,
+  Pencil,
+  Search,
+  Users,
   ArrowLeft,
   Calendar,
   Zap,
@@ -28,30 +43,48 @@ import {
 } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
   DialogDescription,
   DialogTrigger,
-  DialogFooter 
+  DialogFooter
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+/**
+ * @interface AdminMembershipsProps
+ * @description Defines the props for the AdminMemberships component.
+ * @property {() => void} [onBack] - Optional callback function to handle back navigation.
+ */
 interface AdminMembershipsProps {
   onBack?: () => void;
 }
 
+/**
+ * @function AdminMemberships
+ * @description The main component for managing membership plans and subscribers.
+ * @param {AdminMembershipsProps} props - The component's props.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
+  // --- STATE MANAGEMENT ---
+
+  // State for storing the list of membership plans.
   const [plans, setPlans] = useState<MembershipPlan[]>([]);
+  // State for storing all user data.
   const [allUsers, setAllUsers] = useState<Record<string, User>>({});
+  // State for the search query for filtering subscribers.
   const [searchQuery, setSearchQuery] = useState('');
+  // State to control the visibility of the plan creation/editing dialog.
   const [isPlanDialogOpen, setIsPlanDialogOpen] = useState(false);
+  // State to hold the plan being edited (not currently used for editing, but for potential future use).
   const [editingPlan, setEditingUser] = useState<MembershipPlan | null>(null);
 
-  // Form State
+  // State for the new membership plan form.
   const [newPlan, setNewPlan] = useState<Partial<MembershipPlan>>({
     name: '',
     price: 0,
@@ -61,21 +94,38 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
     isActive: true
   });
 
+  // --- DATA FETCHING & INITIALIZATION ---
+
+  /**
+   * @effect
+   * @description Fetches initial data for membership plans and users on component mount.
+   */
   useEffect(() => {
     setPlans(getMembershipPlans());
     setAllUsers(getUsers());
   }, []);
 
-  const subscribers = useMemo(() => 
-    Object.values(allUsers).filter(u => u.membership), 
+  // --- MEMOIZED COMPUTATIONS ---
+
+  // Memoized list of all users who have a membership.
+  const subscribers = useMemo(() =>
+    Object.values(allUsers).filter(u => u.membership),
     [allUsers]
   );
 
-  const filteredSubscribers = subscribers.filter(u => 
-    u.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  // Memoized list of subscribers filtered by the search query.
+  const filteredSubscribers = subscribers.filter(u =>
+    u.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     u.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // --- EVENT HANDLERS ---
+
+  /**
+   * @function handleCreatePlan
+   * @description Handles the creation of a new membership plan.
+   * @param {React.FormEvent} e - The form submission event.
+   */
   const handleCreatePlan = (e: React.FormEvent) => {
     e.preventDefault();
     const plan: MembershipPlan = {
@@ -95,6 +145,11 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
     toast({ title: 'Membership Plan Created' });
   };
 
+  /**
+   * @function togglePlanStatus
+   * @description Toggles the active status of a membership plan.
+   * @param {string} id - The ID of the plan to toggle.
+   */
   const togglePlanStatus = (id: string) => {
     const updated = plans.map(p => p.id === id ? { ...p, isActive: !p.isActive } : p);
     setPlans(updated);
@@ -102,6 +157,12 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
     toast({ title: 'Plan Status Updated' });
   };
 
+  /**
+   * @function handleMembershipAction
+   * @description Approves or revokes a user's membership.
+   * @param {string} email - The email of the user.
+   * @param {'approve' | 'revoke'} action - The action to perform.
+   */
   const handleMembershipAction = (email: string, action: 'approve' | 'revoke') => {
     const updatedUsers = { ...allUsers };
     if (action === 'approve') {
@@ -115,8 +176,11 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
     saveUsers(updatedUsers);
   };
 
+  // --- RENDER METHOD ---
+
   return (
     <div className="space-y-8 pb-20 font-sans max-w-7xl mx-auto px-4 md:px-0">
+      {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="flex items-center gap-4">
           {onBack && (
@@ -129,6 +193,7 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1.5 opacity-70">Loyalty & Exclusive Access Controls</p>
           </div>
         </div>
+        {/* New Plan Dialog Trigger */}
         <Dialog open={isPlanDialogOpen} onOpenChange={setIsPlanDialogOpen}>
           <DialogTrigger asChild>
             <Button className="rounded-2xl h-12 px-6 bg-primary hover:bg-accent font-black text-[10px] uppercase tracking-widest shadow-xl shadow-primary/20 gap-3 text-white">
@@ -144,6 +209,7 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
                 <h3 className="text-sm font-black uppercase tracking-widest">Plan Configuration</h3>
                 <p className="text-[10px] text-green-200/60 font-bold mt-1 uppercase">Define new loyalty tier benefits</p>
              </div>
+             {/* New Plan Form */}
              <form onSubmit={handleCreatePlan} className="p-8 space-y-5 bg-white">
                 <div className="space-y-1.5">
                    <Label className="text-[9px] font-black uppercase text-slate-400">Plan Name</Label>
@@ -170,6 +236,7 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Membership Plans Section */}
         <div className="lg:col-span-4 space-y-6">
           <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-widest px-1">ACTIVE TIERS</h3>
           <div className="space-y-4">
@@ -188,7 +255,7 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
                  </div>
                  <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-1">{plan.name}</h4>
                  <div className="text-xl font-black text-slate-900 mb-4">{fmt(plan.price)} <span className="text-[10px] text-slate-400 font-bold uppercase">/ Year</span></div>
-                 
+
                  <div className="space-y-2">
                     <div className="flex items-center gap-2 text-[10px] font-bold text-green-600 uppercase">
                        <Zap size={12} fill="currentColor" /> {plan.discountPercentage}% Camp Discount
@@ -204,6 +271,7 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
           </div>
         </div>
 
+        {/* Subscribers and Pending Approvals Section */}
         <div className="lg:col-span-8">
            <Tabs defaultValue="members" className="w-full">
               <TabsList className="bg-slate-50 p-1 rounded-2xl mb-6 h-12">
@@ -211,13 +279,14 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
                  <TabsTrigger value="requests" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest">Pending Approvals</TabsTrigger>
               </TabsList>
 
+              {/* Subscriber Ledger Tab */}
               <TabsContent value="members" className="space-y-6">
                  <div className="relative">
                     <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
-                    <Input 
+                    <Input
                        value={searchQuery}
                        onChange={e => setSearchQuery(e.target.value)}
-                       placeholder="Search Subscribers..." 
+                       placeholder="Search Subscribers..."
                        className="pl-12 h-14 rounded-2xl bg-white border-slate-100 shadow-xl font-bold uppercase text-[11px] tracking-tight"
                     />
                  </div>
@@ -239,6 +308,7 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
                           ) : (
                             filteredSubscribers.map(u => (
                               <tr key={u.email} className="group hover:bg-slate-50/50 transition-colors">
+                                 {/* User Information */}
                                  <td className="px-8 py-5">
                                     <div className="flex items-center gap-3">
                                        <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-[11px] font-black text-slate-500 overflow-hidden border border-white">
@@ -250,18 +320,22 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
                                        </div>
                                     </div>
                                  </td>
+                                 {/* Membership Tier */}
                                  <td className="px-8 py-5">
                                     <Badge className="bg-orange-50 text-orange-600 border-none font-black text-[9px] px-2 py-0.5 rounded-lg">{u.membership?.planName}</Badge>
                                  </td>
+                                 {/* Expiry Date */}
                                  <td className="px-8 py-5">
                                     <div className="text-[10px] font-bold text-slate-500 uppercase">{fmtDate(u.membership?.expiryDate)}</div>
                                  </td>
+                                 {/* Membership Status */}
                                  <td className="px-8 py-5">
                                     <div className="flex items-center gap-2">
                                        <div className={cn("w-1.5 h-1.5 rounded-full", u.membership?.status === 'active' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : "bg-amber-500")} />
                                        <span className="text-[9px] font-black uppercase text-slate-500">{u.membership?.status}</span>
                                     </div>
                                  </td>
+                                 {/* Action Button */}
                                  <td className="px-8 py-5 text-right">
                                     <button onClick={() => handleMembershipAction(u.email, u.membership?.status === 'active' ? 'revoke' : 'approve')} className="text-slate-300 hover:text-red-500 transition-colors">
                                        {u.membership?.status === 'active' ? <Ban size={18} /> : <CheckCircle2 size={18} className="text-green-500" />}
@@ -275,6 +349,7 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
                  </div>
               </TabsContent>
 
+              {/* Pending Approvals Tab */}
               <TabsContent value="requests">
                  <div className="space-y-4">
                     {subscribers.filter(u => u.membership?.status === 'pending').length === 0 ? (

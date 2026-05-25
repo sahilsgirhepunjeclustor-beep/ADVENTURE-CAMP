@@ -1,6 +1,20 @@
+/**
+ * @file CouponManagement.tsx
+ * @description This component provides an interface for administrators to manage discount coupons and promotional campaigns.
+ * It allows for creating new coupons with various parameters (code, discount type, value, usage limits, etc.),
+ * viewing existing coupons, and managing their status (activating/deactivating) or deleting them.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for the Coupon type definition
+ * @requires @/lib/store - for data persistence functions (getCoupons, saveCoupons)
+ * @requires @/lib/utils - for utility functions like cn, fmt, and uid
+ * @requires @/components/ui/* - for various UI components (Button, Dialog, Input, Select, etc.)
+ */
 
 "use client";
 
+// Import necessary libraries, types, and components
 import React, { useState, useEffect } from 'react';
 import { Coupon } from '@/lib/types';
 import { getCoupons, saveCoupons } from '@/lib/store';
@@ -8,12 +22,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
 import { fmt, uid } from '@/lib/utils';
-import { 
-  Ticket, 
-  Plus, 
-  Trash2, 
-  Clock, 
-  Zap, 
+import {
+  Ticket,
+  Plus,
+  Trash2,
+  Clock,
+  Zap,
   ArrowLeft,
   Settings2,
   Calendar,
@@ -28,14 +42,30 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from '@/lib/utils';
 
+/**
+ * @interface CouponManagementProps
+ * @description Defines the props for the CouponManagement component.
+ * @property {() => void} [onBack] - Optional callback function to handle back navigation.
+ */
 interface CouponManagementProps {
   onBack?: () => void;
 }
 
+/**
+ * @function CouponManagement
+ * @description The main component for managing coupon campaigns in the admin dashboard.
+ * @param {CouponManagementProps} props - The component's props.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function CouponManagement({ onBack }: CouponManagementProps) {
+  // --- STATE MANAGEMENT ---
+
+  // State to hold all coupons.
   const [coupons, setCoupons] = useState<Coupon[]>([]);
+  // State to control the visibility of the "Add Coupon" dialog.
   const [isAddOpen, setIsAddOpen] = useState(false);
 
+  // State for the new coupon being created in the form.
   const [newCoupon, setNewCoupon] = useState<Partial<Coupon>>({
     code: '',
     discountType: 'percentage',
@@ -46,10 +76,23 @@ export default function CouponManagement({ onBack }: CouponManagementProps) {
     isActive: true
   });
 
+  // --- DATA FETCHING ---
+
+  /**
+   * @effect
+   * @description Fetches all coupons from the store on component mount.
+   */
   useEffect(() => {
     setCoupons(getCoupons());
   }, []);
 
+  // --- EVENT HANDLERS ---
+
+  /**
+   * @function handleCreate
+   * @description Handles the creation of a new coupon campaign.
+   * @param {React.FormEvent} e - The form submission event.
+   */
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
     const coupon: Coupon = {
@@ -71,6 +114,11 @@ export default function CouponManagement({ onBack }: CouponManagementProps) {
     toast({ title: 'Campaign Activated', description: `Coupon ${coupon.code} is now live.` });
   };
 
+  /**
+   * @function toggleStatus
+   * @description Toggles the active status of a coupon.
+   * @param {string} id - The ID of the coupon to update.
+   */
   const toggleStatus = (id: string) => {
     const updated = coupons.map(c => c.id === id ? { ...c, isActive: !c.isActive } : c);
     setCoupons(updated);
@@ -78,6 +126,11 @@ export default function CouponManagement({ onBack }: CouponManagementProps) {
     toast({ title: 'Campaign Updated' });
   };
 
+  /**
+   * @function deleteCoupon
+   * @description Deletes a coupon.
+   * @param {string} id - The ID of the coupon to delete.
+   */
   const deleteCoupon = (id: string) => {
     const updated = coupons.filter(c => c.id !== id);
     setCoupons(updated);
@@ -85,8 +138,11 @@ export default function CouponManagement({ onBack }: CouponManagementProps) {
     toast({ variant: 'destructive', title: 'Campaign Terminated' });
   };
 
+  // --- RENDER METHOD ---
+
   return (
     <div className="space-y-8 pb-20 font-sans max-w-7xl mx-auto px-4 md:px-0 animate-in fade-in duration-500">
+      {/* Header with Back and "New Campaign" buttons */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="flex items-center gap-4">
           {onBack && (
@@ -99,6 +155,7 @@ export default function CouponManagement({ onBack }: CouponManagementProps) {
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1.5 opacity-70">Manage seasonal offers and promotional discounts</p>
           </div>
         </div>
+        {/* "New Campaign" Dialog Trigger */}
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
           <DialogTrigger asChild>
             <Button className="rounded-2xl h-12 px-6 bg-primary hover:bg-accent font-black text-[10px] uppercase tracking-widest shadow-xl shadow-primary/20 gap-3 text-white">
@@ -113,6 +170,7 @@ export default function CouponManagement({ onBack }: CouponManagementProps) {
                 <h3 className="text-sm font-black uppercase tracking-widest">Discount Logic</h3>
                 <p className="text-[10px] text-green-200/60 font-bold mt-1 uppercase">Configure your promotional campaign</p>
              </div>
+             {/* New Coupon Form */}
              <form onSubmit={handleCreate} className="p-8 space-y-5 bg-white">
                 <div className="space-y-1.5">
                    <Label className="text-[9px] font-black uppercase text-slate-400">Coupon Code</Label>
@@ -150,8 +208,10 @@ export default function CouponManagement({ onBack }: CouponManagementProps) {
         </Dialog>
       </div>
 
+      {/* Coupon Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {coupons.length === 0 ? (
+          // Placeholder when no coupons exist
           <div className="col-span-full py-32 text-center bg-white rounded-[40px] border border-dashed border-slate-200 opacity-50 flex flex-col items-center">
              <div className="w-20 h-20 bg-slate-50 rounded-[28px] flex items-center justify-center text-slate-200 mb-6">
                 <Ticket size={40} />
@@ -159,6 +219,7 @@ export default function CouponManagement({ onBack }: CouponManagementProps) {
              <p className="text-sm font-black uppercase text-slate-400 tracking-widest">No active campaigns</p>
           </div>
         ) : (
+          // Render the list of coupons
           coupons.map(c => (
             <div key={c.id} className={cn(
               "bg-white p-6 rounded-[32px] border shadow-sm relative overflow-hidden transition-all hover:shadow-xl",
@@ -168,6 +229,7 @@ export default function CouponManagement({ onBack }: CouponManagementProps) {
                   <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                      <Ticket size={24} />
                   </div>
+                  {/* Action Buttons: Toggle Status and Delete */}
                   <div className="flex gap-2">
                      <button onClick={() => toggleStatus(c.id)} className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400 hover:text-primary">
                         {c.isActive ? <Ban size={16} /> : <CheckCircle2 size={16} />}

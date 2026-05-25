@@ -1,22 +1,38 @@
+/**
+ * @file ActionCenter.tsx
+ * @description This component serves as the central operations hub for administrators.
+ * It provides a consolidated view of pending actions, such as organizer approvals and camp verifications,
+ * as well as a list of platform alerts and notifications. Admins can take direct action on these items,
+ * including approving/rejecting applications, viewing detailed audit information, and managing notifications.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for various data type definitions (User, Notification, Camp, etc.)
+ * @requires @/lib/store - for data persistence and retrieval functions
+ * @requires @/lib/utils - for utility functions like date formatting and class name construction
+ * @requires @/components/ui/* - for various UI components (Button, Dialog, Tabs, Badge, etc.)
+ */
+
 "use client";
 
+// Import necessary libraries, types, and components
 import React, { useState, useEffect } from 'react';
 import { User, Notification, Camp, UploadedDoc } from '@/lib/types';
-import { 
-  getAppData, 
-  saveAppData, 
-  getUsers, 
-  saveUsers, 
-  getPendingCamps, 
+import {
+  getAppData,
+  saveAppData,
+  getUsers,
+  saveUsers,
+  getPendingCamps,
   savePendingCamps,
   saveApprovedCamps,
   getAllApprovedCamps
 } from '@/lib/store';
-import { 
-  Bell, 
-  CheckCircle2, 
-  Trash2, 
-  ChevronLeft, 
+import {
+  Bell,
+  CheckCircle2,
+  Trash2,
+  ChevronLeft,
   ChevronRight,
   Building2,
   MapPin,
@@ -51,41 +67,83 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 
+/**
+ * @interface ActionCenterProps
+ * @description Defines the props for the ActionCenter component.
+ * @property {User} currentUser - The currently logged-in administrator user.
+ * @property {(page: string) => void} onNavigate - Function to handle navigation to other pages.
+ * @property {() => void} [onBack] - Optional callback function to handle back navigation.
+ */
 interface ActionCenterProps {
   currentUser: User;
   onNavigate: (page: string) => void;
   onBack?: () => void;
 }
 
+/**
+ * @function ActionCenter
+ * @description The main component for the admin operations hub.
+ * @param {ActionCenterProps} props - The component's props.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function ActionCenter({ currentUser, onNavigate, onBack }: ActionCenterProps) {
+  // --- STATE MANAGEMENT ---
+
+  // State for admin notifications.
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  // State for pending organizer applications.
   const [pendingOrgs, setPendingOrgs] = useState<User[]>([]);
+  // State for pending camp submissions.
   const [pendingCamps, setPendingCamps] = useState<Camp[]>([]);
+  // Index for navigating through pending organizers.
   const [orgIdx, setOrgIdx] = useState(0);
+  // The user currently being reviewed in the audit dialog.
   const [auditUser, setAuditUser] = useState<User | null>(null);
+  // State to control the main audit dialog.
   const [isAuditOpen, setIsAuditOpen] = useState(false);
+  // State to control the rejection reason dialog.
   const [isOrgRejectOpen, setIsOrgRejectOpen] = useState(false);
+  // State for the rejection reason text.
   const [rejectionReason, setRejectionReason] = useState('');
+  // State for the document being previewed.
   const [previewDoc, setPreviewDoc] = useState<{ label: string; doc?: UploadedDoc } | null>(null);
 
+  // --- DATA FETCHING & SYNCHRONIZATION ---
+
+  /**
+   * @function refreshData
+   * @description Fetches the latest data from the store to update the component's state.
+   */
   const refreshData = () => {
     const data = getAppData(currentUser.email);
     setNotifications(data.notifications || []);
-    
+
     const users = getUsers();
     const currentPendingOrgs = Object.values(users).filter(u => u.role === 'organizer' && !u.isApproved && !u.isRejected);
     setPendingOrgs(currentPendingOrgs);
-    
+
     const currentPendingCamps = getPendingCamps();
     setPendingCamps(currentPendingCamps);
   };
 
+  /**
+   * @effect
+   * @description Sets up an interval to refresh data every 3 seconds to keep the action center up-to-date.
+   * Cleans up the interval on component unmount.
+   */
   useEffect(() => {
     refreshData();
     const interval = setInterval(refreshData, 3000);
     return () => clearInterval(interval);
   }, [currentUser.email]);
 
+  // --- EVENT HANDLERS ---
+
+  /**
+   * @function handleMarkRead
+   * @description Marks a specific notification as read.
+   * @param {string} id - The ID of the notification.
+   */
   const handleMarkRead = (id: string) => {
     const data = getAppData(currentUser.email);
     data.notifications = (data.notifications || []).map(n => n.id === id ? { ...n, read: true } : n);
@@ -93,6 +151,12 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
     saveAppData(currentUser.email, data);
   };
 
+  /**
+   * @function handleOrgAction
+   * @description Approves or rejects an organizer's application.
+   * @param {string} email - The email of the organizer.
+   * @param {'approve' | 'reject'} action - The action to perform.
+   */
   const handleOrgAction = (email: string, action: 'approve' | 'reject') => {
     if (action === 'reject' && !rejectionReason.trim()) {
       setIsOrgRejectOpen(true);
@@ -122,6 +186,12 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
     refreshData();
   };
 
+  /**
+   * @function handleCampAction
+   * @description Approves or rejects a new camp submission.
+   * @param {string} campId - The ID of the camp.
+   * @param {'approve' | 'reject'} action - The action to perform.
+   */
   const handleCampAction = (campId: string, action: 'approve' | 'reject') => {
     const currentPending = getPendingCamps();
     const camp = currentPending.find(c => c.id === campId);
@@ -140,18 +210,23 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
     refreshData();
   };
 
+  // --- DERIVED STATE ---
+
   const pendingAuditTotal = pendingOrgs.length + pendingCamps.length;
   const unreadAlerts = notifications.filter(n => !n.read).length;
 
+  // --- RENDER METHOD ---
+
   return (
     <div className="space-y-6 pb-20 max-w-7xl mx-auto font-sans px-4">
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
         <div className="flex items-center gap-4">
           {onBack && (
-            <Button 
-              variant="outline" 
-              size="icon" 
-              onClick={onBack} 
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={onBack}
               className="rounded-full h-10 w-10 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0"
             >
               <ArrowLeft size={18} className="text-slate-600" />
@@ -172,6 +247,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
+        {/* Left Panel: Audit Queues */}
         <div className="xl:col-span-7 space-y-6">
           <Tabs defaultValue="organizers" className="w-full">
             <TabsList className="bg-muted/30 p-1 rounded-2xl mb-4 h-12 w-full sm:w-auto">
@@ -179,6 +255,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
               <TabsTrigger value="camps" className="flex-1 sm:flex-none rounded-xl px-6 font-black uppercase text-[10px] tracking-widest">Camp Verif. ({pendingCamps.length})</TabsTrigger>
             </TabsList>
 
+            {/* Organizer Applications Tab */}
             <TabsContent value="organizers">
               {pendingOrgs.length === 0 ? (
                 <div className="bg-white p-16 text-center rounded-[32px] border border-slate-100 shadow-sm opacity-50">
@@ -187,7 +264,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
                 </div>
               ) : (
                 <div className="bg-white p-6 sm:p-8 rounded-[32px] border border-slate-100 shadow-sm animate-in fade-in zoom-in duration-300 relative max-w-2xl mx-auto w-full">
-                  <button 
+                  <button
                     onClick={() => { setAuditUser(pendingOrgs[orgIdx]); setIsAuditOpen(true); }}
                     className="absolute top-6 right-6 w-12 h-12 rounded-2xl bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-sm"
                   >
@@ -203,7 +280,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
                         {pendingOrgs[orgIdx]?.firstName} {pendingOrgs[orgIdx]?.lastName}
                       </div>
                       <div className="text-[10px] text-slate-400 font-bold mb-4 uppercase">{pendingOrgs[orgIdx]?.email}</div>
-                      
+
                       <div className="space-y-3 bg-slate-50 p-4 rounded-2xl border border-slate-100">
                          <div className="flex items-center justify-center sm:justify-start gap-3 text-xs font-bold text-slate-600">
                             <Building2 size={14} className="text-primary shrink-0" />
@@ -222,6 +299,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
                     <Button onClick={() => { setAuditUser(pendingOrgs[orgIdx]); setIsOrgRejectOpen(true); }} className="flex-1 h-14 rounded-2xl bg-red-500 hover:bg-red-600 font-black text-xs text-white uppercase tracking-widest shadow-xl border-none">Reject</Button>
                   </div>
 
+                  {/* Navigation for pending organizers */}
                   <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-50">
                     <Button variant="outline" size="icon" onClick={() => setOrgIdx(p => Math.max(0, p - 1))} disabled={orgIdx === 0} className="h-10 w-10 rounded-xl"><ChevronLeft size={16} /></Button>
                     <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{orgIdx + 1} / {pendingOrgs.length} Applications</span>
@@ -231,6 +309,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
               )}
             </TabsContent>
 
+            {/* Pending Camps Tab */}
             <TabsContent value="camps">
               <div className="space-y-4">
                 {pendingCamps.length === 0 ? (
@@ -262,6 +341,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
           </Tabs>
         </div>
 
+        {/* Right Panel: Platform Alerts */}
         <div className="xl:col-span-5">
            <div className="bg-slate-900 rounded-[32px] p-6 shadow-2xl text-white">
               <div className="flex justify-between items-center mb-6">
@@ -303,7 +383,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
         </div>
       </div>
 
-      {/* Deep Audit Dialog */}
+      {/* Deep Audit Dialog for Organizer Verification */}
       <Dialog open={isAuditOpen} onOpenChange={setIsAuditOpen}>
         <DialogContent className="max-w-4xl p-0 overflow-hidden rounded-[24px] border-none shadow-2xl font-sans m-4 sm:m-0 w-[95vw] h-[90vh] flex flex-col">
           <DialogHeader className="sr-only">
@@ -334,7 +414,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
               <ScrollArea className="flex-1 w-full">
                 <div className="p-6 md:p-8 space-y-8 pb-12">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {/* Business Details */}
+                    {/* Business Details Section */}
                     <div className="space-y-6">
                       <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2"><Building2 size={12} className="text-primary" /> Business Profile</h4>
                       <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
@@ -370,7 +450,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
                         </div>
                       </div>
 
-                      {/* Bank Details */}
+                      {/* Bank Details Section */}
                       <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2"><CreditCard size={12} className="text-primary" /> Settlement Account</h4>
                       <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4">
                          <div>
@@ -390,7 +470,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
                       </div>
                     </div>
 
-                    {/* Verification Assets */}
+                    {/* Compliance Documents Section */}
                     <div className="space-y-6">
                       <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2"><FileText size={12} className="text-primary" /> Compliance Documentation</h4>
                       <div className="grid grid-cols-1 gap-3">
@@ -413,7 +493,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
                                  </p>
                               </div>
                             </div>
-                            <button 
+                            <button
                               onClick={() => setPreviewDoc({ label: item.label, doc: item.doc })}
                               className="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all shadow-sm"
                             >
@@ -431,10 +511,11 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
                 </div>
               </ScrollArea>
 
+              {/* Dialog Actions */}
               <div className="p-6 bg-white border-t border-slate-100 flex gap-4 shrink-0 mt-auto">
-                <Button 
-                  onClick={() => { setAuditUser(auditUser); setIsOrgRejectOpen(true); }} 
-                  variant="outline" 
+                <Button
+                  onClick={() => { setAuditUser(auditUser); setIsOrgRejectOpen(true); }}
+                  variant="outline"
                   className="flex-1 h-12 rounded-xl border-red-100 text-red-600 bg-red-50 hover:bg-red-500 hover:text-white hover:border-red-500 font-black uppercase text-[10px] tracking-widest transition-all"
                 >
                   Reject Registry
@@ -456,7 +537,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
           <div className="p-8 space-y-6">
             <div className="space-y-3">
               <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Audit Intelligence (Reason)</Label>
-              <Textarea 
+              <Textarea
                 value={rejectionReason}
                 onChange={e => setRejectionReason(e.target.value)}
                 placeholder="Explain why this partner was declined (e.g., Invalid business registration, mismatched identity)..."
@@ -471,6 +552,7 @@ export default function ActionCenter({ currentUser, onNavigate, onBack }: Action
         </DialogContent>
       </Dialog>
 
+      {/* Document Preview Dialog */}
       <Dialog open={!!previewDoc} onOpenChange={() => setPreviewDoc(null)}>
         <DialogContent className="max-w-2xl p-0 overflow-hidden rounded-[24px] border-none shadow-2xl font-sans m-4 w-[90vw]">
            <DialogHeader className="sr-only">

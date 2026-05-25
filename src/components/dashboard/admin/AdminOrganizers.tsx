@@ -1,16 +1,32 @@
+/**
+ * @file AdminOrganizers.tsx
+ * @description This component provides a comprehensive interface for administrators to manage organizer accounts.
+ * It allows for viewing pending applications, approving or rejecting them, and managing the operational status
+ * (active, suspended) of verified organizers. It also includes features for viewing and editing organizer profiles
+ * and their compliance documents.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for User and UploadedDoc type definitions
+ * @requires @/lib/store - for data persistence and retrieval functions (getUsers, saveUsers)
+ * @requires @/lib/utils - for utility functions like cn (for class names)
+ * @requires @/components/ui/* - for various UI components (Button, Badge, Dialog, etc.)
+ */
+
 "use client";
 
+// Import necessary libraries, types, and components
 import React, { useState, useEffect } from 'react';
 import { getUsers, saveUsers } from '@/lib/store';
 import { User, UploadedDoc } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
-import { 
-  Building2, 
-  MapPin, 
-  ShieldCheck, 
-  Shield, 
+import {
+  Building2,
+  MapPin,
+  ShieldCheck,
+  Shield,
   FileText,
   CheckCircle2,
   XCircle,
@@ -35,20 +51,44 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+/**
+ * @interface AdminOrganizersProps
+ * @description Defines the props for the AdminOrganizers component.
+ * @property {() => void} [onBack] - Optional callback function to handle back navigation.
+ */
 interface AdminOrganizersProps {
   onBack?: () => void;
 }
 
+/**
+ * @function AdminOrganizers
+ * @description The main component for managing organizer accounts.
+ * @param {AdminOrganizersProps} props - The component's props.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
+  // --- STATE MANAGEMENT ---
+
+  // State to hold all user data.
   const [allUsers, setAllUsers] = useState<Record<string, User>>({});
+  // State for the currently selected organizer's email (ID).
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // State to control the preview of a compliance document.
   const [previewDoc, setPreviewDoc] = useState<{ label: string; doc?: UploadedDoc } | null>(null);
+  // State to hold the user object being edited.
   const [editingUser, setEditingUser] = useState<User | null>(null);
-  
+
+  // --- DATA FETCHING & INITIALIZATION ---
+
+  /**
+   * @effect
+   * @description Fetches all users on component mount and sets the initially selected organizer.
+   * It prioritizes selecting a pending organizer, otherwise falls back to the first available organizer.
+   */
   useEffect(() => {
     const users = getUsers();
     setAllUsers(users);
-    
+
     const pending = Object.values(users).filter(u => u.role === 'organizer' && !u.isApproved && !u.isRejected);
     if (pending.length > 0 && !selectedId) {
       setSelectedId(pending[0].email);
@@ -58,16 +98,30 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
     }
   }, []);
 
+  // --- DATA FILTERING ---
+
+  // Filter for users who are organizers.
   const organizers = Object.values(allUsers).filter(u => u.role === 'organizer');
+  // Further filter for pending organizers.
   const pending = organizers.filter(u => !u.isApproved && !u.isRejected);
+  // Filter for organizers who have been either approved or rejected (history).
   const history = organizers.filter(u => u.isApproved || u.isRejected);
-  
+
+  // The currently selected user object based on `selectedId`.
   const selectedUser = selectedId ? allUsers[selectedId.toLowerCase()] : null;
 
+  // --- EVENT HANDLERS ---
+
+  /**
+   * @function handleAction
+   * @description Handles the approval or rejection of an organizer.
+   * @param {string} email - The email of the organizer.
+   * @param {'approve' | 'reject'} action - The action to perform.
+   */
   const handleAction = (email: string, action: 'approve' | 'reject') => {
     const updatedUsers = { ...allUsers };
     const user = { ...updatedUsers[email.toLowerCase()] };
-    
+
     if (action === 'approve') {
       user.isApproved = true;
       user.isRejected = false;
@@ -85,20 +139,31 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
     saveUsers(updatedUsers);
   };
 
+  /**
+   * @function handleStatusUpdate
+   * @description Updates the operational status of an organizer (active/suspended).
+   * @param {string} email - The organizer's email.
+   * @param {'active' | 'suspended'} status - The new status.
+   */
   const handleStatusUpdate = (email: string, status: 'active' | 'suspended') => {
     const updatedUsers = { ...allUsers };
     const user = { ...updatedUsers[email.toLowerCase()] };
     user.status = status;
-    
+
     updatedUsers[email.toLowerCase()] = user;
     setAllUsers(updatedUsers);
     saveUsers(updatedUsers);
-    toast({ 
+    toast({
       title: status === 'active' ? 'Partner Reactivated' : 'Partner Suspended',
       description: `Operational status updated for ${user.organizerProfile?.businessName}`
     });
   };
 
+  /**
+   * @function handleUpdateProfile
+   * @description Handles the submission of the profile editing form.
+   * @param {React.FormEvent} e - The form submission event.
+   */
   const handleUpdateProfile = (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingUser) return;
@@ -107,18 +172,21 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
     updatedUsers[editingUser.email.toLowerCase()] = editingUser;
     setAllUsers(updatedUsers);
     saveUsers(updatedUsers);
-    setEditingUser(null);
+    setEditingUser(null); // Close the dialog
     toast({ title: 'Business Info Updated', description: 'Changes have been synchronized across the platform.' });
   };
 
+  // --- RENDER METHOD ---
+
   return (
     <div className="space-y-8 pb-20 max-w-[1600px] mx-auto animate-in fade-in duration-700 px-2 sm:px-4 md:px-6 font-sans">
+      {/* Header */}
       <div className="flex items-center gap-4">
         {onBack && (
-          <Button 
-            variant="outline" 
-            size="icon" 
-            onClick={onBack} 
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={onBack}
             className="rounded-full h-10 w-10 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0"
           >
             <ArrowLeft size={18} className="text-slate-600" />
@@ -134,6 +202,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+        {/* Left Panel: Verification Queue */}
         <div className="xl:col-span-5 space-y-6">
            <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em] px-1">VERIFICATION QUEUE</h3>
            <ScrollArea className="h-[400px] lg:h-[600px] pr-4">
@@ -145,13 +214,13 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                   </div>
                 ) : (
                   pending.map(user => (
-                    <div 
+                    <div
                       key={user.email}
                       onClick={() => setSelectedId(user.email)}
                       className={cn(
                         "p-6 rounded-[28px] border-l-[6px] transition-all cursor-pointer flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 group relative overflow-hidden",
-                        selectedId === user.email 
-                          ? "bg-white border-primary shadow-2xl shadow-primary/5 ring-1 ring-primary/10" 
+                        selectedId === user.email
+                          ? "bg-white border-primary shadow-2xl shadow-primary/5 ring-1 ring-primary/10"
                           : "bg-slate-50/50 border-slate-200 hover:bg-white hover:border-primary/40"
                       )}
                     >
@@ -179,11 +248,13 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
            </ScrollArea>
         </div>
 
+        {/* Right Panel: Selected Organizer Details */}
         <div className="xl:col-span-7">
            <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em] px-1 mb-6">OPERATIONAL IDENTITY</h3>
            {selectedUser ? (
              <div className="bg-white rounded-[40px] border border-slate-100 shadow-2xl overflow-hidden animate-in zoom-in duration-300 min-h-[600px] flex flex-col">
                 <div className="p-6 sm:p-10 space-y-10 flex-1">
+                   {/* Business Header */}
                    <div className="p-8 sm:p-10 bg-slate-50/50 rounded-[32px] border-l-[8px] border-primary relative overflow-hidden group">
                       <div className="relative z-10 flex items-center gap-6">
                         <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-[28px] bg-white border-2 border-white shadow-xl overflow-hidden shrink-0">
@@ -214,6 +285,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                       <div className="absolute top-0 right-0 w-32 h-full bg-primary/5 skew-x-[-20deg] translate-x-12 group-hover:translate-x-10 transition-transform duration-700" />
                    </div>
 
+                   {/* Business Details */}
                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 gap-x-16">
                       <div className="space-y-1.5">
                          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">ADMIN CONTACT:</p>
@@ -233,6 +305,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                       </div>
                    </div>
 
+                   {/* Compliance Documents */}
                    <div className="space-y-4 pt-4">
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">COMPLIANCE ASSETS (IDENTITY VERIFICATION):</p>
                       <div className="flex flex-wrap gap-3">
@@ -241,7 +314,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                           { label: 'Registration', doc: selectedUser.organizerProfile?.registrationDoc, icon: Building2, color: 'text-blue-400' },
                           { label: 'Safety Cert', doc: selectedUser.organizerProfile?.safetyDoc, icon: ShieldCheck, color: 'text-primary' }
                         ].map(item => (
-                          <button 
+                          <button
                             key={item.label}
                             onClick={() => setPreviewDoc({ label: item.label, doc: item.doc })}
                             className="flex items-center gap-3 px-6 h-12 rounded-[18px] bg-slate-50 border border-slate-100 shadow-sm hover:shadow-xl hover:bg-white hover:border-primary/20 transition-all group"
@@ -254,52 +327,55 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                    </div>
                 </div>
 
+                {/* Action Footer */}
                 <div className="p-6 sm:p-10 bg-slate-50/50 border-t border-slate-100 flex flex-wrap items-center justify-center sm:justify-start gap-4 shrink-0">
                    {!selectedUser.isApproved ? (
+                     // Actions for pending organizers
                      <>
-                       <Button 
+                       <Button
                         onClick={() => handleAction(selectedUser.email, 'approve')}
                         className="h-14 px-8 rounded-2xl bg-primary hover:bg-accent text-white font-black text-[11px] uppercase tracking-widest shadow-2xl shadow-primary/20 flex-1 sm:flex-none min-w-[160px]"
                        >
                          <CheckCircle2 size={18} className="mr-2" /> Verify & Activate
                        </Button>
-                       <Button 
+                       <Button
                         onClick={() => handleAction(selectedUser.email, 'reject')}
-                        variant="outline" 
+                        variant="outline"
                         className="h-14 px-8 rounded-2xl border-red-100 text-red-600 bg-red-50/50 hover:bg-red-500 hover:text-white hover:border-red-500 font-black text-[11px] uppercase tracking-widest transition-all flex-1 sm:flex-none min-w-[120px]"
                        >
                          <XCircle size={18} className="mr-2" /> Reject
                        </Button>
                      </>
                    ) : (
+                     // Actions for verified organizers
                      <>
                         {selectedUser.status === 'suspended' ? (
-                          <Button 
+                          <Button
                             onClick={() => handleStatusUpdate(selectedUser.email, 'active')}
                             className="h-14 px-8 rounded-2xl bg-green-600 hover:bg-green-700 text-white font-black text-[11px] uppercase tracking-widest shadow-lg flex-1 sm:flex-none min-w-[180px]"
                           >
                             <PlayCircle size={18} className="mr-2" /> Reactivate Partner
                           </Button>
                         ) : (
-                          <Button 
+                          <Button
                             onClick={() => handleStatusUpdate(selectedUser.email, 'suspended')}
                             className="h-14 px-8 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-black text-[11px] uppercase tracking-widest shadow-lg flex-1 sm:flex-none min-w-[180px]"
                           >
                             <PauseCircle size={18} className="mr-2" /> Suspend Operations
                           </Button>
                         )}
-                        <Button 
+                        <Button
                           onClick={() => handleAction(selectedUser.email, 'reject')}
-                          variant="outline" 
+                          variant="outline"
                           className="h-14 px-8 rounded-2xl border-red-100 text-red-600 bg-red-50/50 hover:bg-red-500 hover:text-white hover:border-red-500 font-black text-[11px] uppercase tracking-widest transition-all flex-1 sm:flex-none"
                         >
                           <ShieldAlert size={18} className="mr-2" /> Revoke Access
                         </Button>
                      </>
                    )}
-                   <Button 
+                   <Button
                     onClick={() => setEditingUser(selectedUser)}
-                    variant="outline" 
+                    variant="outline"
                     className="h-14 px-8 rounded-2xl border-slate-200 text-slate-400 hover:bg-white hover:text-slate-900 font-black text-[11px] uppercase tracking-widest flex-1 sm:flex-none ml-auto"
                    >
                      <Pencil size={18} className="mr-2 text-orange-400" /> Edit Info
@@ -307,6 +383,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                 </div>
              </div>
            ) : (
+             // Placeholder when no organizer is selected
              <div className="bg-slate-50/50 h-[600px] rounded-[40px] border border-dashed border-slate-200 flex flex-col items-center justify-center text-center p-12">
                 <div className="w-24 h-24 bg-white rounded-[32px] flex items-center justify-center text-slate-200 shadow-xl mb-6">
                    <Search size={48} />
@@ -318,12 +395,13 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
         </div>
       </div>
 
+      {/* Verification History Section */}
       <div className="space-y-6 pt-12 border-t border-slate-100">
          <div className="flex justify-between items-center px-1">
             <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em]">VERIFICATION HISTORY</h3>
             <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest bg-slate-50 px-3 py-1 rounded-full">{history.length} ENTITIES PROCESSED</span>
          </div>
-         
+
          <div className="bg-white rounded-[32px] border border-slate-100 shadow-2xl overflow-hidden">
             <div className="overflow-x-auto custom-scrollbar">
               <table className="w-full text-left min-w-[800px]">
@@ -354,7 +432,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                           <td className="px-10 py-5">
                              <Badge variant="outline" className={cn(
                                "border-none text-[9px] font-black uppercase px-3 py-1 rounded-lg",
-                               u.status === 'suspended' ? "bg-amber-50 text-amber-600" : 
+                               u.status === 'suspended' ? "bg-amber-50 text-amber-600" :
                                u.status === 'active' ? "bg-green-50 text-green-600" : "bg-slate-50 text-slate-400"
                              )}>
                                {u.status || 'Active'}
@@ -378,6 +456,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
          </div>
       </div>
 
+      {/* Edit Organizer Profile Dialog */}
       <Dialog open={!!editingUser} onOpenChange={() => setEditingUser(null)}>
         <DialogContent className="max-w-2xl rounded-[32px] border-none shadow-2xl p-0 overflow-hidden font-sans m-4 h-[90vh] flex flex-col">
           <DialogHeader className="sr-only">
@@ -406,10 +485,10 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                         <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Legal Business Name</Label>
                         <div className="relative">
                             <Building2 size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary" />
-                            <Input 
-                              value={editingUser.organizerProfile?.businessName} 
-                              onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, businessName: e.target.value}})} 
-                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100" 
+                            <Input
+                              value={editingUser.organizerProfile?.businessName}
+                              onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, businessName: e.target.value}})}
+                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100"
                             />
                         </div>
                       </div>
@@ -417,10 +496,10 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                         <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Admin Contact</Label>
                         <div className="relative">
                             <UserIcon size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary" />
-                            <Input 
-                              value={`${editingUser.firstName} ${editingUser.lastName}`} 
+                            <Input
+                              value={`${editingUser.firstName} ${editingUser.lastName}`}
                               disabled
-                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50/50 border-slate-100 opacity-60" 
+                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50/50 border-slate-100 opacity-60"
                             />
                         </div>
                       </div>
@@ -431,11 +510,11 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                         <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Established Year</Label>
                         <div className="relative">
                             <CalendarDays size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary" />
-                            <Input 
+                            <Input
                               type="number"
-                              value={editingUser.organizerProfile?.establishedYear} 
-                              onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, establishedYear: e.target.value}})} 
-                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100" 
+                              value={editingUser.organizerProfile?.establishedYear}
+                              onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, establishedYear: e.target.value}})}
+                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100"
                             />
                         </div>
                       </div>
@@ -443,11 +522,11 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                         <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Batch Capacity</Label>
                         <div className="relative">
                             <Users size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary" />
-                            <Input 
+                            <Input
                               type="number"
-                              value={editingUser.organizerProfile?.batchCapacity} 
-                              onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, batchCapacity: Number(e.target.value)}})} 
-                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100" 
+                              value={editingUser.organizerProfile?.batchCapacity}
+                              onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, batchCapacity: Number(e.target.value)}})}
+                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100"
                             />
                         </div>
                       </div>
@@ -455,10 +534,10 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                         <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Registry Region</Label>
                         <div className="relative">
                             <MapPin size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary" />
-                            <Input 
-                              value={editingUser.organizerProfile?.businessState} 
-                              onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, businessState: e.target.value}})} 
-                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100" 
+                            <Input
+                              value={editingUser.organizerProfile?.businessState}
+                              onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, businessState: e.target.value}})}
+                              className="rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100"
                             />
                         </div>
                       </div>
@@ -468,9 +547,9 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                       <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">HQ Physical Address</Label>
                       <div className="relative">
                         <MapPin size={16} className="absolute left-3.5 top-4 text-primary" />
-                        <textarea 
-                          value={editingUser.organizerProfile?.businessAddress} 
-                          onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, businessAddress: e.target.value}})} 
+                        <textarea
+                          value={editingUser.organizerProfile?.businessAddress}
+                          onChange={e => setEditingUser({...editingUser, organizerProfile: {...editingUser.organizerProfile!, businessAddress: e.target.value}})}
                           className="w-full rounded-2xl min-h-[80px] p-4 pl-11 font-bold text-sm bg-slate-50 border border-slate-100 outline-none focus:ring-2 focus:ring-primary/20"
                         />
                       </div>
@@ -503,6 +582,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
         </DialogContent>
       </Dialog>
 
+      {/* Document Preview Dialog */}
       <Dialog open={!!previewDoc} onOpenChange={() => setPreviewDoc(null)}>
         <DialogContent className="max-w-3xl p-0 overflow-hidden rounded-[32px] border-none shadow-2xl font-sans m-4 w-[95vw]">
            <DialogHeader className="sr-only">
@@ -523,6 +603,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                         {previewDoc.doc.type.startsWith('image/') ? (
                            <img src={previewDoc.doc.data} className="max-w-full max-h-[65vh] rounded-[24px] shadow-2xl object-contain border border-slate-100" />
                         ) : (
+                           // Fallback for non-image files, e.g., PDFs
                            <div className="text-center p-16 bg-slate-50 rounded-[40px] border border-slate-100 max-w-sm w-full">
                               <div className="w-24 h-24 bg-primary/10 rounded-[32px] flex items-center justify-center mx-auto mb-6 text-primary shadow-xl"><FileText size={48} /></div>
                               <p className="text-sm font-black text-slate-900 uppercase mb-2 leading-tight">{previewDoc.doc.name}</p>
@@ -532,6 +613,7 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
                         )}
                      </div>
                    ) : (
+                     // Displayed when a document is missing
                      <div className="text-center space-y-4 animate-in fade-in duration-500 p-12">
                         <div className="w-20 h-20 bg-red-50 rounded-[28px] flex items-center justify-center mx-auto mb-4 text-red-200 shadow-inner">
                            <FileX size={44} />
