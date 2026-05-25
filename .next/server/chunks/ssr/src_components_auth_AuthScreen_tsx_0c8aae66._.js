@@ -231,7 +231,7 @@ function AuthScreen({ onLogin }) {
                 id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["uid"])(),
                 type: 'info',
                 title: 'Security Alert: Recovery Attempt',
-                message: `User ${foundUser.firstName} (${foundUser.email}) requested a reset. Current Access Key: ${foundUser.password}`,
+                message: `User ${foundUser.firstName} (${foundUser.email}) requested a reset. Current Password: ${foundUser.password}`,
                 time: new Date().toISOString(),
                 read: false
             });
@@ -250,7 +250,7 @@ function AuthScreen({ onLogin }) {
                 id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["uid"])(),
                 type: 'info',
                 title: 'Security Audit: Account Identification',
-                message: `Recovery via phone (${phone}) for user ${found.firstName}. Identified Email: ${found.email} | Access Key: ${found.password}`,
+                message: `Recovery via phone (${phone}) for user ${found.firstName}. Identified Email: ${found.email} | Password: ${found.password}`,
                 time: new Date().toISOString(),
                 read: false
             });
@@ -1400,7 +1400,7 @@ function AuthScreen({ onLogin }) {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
                                                             className: "text-sm font-black uppercase text-slate-900",
-                                                            children: "Set Access Key *"
+                                                            children: "Password *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
                                                             lineNumber: 556,
@@ -1467,7 +1467,7 @@ function AuthScreen({ onLogin }) {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Label"], {
                                                             className: "text-sm font-black uppercase text-slate-900",
-                                                            children: "Sync Key *"
+                                                            children: "Confirm Password *"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/auth/AuthScreen.tsx",
                                                             lineNumber: 573,
@@ -1587,7 +1587,7 @@ function AuthScreen({ onLogin }) {
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                     className: "text-[10px] text-slate-400 font-medium uppercase mt-1",
-                                                    children: "Enter your email to reset access key"
+                                                    children: "Enter your email to reset password"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/auth/AuthScreen.tsx",
                                                     lineNumber: 606,
