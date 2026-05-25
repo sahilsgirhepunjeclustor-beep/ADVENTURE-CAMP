@@ -1117,6 +1117,10 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 120px;
 }
 
+.min-h-\[140px\] {
+  min-height: 140px;
+}
+
 .min-h-\[180px\] {
   min-height: 180px;
 }
@@ -1167,10 +1171,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .min-h-svh {
   min-height: 100svh;
-}
-
-.min-h-\[140px\] {
-  min-height: 140px;
 }
 
 .w-0 {
@@ -3283,12 +3283,12 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: .025em;
 }
 
-.tracking-widest {
-  letter-spacing: .1em;
-}
-
 .tracking-wider {
   letter-spacing: .05em;
+}
+
+.tracking-widest {
+  letter-spacing: .1em;
 }
 
 .text-\[\#0891b2\] {
