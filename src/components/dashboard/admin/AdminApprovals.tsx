@@ -1,11 +1,26 @@
+/**
+ * @file AdminApprovals.tsx
+ * @description This component provides a comprehensive interface for administrators to manage the approval lifecycle of camps.
+ * It includes tabs for pending, approved, rejected, and archived camps, allowing for efficient moderation and lifecycle management.
+ * Admins can view camp details, approve, reject with a reason, update status, and restore rejected camps.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for the Camp type definition
+ * @requires @/lib/store - for data persistence and retrieval functions related to camps and user notifications
+ * @requires @/lib/utils - for utility functions like date formatting, class name construction, and unique ID generation
+ * @requires @/components/ui/* - for various UI components (Button, Badge, Dialog, Tabs, etc.)
+ */
+
 "use client";
 
+// Import necessary libraries, types, and components
 import React, { useState, useEffect, useMemo } from 'react';
-import { 
-  getPendingCamps, 
-  getAllApprovedCamps, 
+import {
+  getPendingCamps,
+  getAllApprovedCamps,
   getRejectedCamps,
-  savePendingCamps, 
+  savePendingCamps,
   saveApprovedCamps,
   saveRejectedCamps,
   addUserNotification
@@ -15,13 +30,13 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
 import { fmt, fmtDate, cn, uid } from '@/lib/utils';
-import { 
-  Check, 
-  X, 
-  Eye, 
-  MapPin, 
-  Calendar, 
-  Building2, 
+import {
+  Check,
+  X,
+  Eye,
+  MapPin,
+  Calendar,
+  Building2,
   Mountain,
   FileText,
   RotateCcw,
@@ -61,23 +76,51 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ITEMS_PER_PAGE = 8;
 
+/**
+ * @interface AdminApprovalsProps
+ * @description Defines the props for the AdminApprovals component.
+ * @property {() => void} [onBack] - Optional callback function to handle back navigation.
+ */
 interface AdminApprovalsProps {
   onBack?: () => void;
 }
 
+/**
+ * @function AdminApprovals
+ * @description The main component for managing camp approvals and their lifecycle.
+ * @param {AdminApprovalsProps} props - The component's props.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
+  // --- STATE MANAGEMENT ---
+
+  // The currently active tab (e.g., pending, approved).
   const [activeTab, setActiveTab] = useState<'pending' | 'approved' | 'rejected' | 'archived'>('pending');
+  // State for camps pending approval.
   const [pending, setPending] = useState<Camp[]>([]);
+  // State for approved camps.
   const [approved, setApproved] = useState<Camp[]>([]);
+  // State for rejected camps.
   const [rejected, setRejected] = useState<Camp[]>([]);
+  // State for archived camps (inactive or completed).
   const [archived, setArchived] = useState<Camp[]>([]);
-  
+  // The camp currently selected for detailed view or action.
   const [selectedCamp, setSelectedCamp] = useState<Camp | null>(null);
+  // State to control the visibility of the camp details dialog.
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  // State to control the visibility of the rejection reason dialog.
   const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
+  // State for the rejection reason text.
   const [rejectionReason, setRejectionReason] = useState('');
+  // State for the current page number for pagination.
   const [currentPage, setCurrentPage] = useState(1);
 
+  // --- DATA LOADING & SYNCHRONIZATION ---
+
+  /**
+   * @function loadData
+   * @description Loads all camp data from the store and categorizes it into the respective state arrays.
+   */
   const loadData = () => {
     const allApproved = getAllApprovedCamps();
     setPending(getPendingCamps());
@@ -86,14 +129,25 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
     setArchived(allApproved.filter(c => c.status === 'inactive' || c.status === 'completed'));
   };
 
+  /**
+   * @effect
+   * @description Loads data on initial component mount.
+   */
   useEffect(() => {
     loadData();
   }, []);
 
+  /**
+   * @effect
+   * @description Resets pagination to the first page whenever the active tab changes.
+   */
   useEffect(() => {
     setCurrentPage(1);
   }, [activeTab]);
 
+  // --- MEMOIZED COMPUTATIONS ---
+
+  // Memoized list of camps to display based on the active tab.
   const currentList = useMemo(() => {
     if (activeTab === 'pending') return pending;
     if (activeTab === 'approved') return approved;
@@ -105,25 +159,40 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedList = currentList.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
+  /**
+   * @function syncStore
+   * @description A utility function to save all camp lists to the store and update the component's state.
+   * @param {Camp[]} newPending - The updated list of pending camps.
+   * @param {Camp[]} newApproved - The updated list of approved camps.
+   * @param {Camp[]} newRejected - The updated list of rejected camps.
+   */
   const syncStore = (newPending: Camp[], newApproved: Camp[], newRejected: Camp[]) => {
     savePendingCamps(newPending);
     saveApprovedCamps(newApproved);
     saveRejectedCamps(newRejected);
-    
+
     setPending(newPending);
     setApproved(newApproved.filter(c => c.status === 'approved'));
     setRejected(newRejected);
     setArchived(newApproved.filter(c => c.status === 'inactive' || c.status === 'completed'));
   };
 
+  // --- ACTION HANDLERS ---
+
+  /**
+   * @function handleApprove
+   * @description Approves a camp, moving it from the pending list to the approved list.
+   * @param {Camp} camp - The camp to approve.
+   */
   const handleApprove = (camp: Camp) => {
     const allApproved = getAllApprovedCamps();
     const newPending = pending.filter(c => c.id !== camp.id);
     const newRejected = rejected.filter(c => c.id !== camp.id);
     const updatedApproved = [{ ...camp, status: 'approved' as const, rejectionReason: undefined }, ...allApproved.filter(c => c.id !== camp.id)];
-    
+
     syncStore(newPending, updatedApproved, newRejected);
 
+    // Notify the camp organizer about the approval.
     addUserNotification(camp.addedBy, {
       id: uid(),
       type: 'approval',
@@ -137,6 +206,11 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
     setIsDetailsOpen(false);
   };
 
+  /**
+   * @function handleReject
+   * @description Rejects a camp, moving it to the rejected list.
+   * @param {Camp} camp - The camp to reject.
+   */
   const handleReject = (camp: Camp) => {
     if (!rejectionReason.trim()) {
       toast({ variant: 'destructive', title: 'Action Required', description: 'Please provide a reason for rejection.' });
@@ -150,6 +224,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
 
     syncStore(newPending, newApproved, newRejected);
 
+    // Notify the camp organizer about the rejection.
     addUserNotification(camp.addedBy, {
       id: uid(),
       type: 'info',
@@ -165,31 +240,50 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
     setRejectionReason('');
   };
 
+  /**
+   * @function handleStatusUpdate
+   * @description Updates the status of an already approved camp (e.g., to inactive).
+   * @param {Camp} camp - The camp to update.
+   * @param {Camp['status']} status - The new status.
+   */
   const handleStatusUpdate = (camp: Camp, status: Camp['status']) => {
     const allApproved = getAllApprovedCamps();
     const updated = allApproved.map(c => c.id === camp.id ? { ...c, status } : c);
     syncStore(pending, updated, rejected);
-    
+
     const message = status === 'inactive' ? 'Moved to Lifecycle/Inactive tab' : 'Expedition is now Live';
     toast({ title: 'Status Updated', description: message });
   };
 
+  /**
+   * @function handleRestore
+   * @description Restores a rejected camp back to the pending queue for re-evaluation.
+   * @param {Camp} camp - The camp to restore.
+   */
   const handleRestore = (camp: Camp) => {
     const newRejected = rejected.filter(c => c.id !== camp.id);
     const newPending = [{ ...camp, status: 'pending_approval' as const }, ...pending];
     const allApproved = getAllApprovedCamps().filter(c => c.id !== camp.id);
-    
+
     syncStore(newPending, allApproved, newRejected);
     toast({ title: 'Camp Restored', description: 'Moved back to pending queue for re-evaluation.' });
   };
 
+  /**
+   * @function openReview
+   * @description Opens the detailed audit view for a selected camp.
+   * @param {Camp} camp - The camp to review.
+   */
   const openReview = (camp: Camp) => {
     setSelectedCamp(camp);
     setIsDetailsOpen(true);
   };
 
+  // --- RENDER METHOD ---
+
   return (
     <div className="space-y-6 font-sans max-w-[1600px] mx-auto px-2 md:px-4 h-full">
+      {/* Header and Tabs */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-8 shrink-0">
         <div className="flex items-center gap-3 md:gap-4 w-full">
           {onBack && (
@@ -218,6 +312,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
         </div>
       </div>
 
+      {/* Camp List */}
       <div className="space-y-4 pb-20">
         {paginatedList.length === 0 ? (
           <div className="text-center py-32 bg-white rounded-[40px] border border-dashed border-slate-200 shadow-sm opacity-50 flex flex-col items-center">
@@ -230,7 +325,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
               <div className="w-full md:w-32 h-40 md:h-24 rounded-2xl overflow-hidden shrink-0 border border-slate-100 shadow-inner">
                 <img src={camp.campImages?.[0] || 'https://picsum.photos/seed/default/400/300'} className="w-full h-full object-cover transition-transform group-hover:scale-110 duration-700" />
               </div>
-              
+
               <div className="flex-1 min-w-0 text-center md:text-left w-full">
                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-2">
                    <h4 className="text-sm md:text-base font-black text-slate-900 uppercase tracking-tight line-clamp-2 leading-tight max-w-full">{camp.name}</h4>
@@ -250,9 +345,10 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
                 </div>
               </div>
 
+              {/* Action Buttons based on Active Tab */}
               <div className="flex gap-2 w-full md:w-auto mt-2 md:mt-0">
                 <Button onClick={() => openReview(camp)} variant="outline" size="icon" className="h-10 w-10 md:h-11 md:w-11 rounded-xl bg-slate-50 border-slate-100 hover:bg-white transition-all shadow-sm shrink-0"><Eye size={18} /></Button>
-                
+
                 {activeTab === 'pending' && (
                   <>
                     <Button onClick={() => handleApprove(camp)} className="flex-1 md:flex-none h-10 md:h-11 px-5 rounded-xl bg-primary hover:bg-accent font-black text-[9px] uppercase tracking-widest text-white shadow-lg">Approve</Button>
@@ -287,6 +383,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
           ))
         )}
 
+        {/* Pagination Controls */}
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 md:gap-6 py-10 border-t border-slate-50 mt-10">
             <Button variant="outline" size="icon" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="h-9 w-9 md:h-10 md:w-10 rounded-xl"><ChevronLeft size={18} /></Button>
@@ -316,7 +413,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
         </DialogContent>
       </Dialog>
 
-      {/* Expanded Deep Audit Dialog */}
+      {/* Expanded Deep Audit Dialog for Camp Details */}
       <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
         <DialogContent className="max-w-5xl h-[90vh] p-0 overflow-hidden rounded-[32px] border-none shadow-2xl font-sans m-4 w-[95vw] flex flex-col">
           <DialogHeader className="sr-only">
@@ -325,7 +422,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
           </DialogHeader>
           {selectedCamp && (
             <div className="flex flex-col h-full bg-white overflow-hidden">
-              {/* Cinematic Header */}
+              {/* Header with Camp Image and Title */}
               <div className="relative h-48 md:h-64 shrink-0">
                 <img src={selectedCamp.campImages?.[0] || 'https://picsum.photos/seed/header/1200/600'} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
@@ -340,15 +437,15 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
                 </div>
               </div>
 
-              {/* Technical manifest Body */}
+              {/* Tabbed content for camp details */}
               <div className="flex-1 overflow-hidden flex flex-col">
                 <Tabs defaultValue="overview" className="flex-1 flex flex-col overflow-hidden">
                    <div className="px-4 md:px-10 border-b border-slate-100 bg-slate-50 shrink-0">
                       <TabsList className="h-12 md:h-14 bg-transparent gap-4 md:gap-8 p-0 rounded-none w-full justify-start overflow-x-auto no-scrollbar">
                         {['Overview', 'Itinerary', 'Logistics', 'Safety'].map(t => (
-                          <TabsTrigger 
-                            key={t} 
-                            value={t.toLowerCase()} 
+                          <TabsTrigger
+                            key={t}
+                            value={t.toLowerCase()}
                             className="h-full rounded-none border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:shadow-none font-black text-[8px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.2em] text-slate-400 data-[state=active]:text-slate-900 transition-all px-0 whitespace-nowrap"
                           >
                             {t}
@@ -358,6 +455,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
                    </div>
 
                    <div className="flex-1 overflow-hidden">
+                      {/* Overview Tab */}
                       <TabsContent value="overview" className="h-full mt-0 focus-visible:ring-0">
                          <ScrollArea className="h-full">
                             <div className="p-4 md:p-10 pb-20 space-y-8 md:space-y-10 animate-in fade-in slide-in-from-bottom-2">
@@ -416,6 +514,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
                          </ScrollArea>
                       </TabsContent>
 
+                      {/* Itinerary Tab */}
                       <TabsContent value="itinerary" className="h-full mt-0 focus-visible:ring-0">
                          <ScrollArea className="h-full">
                             <div className="p-4 md:p-10 pb-20 space-y-8 md:space-y-10 max-w-3xl">
@@ -445,6 +544,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
                          </ScrollArea>
                       </TabsContent>
 
+                      {/* Logistics Tab */}
                       <TabsContent value="logistics" className="h-full mt-0 focus-visible:ring-0">
                          <ScrollArea className="h-full">
                             <div className="p-4 md:p-10 pb-20 space-y-10 md:space-y-12 animate-in fade-in slide-in-from-bottom-2">
@@ -489,6 +589,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
                          </ScrollArea>
                       </TabsContent>
 
+                      {/* Safety Tab */}
                       <TabsContent value="safety" className="h-full mt-0 focus-visible:ring-0">
                          <ScrollArea className="h-full">
                             <div className="p-4 md:p-10 pb-20 animate-in fade-in slide-in-from-bottom-2">
@@ -519,9 +620,9 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
                 </Tabs>
               </div>
 
-              {/* Action Hub - Fixed at Bottom */}
+              {/* Dialog Footer Actions */}
               <div className="p-4 md:p-8 bg-white border-t border-slate-100 flex gap-3 md:gap-4 shrink-0 shadow-[0_-10px_30px_rgba(0,0,0,0.03)] z-20">
-                <button 
+                <button
                   onClick={() => setIsDetailsOpen(false)}
                   className="w-full h-12 md:h-14 rounded-xl md:rounded-2xl bg-slate-900 text-white font-black text-[10px] md:text-xs uppercase tracking-widest border-none"
                 >
