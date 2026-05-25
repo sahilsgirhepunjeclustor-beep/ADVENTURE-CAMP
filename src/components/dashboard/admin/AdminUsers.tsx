@@ -1,18 +1,33 @@
+/**
+ * @file AdminUsers.tsx
+ * @description This component provides a comprehensive interface for administrators to manage all users on the platform.
+ * It includes features for viewing a list of all users, searching, filtering by role, and performing various
+ * administrative actions such as editing user profiles, updating passwords, changing roles, and managing account status
+ * (active, suspended, blocked) and verification.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for User and Role type definitions
+ * @requires @/lib/store - for data persistence and retrieval functions (getUsers, saveUsers)
+ * @requires @/lib/utils - for utility functions like cn (for class names) and fmtDate
+ * @requires @/components/ui/* - for various UI components (Button, Badge, Dialog, Input, etc.)
+ */
 
 "use client";
 
+// Import necessary libraries, types, and components
 import React, { useState, useEffect, useMemo } from 'react';
 import { getUsers, saveUsers } from '@/lib/store';
 import { User, Role } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
-import { 
-  Trash2, 
-  UserCog, 
-  Mail, 
-  Shield, 
-  User as UserIcon, 
+import {
+  Trash2,
+  UserCog,
+  Mail,
+  Shield,
+  User as UserIcon,
   Building2,
   RotateCcw,
   Search,
@@ -51,29 +66,58 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { fmtDate, cn } from '@/lib/utils';
 
+/**
+ * @interface AdminUsersProps
+ * @description Defines the props for the AdminUsers component.
+ * @property {() => void} [onBack] - Optional callback function to handle back navigation.
+ */
 interface AdminUsersProps {
   onBack?: () => void;
 }
 
+/**
+ * @function AdminUsers
+ * @description The main component for managing user accounts in the admin dashboard.
+ * @param {AdminUsersProps} props - The component's props.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function AdminUsers({ onBack }: AdminUsersProps) {
+  // --- STATE MANAGEMENT ---
+
+  // State to hold all user data.
   const [allUsers, setAllUsers] = useState<Record<string, User>>({});
+  // State for the search query to filter users.
   const [searchQuery, setSearchQuery] = useState('');
+  // State to hold the user object being edited.
   const [editingUser, setEditingUser] = useState<User | null>(null);
+  // State to toggle password visibility in the edit dialog.
   const [showPassword, setShowPassword] = useState(false);
+  // State to temporarily hold the password while editing.
   const [tempPassword, setTempPassword] = useState('');
 
+  // --- DATA FETCHING & INITIALIZATION ---
+
+  /**
+   * @effect
+   * @description Fetches all users from the store on component mount.
+   */
   useEffect(() => {
     setAllUsers(getUsers());
   }, []);
 
+  // --- MEMOIZED COMPUTATIONS ---
+
+  // Memoized list of all users, derived from the `allUsers` state.
   const usersList = useMemo(() => Object.values(allUsers), [allUsers]);
 
-  const filteredUsers = usersList.filter(u => 
-    u.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    u.lastName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+  // Memoized list of users filtered by the search query.
+  const filteredUsers = usersList.filter(u =>
+    u.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    u.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     u.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Memoized statistics about user roles.
   const stats = useMemo(() => {
     const list = Object.values(allUsers);
     return {
@@ -84,6 +128,13 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
     };
   }, [allUsers]);
 
+  // --- EVENT HANDLERS ---
+
+  /**
+   * @function handleDelete
+   * @description Permanently deletes a user account.
+   * @param {string} email - The email of the user to delete.
+   */
   const handleDelete = (email: string) => {
     if (confirm('Are you sure you want to permanently delete this user account? This action cannot be undone.')) {
       const updated = { ...allUsers };
@@ -94,18 +145,28 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
     }
   };
 
+  /**
+   * @function handleEditClick
+   * @description Opens the edit dialog for a specific user.
+   * @param {User} u - The user object to edit.
+   */
   const handleEditClick = (u: User) => {
     setEditingUser(u);
     setTempPassword(u.password || '');
   };
 
+  /**
+   * @function handleUpdateUser
+   * @description Saves the changes made to a user's profile.
+   * @param {React.FormEvent} e - The form submission event.
+   */
   const handleUpdateUser = (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingUser) return;
 
     const updated = { ...allUsers };
     const userToSave = { ...editingUser, password: tempPassword };
-    
+
     updated[editingUser.email.toLowerCase()] = userToSave;
     saveUsers(updated);
     setAllUsers(updated);
@@ -113,6 +174,12 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
     toast({ title: 'Profile Updated', description: 'User identity and security credentials updated.' });
   };
 
+  /**
+   * @function updateStatus
+   * @description Updates the account status of a user.
+   * @param {string} email - The user's email.
+   * @param {'active' | 'suspended' | 'blocked'} status - The new account status.
+   */
   const updateStatus = (email: string, status: 'active' | 'suspended' | 'blocked') => {
     const updated = { ...allUsers };
     updated[email.toLowerCase()] = { ...updated[email.toLowerCase()], status };
@@ -121,6 +188,11 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
     toast({ title: `Account ${status.toUpperCase()}` });
   };
 
+  /**
+   * @function toggleApproval
+   * @description Toggles the verification status of a user.
+   * @param {User} user - The user to update.
+   */
   const toggleApproval = (user: User) => {
     const updated = { ...allUsers };
     const isNowApproved = !user.isApproved;
@@ -130,6 +202,12 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
     toast({ title: isNowApproved ? 'Access Verified' : 'Access Revoked' });
   };
 
+  /**
+   * @function updateRole
+   * @description Updates the role (permission level) of a user.
+   * @param {User} user - The user to update.
+   * @param {Role} newRole - The new role to assign.
+   */
   const updateRole = (user: User, newRole: Role) => {
     const updated = { ...allUsers };
     updated[user.email.toLowerCase()] = { ...user, role: newRole };
@@ -138,15 +216,18 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
     toast({ title: `Role Escalated to ${newRole.toUpperCase()}` });
   };
 
+  // --- RENDER METHOD ---
+
   return (
     <div className="space-y-6 font-sans animate-in fade-in duration-500 max-w-7xl mx-auto">
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-2">
         <div className="flex items-center gap-4">
           {onBack && (
-            <Button 
-              variant="outline" 
-              size="icon" 
-              onClick={onBack} 
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={onBack}
               className="rounded-full h-10 w-10 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0"
             >
               <ArrowLeft size={18} className="text-slate-600" />
@@ -157,6 +238,7 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1.5 opacity-70">Administrative User Directory</p>
           </div>
         </div>
+        {/* User Role Statistics */}
         <div className="flex items-center gap-2">
            <div className="bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-2">
               <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">Admins</div>
@@ -173,13 +255,14 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
         </div>
       </div>
 
+      {/* Search Bar */}
       <div className="flex flex-wrap gap-4 items-center bg-white p-3 rounded-[20px] border border-slate-100 shadow-sm">
         <div className="relative flex-1 min-w-[280px]">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-          <Input 
+          <Input
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Search by name, email or registry ID..." 
+            placeholder="Search by name, email or registry ID..."
             className="pl-9 h-9 rounded-xl border-slate-100 bg-slate-50/50 font-bold text-[10px] uppercase tracking-tight"
           />
         </div>
@@ -188,6 +271,7 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
         </div>
       </div>
 
+      {/* Users Table */}
       <div className="bg-white rounded-[24px] border border-slate-100 shadow-xl overflow-hidden">
         <table className="w-full text-left">
           <thead className="bg-slate-50/50">
@@ -205,6 +289,7 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
             ) : (
               filteredUsers.map(u => (
                 <tr key={u.email} className="group hover:bg-slate-50/30 transition-colors">
+                  {/* User Identity Column */}
                   <td className="px-6 py-3">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black uppercase text-[10px] border border-white shadow-sm overflow-hidden">
@@ -216,16 +301,18 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
                       </div>
                     </div>
                   </td>
+                  {/* Role (Security Level) Column */}
                   <td className="px-6 py-3">
                     <Badge variant="outline" className={cn(
                       "text-[8px] font-black uppercase px-2 py-0.5 rounded-lg border-none",
-                      u.role === 'admin' ? 'text-orange-700 bg-orange-100' : 
-                      u.role === 'organizer' ? 'text-blue-700 bg-blue-100' : 
+                      u.role === 'admin' ? 'text-orange-700 bg-orange-100' :
+                      u.role === 'organizer' ? 'text-blue-700 bg-blue-100' :
                       'text-green-700 bg-green-100'
                     )}>
                       {u.role}
                     </Badge>
                   </td>
+                  {/* Verification Status Column */}
                   <td className="px-6 py-3">
                     <div className="flex items-center gap-2">
                       <div className={cn("w-1.5 h-1.5 rounded-full", u.isApproved ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : "bg-amber-500")} />
@@ -234,16 +321,18 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
                       </span>
                     </div>
                   </td>
+                  {/* Account Status Column */}
                   <td className="px-6 py-3">
                     <Badge variant="outline" className={cn(
                       "text-[8px] font-black uppercase px-2 py-0.5 rounded-lg border-none",
-                      u.status === 'suspended' ? 'text-amber-700 bg-amber-100' : 
-                      u.status === 'blocked' ? 'text-red-700 bg-red-100' : 
+                      u.status === 'suspended' ? 'text-amber-700 bg-amber-100' :
+                      u.status === 'blocked' ? 'text-red-700 bg-red-100' :
                       'text-primary bg-primary/10'
                     )}>
                       {u.status || 'active'}
                     </Badge>
                   </td>
+                  {/* Actions Column */}
                   <td className="px-6 py-3 text-right">
                     <div className="flex justify-end gap-1.5">
                       <Button variant="outline" size="icon" onClick={() => handleEditClick(u)} className="h-7 w-7 rounded-lg bg-slate-50 hover:bg-primary hover:text-white border-slate-100 shadow-sm transition-all"><Pencil size={12} /></Button>
@@ -252,11 +341,11 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
                         <DropdownMenuContent align="end" className="rounded-2xl min-w-[200px] shadow-2xl border-none p-2 font-sans">
                           <DropdownMenuLabel className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400 px-3 py-2">Account Registry</DropdownMenuLabel>
                           <DropdownMenuItem onClick={() => toggleApproval(u)} className="text-[9px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer">
-                             {u.isApproved ? <Ban size={14} className="text-amber-500" /> : <UserCheck size={14} className="text-primary" />} 
+                             {u.isApproved ? <Ban size={14} className="text-amber-500" /> : <UserCheck size={14} className="text-primary" />}
                              {u.isApproved ? 'Revoke Verification' : 'Verify Identity'}
                           </DropdownMenuItem>
                           <DropdownMenuSeparator className="bg-slate-50" />
-                          
+
                           <DropdownMenuLabel className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400 px-3 py-2">Access Control</DropdownMenuLabel>
                           <DropdownMenuItem onClick={() => updateStatus(u.email, 'active')} className="text-[9px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer">
                              <PlayCircle size={14} className="text-green-500" /> Activate Account
@@ -267,13 +356,13 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
                           <DropdownMenuItem onClick={() => updateStatus(u.email, 'blocked')} className="text-[9px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer">
                              <Ban size={14} className="text-red-500" /> Block Account
                           </DropdownMenuItem>
-                          
+
                           <DropdownMenuSeparator className="bg-slate-50" />
                           <DropdownMenuLabel className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400 px-3 py-2">Authorization Scale</DropdownMenuLabel>
                           <DropdownMenuItem onClick={() => updateRole(u, 'user')} className="text-[9px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer"><UserIcon size={14} className="text-green-500" /> Explorer Level</DropdownMenuItem>
                           <DropdownMenuItem onClick={() => updateRole(u, 'organizer')} className="text-[9px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer"><Building2 size={14} className="text-blue-500" /> Partner Access</DropdownMenuItem>
                           <DropdownMenuItem onClick={() => updateRole(u, 'admin')} className="text-[9px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer"><Shield size={14} className="text-orange-500" /> Platform Staff</DropdownMenuItem>
-                          
+
                           <DropdownMenuSeparator className="bg-slate-50" />
                           <DropdownMenuItem onClick={() => handleDelete(u.email)} className="text-[9px] font-bold gap-3 rounded-xl py-2 px-3 text-destructive hover:bg-red-50 cursor-pointer">
                              <Trash2 size={14} /> Terminate Record
@@ -289,6 +378,7 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
         </table>
       </div>
 
+      {/* Pagination Controls */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-2 px-2 pb-10">
         <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest">
           Active Directory: 1 to {filteredUsers.length} of {usersList.length} entities
@@ -302,6 +392,7 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
         </div>
       </div>
 
+      {/* Edit User Dialog */}
       <Dialog open={!!editingUser} onOpenChange={() => setEditingUser(null)}>
         <DialogContent className="max-w-md rounded-[28px] border-none shadow-2xl p-0 overflow-hidden font-sans m-4 h-[85vh] flex flex-col">
           <DialogHeader className="sr-only"><DialogTitle>Identity Audit</DialogTitle></DialogHeader>
@@ -336,8 +427,8 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
                   <div className="space-y-1.5">
                       <div className="flex justify-between items-center mb-0.5">
                         <Label className="text-[8px] font-black uppercase tracking-widest text-slate-400">Security Credentials</Label>
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           onClick={() => setShowPassword(!showPassword)}
                           className="text-[8px] font-black text-primary uppercase hover:underline"
                         >
@@ -348,8 +439,8 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
                         <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300">
                             <Key size={14} />
                         </div>
-                        <Input 
-                          type={showPassword ? "text" : "password"} 
+                        <Input
+                          type={showPassword ? "text" : "password"}
                           value={tempPassword}
                           onChange={e => setTempPassword(e.target.value)}
                           className="rounded-xl h-10 font-black text-xs pl-9 pr-10 border-slate-100 bg-slate-50/50"

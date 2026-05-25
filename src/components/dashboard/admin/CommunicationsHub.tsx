@@ -1,16 +1,30 @@
+/**
+ * @file CommunicationsHub.tsx
+ * @description This component provides a centralized hub for administrators to manage omnichannel communications.
+ * It allows for the creation and sending of campaigns via different channels like email, push notifications, SMS, and platform announcements.
+ * It also includes a history log of past campaigns.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/utils - for utility functions like cn and uid
+ * @requires @/lib/store - for adding admin notifications
+ * @requires @/components/ui/* - for various UI components (Button, Tabs, Input, Textarea, Select, etc.)
+ */
+
 "use client";
 
+// Import necessary libraries, types, and components
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
-import { 
-  MessageCircle, 
-  Mail, 
-  Smartphone, 
-  Bell, 
-  Send, 
-  Users, 
-  Target, 
+import {
+  MessageCircle,
+  Mail,
+  Smartphone,
+  Bell,
+  Send,
+  Users,
+  Target,
   ArrowLeft,
   Calendar,
   Eye,
@@ -28,13 +42,28 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { addAdminNotification } from '@/lib/store';
 
+/**
+ * @interface CommunicationsHubProps
+ * @description Defines the props for the CommunicationsHub component.
+ * @property {() => void} [onBack] - Optional callback function to handle back navigation.
+ */
 interface CommunicationsHubProps {
   onBack?: () => void;
 }
 
+/**
+ * @function CommunicationsHub
+ * @description The main component for managing and orchestrating communication campaigns.
+ * @param {CommunicationsHubProps} props - The component's props.
+ * @returns {JSX.Element} The rendered component.
+ */
 export default function CommunicationsHub({ onBack }: CommunicationsHubProps) {
+  // --- STATE MANAGEMENT ---
+
+  // State to manage the currently selected communication channel.
   const [activeChannel, setActiveChannel] = useState<'email' | 'push' | 'sms' | 'announcement'>('email');
-  
+
+  // State for the campaign creation form.
   const [campaign, setCampaign] = useState({
     title: '',
     message: '',
@@ -42,16 +71,25 @@ export default function CommunicationsHub({ onBack }: CommunicationsHubProps) {
     schedule: 'immediate'
   });
 
+  // Static state for campaign history (in a real app, this would be fetched from a backend).
   const [history] = useState([
     { id: '1', title: 'Winter Sale 2025', channel: 'Email', status: 'Delivered', reach: '4.2k', date: '2025-01-10' },
     { id: '2', title: 'New Kasol Camp', channel: 'Push', status: 'Active', reach: '1.8k', date: '2025-01-15' },
     { id: '3', title: 'Organizer Policy Update', channel: 'Platform', status: 'Draft', reach: '0', date: '2025-01-20' }
   ]);
 
+  // --- EVENT HANDLERS ---
+
+  /**
+   * @function handleSend
+   * @description Handles the submission of the campaign form, sending the communication.
+   * @param {React.FormEvent} e - The form submission event.
+   */
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!campaign.title || !campaign.message) return;
 
+    // If the channel is 'announcement', add it to the admin notifications in the store.
     if (activeChannel === 'announcement') {
       addAdminNotification({
         id: uid(),
@@ -64,11 +102,15 @@ export default function CommunicationsHub({ onBack }: CommunicationsHubProps) {
     }
 
     toast({ title: 'Campaign Broadcasted', description: `Message queued for ${campaign.target} explorers via ${activeChannel.toUpperCase()}.` });
+    // Reset the form after submission.
     setCampaign({ title: '', message: '', target: 'all', schedule: 'immediate' });
   };
 
+  // --- RENDER METHOD ---
+
   return (
     <div className="space-y-8 pb-20 font-sans max-w-7xl mx-auto px-4 md:px-0 animate-in fade-in duration-500">
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="flex items-center gap-4">
           {onBack && (
@@ -84,6 +126,7 @@ export default function CommunicationsHub({ onBack }: CommunicationsHubProps) {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+        {/* Left Panel: Campaign Composer */}
         <div className="xl:col-span-7">
            <div className="bg-white p-8 rounded-[40px] border border-slate-100 shadow-sm space-y-8">
               <Tabs defaultValue="email" onValueChange={(v: any) => setActiveChannel(v)}>
@@ -98,7 +141,7 @@ export default function CommunicationsHub({ onBack }: CommunicationsHubProps) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                        <div className="space-y-1.5">
                           <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Campaign Title</Label>
-                          <Input 
+                          <Input
                              value={campaign.title}
                              onChange={e => setCampaign({...campaign, title: e.target.value})}
                              placeholder="Internal identification"
@@ -122,7 +165,7 @@ export default function CommunicationsHub({ onBack }: CommunicationsHubProps) {
 
                     <div className="space-y-1.5">
                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Campaign Content</Label>
-                       <Textarea 
+                       <Textarea
                           value={campaign.message}
                           onChange={e => setCampaign({...campaign, message: e.target.value})}
                           placeholder="Your broadcast message..."
@@ -144,6 +187,7 @@ export default function CommunicationsHub({ onBack }: CommunicationsHubProps) {
            </div>
         </div>
 
+        {/* Right Panel: Transmission Log */}
         <div className="xl:col-span-5 space-y-6">
            <div className="bg-slate-900 rounded-[40px] p-8 text-white shadow-2xl">
               <h3 className="text-[11px] font-black uppercase tracking-widest text-primary mb-8">TRANSMISSION LOG</h3>
