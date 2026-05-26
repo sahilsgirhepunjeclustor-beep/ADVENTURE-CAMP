@@ -2,11 +2,25 @@ module.exports = [
 "[project]/src/components/dashboard/admin/AdminUsers.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-__turbopack_context__.s([
+/**
+ * @file AdminUsers.tsx
+ * @description This component provides a comprehensive interface for administrators to manage all users on the platform.
+ * It includes features for viewing a list of all users, searching, filtering by role, and performing various
+ * administrative actions such as editing user profiles, updating passwords, changing roles, and managing account status
+ * (active, suspended, blocked) and verification.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for User and Role type definitions
+ * @requires @/lib/store - for data persistence and retrieval functions (getUsers, saveUsers)
+ * @requires @/lib/utils - for utility functions like cn (for class names) and fmtDate
+ * @requires @/components/ui/* - for various UI components (Button, Badge, Dialog, Input, etc.)
+ */ __turbopack_context__.s([
     "default",
     ()=>AdminUsers
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+// Import necessary libraries, types, and components
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/store.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-ssr] (ecmascript)");
@@ -48,18 +62,32 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$
 ;
 ;
 function AdminUsers({ onBack }) {
+    // --- STATE MANAGEMENT ---
+    // State to hold all user data.
     const [allUsers, setAllUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({});
+    // State for the search query to filter users.
     const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
+    // State to hold the user object being edited.
     const [editingUser, setEditingUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    // State to toggle password visibility in the edit dialog.
     const [showPassword, setShowPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    // State to temporarily hold the password while editing.
     const [tempPassword, setTempPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+    // --- DATA FETCHING & INITIALIZATION ---
+    /**
+   * @effect
+   * @description Fetches all users from the store on component mount.
+   */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         setAllUsers((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getUsers"])());
     }, []);
+    // --- MEMOIZED COMPUTATIONS ---
+    // Memoized list of all users, derived from the `allUsers` state.
     const usersList = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>Object.values(allUsers), [
         allUsers
     ]);
+    // Memoized list of users filtered by the search query.
     const filteredUsers = usersList.filter((u)=>u.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || u.lastName.toLowerCase().includes(searchQuery.toLowerCase()) || u.email.toLowerCase().includes(searchQuery.toLowerCase()));
+    // Memoized statistics about user roles.
     const stats = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
         const list = Object.values(allUsers);
         return {
@@ -71,7 +99,12 @@ function AdminUsers({ onBack }) {
     }, [
         allUsers
     ]);
-    const handleDelete = (email)=>{
+    // --- EVENT HANDLERS ---
+    /**
+   * @function handleDelete
+   * @description Permanently deletes a user account.
+   * @param {string} email - The email of the user to delete.
+   */ const handleDelete = (email)=>{
         if (confirm('Are you sure you want to permanently delete this user account? This action cannot be undone.')) {
             const updated = {
                 ...allUsers
@@ -85,11 +118,19 @@ function AdminUsers({ onBack }) {
             });
         }
     };
-    const handleEditClick = (u)=>{
+    /**
+   * @function handleEditClick
+   * @description Opens the edit dialog for a specific user.
+   * @param {User} u - The user object to edit.
+   */ const handleEditClick = (u)=>{
         setEditingUser(u);
         setTempPassword(u.password || '');
     };
-    const handleUpdateUser = (e)=>{
+    /**
+   * @function handleUpdateUser
+   * @description Saves the changes made to a user's profile.
+   * @param {React.FormEvent} e - The form submission event.
+   */ const handleUpdateUser = (e)=>{
         e.preventDefault();
         if (!editingUser) return;
         const updated = {
@@ -108,7 +149,12 @@ function AdminUsers({ onBack }) {
             description: 'User identity and security credentials updated.'
         });
     };
-    const updateStatus = (email, status)=>{
+    /**
+   * @function updateStatus
+   * @description Updates the account status of a user.
+   * @param {string} email - The user's email.
+   * @param {'active' | 'suspended' | 'blocked'} status - The new account status.
+   */ const updateStatus = (email, status)=>{
         const updated = {
             ...allUsers
         };
@@ -122,7 +168,11 @@ function AdminUsers({ onBack }) {
             title: `Account ${status.toUpperCase()}`
         });
     };
-    const toggleApproval = (user)=>{
+    /**
+   * @function toggleApproval
+   * @description Toggles the verification status of a user.
+   * @param {User} user - The user to update.
+   */ const toggleApproval = (user)=>{
         const updated = {
             ...allUsers
         };
@@ -138,7 +188,12 @@ function AdminUsers({ onBack }) {
             title: isNowApproved ? 'Access Verified' : 'Access Revoked'
         });
     };
-    const updateRole = (user, newRole)=>{
+    /**
+   * @function updateRole
+   * @description Updates the role (permission level) of a user.
+   * @param {User} user - The user to update.
+   * @param {Role} newRole - The new role to assign.
+   */ const updateRole = (user, newRole)=>{
         const updated = {
             ...allUsers
         };
@@ -152,6 +207,7 @@ function AdminUsers({ onBack }) {
             title: `Role Escalated to ${newRole.toUpperCase()}`
         });
     };
+    // --- RENDER METHOD ---
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 font-sans animate-in fade-in duration-500 max-w-7xl mx-auto",
         children: [
@@ -171,12 +227,12 @@ function AdminUsers({ onBack }) {
                                     className: "text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 152,
+                                    lineNumber: 233,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 146,
+                                lineNumber: 227,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -186,7 +242,7 @@ function AdminUsers({ onBack }) {
                                         children: "Identity Management"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 156,
+                                        lineNumber: 237,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -194,19 +250,19 @@ function AdminUsers({ onBack }) {
                                         children: "Administrative User Directory"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 157,
+                                        lineNumber: 238,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 155,
+                                lineNumber: 236,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 144,
+                        lineNumber: 225,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -220,7 +276,7 @@ function AdminUsers({ onBack }) {
                                         children: "Admins"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 162,
+                                        lineNumber: 244,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -228,13 +284,13 @@ function AdminUsers({ onBack }) {
                                         children: stats.admins
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 163,
+                                        lineNumber: 245,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 161,
+                                lineNumber: 243,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -245,7 +301,7 @@ function AdminUsers({ onBack }) {
                                         children: "Partners"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 166,
+                                        lineNumber: 248,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -253,13 +309,13 @@ function AdminUsers({ onBack }) {
                                         children: stats.organizers
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 167,
+                                        lineNumber: 249,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 165,
+                                lineNumber: 247,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -270,7 +326,7 @@ function AdminUsers({ onBack }) {
                                         children: "Explorers"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 170,
+                                        lineNumber: 252,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -278,25 +334,25 @@ function AdminUsers({ onBack }) {
                                         children: stats.users
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 171,
+                                        lineNumber: 253,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 169,
+                                lineNumber: 251,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 160,
+                        lineNumber: 242,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 143,
+                lineNumber: 224,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -310,7 +366,7 @@ function AdminUsers({ onBack }) {
                                 className: "absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 178,
+                                lineNumber: 261,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -320,13 +376,13 @@ function AdminUsers({ onBack }) {
                                 className: "pl-9 h-9 rounded-xl border-slate-100 bg-slate-50/50 font-bold text-[10px] uppercase tracking-tight"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 179,
+                                lineNumber: 262,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 177,
+                        lineNumber: 260,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -339,18 +395,18 @@ function AdminUsers({ onBack }) {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 187,
+                            lineNumber: 270,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 186,
+                        lineNumber: 269,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 176,
+                lineNumber: 259,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -368,7 +424,7 @@ function AdminUsers({ onBack }) {
                                         children: "Identity"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 195,
+                                        lineNumber: 279,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -376,7 +432,7 @@ function AdminUsers({ onBack }) {
                                         children: "Security Level"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 196,
+                                        lineNumber: 280,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -384,7 +440,7 @@ function AdminUsers({ onBack }) {
                                         children: "Registry Status"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 197,
+                                        lineNumber: 281,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -392,7 +448,7 @@ function AdminUsers({ onBack }) {
                                         children: "Access Profile"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 198,
+                                        lineNumber: 282,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -400,18 +456,18 @@ function AdminUsers({ onBack }) {
                                         children: "Operations"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 199,
+                                        lineNumber: 283,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 194,
+                                lineNumber: 278,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 193,
+                            lineNumber: 277,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -423,12 +479,12 @@ function AdminUsers({ onBack }) {
                                     children: "No active directory entries"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 204,
+                                    lineNumber: 288,
                                     columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 204,
+                                lineNumber: 288,
                                 columnNumber: 15
                             }, this) : filteredUsers.map((u)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                     className: "group hover:bg-slate-50/30 transition-colors",
@@ -445,12 +501,12 @@ function AdminUsers({ onBack }) {
                                                             className: "w-full h-full object-cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 211,
+                                                            lineNumber: 296,
                                                             columnNumber: 37
                                                         }, this) : u.firstName[0]
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 210,
+                                                        lineNumber: 295,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -465,7 +521,7 @@ function AdminUsers({ onBack }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 214,
+                                                                lineNumber: 299,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -476,7 +532,7 @@ function AdminUsers({ onBack }) {
                                                                         className: "text-primary"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 215,
+                                                                        lineNumber: 300,
                                                                         columnNumber: 121
                                                                     }, this),
                                                                     " ",
@@ -484,24 +540,24 @@ function AdminUsers({ onBack }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 215,
+                                                                lineNumber: 300,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 213,
+                                                        lineNumber: 298,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 209,
+                                                lineNumber: 294,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 208,
+                                            lineNumber: 293,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -512,12 +568,12 @@ function AdminUsers({ onBack }) {
                                                 children: u.role
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 220,
+                                                lineNumber: 306,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 219,
+                                            lineNumber: 305,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -529,7 +585,7 @@ function AdminUsers({ onBack }) {
                                                         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("w-1.5 h-1.5 rounded-full", u.isApproved ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : "bg-amber-500")
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 231,
+                                                        lineNumber: 318,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -537,18 +593,18 @@ function AdminUsers({ onBack }) {
                                                         children: u.isApproved ? 'Verified Identity' : 'Registry Pending'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 232,
+                                                        lineNumber: 319,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 230,
+                                                lineNumber: 317,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 229,
+                                            lineNumber: 316,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -559,12 +615,12 @@ function AdminUsers({ onBack }) {
                                                 children: u.status || 'active'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 238,
+                                                lineNumber: 326,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 237,
+                                            lineNumber: 325,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -581,12 +637,12 @@ function AdminUsers({ onBack }) {
                                                             size: 12
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 249,
+                                                            lineNumber: 338,
                                                             columnNumber: 215
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 249,
+                                                        lineNumber: 338,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenu"], {
@@ -601,17 +657,17 @@ function AdminUsers({ onBack }) {
                                                                         size: 12
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 251,
+                                                                        lineNumber: 340,
                                                                         columnNumber: 123
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                    lineNumber: 251,
+                                                                    lineNumber: 340,
                                                                     columnNumber: 54
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 251,
+                                                                lineNumber: 340,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuContent"], {
@@ -623,7 +679,7 @@ function AdminUsers({ onBack }) {
                                                                         children: "Account Registry"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 253,
+                                                                        lineNumber: 342,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -635,28 +691,28 @@ function AdminUsers({ onBack }) {
                                                                                 className: "text-amber-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 255,
+                                                                                lineNumber: 344,
                                                                                 columnNumber: 46
                                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCheck$3e$__["UserCheck"], {
                                                                                 size: 14,
                                                                                 className: "text-primary"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 255,
+                                                                                lineNumber: 344,
                                                                                 columnNumber: 93
                                                                             }, this),
                                                                             u.isApproved ? 'Revoke Verification' : 'Verify Identity'
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 254,
+                                                                        lineNumber: 343,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuSeparator"], {
                                                                         className: "bg-slate-50"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 258,
+                                                                        lineNumber: 347,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuLabel"], {
@@ -664,7 +720,7 @@ function AdminUsers({ onBack }) {
                                                                         children: "Access Control"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 260,
+                                                                        lineNumber: 349,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -676,14 +732,14 @@ function AdminUsers({ onBack }) {
                                                                                 className: "text-green-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 262,
+                                                                                lineNumber: 351,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             " Activate Account"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 261,
+                                                                        lineNumber: 350,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -695,14 +751,14 @@ function AdminUsers({ onBack }) {
                                                                                 className: "text-amber-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 265,
+                                                                                lineNumber: 354,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             " Suspend Access"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 264,
+                                                                        lineNumber: 353,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -714,21 +770,21 @@ function AdminUsers({ onBack }) {
                                                                                 className: "text-red-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 268,
+                                                                                lineNumber: 357,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             " Block Account"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 267,
+                                                                        lineNumber: 356,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuSeparator"], {
                                                                         className: "bg-slate-50"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 271,
+                                                                        lineNumber: 360,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuLabel"], {
@@ -736,7 +792,7 @@ function AdminUsers({ onBack }) {
                                                                         children: "Authorization Scale"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 272,
+                                                                        lineNumber: 361,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -748,14 +804,14 @@ function AdminUsers({ onBack }) {
                                                                                 className: "text-green-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 273,
+                                                                                lineNumber: 362,
                                                                                 columnNumber: 158
                                                                             }, this),
                                                                             " Explorer Level"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 273,
+                                                                        lineNumber: 362,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -767,14 +823,14 @@ function AdminUsers({ onBack }) {
                                                                                 className: "text-blue-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 274,
+                                                                                lineNumber: 363,
                                                                                 columnNumber: 163
                                                                             }, this),
                                                                             " Partner Access"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 274,
+                                                                        lineNumber: 363,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -786,21 +842,21 @@ function AdminUsers({ onBack }) {
                                                                                 className: "text-orange-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 275,
+                                                                                lineNumber: 364,
                                                                                 columnNumber: 159
                                                                             }, this),
                                                                             " Platform Staff"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 275,
+                                                                        lineNumber: 364,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuSeparator"], {
                                                                         className: "bg-slate-50"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 277,
+                                                                        lineNumber: 366,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -811,59 +867,59 @@ function AdminUsers({ onBack }) {
                                                                                 size: 14
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 279,
+                                                                                lineNumber: 368,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             " Terminate Record"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 278,
+                                                                        lineNumber: 367,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 252,
+                                                                lineNumber: 341,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 250,
+                                                        lineNumber: 339,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 248,
+                                                lineNumber: 337,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 247,
+                                            lineNumber: 336,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, u.email, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 207,
+                                    lineNumber: 291,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 202,
+                            lineNumber: 286,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                    lineNumber: 192,
+                    lineNumber: 276,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 191,
+                lineNumber: 275,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -880,7 +936,7 @@ function AdminUsers({ onBack }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 293,
+                        lineNumber: 383,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -893,7 +949,7 @@ function AdminUsers({ onBack }) {
                                 children: "Prev"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 297,
+                                lineNumber: 387,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -901,7 +957,7 @@ function AdminUsers({ onBack }) {
                                 children: "Page 1 of 1"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 298,
+                                lineNumber: 388,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -911,19 +967,19 @@ function AdminUsers({ onBack }) {
                                 children: "Next"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 301,
+                                lineNumber: 391,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 296,
+                        lineNumber: 386,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 292,
+                lineNumber: 382,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -938,12 +994,12 @@ function AdminUsers({ onBack }) {
                                 children: "Identity Audit"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 307,
+                                lineNumber: 398,
                                 columnNumber: 45
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 307,
+                            lineNumber: 398,
                             columnNumber: 11
                         }, this),
                         editingUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -963,12 +1019,12 @@ function AdminUsers({ onBack }) {
                                                         className: "w-full h-full object-cover"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 313,
+                                                        lineNumber: 404,
                                                         columnNumber: 46
                                                     }, this) : editingUser.firstName[0]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                    lineNumber: 312,
+                                                    lineNumber: 403,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -982,7 +1038,7 @@ function AdminUsers({ onBack }) {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 316,
+                                                            lineNumber: 407,
                                                             columnNumber: 24
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -990,32 +1046,32 @@ function AdminUsers({ onBack }) {
                                                             children: editingUser.email
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 317,
+                                                            lineNumber: 408,
                                                             columnNumber: 24
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                    lineNumber: 315,
+                                                    lineNumber: 406,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 311,
+                                            lineNumber: 402,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "absolute top-0 right-0 w-32 h-full bg-white/5 skew-x-[-25deg] translate-x-12"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 320,
+                                            lineNumber: 411,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 310,
+                                    lineNumber: 401,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$scroll$2d$area$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ScrollArea"], {
@@ -1034,7 +1090,7 @@ function AdminUsers({ onBack }) {
                                                                 children: "First Name"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 327,
+                                                                lineNumber: 418,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1046,13 +1102,13 @@ function AdminUsers({ onBack }) {
                                                                 className: "rounded-xl h-10 font-bold text-xs"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 328,
+                                                                lineNumber: 419,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 326,
+                                                        lineNumber: 417,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1063,7 +1119,7 @@ function AdminUsers({ onBack }) {
                                                                 children: "Last Name"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 331,
+                                                                lineNumber: 422,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1075,19 +1131,19 @@ function AdminUsers({ onBack }) {
                                                                 className: "rounded-xl h-10 font-bold text-xs"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 332,
+                                                                lineNumber: 423,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 330,
+                                                        lineNumber: 421,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 325,
+                                                lineNumber: 416,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1101,7 +1157,7 @@ function AdminUsers({ onBack }) {
                                                                 children: "Security Credentials"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 338,
+                                                                lineNumber: 429,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1111,13 +1167,13 @@ function AdminUsers({ onBack }) {
                                                                 children: showPassword ? 'Hide Key' : 'Reveal Key'
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 339,
+                                                                lineNumber: 430,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 337,
+                                                        lineNumber: 428,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1129,12 +1185,12 @@ function AdminUsers({ onBack }) {
                                                                     size: 14
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                    lineNumber: 349,
+                                                                    lineNumber: 440,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 348,
+                                                                lineNumber: 439,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1145,19 +1201,19 @@ function AdminUsers({ onBack }) {
                                                                 placeholder: "Registry Password"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 351,
+                                                                lineNumber: 442,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 347,
+                                                        lineNumber: 438,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 336,
+                                                lineNumber: 427,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1169,12 +1225,12 @@ function AdminUsers({ onBack }) {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 363,
+                                                            lineNumber: 454,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 362,
+                                                        lineNumber: 453,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1185,7 +1241,7 @@ function AdminUsers({ onBack }) {
                                                                 children: "System Clearance"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 366,
+                                                                lineNumber: 457,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1196,13 +1252,13 @@ function AdminUsers({ onBack }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 367,
+                                                                lineNumber: 458,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 365,
+                                                        lineNumber: 456,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1210,24 +1266,24 @@ function AdminUsers({ onBack }) {
                                                         children: editingUser.isApproved ? 'Verified' : 'Pending'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 369,
+                                                        lineNumber: 460,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 361,
+                                                lineNumber: 452,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 324,
+                                        lineNumber: 415,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 323,
+                                    lineNumber: 414,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1241,7 +1297,7 @@ function AdminUsers({ onBack }) {
                                             children: "Cancel"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 380,
+                                            lineNumber: 471,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1250,36 +1306,36 @@ function AdminUsers({ onBack }) {
                                             children: "Save Changes"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 381,
+                                            lineNumber: 472,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 379,
+                                    lineNumber: 470,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 309,
+                            lineNumber: 400,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                    lineNumber: 306,
+                    lineNumber: 397,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 305,
+                lineNumber: 396,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-        lineNumber: 142,
+        lineNumber: 222,
         columnNumber: 5
     }, this);
 }

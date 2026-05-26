@@ -2,11 +2,25 @@ module.exports = [
 "[project]/src/components/dashboard/admin/ActionCenter.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-__turbopack_context__.s([
+/**
+ * @file ActionCenter.tsx
+ * @description This component serves as the central operations hub for administrators.
+ * It provides a consolidated view of pending actions, such as organizer approvals and camp verifications,
+ * as well as a list of platform alerts and notifications. Admins can take direct action on these items,
+ * including approving/rejecting applications, viewing detailed audit information, and managing notifications.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for various data type definitions (User, Notification, Camp, etc.)
+ * @requires @/lib/store - for data persistence and retrieval functions
+ * @requires @/lib/utils - for utility functions like date formatting and class name construction
+ * @requires @/components/ui/* - for various UI components (Button, Dialog, Tabs, Badge, etc.)
+ */ __turbopack_context__.s([
     "default",
     ()=>ActionCenter
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+// Import necessary libraries, types, and components
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/store.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bell$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Bell$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/bell.js [app-ssr] (ecmascript) <export default as Bell>");
@@ -52,16 +66,30 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$l
 ;
 ;
 function ActionCenter({ currentUser, onNavigate, onBack }) {
+    // --- STATE MANAGEMENT ---
+    // State for admin notifications.
     const [notifications, setNotifications] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    // State for pending organizer applications.
     const [pendingOrgs, setPendingOrgs] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    // State for pending camp submissions.
     const [pendingCamps, setPendingCamps] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    // Index for navigating through pending organizers.
     const [orgIdx, setOrgIdx] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
+    // The user currently being reviewed in the audit dialog.
     const [auditUser, setAuditUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    // State to control the main audit dialog.
     const [isAuditOpen, setIsAuditOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    // State to control the rejection reason dialog.
     const [isOrgRejectOpen, setIsOrgRejectOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    // State for the rejection reason text.
     const [rejectionReason, setRejectionReason] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
+    // State for the document being previewed.
     const [previewDoc, setPreviewDoc] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
-    const refreshData = ()=>{
+    // --- DATA FETCHING & SYNCHRONIZATION ---
+    /**
+   * @function refreshData
+   * @description Fetches the latest data from the store to update the component's state.
+   */ const refreshData = ()=>{
         const data = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAppData"])(currentUser.email);
         setNotifications(data.notifications || []);
         const users = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getUsers"])();
@@ -70,14 +98,23 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
         const currentPendingCamps = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getPendingCamps"])();
         setPendingCamps(currentPendingCamps);
     };
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+    /**
+   * @effect
+   * @description Sets up an interval to refresh data every 3 seconds to keep the action center up-to-date.
+   * Cleans up the interval on component unmount.
+   */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         refreshData();
         const interval = setInterval(refreshData, 3000);
         return ()=>clearInterval(interval);
     }, [
         currentUser.email
     ]);
-    const handleMarkRead = (id)=>{
+    // --- EVENT HANDLERS ---
+    /**
+   * @function handleMarkRead
+   * @description Marks a specific notification as read.
+   * @param {string} id - The ID of the notification.
+   */ const handleMarkRead = (id)=>{
         const data = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAppData"])(currentUser.email);
         data.notifications = (data.notifications || []).map((n)=>n.id === id ? {
                 ...n,
@@ -86,7 +123,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
         setNotifications(data.notifications);
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["saveAppData"])(currentUser.email, data);
     };
-    const handleOrgAction = (email, action)=>{
+    /**
+   * @function handleOrgAction
+   * @description Approves or rejects an organizer's application.
+   * @param {string} email - The email of the organizer.
+   * @param {'approve' | 'reject'} action - The action to perform.
+   */ const handleOrgAction = (email, action)=>{
         if (action === 'reject' && !rejectionReason.trim()) {
             setIsOrgRejectOpen(true);
             return;
@@ -116,7 +158,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
         setRejectionReason('');
         refreshData();
     };
-    const handleCampAction = (campId, action)=>{
+    /**
+   * @function handleCampAction
+   * @description Approves or rejects a new camp submission.
+   * @param {string} campId - The ID of the camp.
+   * @param {'approve' | 'reject'} action - The action to perform.
+   */ const handleCampAction = (campId, action)=>{
         const currentPending = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getPendingCamps"])();
         const camp = currentPending.find((c)=>c.id === campId);
         if (!camp) return;
@@ -142,8 +189,10 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["savePendingCamps"])(updatedPending);
         refreshData();
     };
+    // --- DERIVED STATE ---
     const pendingAuditTotal = pendingOrgs.length + pendingCamps.length;
     const unreadAlerts = notifications.filter((n)=>!n.read).length;
+    // --- RENDER METHOD ---
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 pb-20 max-w-7xl mx-auto font-sans px-4",
         children: [
@@ -163,12 +212,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                     className: "text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 157,
+                                    lineNumber: 232,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                lineNumber: 151,
+                                lineNumber: 226,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -178,7 +227,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                         children: "Action Center"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 161,
+                                        lineNumber: 236,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -186,19 +235,19 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                         children: "Operations Hub"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 162,
+                                        lineNumber: 237,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                lineNumber: 160,
+                                lineNumber: 235,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                        lineNumber: 149,
+                        lineNumber: 224,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -209,7 +258,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                 children: "Pending Audit"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                lineNumber: 169,
+                                lineNumber: 244,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -217,19 +266,19 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                 children: pendingAuditTotal
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                lineNumber: 170,
+                                lineNumber: 245,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                        lineNumber: 165,
+                        lineNumber: 240,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                lineNumber: 148,
+                lineNumber: 223,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -254,7 +303,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 178,
+                                            lineNumber: 254,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -267,13 +316,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 179,
+                                            lineNumber: 255,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 177,
+                                    lineNumber: 253,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -286,7 +335,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                 className: "mx-auto mb-4 text-green-500 opacity-20"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 185,
+                                                lineNumber: 262,
                                                 columnNumber: 20
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -294,13 +343,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                 children: "All applications audited"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 186,
+                                                lineNumber: 263,
                                                 columnNumber: 20
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 184,
+                                        lineNumber: 261,
                                         columnNumber: 17
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "bg-white p-6 sm:p-8 rounded-[32px] border border-slate-100 shadow-sm animate-in fade-in zoom-in duration-300 relative max-w-2xl mx-auto w-full",
@@ -315,12 +364,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                     size: 24
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                    lineNumber: 194,
+                                                    lineNumber: 271,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 190,
+                                                lineNumber: 267,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -331,7 +380,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                         children: pendingOrgs[orgIdx]?.firstName[0]
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 198,
+                                                        lineNumber: 275,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -346,7 +395,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 202,
+                                                                lineNumber: 279,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -354,7 +403,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 children: pendingOrgs[orgIdx]?.email
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 205,
+                                                                lineNumber: 282,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -368,7 +417,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 className: "text-primary shrink-0"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 209,
+                                                                                lineNumber: 286,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -376,13 +425,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 children: pendingOrgs[orgIdx]?.organizerProfile?.businessName
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 210,
+                                                                                lineNumber: 287,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 208,
+                                                                        lineNumber: 285,
                                                                         columnNumber: 26
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -393,7 +442,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 className: "text-primary shrink-0"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 213,
+                                                                                lineNumber: 290,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -401,31 +450,31 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 children: pendingOrgs[orgIdx]?.organizerProfile?.businessAddress
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 214,
+                                                                                lineNumber: 291,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 212,
+                                                                        lineNumber: 289,
                                                                         columnNumber: 26
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 207,
+                                                                lineNumber: 284,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 201,
+                                                        lineNumber: 278,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 197,
+                                                lineNumber: 274,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -437,7 +486,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                         children: "Activate"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 221,
+                                                        lineNumber: 298,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -449,13 +498,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                         children: "Reject"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 222,
+                                                        lineNumber: 299,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 220,
+                                                lineNumber: 297,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -471,12 +520,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 226,
+                                                            lineNumber: 304,
                                                             columnNumber: 167
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 226,
+                                                        lineNumber: 304,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -489,7 +538,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 227,
+                                                        lineNumber: 305,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -502,29 +551,29 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 228,
+                                                            lineNumber: 306,
                                                             columnNumber: 209
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 228,
+                                                        lineNumber: 306,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 225,
+                                                lineNumber: 303,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 189,
+                                        lineNumber: 266,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 182,
+                                    lineNumber: 259,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -538,12 +587,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                 children: "Camp audits complete"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 238,
+                                                lineNumber: 317,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 237,
+                                            lineNumber: 316,
                                             columnNumber: 19
                                         }, this) : pendingCamps.map((camp)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "bg-white p-5 rounded-[24px] border border-slate-100 shadow-sm flex flex-col sm:flex-row items-center gap-5 animate-in slide-in-from-bottom-2",
@@ -555,12 +604,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                             className: "w-full h-full object-cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 244,
+                                                            lineNumber: 323,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 243,
+                                                        lineNumber: 322,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -571,7 +620,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 children: camp.name
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 247,
+                                                                lineNumber: 326,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -585,7 +634,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 className: "text-primary"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 249,
+                                                                                lineNumber: 328,
                                                                                 columnNumber: 73
                                                                             }, this),
                                                                             " ",
@@ -593,7 +642,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 249,
+                                                                        lineNumber: 328,
                                                                         columnNumber: 30
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -604,7 +653,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 className: "text-primary"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 250,
+                                                                                lineNumber: 329,
                                                                                 columnNumber: 73
                                                                             }, this),
                                                                             " ",
@@ -613,19 +662,19 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 250,
+                                                                        lineNumber: 329,
                                                                         columnNumber: 30
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 248,
+                                                                lineNumber: 327,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 246,
+                                                        lineNumber: 325,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -639,12 +688,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                     size: 16
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 254,
+                                                                    lineNumber: 333,
                                                                     columnNumber: 193
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 254,
+                                                                lineNumber: 333,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -653,40 +702,40 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 children: "Verify"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 255,
+                                                                lineNumber: 334,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 253,
+                                                        lineNumber: 332,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, camp.id, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 242,
+                                                lineNumber: 321,
                                                 columnNumber: 21
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 235,
+                                        lineNumber: 314,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 234,
+                                    lineNumber: 313,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                            lineNumber: 176,
+                            lineNumber: 252,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                        lineNumber: 175,
+                        lineNumber: 251,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -706,12 +755,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                     className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])(unreadAlerts > 0 && "animate-shake text-orange-400")
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                    lineNumber: 270,
+                                                    lineNumber: 350,
                                                     columnNumber: 24
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 269,
+                                                lineNumber: 349,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -721,7 +770,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                         children: "Platform Alerts"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 273,
+                                                        lineNumber: 353,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -732,24 +781,24 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 274,
+                                                        lineNumber: 354,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 272,
+                                                lineNumber: 352,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 268,
+                                        lineNumber: 348,
                                         columnNumber: 18
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 267,
+                                    lineNumber: 347,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$scroll$2d$area$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ScrollArea"], {
@@ -761,7 +810,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             children: "No active alerts"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 282,
+                                            lineNumber: 362,
                                             columnNumber: 23
                                         }, this) : notifications.map((n)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("p-5 rounded-2xl border transition-all cursor-pointer group", n.read ? "bg-white/5 border-white/5 opacity-60" : "bg-white/10 border-white/10"),
@@ -773,7 +822,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("w-2 h-2 rounded-full mt-1.5 shrink-0", !n.read ? "bg-orange-500" : "bg-transparent")
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 287,
+                                                                lineNumber: 367,
                                                                 columnNumber: 31
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -784,7 +833,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                         children: n.title
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 289,
+                                                                        lineNumber: 369,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -792,13 +841,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                         children: n.message
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 290,
+                                                                        lineNumber: 370,
                                                                         columnNumber: 34
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 288,
+                                                                lineNumber: 368,
                                                                 columnNumber: 31
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -809,18 +858,18 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                     size: 14
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 293,
+                                                                    lineNumber: 373,
                                                                     columnNumber: 34
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 292,
+                                                                lineNumber: 372,
                                                                 columnNumber: 31
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 286,
+                                                        lineNumber: 366,
                                                         columnNumber: 28
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -828,40 +877,40 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmtDate"])(n.time)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 296,
+                                                        lineNumber: 376,
                                                         columnNumber: 28
                                                     }, this)
                                                 ]
                                             }, n.id, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 285,
+                                                lineNumber: 365,
                                                 columnNumber: 25
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 280,
+                                        lineNumber: 360,
                                         columnNumber: 18
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 279,
+                                    lineNumber: 359,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                            lineNumber: 266,
+                            lineNumber: 346,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                        lineNumber: 265,
+                        lineNumber: 345,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                lineNumber: 174,
+                lineNumber: 249,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -877,20 +926,20 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                     children: "Organizer Audit"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 310,
+                                    lineNumber: 390,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Full operational audit of the selected partner's business registry and compliance assets."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 311,
+                                    lineNumber: 391,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                            lineNumber: 309,
+                            lineNumber: 389,
                             columnNumber: 11
                         }, this),
                         auditUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -908,12 +957,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                     className: "w-full h-full object-cover"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                    lineNumber: 318,
+                                                    lineNumber: 398,
                                                     columnNumber: 41
                                                 }, this) : auditUser.firstName[0]
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 317,
+                                                lineNumber: 397,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -931,7 +980,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 322,
+                                                                lineNumber: 402,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -939,13 +988,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 children: "Deep Audit"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 323,
+                                                                lineNumber: 403,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 321,
+                                                        lineNumber: 401,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -958,7 +1007,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                         size: 12
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 326,
+                                                                        lineNumber: 406,
                                                                         columnNumber: 67
                                                                     }, this),
                                                                     " ",
@@ -966,7 +1015,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 326,
+                                                                lineNumber: 406,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -976,7 +1025,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                         size: 12
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 327,
+                                                                        lineNumber: 407,
                                                                         columnNumber: 67
                                                                     }, this),
                                                                     " ",
@@ -984,7 +1033,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 327,
+                                                                lineNumber: 407,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -994,7 +1043,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                         size: 12
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 328,
+                                                                        lineNumber: 408,
                                                                         columnNumber: 67
                                                                     }, this),
                                                                     " DOB: ",
@@ -1002,30 +1051,30 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 328,
+                                                                lineNumber: 408,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 325,
+                                                        lineNumber: 405,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 320,
+                                                lineNumber: 400,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 316,
+                                        lineNumber: 396,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 315,
+                                    lineNumber: 395,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$scroll$2d$area$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ScrollArea"], {
@@ -1046,14 +1095,14 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                     className: "text-primary"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 339,
+                                                                    lineNumber: 419,
                                                                     columnNumber: 127
                                                                 }, this),
                                                                 " Business Profile"
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 339,
+                                                            lineNumber: 419,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1068,7 +1117,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 children: "Entity Name"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 343,
+                                                                                lineNumber: 423,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1076,13 +1125,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 children: auditUser.organizerProfile?.businessName
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 344,
+                                                                                lineNumber: 424,
                                                                                 columnNumber: 30
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 342,
+                                                                        lineNumber: 422,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1095,7 +1144,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                         children: "GST Identification"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                        lineNumber: 348,
+                                                                                        lineNumber: 428,
                                                                                         columnNumber: 32
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1103,13 +1152,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                         children: auditUser.organizerProfile?.gstNumber || 'N/A'
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                        lineNumber: 349,
+                                                                                        lineNumber: 429,
                                                                                         columnNumber: 32
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 347,
+                                                                                lineNumber: 427,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1119,7 +1168,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                         children: "PAN Number"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                        lineNumber: 352,
+                                                                                        lineNumber: 432,
                                                                                         columnNumber: 32
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1127,19 +1176,19 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                         children: auditUser.organizerProfile?.panNumber || 'N/A'
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                        lineNumber: 353,
+                                                                                        lineNumber: 433,
                                                                                         columnNumber: 32
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 351,
+                                                                                lineNumber: 431,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 346,
+                                                                        lineNumber: 426,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1152,7 +1201,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                         children: "License #"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                        lineNumber: 358,
+                                                                                        lineNumber: 438,
                                                                                         columnNumber: 32
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1160,13 +1209,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                         children: auditUser.organizerProfile?.registrationNumber
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                        lineNumber: 359,
+                                                                                        lineNumber: 439,
                                                                                         columnNumber: 32
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 357,
+                                                                                lineNumber: 437,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1176,7 +1225,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                         children: "Established"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                        lineNumber: 362,
+                                                                                        lineNumber: 442,
                                                                                         columnNumber: 32
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1184,19 +1233,19 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                         children: auditUser.organizerProfile?.establishedYear
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                        lineNumber: 363,
+                                                                                        lineNumber: 443,
                                                                                         columnNumber: 32
                                                                                     }, this)
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 361,
+                                                                                lineNumber: 441,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 356,
+                                                                        lineNumber: 436,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1206,7 +1255,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 children: "HQ Address"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 367,
+                                                                                lineNumber: 447,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1218,24 +1267,24 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 368,
+                                                                                lineNumber: 448,
                                                                                 columnNumber: 30
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                        lineNumber: 366,
+                                                                        lineNumber: 446,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                lineNumber: 341,
+                                                                lineNumber: 421,
                                                                 columnNumber: 25
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 340,
+                                                            lineNumber: 420,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -1246,14 +1295,14 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                     className: "text-primary"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 374,
+                                                                    lineNumber: 454,
                                                                     columnNumber: 127
                                                                 }, this),
                                                                 " Settlement Account"
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 374,
+                                                            lineNumber: 454,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1266,7 +1315,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                             children: "Bank Name"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                            lineNumber: 377,
+                                                                            lineNumber: 457,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1274,13 +1323,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                             children: auditUser.organizerProfile?.bankName || 'N/A'
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                            lineNumber: 378,
+                                                                            lineNumber: 458,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 376,
+                                                                    lineNumber: 456,
                                                                     columnNumber: 26
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1293,7 +1342,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                     children: "Account Number"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                    lineNumber: 382,
+                                                                                    lineNumber: 462,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1301,13 +1350,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                     children: auditUser.organizerProfile?.bankAccount
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                    lineNumber: 383,
+                                                                                    lineNumber: 463,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                            lineNumber: 381,
+                                                                            lineNumber: 461,
                                                                             columnNumber: 28
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1317,7 +1366,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                     children: "IFSC Code"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                    lineNumber: 386,
+                                                                                    lineNumber: 466,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1325,31 +1374,31 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                     children: auditUser.organizerProfile?.ifscCode
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                    lineNumber: 387,
+                                                                                    lineNumber: 467,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                            lineNumber: 385,
+                                                                            lineNumber: 465,
                                                                             columnNumber: 28
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 380,
+                                                                    lineNumber: 460,
                                                                     columnNumber: 26
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 375,
+                                                            lineNumber: 455,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                    lineNumber: 338,
+                                                    lineNumber: 418,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1363,14 +1412,14 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                     className: "text-primary"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 395,
+                                                                    lineNumber: 475,
                                                                     columnNumber: 127
                                                                 }, this),
                                                                 " Compliance Documentation"
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 395,
+                                                            lineNumber: 475,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1418,12 +1467,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                         size: 18
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                        lineNumber: 407,
+                                                                                        lineNumber: 487,
                                                                                         columnNumber: 34
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                    lineNumber: 406,
+                                                                                    lineNumber: 486,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1433,7 +1482,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                             children: item.label
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                            lineNumber: 410,
+                                                                                            lineNumber: 490,
                                                                                             columnNumber: 34
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1441,19 +1490,19 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                             children: item.doc?.data ? 'ATTACHMENT VERIFIED' : 'ASSET MISSING'
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                            lineNumber: 411,
+                                                                                            lineNumber: 491,
                                                                                             columnNumber: 34
                                                                                         }, this)
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                    lineNumber: 409,
+                                                                                    lineNumber: 489,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                            lineNumber: 405,
+                                                                            lineNumber: 485,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1466,23 +1515,23 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                                 size: 16
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                                lineNumber: 420,
+                                                                                lineNumber: 500,
                                                                                 columnNumber: 31
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                            lineNumber: 416,
+                                                                            lineNumber: 496,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, item.label, true, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 404,
+                                                                    lineNumber: 484,
                                                                     columnNumber: 27
                                                                 }, this))
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 396,
+                                                            lineNumber: 476,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1493,7 +1542,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                     className: "text-primary shrink-0"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 426,
+                                                                    lineNumber: 506,
                                                                     columnNumber: 26
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1501,35 +1550,35 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                                     children: "Platform security requires 100% document verification for all operational partners."
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                                    lineNumber: 427,
+                                                                    lineNumber: 507,
                                                                     columnNumber: 26
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                            lineNumber: 425,
+                                                            lineNumber: 505,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                    lineNumber: 394,
+                                                    lineNumber: 474,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 336,
+                                            lineNumber: 416,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 335,
+                                        lineNumber: 415,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 334,
+                                    lineNumber: 414,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1545,7 +1594,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             children: "Reject Registry"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 435,
+                                            lineNumber: 516,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1554,30 +1603,30 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             children: "Approve & Activate Partner"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 442,
+                                            lineNumber: 523,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 434,
+                                    lineNumber: 515,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                            lineNumber: 314,
+                            lineNumber: 394,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                    lineNumber: 308,
+                    lineNumber: 388,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                lineNumber: 307,
+                lineNumber: 387,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -1594,7 +1643,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                     children: "Partner Rejection Protocol"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 453,
+                                    lineNumber: 534,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -1605,13 +1654,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 454,
+                                    lineNumber: 535,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                            lineNumber: 452,
+                            lineNumber: 533,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1625,7 +1674,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             children: "Audit Intelligence (Reason)"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 458,
+                                            lineNumber: 539,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -1635,13 +1684,13 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             className: "min-h-[120px] rounded-2xl bg-slate-50 border-slate-100 text-xs font-bold leading-relaxed"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 459,
+                                            lineNumber: 540,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 457,
+                                    lineNumber: 538,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1654,7 +1703,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             children: "Cancel"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 467,
+                                            lineNumber: 548,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1663,30 +1712,30 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             children: "Confirm Rejection"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 468,
+                                            lineNumber: 549,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 466,
+                                    lineNumber: 547,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                            lineNumber: 456,
+                            lineNumber: 537,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                    lineNumber: 451,
+                    lineNumber: 532,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                lineNumber: 450,
+                lineNumber: 531,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -1702,20 +1751,20 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                     children: "Audit Asset Preview"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 477,
+                                    lineNumber: 559,
                                     columnNumber: 14
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "A visual preview of the uploaded compliance document for administrative verification."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 478,
+                                    lineNumber: 560,
                                     columnNumber: 14
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                            lineNumber: 476,
+                            lineNumber: 558,
                             columnNumber: 12
                         }, this),
                         previewDoc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1728,12 +1777,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                         children: previewDoc.label
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 483,
+                                        lineNumber: 565,
                                         columnNumber: 20
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 482,
+                                    lineNumber: 564,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1745,7 +1794,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                             className: "max-w-full max-h-[60vh] rounded-xl shadow-xl object-contain border border-slate-100"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 489,
+                                            lineNumber: 571,
                                             columnNumber: 28
                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "text-center p-12 bg-slate-50 rounded-[32px] border border-slate-100 max-w-xs",
@@ -1756,12 +1805,12 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                         size: 32
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                        lineNumber: 492,
+                                                        lineNumber: 574,
                                                         columnNumber: 143
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                    lineNumber: 492,
+                                                    lineNumber: 574,
                                                     columnNumber: 31
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1769,7 +1818,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                     children: previewDoc.doc.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                    lineNumber: 493,
+                                                    lineNumber: 575,
                                                     columnNumber: 31
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1777,18 +1826,18 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                     children: "Download PDF"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                    lineNumber: 494,
+                                                    lineNumber: 576,
                                                     columnNumber: 31
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                            lineNumber: 491,
+                                            lineNumber: 573,
                                             columnNumber: 28
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 487,
+                                        lineNumber: 569,
                                         columnNumber: 22
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "text-center space-y-3 animate-in fade-in duration-500 p-8",
@@ -1798,7 +1847,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                 className: "mx-auto text-red-200"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 500,
+                                                lineNumber: 582,
                                                 columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -1806,7 +1855,7 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                 children: "No asset found"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 501,
+                                                lineNumber: 583,
                                                 columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1814,41 +1863,41 @@ function ActionCenter({ currentUser, onNavigate, onBack }) {
                                                 children: "The organizer did not submit this compliance asset during registration."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                                lineNumber: 502,
+                                                lineNumber: 584,
                                                 columnNumber: 25
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                        lineNumber: 499,
+                                        lineNumber: 581,
                                         columnNumber: 22
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                                    lineNumber: 485,
+                                    lineNumber: 567,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                            lineNumber: 481,
+                            lineNumber: 563,
                             columnNumber: 14
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                    lineNumber: 475,
+                    lineNumber: 557,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-                lineNumber: 474,
+                lineNumber: 556,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/ActionCenter.tsx",
-        lineNumber: 147,
+        lineNumber: 221,
         columnNumber: 5
     }, this);
 }

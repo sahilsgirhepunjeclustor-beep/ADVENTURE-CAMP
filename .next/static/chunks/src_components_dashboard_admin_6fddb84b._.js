@@ -2,11 +2,24 @@
 "[project]/src/components/dashboard/admin/AdminMemberships.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-__turbopack_context__.s([
+/**
+ * @file AdminMemberships.tsx
+ * @description This component allows administrators to manage membership plans and subscribers.
+ * It provides functionalities to create, view, and toggle the status of membership plans. It also lists
+ * all subscribers, allowing admins to search for them and manage their membership status (approve/revoke).
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for application-specific type definitions (MembershipPlan, User)
+ * @requires @/lib/store - for data persistence and retrieval functions
+ * @requires @/lib/utils - for utility functions like formatting and unique ID generation
+ * @requires @/components/ui/* - for various UI components (Button, Badge, Dialog, etc.)
+ */ __turbopack_context__.s([
     "default",
     ()=>AdminMemberships
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+// Import necessary libraries, types, and components
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/store.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
@@ -42,12 +55,18 @@ var _s = __turbopack_context__.k.signature();
 function AdminMemberships(param) {
     let { onBack } = param;
     _s();
+    // --- STATE MANAGEMENT ---
+    // State for storing the list of membership plans.
     const [plans, setPlans] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    // State for storing all user data.
     const [allUsers, setAllUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({});
+    // State for the search query for filtering subscribers.
     const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    // State to control the visibility of the plan creation/editing dialog.
     const [isPlanDialogOpen, setIsPlanDialogOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // State to hold the plan being edited (not currently used for editing, but for potential future use).
     const [editingPlan, setEditingUser] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    // Form State
+    // State for the new membership plan form.
     const [newPlan, setNewPlan] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
         name: '',
         price: 0,
@@ -56,12 +75,18 @@ function AdminMemberships(param) {
         features: [],
         isActive: true
     });
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+    // --- DATA FETCHING & INITIALIZATION ---
+    /**
+   * @effect
+   * @description Fetches initial data for membership plans and users on component mount.
+   */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AdminMemberships.useEffect": ()=>{
             setPlans((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getMembershipPlans"])());
             setAllUsers((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getUsers"])());
         }
     }["AdminMemberships.useEffect"], []);
+    // --- MEMOIZED COMPUTATIONS ---
+    // Memoized list of all users who have a membership.
     const subscribers = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "AdminMemberships.useMemo[subscribers]": ()=>Object.values(allUsers).filter({
                 "AdminMemberships.useMemo[subscribers]": (u)=>u.membership
@@ -69,8 +94,14 @@ function AdminMemberships(param) {
     }["AdminMemberships.useMemo[subscribers]"], [
         allUsers
     ]);
+    // Memoized list of subscribers filtered by the search query.
     const filteredSubscribers = subscribers.filter((u)=>u.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || u.email.toLowerCase().includes(searchQuery.toLowerCase()));
-    const handleCreatePlan = (e)=>{
+    // --- EVENT HANDLERS ---
+    /**
+   * @function handleCreatePlan
+   * @description Handles the creation of a new membership plan.
+   * @param {React.FormEvent} e - The form submission event.
+   */ const handleCreatePlan = (e)=>{
         e.preventDefault();
         const plan = {
             id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["uid"])(),
@@ -92,7 +123,11 @@ function AdminMemberships(param) {
             title: 'Membership Plan Created'
         });
     };
-    const togglePlanStatus = (id)=>{
+    /**
+   * @function togglePlanStatus
+   * @description Toggles the active status of a membership plan.
+   * @param {string} id - The ID of the plan to toggle.
+   */ const togglePlanStatus = (id)=>{
         const updated = plans.map((p)=>p.id === id ? {
                 ...p,
                 isActive: !p.isActive
@@ -103,7 +138,12 @@ function AdminMemberships(param) {
             title: 'Plan Status Updated'
         });
     };
-    const handleMembershipAction = (email, action)=>{
+    /**
+   * @function handleMembershipAction
+   * @description Approves or revokes a user's membership.
+   * @param {string} email - The email of the user.
+   * @param {'approve' | 'revoke'} action - The action to perform.
+   */ const handleMembershipAction = (email, action)=>{
         const updatedUsers = {
             ...allUsers
         };
@@ -122,6 +162,7 @@ function AdminMemberships(param) {
         setAllUsers(updatedUsers);
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["saveUsers"])(updatedUsers);
     };
+    // --- RENDER METHOD ---
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-8 pb-20 font-sans max-w-7xl mx-auto px-4 md:px-0",
         children: [
@@ -141,12 +182,12 @@ function AdminMemberships(param) {
                                     className: "text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 124,
+                                    lineNumber: 188,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 123,
+                                lineNumber: 187,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -156,7 +197,7 @@ function AdminMemberships(param) {
                                         children: "Membership Management"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 128,
+                                        lineNumber: 192,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -164,19 +205,19 @@ function AdminMemberships(param) {
                                         children: "Loyalty & Exclusive Access Controls"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 129,
+                                        lineNumber: 193,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 127,
+                                lineNumber: 191,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                        lineNumber: 121,
+                        lineNumber: 185,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -192,19 +233,19 @@ function AdminMemberships(param) {
                                             size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 135,
+                                            lineNumber: 200,
                                             columnNumber: 15
                                         }, this),
                                         " New Membership Plan"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 134,
+                                    lineNumber: 199,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 133,
+                                lineNumber: 198,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogContent"], {
@@ -217,20 +258,20 @@ function AdminMemberships(param) {
                                                 children: "Create Membership Plan"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 140,
+                                                lineNumber: 205,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                                 children: "Define new loyalty tiers and benefits for platform explorers."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 141,
+                                                lineNumber: 206,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 139,
+                                        lineNumber: 204,
                                         columnNumber: 14
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -241,7 +282,7 @@ function AdminMemberships(param) {
                                                 children: "Plan Configuration"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 144,
+                                                lineNumber: 209,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -249,13 +290,13 @@ function AdminMemberships(param) {
                                                 children: "Define new loyalty tier benefits"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 145,
+                                                lineNumber: 210,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 143,
+                                        lineNumber: 208,
                                         columnNumber: 14
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -270,7 +311,7 @@ function AdminMemberships(param) {
                                                         children: "Plan Name"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 149,
+                                                        lineNumber: 215,
                                                         columnNumber: 20
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -283,13 +324,13 @@ function AdminMemberships(param) {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 150,
+                                                        lineNumber: 216,
                                                         columnNumber: 20
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 148,
+                                                lineNumber: 214,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -303,7 +344,7 @@ function AdminMemberships(param) {
                                                                 children: "Annual Price (₹)"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 154,
+                                                                lineNumber: 220,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -316,13 +357,13 @@ function AdminMemberships(param) {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 155,
+                                                                lineNumber: 221,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 153,
+                                                        lineNumber: 219,
                                                         columnNumber: 20
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -333,7 +374,7 @@ function AdminMemberships(param) {
                                                                 children: "Expedition Discount (%)"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 158,
+                                                                lineNumber: 224,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -346,19 +387,19 @@ function AdminMemberships(param) {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 159,
+                                                                lineNumber: 225,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 157,
+                                                        lineNumber: 223,
                                                         columnNumber: 20
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 152,
+                                                lineNumber: 218,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -369,7 +410,7 @@ function AdminMemberships(param) {
                                                         children: "Features (Comma separated)"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 163,
+                                                        lineNumber: 229,
                                                         columnNumber: 20
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -381,13 +422,13 @@ function AdminMemberships(param) {
                                                         placeholder: "VIP access, Insurance, etc."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 164,
+                                                        lineNumber: 230,
                                                         columnNumber: 20
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 162,
+                                                lineNumber: 228,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -396,31 +437,31 @@ function AdminMemberships(param) {
                                                 children: "Activate Plan"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 166,
+                                                lineNumber: 232,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 147,
+                                        lineNumber: 213,
                                         columnNumber: 14
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 138,
+                                lineNumber: 203,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                        lineNumber: 132,
+                        lineNumber: 197,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                lineNumber: 120,
+                lineNumber: 184,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -434,7 +475,7 @@ function AdminMemberships(param) {
                                 children: "ACTIVE TIERS"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 174,
+                                lineNumber: 241,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -451,12 +492,12 @@ function AdminMemberships(param) {
                                                             size: 20
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                            lineNumber: 183,
+                                                            lineNumber: 250,
                                                             columnNumber: 24
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 182,
+                                                        lineNumber: 249,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -465,13 +506,13 @@ function AdminMemberships(param) {
                                                         children: plan.isActive ? 'Suspend' : 'Activate'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 185,
+                                                        lineNumber: 252,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 181,
+                                                lineNumber: 248,
                                                 columnNumber: 18
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -479,7 +520,7 @@ function AdminMemberships(param) {
                                                 children: plan.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 189,
+                                                lineNumber: 256,
                                                 columnNumber: 18
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -492,13 +533,13 @@ function AdminMemberships(param) {
                                                         children: "/ Year"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 190,
+                                                        lineNumber: 257,
                                                         columnNumber: 92
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 190,
+                                                lineNumber: 257,
                                                 columnNumber: 18
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -512,7 +553,7 @@ function AdminMemberships(param) {
                                                                 fill: "currentColor"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 194,
+                                                                lineNumber: 261,
                                                                 columnNumber: 24
                                                             }, this),
                                                             " ",
@@ -521,7 +562,7 @@ function AdminMemberships(param) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 193,
+                                                        lineNumber: 260,
                                                         columnNumber: 21
                                                     }, this),
                                                     plan.features.slice(0, 2).map((f, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -531,7 +572,7 @@ function AdminMemberships(param) {
                                                                     className: "w-1 h-1 rounded-full bg-slate-300"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 198,
+                                                                    lineNumber: 265,
                                                                     columnNumber: 26
                                                                 }, this),
                                                                 " ",
@@ -539,30 +580,30 @@ function AdminMemberships(param) {
                                                             ]
                                                         }, i, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                            lineNumber: 197,
+                                                            lineNumber: 264,
                                                             columnNumber: 23
                                                         }, this))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 192,
+                                                lineNumber: 259,
                                                 columnNumber: 18
                                             }, this)
                                         ]
                                     }, plan.id, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 177,
+                                        lineNumber: 244,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 175,
+                                lineNumber: 242,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                        lineNumber: 173,
+                        lineNumber: 240,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -580,7 +621,7 @@ function AdminMemberships(param) {
                                             children: "Subscriber Ledger"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 210,
+                                            lineNumber: 278,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -589,13 +630,13 @@ function AdminMemberships(param) {
                                             children: "Pending Approvals"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 211,
+                                            lineNumber: 279,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 209,
+                                    lineNumber: 277,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -610,7 +651,7 @@ function AdminMemberships(param) {
                                                     className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                    lineNumber: 216,
+                                                    lineNumber: 285,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -620,13 +661,13 @@ function AdminMemberships(param) {
                                                     className: "pl-12 h-14 rounded-2xl bg-white border-slate-100 shadow-xl font-bold uppercase text-[11px] tracking-tight"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                    lineNumber: 217,
+                                                    lineNumber: 286,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 215,
+                                            lineNumber: 284,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -644,7 +685,7 @@ function AdminMemberships(param) {
                                                                     children: "EXPEDITIONIST"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 229,
+                                                                    lineNumber: 298,
                                                                     columnNumber: 30
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -652,7 +693,7 @@ function AdminMemberships(param) {
                                                                     children: "TIER"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 230,
+                                                                    lineNumber: 299,
                                                                     columnNumber: 30
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -660,7 +701,7 @@ function AdminMemberships(param) {
                                                                     children: "EXPIRY"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 231,
+                                                                    lineNumber: 300,
                                                                     columnNumber: 30
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -668,7 +709,7 @@ function AdminMemberships(param) {
                                                                     children: "STATUS"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 232,
+                                                                    lineNumber: 301,
                                                                     columnNumber: 30
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -676,18 +717,18 @@ function AdminMemberships(param) {
                                                                     children: "ACTION"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 233,
+                                                                    lineNumber: 302,
                                                                     columnNumber: 30
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                            lineNumber: 228,
+                                                            lineNumber: 297,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 227,
+                                                        lineNumber: 296,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -699,12 +740,12 @@ function AdminMemberships(param) {
                                                                 children: "No active subscribers found"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 238,
+                                                                lineNumber: 307,
                                                                 columnNumber: 33
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                            lineNumber: 238,
+                                                            lineNumber: 307,
                                                             columnNumber: 29
                                                         }, this) : filteredSubscribers.map((u)=>{
                                                             var _u_membership, _u_membership1, _u_membership2, _u_membership3, _u_membership4;
@@ -723,12 +764,12 @@ function AdminMemberships(param) {
                                                                                         className: "w-full h-full object-cover"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                        lineNumber: 245,
+                                                                                        lineNumber: 315,
                                                                                         columnNumber: 55
                                                                                     }, this) : u.firstName[0]
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                    lineNumber: 244,
+                                                                                    lineNumber: 314,
                                                                                     columnNumber: 40
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -742,7 +783,7 @@ function AdminMemberships(param) {
                                                                                             ]
                                                                                         }, void 0, true, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                            lineNumber: 248,
+                                                                                            lineNumber: 318,
                                                                                             columnNumber: 43
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -750,24 +791,24 @@ function AdminMemberships(param) {
                                                                                             children: u.email
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                            lineNumber: 249,
+                                                                                            lineNumber: 319,
                                                                                             columnNumber: 43
                                                                                         }, this)
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                    lineNumber: 247,
+                                                                                    lineNumber: 317,
                                                                                     columnNumber: 40
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 243,
+                                                                            lineNumber: 313,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 242,
+                                                                        lineNumber: 312,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -777,12 +818,12 @@ function AdminMemberships(param) {
                                                                             children: (_u_membership = u.membership) === null || _u_membership === void 0 ? void 0 : _u_membership.planName
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 254,
+                                                                            lineNumber: 325,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 253,
+                                                                        lineNumber: 324,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -792,12 +833,12 @@ function AdminMemberships(param) {
                                                                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["fmtDate"])((_u_membership1 = u.membership) === null || _u_membership1 === void 0 ? void 0 : _u_membership1.expiryDate)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 257,
+                                                                            lineNumber: 329,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 256,
+                                                                        lineNumber: 328,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -809,7 +850,7 @@ function AdminMemberships(param) {
                                                                                     className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("w-1.5 h-1.5 rounded-full", ((_u_membership2 = u.membership) === null || _u_membership2 === void 0 ? void 0 : _u_membership2.status) === 'active' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : "bg-amber-500")
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                    lineNumber: 261,
+                                                                                    lineNumber: 334,
                                                                                     columnNumber: 40
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -817,18 +858,18 @@ function AdminMemberships(param) {
                                                                                     children: (_u_membership3 = u.membership) === null || _u_membership3 === void 0 ? void 0 : _u_membership3.status
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                    lineNumber: 262,
+                                                                                    lineNumber: 335,
                                                                                     columnNumber: 40
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 260,
+                                                                            lineNumber: 333,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 259,
+                                                                        lineNumber: 332,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -843,53 +884,53 @@ function AdminMemberships(param) {
                                                                                 size: 18
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                lineNumber: 267,
+                                                                                lineNumber: 341,
                                                                                 columnNumber: 77
                                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
                                                                                 size: 18,
                                                                                 className: "text-green-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                lineNumber: 267,
+                                                                                lineNumber: 341,
                                                                                 columnNumber: 97
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 266,
+                                                                            lineNumber: 340,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 265,
+                                                                        lineNumber: 339,
                                                                         columnNumber: 34
                                                                     }, this)
                                                                 ]
                                                             }, u.email, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 241,
+                                                                lineNumber: 310,
                                                                 columnNumber: 31
                                                             }, this);
                                                         })
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 236,
+                                                        lineNumber: 305,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 226,
+                                                lineNumber: 295,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 225,
+                                            lineNumber: 294,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 214,
+                                    lineNumber: 283,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -907,7 +948,7 @@ function AdminMemberships(param) {
                                                     className: "mx-auto mb-4 text-green-500/20"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                    lineNumber: 282,
+                                                    lineNumber: 357,
                                                     columnNumber: 26
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -915,13 +956,13 @@ function AdminMemberships(param) {
                                                     children: "All membership audits complete"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                    lineNumber: 283,
+                                                    lineNumber: 358,
                                                     columnNumber: 26
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 281,
+                                            lineNumber: 356,
                                             columnNumber: 23
                                         }, this) : subscribers.filter((u)=>{
                                             var _u_membership;
@@ -939,7 +980,7 @@ function AdminMemberships(param) {
                                                                 children: u.firstName[0]
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 289,
+                                                                lineNumber: 364,
                                                                 columnNumber: 31
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -953,7 +994,7 @@ function AdminMemberships(param) {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 291,
+                                                                        lineNumber: 366,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -965,25 +1006,25 @@ function AdminMemberships(param) {
                                                                                 children: (_u_membership = u.membership) === null || _u_membership === void 0 ? void 0 : _u_membership.planName
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                lineNumber: 292,
+                                                                                lineNumber: 367,
                                                                                 columnNumber: 97
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 292,
+                                                                        lineNumber: 367,
                                                                         columnNumber: 34
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 290,
+                                                                lineNumber: 365,
                                                                 columnNumber: 31
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 288,
+                                                        lineNumber: 363,
                                                         columnNumber: 28
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -997,12 +1038,12 @@ function AdminMemberships(param) {
                                                                     size: 20
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 296,
+                                                                    lineNumber: 371,
                                                                     columnNumber: 175
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 296,
+                                                                lineNumber: 371,
                                                                 columnNumber: 31
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1011,53 +1052,53 @@ function AdminMemberships(param) {
                                                                 children: "Approve Member"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 297,
+                                                                lineNumber: 372,
                                                                 columnNumber: 31
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 295,
+                                                        lineNumber: 370,
                                                         columnNumber: 28
                                                     }, this)
                                                 ]
                                             }, u.email, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 287,
+                                                lineNumber: 362,
                                                 columnNumber: 25
                                             }, this);
                                         })
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 279,
+                                        lineNumber: 354,
                                         columnNumber: 18
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 278,
+                                    lineNumber: 353,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                            lineNumber: 208,
+                            lineNumber: 276,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                        lineNumber: 207,
+                        lineNumber: 275,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                lineNumber: 172,
+                lineNumber: 238,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-        lineNumber: 119,
+        lineNumber: 182,
         columnNumber: 5
     }, this);
 }
@@ -1072,11 +1113,24 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/src/components/dashboard/admin/AdminReviews.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-__turbopack_context__.s([
+/**
+ * @file AdminReviews.tsx
+ * @description This component provides an interface for administrators to moderate user-submitted reviews.
+ * It allows admins to view pending, approved, and hidden (spam) reviews, and to take actions such as
+ * approving, hiding, or deleting them.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for the Review type definition
+ * @requires @/lib/store - for data persistence and retrieval functions
+ * @requires @/lib/utils - for utility functions like date formatting
+ * @requires @/components/ui/* - for various UI components (Button, Badge, Input, Tabs, etc.)
+ */ __turbopack_context__.s([
     "default",
     ()=>AdminReviews
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+// Import necessary libraries, types, and components
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/store.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
@@ -1105,10 +1159,19 @@ var _s = __turbopack_context__.k.signature();
 function AdminReviews(param) {
     let { onBack } = param;
     _s();
+    // --- STATE MANAGEMENT ---
+    // State to hold all reviews.
     const [reviews, setReviews] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    // State for the search query used to filter reviews.
     const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    // State to manage the active tab (pending, approved, hidden).
     const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('pending');
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+    // --- DATA FETCHING ---
+    /**
+   * @effect
+   * @description Fetches all reviews from the global app data on component mount.
+   * It also ensures that each review has a status, defaulting to 'approved' if not present.
+   */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AdminReviews.useEffect": ()=>{
             const { allReviews } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getGlobalAppData"])();
             setReviews(allReviews.map({
@@ -1119,12 +1182,17 @@ function AdminReviews(param) {
             }["AdminReviews.useEffect"]));
         }
     }["AdminReviews.useEffect"], []);
+    // --- MEMOIZED COMPUTATIONS ---
+    // Memoized list of reviews filtered by the active tab and search query.
     const filteredReviews = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "AdminReviews.useMemo[filteredReviews]": ()=>{
             return reviews.filter({
                 "AdminReviews.useMemo[filteredReviews]": (r)=>{
                     const matchesSearch = r.customer.toLowerCase().includes(searchQuery.toLowerCase()) || r.camp.toLowerCase().includes(searchQuery.toLowerCase()) || r.text.toLowerCase().includes(searchQuery.toLowerCase());
-                    if (activeTab === 'pending') return matchesSearch && (r.status === 'pending' || !r.status);
+                    if (activeTab === 'pending') {
+                        // The 'pending' tab should show reviews with status 'pending' or no status at all.
+                        return matchesSearch && (r.status === 'pending' || !r.status);
+                    }
                     return matchesSearch && r.status === activeTab;
                 }
             }["AdminReviews.useMemo[filteredReviews]"]);
@@ -1134,7 +1202,14 @@ function AdminReviews(param) {
         searchQuery,
         activeTab
     ]);
-    const handleAction = (id, email, action)=>{
+    // --- EVENT HANDLERS ---
+    /**
+   * @function handleAction
+   * @description Handles actions on a review, such as changing its status or deleting it.
+   * @param {string} id - The ID of the review.
+   * @param {string} email - The email of the user who wrote the review.
+   * @param {Review['status'] | 'delete'} action - The action to perform.
+   */ const handleAction = (id, email, action)=>{
         const userData = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getAppData"])(email);
         if (action === 'delete') {
             userData.reviews = userData.reviews.filter((r)=>r.id !== id);
@@ -1153,7 +1228,7 @@ function AdminReviews(param) {
             });
         }
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["saveAppData"])(email, userData);
-        // Refresh local state
+        // Update the local state to reflect the change immediately.
         setReviews((prev)=>{
             if (action === 'delete') return prev.filter((r)=>r.id !== id);
             return prev.map((r)=>r.id === id ? {
@@ -1162,6 +1237,7 @@ function AdminReviews(param) {
                 } : r);
         });
     };
+    // --- RENDER METHOD ---
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-8 pb-20 font-sans max-w-7xl mx-auto px-4 md:px-0 animate-in fade-in duration-500",
         children: [
@@ -1180,12 +1256,12 @@ function AdminReviews(param) {
                                 className: "text-slate-600"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                lineNumber: 78,
+                                lineNumber: 134,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                            lineNumber: 77,
+                            lineNumber: 133,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1195,7 +1271,7 @@ function AdminReviews(param) {
                                     children: "Review Moderation"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                    lineNumber: 82,
+                                    lineNumber: 138,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1203,24 +1279,24 @@ function AdminReviews(param) {
                                     children: "Audit platform feedback and manage spam"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                    lineNumber: 83,
+                                    lineNumber: 139,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                            lineNumber: 81,
+                            lineNumber: 137,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                    lineNumber: 75,
+                    lineNumber: 131,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                lineNumber: 74,
+                lineNumber: 130,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1234,7 +1310,7 @@ function AdminReviews(param) {
                                 className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                lineNumber: 90,
+                                lineNumber: 147,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1244,13 +1320,13 @@ function AdminReviews(param) {
                                 className: "pl-12 h-12 rounded-xl bg-slate-50 border-none font-bold text-[11px] uppercase"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                lineNumber: 91,
+                                lineNumber: 148,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                        lineNumber: 89,
+                        lineNumber: 146,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Tabs"], {
@@ -1266,7 +1342,7 @@ function AdminReviews(param) {
                                     children: "Auditing"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                    lineNumber: 100,
+                                    lineNumber: 157,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -1275,7 +1351,7 @@ function AdminReviews(param) {
                                     children: "Verified"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                    lineNumber: 101,
+                                    lineNumber: 158,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -1284,29 +1360,30 @@ function AdminReviews(param) {
                                     children: "Spam/Hidden"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                    lineNumber: 102,
+                                    lineNumber: 159,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                            lineNumber: 99,
+                            lineNumber: 156,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                        lineNumber: 98,
+                        lineNumber: 155,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                lineNumber: 88,
+                lineNumber: 145,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 md:grid-cols-2 gap-6",
-                children: filteredReviews.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                children: filteredReviews.length === 0 ? // Placeholder when no reviews are found
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "col-span-full py-32 text-center bg-white rounded-[40px] border border-dashed border-slate-200 opacity-50 flex flex-col items-center",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1315,12 +1392,12 @@ function AdminReviews(param) {
                                 size: 40
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                lineNumber: 111,
+                                lineNumber: 170,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                            lineNumber: 110,
+                            lineNumber: 169,
                             columnNumber: 14
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1328,15 +1405,16 @@ function AdminReviews(param) {
                             children: "No feedback in this audit queue"
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                            lineNumber: 113,
+                            lineNumber: 172,
                             columnNumber: 14
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                    lineNumber: 109,
+                    lineNumber: 168,
                     columnNumber: 11
-                }, this) : filteredReviews.map((r)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                }, this) : // Render the list of reviews
+                filteredReviews.map((r)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm relative group hover:shadow-xl transition-all border-l-[8px] border-l-primary/10 hover:border-l-primary",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1352,12 +1430,12 @@ function AdminReviews(param) {
                                                     className: "w-full h-full object-cover"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                                    lineNumber: 121,
+                                                    lineNumber: 182,
                                                     columnNumber: 37
                                                 }, this) : r.customer[0]
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                                lineNumber: 120,
+                                                lineNumber: 181,
                                                 columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1367,7 +1445,7 @@ function AdminReviews(param) {
                                                         children: r.customer
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                                        lineNumber: 124,
+                                                        lineNumber: 185,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1379,7 +1457,7 @@ function AdminReviews(param) {
                                                                 className: "text-amber-500"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                                                lineNumber: 126,
+                                                                lineNumber: 187,
                                                                 columnNumber: 28
                                                             }, this),
                                                             " ",
@@ -1389,19 +1467,19 @@ function AdminReviews(param) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                                        lineNumber: 125,
+                                                        lineNumber: 186,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                                lineNumber: 123,
+                                                lineNumber: 184,
                                                 columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                        lineNumber: 119,
+                                        lineNumber: 180,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1409,13 +1487,13 @@ function AdminReviews(param) {
                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["fmtDate"])(r.time)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                        lineNumber: 130,
+                                        lineNumber: 192,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                lineNumber: 118,
+                                lineNumber: 178,
                                 columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1426,7 +1504,7 @@ function AdminReviews(param) {
                                         children: "“"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                        lineNumber: 134,
+                                        lineNumber: 197,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1434,13 +1512,13 @@ function AdminReviews(param) {
                                         children: r.text
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                        lineNumber: 135,
+                                        lineNumber: 198,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                lineNumber: 133,
+                                lineNumber: 196,
                                 columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1455,14 +1533,14 @@ function AdminReviews(param) {
                                                 size: 14
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                                lineNumber: 141,
+                                                lineNumber: 206,
                                                 columnNumber: 24
                                             }, this),
                                             " Approve"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                        lineNumber: 140,
+                                        lineNumber: 205,
                                         columnNumber: 21
                                     }, this),
                                     activeTab !== 'hidden' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1475,14 +1553,14 @@ function AdminReviews(param) {
                                                 size: 14
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                                lineNumber: 146,
+                                                lineNumber: 212,
                                                 columnNumber: 24
                                             }, this),
                                             " Mark Spam"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                        lineNumber: 145,
+                                        lineNumber: 211,
                                         columnNumber: 21
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1495,37 +1573,37 @@ function AdminReviews(param) {
                                                 size: 14
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                                lineNumber: 150,
+                                                lineNumber: 217,
                                                 columnNumber: 22
                                             }, this),
                                             " Delete"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                        lineNumber: 149,
+                                        lineNumber: 216,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                                lineNumber: 138,
+                                lineNumber: 202,
                                 columnNumber: 16
                             }, this)
                         ]
                     }, r.id, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                        lineNumber: 117,
+                        lineNumber: 177,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-                lineNumber: 107,
+                lineNumber: 165,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminReviews.tsx",
-        lineNumber: 73,
+        lineNumber: 128,
         columnNumber: 5
     }, this);
 }
@@ -1540,11 +1618,24 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/src/components/dashboard/admin/AdminSupport.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-__turbopack_context__.s([
+/**
+ * @file AdminSupport.tsx
+ * @description This component provides an interface for administrators to manage support tickets.
+ * It allows viewing, filtering, searching, and updating the status of tickets. Actions include resolving,
+ * marking as in-progress, re-opening, escalating, and deleting tickets.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for the SupportTicket type definition
+ * @requires @/lib/store - for data persistence and retrieval functions
+ * @requires @/lib/utils - for utility functions like date formatting
+ * @requires @/components/ui/* - for various UI components (Button, Badge, Input, DropdownMenu, etc.)
+ */ __turbopack_context__.s([
     "default",
     ()=>AdminSupport
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+// Import necessary libraries, types, and components
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/store.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
@@ -1580,14 +1671,24 @@ var _s = __turbopack_context__.k.signature();
 function AdminSupport(param) {
     let { onBack } = param;
     _s();
+    // --- STATE MANAGEMENT ---
+    // State to hold all support tickets.
     const [tickets, setTickets] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    // State for the search query.
     const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    // State for the active filter tab.
     const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('all');
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+    // --- DATA FETCHING ---
+    /**
+   * @effect
+   * @description Fetches all support tickets from the store on component mount.
+   */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AdminSupport.useEffect": ()=>{
             setTickets((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getSupportTickets"])());
         }
     }["AdminSupport.useEffect"], []);
+    // --- MEMOIZED COMPUTATIONS ---
+    // Memoized list of tickets filtered by the active tab and search query.
     const filteredTickets = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useMemo"])({
         "AdminSupport.useMemo[filteredTickets]": ()=>{
             return tickets.filter({
@@ -1603,7 +1704,13 @@ function AdminSupport(param) {
         searchQuery,
         activeTab
     ]);
-    const updateStatus = (id, newStatus)=>{
+    // --- EVENT HANDLERS ---
+    /**
+   * @function updateStatus
+   * @description Updates the status of a support ticket.
+   * @param {string} id - The ID of the ticket to update.
+   * @param {SupportTicket['status']} newStatus - The new status to set.
+   */ const updateStatus = (id, newStatus)=>{
         const updated = tickets.map((t)=>t.id === id ? {
                 ...t,
                 status: newStatus,
@@ -1616,7 +1723,11 @@ function AdminSupport(param) {
             description: "Reference #".concat(id, " updated.")
         });
     };
-    const deleteTicket = (id)=>{
+    /**
+   * @function deleteTicket
+   * @description Deletes a support ticket.
+   * @param {string} id - The ID of the ticket to delete.
+   */ const deleteTicket = (id)=>{
         const updated = tickets.filter((t)=>t.id !== id);
         setTickets(updated);
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["saveSupportTickets"])(updated);
@@ -1625,6 +1736,7 @@ function AdminSupport(param) {
             title: 'Ticket Deleted'
         });
     };
+    // --- RENDER METHOD ---
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-8 pb-20 font-sans max-w-7xl mx-auto px-4 md:px-0 animate-in fade-in duration-500",
         children: [
@@ -1643,12 +1755,12 @@ function AdminSupport(param) {
                                 className: "text-slate-600"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                lineNumber: 81,
+                                lineNumber: 137,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                            lineNumber: 80,
+                            lineNumber: 136,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1658,7 +1770,7 @@ function AdminSupport(param) {
                                     children: "Support & Escalations"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                    lineNumber: 85,
+                                    lineNumber: 141,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1666,24 +1778,24 @@ function AdminSupport(param) {
                                     children: "Resolution Center for Complaints & Disputes"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                    lineNumber: 86,
+                                    lineNumber: 142,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                            lineNumber: 84,
+                            lineNumber: 140,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                    lineNumber: 78,
+                    lineNumber: 134,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                lineNumber: 77,
+                lineNumber: 133,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1697,7 +1809,7 @@ function AdminSupport(param) {
                                 className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                lineNumber: 93,
+                                lineNumber: 150,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1707,13 +1819,13 @@ function AdminSupport(param) {
                                 className: "pl-12 h-12 rounded-xl bg-slate-50 border-none font-bold text-[11px] uppercase"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                lineNumber: 94,
+                                lineNumber: 151,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                        lineNumber: 92,
+                        lineNumber: 149,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1729,23 +1841,24 @@ function AdminSupport(param) {
                                 children: tab
                             }, tab, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                lineNumber: 103,
+                                lineNumber: 160,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                        lineNumber: 101,
+                        lineNumber: 158,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                lineNumber: 91,
+                lineNumber: 148,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 gap-4",
-                children: filteredTickets.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                children: filteredTickets.length === 0 ? // Placeholder when no tickets are found
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "py-32 text-center bg-white rounded-[40px] border border-dashed border-slate-200 opacity-50 flex flex-col items-center",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1754,12 +1867,12 @@ function AdminSupport(param) {
                                 size: 40
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                lineNumber: 121,
+                                lineNumber: 180,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                            lineNumber: 120,
+                            lineNumber: 179,
                             columnNumber: 14
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1767,15 +1880,16 @@ function AdminSupport(param) {
                             children: "No support records found"
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                            lineNumber: 123,
+                            lineNumber: 182,
                             columnNumber: 14
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                    lineNumber: 119,
+                    lineNumber: 178,
                     columnNumber: 11
-                }, this) : filteredTickets.map((t)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                }, this) : // Render the list of tickets
+                filteredTickets.map((t)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "bg-white p-6 rounded-[28px] border border-slate-100 shadow-sm flex flex-col md:flex-row items-center gap-6 hover:shadow-lg transition-all group",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1784,18 +1898,18 @@ function AdminSupport(param) {
                                     size: 20
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                    lineNumber: 134,
+                                    lineNumber: 195,
                                     columnNumber: 47
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$message$2d$square$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MessageSquare$3e$__["MessageSquare"], {
                                     size: 20
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                    lineNumber: 134,
+                                    lineNumber: 195,
                                     columnNumber: 75
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                lineNumber: 128,
+                                lineNumber: 189,
                                 columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1813,7 +1927,7 @@ function AdminSupport(param) {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                lineNumber: 139,
+                                                lineNumber: 201,
                                                 columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1821,7 +1935,7 @@ function AdminSupport(param) {
                                                 children: t.status
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                lineNumber: 140,
+                                                lineNumber: 202,
                                                 columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1829,13 +1943,13 @@ function AdminSupport(param) {
                                                 children: t.category
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                lineNumber: 147,
+                                                lineNumber: 209,
                                                 columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                        lineNumber: 138,
+                                        lineNumber: 200,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -1843,7 +1957,7 @@ function AdminSupport(param) {
                                         children: t.subject
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                        lineNumber: 149,
+                                        lineNumber: 212,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1857,7 +1971,7 @@ function AdminSupport(param) {
                                                         className: "text-primary"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                        lineNumber: 151,
+                                                        lineNumber: 215,
                                                         columnNumber: 66
                                                     }, this),
                                                     " ",
@@ -1865,7 +1979,7 @@ function AdminSupport(param) {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                lineNumber: 151,
+                                                lineNumber: 215,
                                                 columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1876,7 +1990,7 @@ function AdminSupport(param) {
                                                         className: "text-primary"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                        lineNumber: 152,
+                                                        lineNumber: 216,
                                                         columnNumber: 66
                                                     }, this),
                                                     " ",
@@ -1884,19 +1998,19 @@ function AdminSupport(param) {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                lineNumber: 152,
+                                                lineNumber: 216,
                                                 columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                        lineNumber: 150,
+                                        lineNumber: 214,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                lineNumber: 137,
+                                lineNumber: 198,
                                 columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1912,12 +2026,12 @@ function AdminSupport(param) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                            lineNumber: 158,
+                                            lineNumber: 224,
                                             columnNumber: 22
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                        lineNumber: 157,
+                                        lineNumber: 223,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1932,14 +2046,14 @@ function AdminSupport(param) {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                        lineNumber: 172,
+                                                        lineNumber: 239,
                                                         columnNumber: 25
                                                     }, this),
                                                     " Resolve"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                lineNumber: 167,
+                                                lineNumber: 234,
                                                 columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenu"], {
@@ -1954,17 +2068,17 @@ function AdminSupport(param) {
                                                                 size: 16
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                lineNumber: 177,
+                                                                lineNumber: 245,
                                                                 columnNumber: 116
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                            lineNumber: 177,
+                                                            lineNumber: 245,
                                                             columnNumber: 28
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                        lineNumber: 176,
+                                                        lineNumber: 244,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuContent"], {
@@ -1976,7 +2090,7 @@ function AdminSupport(param) {
                                                                 children: "Lifecycle Actions"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                lineNumber: 180,
+                                                                lineNumber: 248,
                                                                 columnNumber: 28
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -1988,14 +2102,14 @@ function AdminSupport(param) {
                                                                         className: "text-blue-500"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                        lineNumber: 182,
+                                                                        lineNumber: 250,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     " Mark In-Progress"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                lineNumber: 181,
+                                                                lineNumber: 249,
                                                                 columnNumber: 28
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -2007,14 +2121,14 @@ function AdminSupport(param) {
                                                                         className: "text-amber-500"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                        lineNumber: 185,
+                                                                        lineNumber: 253,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     " Re-open Ticket"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                lineNumber: 184,
+                                                                lineNumber: 252,
                                                                 columnNumber: 28
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -2025,14 +2139,14 @@ function AdminSupport(param) {
                                                                         className: "text-orange-500"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                        lineNumber: 188,
+                                                                        lineNumber: 256,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     " Escalate Further"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                lineNumber: 187,
+                                                                lineNumber: 255,
                                                                 columnNumber: 28
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -2043,55 +2157,55 @@ function AdminSupport(param) {
                                                                         size: 14
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                        lineNumber: 191,
+                                                                        lineNumber: 259,
                                                                         columnNumber: 31
                                                                     }, this),
                                                                     " Delete Record"
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                                lineNumber: 190,
+                                                                lineNumber: 258,
                                                                 columnNumber: 28
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                        lineNumber: 179,
+                                                        lineNumber: 247,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                                lineNumber: 175,
+                                                lineNumber: 243,
                                                 columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                        lineNumber: 166,
+                                        lineNumber: 232,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                                lineNumber: 156,
+                                lineNumber: 221,
                                 columnNumber: 16
                             }, this)
                         ]
                     }, t.id, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                        lineNumber: 127,
+                        lineNumber: 187,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-                lineNumber: 117,
+                lineNumber: 175,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminSupport.tsx",
-        lineNumber: 76,
+        lineNumber: 131,
         columnNumber: 5
     }, this);
 }
@@ -2106,11 +2220,24 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/src/components/dashboard/admin/CouponManagement.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-__turbopack_context__.s([
+/**
+ * @file CouponManagement.tsx
+ * @description This component provides an interface for administrators to manage discount coupons and promotional campaigns.
+ * It allows for creating new coupons with various parameters (code, discount type, value, usage limits, etc.),
+ * viewing existing coupons, and managing their status (activating/deactivating) or deleting them.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for the Coupon type definition
+ * @requires @/lib/store - for data persistence functions (getCoupons, saveCoupons)
+ * @requires @/lib/utils - for utility functions like cn, fmt, and uid
+ * @requires @/components/ui/* - for various UI components (Button, Dialog, Input, Select, etc.)
+ */ __turbopack_context__.s([
     "default",
     ()=>CouponManagement
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+// Import necessary libraries, types, and components
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/store.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
@@ -2144,8 +2271,12 @@ var _s = __turbopack_context__.k.signature();
 function CouponManagement(param) {
     let { onBack } = param;
     _s();
+    // --- STATE MANAGEMENT ---
+    // State to hold all coupons.
     const [coupons, setCoupons] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
+    // State to control the visibility of the "Add Coupon" dialog.
     const [isAddOpen, setIsAddOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    // State for the new coupon being created in the form.
     const [newCoupon, setNewCoupon] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
         code: '',
         discountType: 'percentage',
@@ -2155,12 +2286,21 @@ function CouponManagement(param) {
         expiryDate: '',
         isActive: true
     });
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+    // --- DATA FETCHING ---
+    /**
+   * @effect
+   * @description Fetches all coupons from the store on component mount.
+   */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "CouponManagement.useEffect": ()=>{
             setCoupons((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getCoupons"])());
         }
     }["CouponManagement.useEffect"], []);
-    const handleCreate = (e)=>{
+    // --- EVENT HANDLERS ---
+    /**
+   * @function handleCreate
+   * @description Handles the creation of a new coupon campaign.
+   * @param {React.FormEvent} e - The form submission event.
+   */ const handleCreate = (e)=>{
         e.preventDefault();
         const coupon = {
             id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["uid"])(),
@@ -2185,7 +2325,11 @@ function CouponManagement(param) {
             description: "Coupon ".concat(coupon.code, " is now live.")
         });
     };
-    const toggleStatus = (id)=>{
+    /**
+   * @function toggleStatus
+   * @description Toggles the active status of a coupon.
+   * @param {string} id - The ID of the coupon to update.
+   */ const toggleStatus = (id)=>{
         const updated = coupons.map((c)=>c.id === id ? {
                 ...c,
                 isActive: !c.isActive
@@ -2196,7 +2340,11 @@ function CouponManagement(param) {
             title: 'Campaign Updated'
         });
     };
-    const deleteCoupon = (id)=>{
+    /**
+   * @function deleteCoupon
+   * @description Deletes a coupon.
+   * @param {string} id - The ID of the coupon to delete.
+   */ const deleteCoupon = (id)=>{
         const updated = coupons.filter((c)=>c.id !== id);
         setCoupons(updated);
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["saveCoupons"])(updated);
@@ -2205,6 +2353,7 @@ function CouponManagement(param) {
             title: 'Campaign Terminated'
         });
     };
+    // --- RENDER METHOD ---
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-8 pb-20 font-sans max-w-7xl mx-auto px-4 md:px-0 animate-in fade-in duration-500",
         children: [
@@ -2224,12 +2373,12 @@ function CouponManagement(param) {
                                     className: "text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                    lineNumber: 94,
+                                    lineNumber: 150,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                lineNumber: 93,
+                                lineNumber: 149,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2239,7 +2388,7 @@ function CouponManagement(param) {
                                         children: "Coupon & Campaign Hub"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 98,
+                                        lineNumber: 154,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2247,19 +2396,19 @@ function CouponManagement(param) {
                                         children: "Manage seasonal offers and promotional discounts"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 99,
+                                        lineNumber: 155,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                lineNumber: 97,
+                                lineNumber: 153,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                        lineNumber: 91,
+                        lineNumber: 147,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -2275,19 +2424,19 @@ function CouponManagement(param) {
                                             size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                            lineNumber: 105,
+                                            lineNumber: 162,
                                             columnNumber: 15
                                         }, this),
                                         " New Campaign"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                    lineNumber: 104,
+                                    lineNumber: 161,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                lineNumber: 103,
+                                lineNumber: 160,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogContent"], {
@@ -2299,12 +2448,12 @@ function CouponManagement(param) {
                                             children: "Create Coupon Campaign"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                            lineNumber: 110,
+                                            lineNumber: 167,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 109,
+                                        lineNumber: 166,
                                         columnNumber: 14
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2315,7 +2464,7 @@ function CouponManagement(param) {
                                                 children: "Discount Logic"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 113,
+                                                lineNumber: 170,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2323,13 +2472,13 @@ function CouponManagement(param) {
                                                 children: "Configure your promotional campaign"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 114,
+                                                lineNumber: 171,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 112,
+                                        lineNumber: 169,
                                         columnNumber: 14
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -2344,7 +2493,7 @@ function CouponManagement(param) {
                                                         children: "Coupon Code"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 118,
+                                                        lineNumber: 176,
                                                         columnNumber: 20
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2358,13 +2507,13 @@ function CouponManagement(param) {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 119,
+                                                        lineNumber: 177,
                                                         columnNumber: 20
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 117,
+                                                lineNumber: 175,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2378,7 +2527,7 @@ function CouponManagement(param) {
                                                                 children: "Discount Type"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                lineNumber: 123,
+                                                                lineNumber: 181,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -2392,12 +2541,12 @@ function CouponManagement(param) {
                                                                         className: "rounded-xl h-12 font-bold",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                            lineNumber: 125,
+                                                                            lineNumber: 183,
                                                                             columnNumber: 79
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                        lineNumber: 125,
+                                                                        lineNumber: 183,
                                                                         columnNumber: 26
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -2407,7 +2556,7 @@ function CouponManagement(param) {
                                                                                 children: "Percentage (%)"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                                lineNumber: 127,
+                                                                                lineNumber: 185,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -2415,25 +2564,25 @@ function CouponManagement(param) {
                                                                                 children: "Fixed Amount (₹)"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                                lineNumber: 128,
+                                                                                lineNumber: 186,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                        lineNumber: 126,
+                                                                        lineNumber: 184,
                                                                         columnNumber: 26
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                lineNumber: 124,
+                                                                lineNumber: 182,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 122,
+                                                        lineNumber: 180,
                                                         columnNumber: 20
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2444,7 +2593,7 @@ function CouponManagement(param) {
                                                                 children: "Value"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                lineNumber: 133,
+                                                                lineNumber: 191,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2458,19 +2607,19 @@ function CouponManagement(param) {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                lineNumber: 134,
+                                                                lineNumber: 192,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 132,
+                                                        lineNumber: 190,
                                                         columnNumber: 20
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 121,
+                                                lineNumber: 179,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2484,7 +2633,7 @@ function CouponManagement(param) {
                                                                 children: "Min. Booking (₹)"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                lineNumber: 139,
+                                                                lineNumber: 197,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2497,13 +2646,13 @@ function CouponManagement(param) {
                                                                 className: "rounded-xl h-12 font-bold"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                lineNumber: 140,
+                                                                lineNumber: 198,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 138,
+                                                        lineNumber: 196,
                                                         columnNumber: 20
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2514,7 +2663,7 @@ function CouponManagement(param) {
                                                                 children: "Expiry Date"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                lineNumber: 143,
+                                                                lineNumber: 201,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -2528,19 +2677,19 @@ function CouponManagement(param) {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                                lineNumber: 144,
+                                                                lineNumber: 202,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 142,
+                                                        lineNumber: 200,
                                                         columnNumber: 20
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 137,
+                                                lineNumber: 195,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2549,36 +2698,37 @@ function CouponManagement(param) {
                                                 children: "Commit Campaign"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 147,
+                                                lineNumber: 205,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 116,
+                                        lineNumber: 174,
                                         columnNumber: 14
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                lineNumber: 108,
+                                lineNumber: 165,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                        lineNumber: 102,
+                        lineNumber: 159,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                lineNumber: 90,
+                lineNumber: 146,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
-                children: coupons.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                children: coupons.length === 0 ? // Placeholder when no coupons exist
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "col-span-full py-32 text-center bg-white rounded-[40px] border border-dashed border-slate-200 opacity-50 flex flex-col items-center",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2587,12 +2737,12 @@ function CouponManagement(param) {
                                 size: 40
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                lineNumber: 157,
+                                lineNumber: 217,
                                 columnNumber: 17
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                            lineNumber: 156,
+                            lineNumber: 216,
                             columnNumber: 14
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2600,15 +2750,16 @@ function CouponManagement(param) {
                             children: "No active campaigns"
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                            lineNumber: 159,
+                            lineNumber: 219,
                             columnNumber: 14
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                    lineNumber: 155,
+                    lineNumber: 215,
                     columnNumber: 11
-                }, this) : coupons.map((c)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                }, this) : // Render the list of coupons
+                coupons.map((c)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("bg-white p-6 rounded-[32px] border shadow-sm relative overflow-hidden transition-all hover:shadow-xl", c.isActive ? "border-slate-100" : "border-slate-100 opacity-60 grayscale"),
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2620,12 +2771,12 @@ function CouponManagement(param) {
                                             size: 24
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                            lineNumber: 169,
+                                            lineNumber: 230,
                                             columnNumber: 22
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 168,
+                                        lineNumber: 229,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2638,18 +2789,18 @@ function CouponManagement(param) {
                                                     size: 16
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                    lineNumber: 173,
+                                                    lineNumber: 235,
                                                     columnNumber: 39
                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
                                                     size: 16
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                    lineNumber: 173,
+                                                    lineNumber: 235,
                                                     columnNumber: 59
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 172,
+                                                lineNumber: 234,
                                                 columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2659,24 +2810,24 @@ function CouponManagement(param) {
                                                     size: 16
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                    lineNumber: 176,
+                                                    lineNumber: 238,
                                                     columnNumber: 25
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 175,
+                                                lineNumber: 237,
                                                 columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 171,
+                                        lineNumber: 233,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                lineNumber: 167,
+                                lineNumber: 228,
                                 columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2689,7 +2840,7 @@ function CouponManagement(param) {
                                                 children: c.code
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 183,
+                                                lineNumber: 245,
                                                 columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2701,13 +2852,13 @@ function CouponManagement(param) {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 184,
+                                                lineNumber: 246,
                                                 columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 182,
+                                        lineNumber: 244,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2721,7 +2872,7 @@ function CouponManagement(param) {
                                                         children: "USAGE"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 191,
+                                                        lineNumber: 253,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2733,13 +2884,13 @@ function CouponManagement(param) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 192,
+                                                        lineNumber: 254,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 190,
+                                                lineNumber: 252,
                                                 columnNumber: 22
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2750,7 +2901,7 @@ function CouponManagement(param) {
                                                         children: "MIN. SPEND"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 195,
+                                                        lineNumber: 257,
                                                         columnNumber: 25
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2758,19 +2909,19 @@ function CouponManagement(param) {
                                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["fmt"])(c.minBookingValue)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                        lineNumber: 196,
+                                                        lineNumber: 258,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 194,
+                                                lineNumber: 256,
                                                 columnNumber: 22
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 189,
+                                        lineNumber: 251,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2781,7 +2932,7 @@ function CouponManagement(param) {
                                                 className: "text-primary"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                                lineNumber: 201,
+                                                lineNumber: 263,
                                                 columnNumber: 22
                                             }, this),
                                             " EXP: ",
@@ -2789,37 +2940,37 @@ function CouponManagement(param) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                        lineNumber: 200,
+                                        lineNumber: 262,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                lineNumber: 181,
+                                lineNumber: 243,
                                 columnNumber: 16
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "absolute -bottom-2 -right-2 w-20 h-20 bg-primary/5 rounded-full blur-2xl"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                                lineNumber: 204,
+                                lineNumber: 266,
                                 columnNumber: 16
                             }, this)
                         ]
                     }, c.id, true, {
                         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                        lineNumber: 163,
+                        lineNumber: 224,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-                lineNumber: 153,
+                lineNumber: 212,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/CouponManagement.tsx",
-        lineNumber: 89,
+        lineNumber: 144,
         columnNumber: 5
     }, this);
 }
@@ -2834,11 +2985,24 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/src/components/dashboard/admin/ContentManagement.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-__turbopack_context__.s([
+/**
+ * @file ContentManagement.tsx
+ * @description This component provides a Content Management System (CMS) interface for administrators.
+ * It allows for the management of various content types across the platform, including homepage content (hero titles, subtitles, banners),
+ * blog posts, Frequently Asked Questions (FAQs), and legal documents (Terms & Conditions, Privacy Policy). It also includes a section for SEO settings.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for CMS content type definitions (CMSContent, FAQ, BlogPost)
+ * @requires @/lib/store - for data persistence functions (getCMSContent, saveCMSContent)
+ * @requires @/lib/utils - for utility functions like cn and uid
+ * @requires @/components/ui/* - for various UI components (Button, Tabs, Input, Textarea, etc.)
+ */ __turbopack_context__.s([
     "default",
     ()=>ContentManagement
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+// Import necessary libraries, types, and components
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/store.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
@@ -2875,13 +3039,23 @@ var _s = __turbopack_context__.k.signature();
 function ContentManagement(param) {
     let { onBack } = param;
     _s();
+    // --- STATE MANAGEMENT ---
+    // State to hold the entire CMS content structure.
     const [content, setContent] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+    // --- DATA FETCHING ---
+    /**
+   * @effect
+   * @description Fetches the CMS content from the store on component mount.
+   */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ContentManagement.useEffect": ()=>{
             setContent((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getCMSContent"])());
         }
     }["ContentManagement.useEffect"], []);
-    const handleSave = ()=>{
+    // --- EVENT HANDLERS ---
+    /**
+   * @function handleSave
+   * @description Saves the current state of the content to the store and shows a toast notification.
+   */ const handleSave = ()=>{
         if (content) {
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["saveCMSContent"])(content);
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"])({
@@ -2890,7 +3064,13 @@ function ContentManagement(param) {
             });
         }
     };
-    const updateFaq = (index, field, value)=>{
+    /**
+   * @function updateFaq
+   * @description Updates a specific field of a FAQ item.
+   * @param {number} index - The index of the FAQ to update.
+   * @param {keyof FAQ} field - The field to update (e.g., 'question', 'answer').
+   * @param {string} value - The new value for the field.
+   */ const updateFaq = (index, field, value)=>{
         if (!content) return;
         const newFaqs = [
             ...content.faqs
@@ -2904,7 +3084,11 @@ function ContentManagement(param) {
             faqs: newFaqs
         });
     };
-    const removeFaq = (index)=>{
+    /**
+   * @function removeFaq
+   * @description Removes a FAQ item from the list.
+   * @param {number} index - The index of the FAQ to remove.
+   */ const removeFaq = (index)=>{
         if (!content) return;
         const newFaqs = content.faqs.filter((_, i)=>i !== index);
         setContent({
@@ -2912,7 +3096,10 @@ function ContentManagement(param) {
             faqs: newFaqs
         });
     };
-    const addFaq = ()=>{
+    /**
+   * @function addFaq
+   * @description Adds a new, empty FAQ item to the list.
+   */ const addFaq = ()=>{
         if (!content) return;
         const newFaqs = [
             ...content.faqs,
@@ -2927,6 +3114,8 @@ function ContentManagement(param) {
             faqs: newFaqs
         });
     };
+    // --- RENDER METHOD ---
+    // Return null if content is not yet loaded to prevent rendering errors.
     if (!content) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-8 pb-20 font-sans max-w-7xl mx-auto px-4 md:px-0 animate-in fade-in duration-500",
@@ -2947,12 +3136,12 @@ function ContentManagement(param) {
                                     className: "text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                    lineNumber: 79,
+                                    lineNumber: 139,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 78,
+                                lineNumber: 138,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2962,7 +3151,7 @@ function ContentManagement(param) {
                                         children: "CMS & Content Portal"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 83,
+                                        lineNumber: 143,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2970,19 +3159,19 @@ function ContentManagement(param) {
                                         children: "Global Content Orchestration"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 84,
+                                        lineNumber: 144,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 82,
+                                lineNumber: 142,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                        lineNumber: 76,
+                        lineNumber: 136,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -2993,20 +3182,20 @@ function ContentManagement(param) {
                                 size: 16
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 88,
+                                lineNumber: 148,
                                 columnNumber: 12
                             }, this),
                             " Publish Changes"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                        lineNumber: 87,
+                        lineNumber: 147,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                lineNumber: 75,
+                lineNumber: 135,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Tabs"], {
@@ -3024,14 +3213,14 @@ function ContentManagement(param) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 94,
+                                        lineNumber: 154,
                                         columnNumber: 144
                                     }, this),
                                     " Homepage"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 94,
+                                lineNumber: 154,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -3042,14 +3231,14 @@ function ContentManagement(param) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 95,
+                                        lineNumber: 155,
                                         columnNumber: 141
                                     }, this),
                                     " Blogs"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 95,
+                                lineNumber: 155,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -3060,14 +3249,14 @@ function ContentManagement(param) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 96,
+                                        lineNumber: 156,
                                         columnNumber: 140
                                     }, this),
                                     " FAQs"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 96,
+                                lineNumber: 156,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -3078,14 +3267,14 @@ function ContentManagement(param) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 97,
+                                        lineNumber: 157,
                                         columnNumber: 141
                                     }, this),
                                     " Legal"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 97,
+                                lineNumber: 157,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -3096,20 +3285,20 @@ function ContentManagement(param) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 98,
+                                        lineNumber: 158,
                                         columnNumber: 139
                                     }, this),
                                     " SEO"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 98,
+                                lineNumber: 158,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                        lineNumber: 93,
+                        lineNumber: 153,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -3128,7 +3317,7 @@ function ContentManagement(param) {
                                                 children: "Hero Section Heading"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                lineNumber: 105,
+                                                lineNumber: 166,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3143,7 +3332,7 @@ function ContentManagement(param) {
                                                 className: "rounded-xl h-12 font-black"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                lineNumber: 106,
+                                                lineNumber: 167,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
@@ -3151,7 +3340,7 @@ function ContentManagement(param) {
                                                 children: "Hero Subtitle"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                lineNumber: 111,
+                                                lineNumber: 172,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -3166,13 +3355,13 @@ function ContentManagement(param) {
                                                 className: "rounded-xl min-h-[100px] font-bold"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                lineNumber: 112,
+                                                lineNumber: 173,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 104,
+                                        lineNumber: 165,
                                         columnNumber: 18
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3183,7 +3372,7 @@ function ContentManagement(param) {
                                                 children: "Promotional Banners (URLs)"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                lineNumber: 119,
+                                                lineNumber: 180,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3198,7 +3387,7 @@ function ContentManagement(param) {
                                                                     readOnly: true
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                                    lineNumber: 123,
+                                                                    lineNumber: 184,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3209,18 +3398,18 @@ function ContentManagement(param) {
                                                                         size: 16
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                                        lineNumber: 124,
+                                                                        lineNumber: 185,
                                                                         columnNumber: 132
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                                    lineNumber: 124,
+                                                                    lineNumber: 185,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
                                                         }, i, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                            lineNumber: 122,
+                                                            lineNumber: 183,
                                                             columnNumber: 26
                                                         }, this)),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3229,35 +3418,35 @@ function ContentManagement(param) {
                                                         children: "+ Add Banner"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                        lineNumber: 127,
+                                                        lineNumber: 188,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                lineNumber: 120,
+                                                lineNumber: 181,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 118,
+                                        lineNumber: 179,
                                         columnNumber: 18
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 103,
+                                lineNumber: 164,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                            lineNumber: 102,
+                            lineNumber: 163,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                        lineNumber: 101,
+                        lineNumber: 162,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -3272,7 +3461,7 @@ function ContentManagement(param) {
                                         children: "Article Registry"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 136,
+                                        lineNumber: 198,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3282,13 +3471,13 @@ function ContentManagement(param) {
                                         children: "+ New Draft"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 137,
+                                        lineNumber: 199,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 135,
+                                lineNumber: 197,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3303,12 +3492,12 @@ function ContentManagement(param) {
                                                     className: "w-full h-full object-cover"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 143,
+                                                    lineNumber: 205,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                lineNumber: 142,
+                                                lineNumber: 204,
                                                 columnNumber: 20
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3319,7 +3508,7 @@ function ContentManagement(param) {
                                                         children: blog.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                        lineNumber: 146,
+                                                        lineNumber: 208,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3331,13 +3520,13 @@ function ContentManagement(param) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                        lineNumber: 147,
+                                                        lineNumber: 209,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                lineNumber: 145,
+                                                lineNumber: 207,
                                                 columnNumber: 20
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3351,12 +3540,12 @@ function ContentManagement(param) {
                                                             size: 14
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                            lineNumber: 150,
+                                                            lineNumber: 212,
                                                             columnNumber: 92
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                        lineNumber: 150,
+                                                        lineNumber: 212,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3367,35 +3556,35 @@ function ContentManagement(param) {
                                                             size: 14
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                            lineNumber: 151,
+                                                            lineNumber: 213,
                                                             columnNumber: 124
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                        lineNumber: 151,
+                                                        lineNumber: 213,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                lineNumber: 149,
+                                                lineNumber: 211,
                                                 columnNumber: 20
                                             }, this)
                                         ]
                                     }, blog.id, true, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 141,
+                                        lineNumber: 203,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 139,
+                                lineNumber: 201,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                        lineNumber: 134,
+                        lineNumber: 196,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -3420,7 +3609,7 @@ function ContentManagement(param) {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                            lineNumber: 164,
+                                                            lineNumber: 227,
                                                             columnNumber: 26
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3430,18 +3619,18 @@ function ContentManagement(param) {
                                                                 size: 14
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                                lineNumber: 165,
+                                                                lineNumber: 228,
                                                                 columnNumber: 125
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                            lineNumber: 165,
+                                                            lineNumber: 228,
                                                             columnNumber: 26
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 163,
+                                                    lineNumber: 226,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3450,7 +3639,7 @@ function ContentManagement(param) {
                                                     className: "rounded-xl h-11 font-black text-xs"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 167,
+                                                    lineNumber: 230,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -3459,13 +3648,13 @@ function ContentManagement(param) {
                                                     className: "rounded-xl min-h-[80px] text-xs font-bold"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 172,
+                                                    lineNumber: 235,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, i, true, {
                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                            lineNumber: 162,
+                                            lineNumber: 225,
                                             columnNumber: 20
                                         }, this)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -3475,23 +3664,23 @@ function ContentManagement(param) {
                                         children: "+ Add Query"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                        lineNumber: 179,
+                                        lineNumber: 242,
                                         columnNumber: 18
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                lineNumber: 160,
+                                lineNumber: 223,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                            lineNumber: 159,
+                            lineNumber: 222,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                        lineNumber: 158,
+                        lineNumber: 221,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -3508,7 +3697,7 @@ function ContentManagement(param) {
                                             children: "Terms & Conditions"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                            lineNumber: 187,
+                                            lineNumber: 251,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -3523,13 +3712,13 @@ function ContentManagement(param) {
                                             className: "rounded-xl min-h-[400px] text-xs font-medium leading-relaxed bg-slate-50/50"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                            lineNumber: 188,
+                                            lineNumber: 252,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                    lineNumber: 186,
+                                    lineNumber: 250,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3540,7 +3729,7 @@ function ContentManagement(param) {
                                             children: "Privacy Policy"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                            lineNumber: 195,
+                                            lineNumber: 259,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -3555,24 +3744,24 @@ function ContentManagement(param) {
                                             className: "rounded-xl min-h-[400px] text-xs font-medium leading-relaxed bg-slate-50/50"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                            lineNumber: 196,
+                                            lineNumber: 260,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                    lineNumber: 194,
+                                    lineNumber: 258,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                            lineNumber: 185,
+                            lineNumber: 249,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                        lineNumber: 184,
+                        lineNumber: 248,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -3586,7 +3775,7 @@ function ContentManagement(param) {
                                     children: "Metadata Control"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                    lineNumber: 207,
+                                    lineNumber: 272,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3600,7 +3789,7 @@ function ContentManagement(param) {
                                                     children: "Global Page Title"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 210,
+                                                    lineNumber: 275,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3608,13 +3797,13 @@ function ContentManagement(param) {
                                                     className: "rounded-xl h-12 font-bold"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 211,
+                                                    lineNumber: 276,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                            lineNumber: 209,
+                                            lineNumber: 274,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3625,7 +3814,7 @@ function ContentManagement(param) {
                                                     children: "Meta Keywords"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 214,
+                                                    lineNumber: 279,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3633,13 +3822,13 @@ function ContentManagement(param) {
                                                     className: "rounded-xl h-12 font-bold"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 215,
+                                                    lineNumber: 280,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                            lineNumber: 213,
+                                            lineNumber: 278,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3650,7 +3839,7 @@ function ContentManagement(param) {
                                                     children: "Google Analytics ID"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 218,
+                                                    lineNumber: 283,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3658,42 +3847,42 @@ function ContentManagement(param) {
                                                     className: "rounded-xl h-12 font-mono text-xs uppercase"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                                    lineNumber: 219,
+                                                    lineNumber: 284,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                            lineNumber: 217,
+                                            lineNumber: 282,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                                    lineNumber: 208,
+                                    lineNumber: 273,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                            lineNumber: 206,
+                            lineNumber: 271,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                        lineNumber: 205,
+                        lineNumber: 270,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-                lineNumber: 92,
+                lineNumber: 152,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/ContentManagement.tsx",
-        lineNumber: 74,
+        lineNumber: 133,
         columnNumber: 5
     }, this);
 }
@@ -3708,11 +3897,23 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "[project]/src/components/dashboard/admin/CommunicationsHub.tsx [app-client] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-__turbopack_context__.s([
+/**
+ * @file CommunicationsHub.tsx
+ * @description This component provides a centralized hub for administrators to manage omnichannel communications.
+ * It allows for the creation and sending of campaigns via different channels like email, push notifications, SMS, and platform announcements.
+ * It also includes a history log of past campaigns.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/utils - for utility functions like cn and uid
+ * @requires @/lib/store - for adding admin notifications
+ * @requires @/components/ui/* - for various UI components (Button, Tabs, Input, Textarea, Select, etc.)
+ */ __turbopack_context__.s([
     "default",
     ()=>CommunicationsHub
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
+// Import necessary libraries, types, and components
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/hooks/use-toast.ts [app-client] (ecmascript)");
@@ -3752,13 +3953,17 @@ var _s = __turbopack_context__.k.signature();
 function CommunicationsHub(param) {
     let { onBack } = param;
     _s();
+    // --- STATE MANAGEMENT ---
+    // State to manage the currently selected communication channel.
     const [activeChannel, setActiveChannel] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('email');
+    // State for the campaign creation form.
     const [campaign, setCampaign] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
         title: '',
         message: '',
         target: 'all',
         schedule: 'immediate'
     });
+    // Static state for campaign history (in a real app, this would be fetched from a backend).
     const [history] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([
         {
             id: '1',
@@ -3785,9 +3990,15 @@ function CommunicationsHub(param) {
             date: '2025-01-20'
         }
     ]);
-    const handleSend = (e)=>{
+    // --- EVENT HANDLERS ---
+    /**
+   * @function handleSend
+   * @description Handles the submission of the campaign form, sending the communication.
+   * @param {React.FormEvent} e - The form submission event.
+   */ const handleSend = (e)=>{
         e.preventDefault();
         if (!campaign.title || !campaign.message) return;
+        // If the channel is 'announcement', add it to the admin notifications in the store.
         if (activeChannel === 'announcement') {
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["addAdminNotification"])({
                 id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["uid"])(),
@@ -3802,6 +4013,7 @@ function CommunicationsHub(param) {
             title: 'Campaign Broadcasted',
             description: "Message queued for ".concat(campaign.target, " explorers via ").concat(activeChannel.toUpperCase(), ".")
         });
+        // Reset the form after submission.
         setCampaign({
             title: '',
             message: '',
@@ -3809,6 +4021,7 @@ function CommunicationsHub(param) {
             schedule: 'immediate'
         });
     };
+    // --- RENDER METHOD ---
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-8 pb-20 font-sans max-w-7xl mx-auto px-4 md:px-0 animate-in fade-in duration-500",
         children: [
@@ -3827,12 +4040,12 @@ function CommunicationsHub(param) {
                                 className: "text-slate-600"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                lineNumber: 76,
+                                lineNumber: 118,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                            lineNumber: 75,
+                            lineNumber: 117,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3842,7 +4055,7 @@ function CommunicationsHub(param) {
                                     children: "Communications Hub"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                    lineNumber: 80,
+                                    lineNumber: 122,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3850,24 +4063,24 @@ function CommunicationsHub(param) {
                                     children: "Omnichannel Campaign Orchestration"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                    lineNumber: 81,
+                                    lineNumber: 123,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                            lineNumber: 79,
+                            lineNumber: 121,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                    lineNumber: 73,
+                    lineNumber: 115,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                lineNumber: 72,
+                lineNumber: 114,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3892,14 +4105,14 @@ function CommunicationsHub(param) {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 91,
+                                                        lineNumber: 134,
                                                         columnNumber: 135
                                                     }, this),
                                                     " Email"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                lineNumber: 91,
+                                                lineNumber: 134,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -3910,14 +4123,14 @@ function CommunicationsHub(param) {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 92,
+                                                        lineNumber: 135,
                                                         columnNumber: 134
                                                     }, this),
                                                     " Push"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                lineNumber: 92,
+                                                lineNumber: 135,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -3928,14 +4141,14 @@ function CommunicationsHub(param) {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 93,
+                                                        lineNumber: 136,
                                                         columnNumber: 133
                                                     }, this),
                                                     " SMS"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                lineNumber: 93,
+                                                lineNumber: 136,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -3946,20 +4159,20 @@ function CommunicationsHub(param) {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 94,
+                                                        lineNumber: 137,
                                                         columnNumber: 142
                                                     }, this),
                                                     " Alert"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                lineNumber: 94,
+                                                lineNumber: 137,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                        lineNumber: 90,
+                                        lineNumber: 133,
                                         columnNumber: 18
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -3977,7 +4190,7 @@ function CommunicationsHub(param) {
                                                                 children: "Campaign Title"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 100,
+                                                                lineNumber: 143,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -3991,13 +4204,13 @@ function CommunicationsHub(param) {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 101,
+                                                                lineNumber: 144,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 99,
+                                                        lineNumber: 142,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4008,7 +4221,7 @@ function CommunicationsHub(param) {
                                                                 children: "Target Audience"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 110,
+                                                                lineNumber: 153,
                                                                 columnNumber: 27
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -4022,12 +4235,12 @@ function CommunicationsHub(param) {
                                                                         className: "rounded-xl h-12 font-bold",
                                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                            lineNumber: 112,
+                                                                            lineNumber: 155,
                                                                             columnNumber: 83
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                        lineNumber: 112,
+                                                                        lineNumber: 155,
                                                                         columnNumber: 30
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -4037,7 +4250,7 @@ function CommunicationsHub(param) {
                                                                                 children: "All Ecosystem Users"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                                lineNumber: 114,
+                                                                                lineNumber: 157,
                                                                                 columnNumber: 33
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -4045,7 +4258,7 @@ function CommunicationsHub(param) {
                                                                                 children: "Explorers Only"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                                lineNumber: 115,
+                                                                                lineNumber: 158,
                                                                                 columnNumber: 33
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -4053,7 +4266,7 @@ function CommunicationsHub(param) {
                                                                                 children: "Partners (Organizers)"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                                lineNumber: 116,
+                                                                                lineNumber: 159,
                                                                                 columnNumber: 33
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -4061,31 +4274,31 @@ function CommunicationsHub(param) {
                                                                                 children: "Active Membership Tier"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                                lineNumber: 117,
+                                                                                lineNumber: 160,
                                                                                 columnNumber: 33
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                        lineNumber: 113,
+                                                                        lineNumber: 156,
                                                                         columnNumber: 30
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 111,
+                                                                lineNumber: 154,
                                                                 columnNumber: 27
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 109,
+                                                        lineNumber: 152,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                lineNumber: 98,
+                                                lineNumber: 141,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4096,7 +4309,7 @@ function CommunicationsHub(param) {
                                                         children: "Campaign Content"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 124,
+                                                        lineNumber: 167,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -4110,13 +4323,13 @@ function CommunicationsHub(param) {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 125,
+                                                        lineNumber: 168,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                lineNumber: 123,
+                                                lineNumber: 166,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4130,14 +4343,14 @@ function CommunicationsHub(param) {
                                                                 size: 18
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 136,
+                                                                lineNumber: 179,
                                                                 columnNumber: 27
                                                             }, this),
                                                             " Broadcast Now"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 135,
+                                                        lineNumber: 178,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -4149,42 +4362,42 @@ function CommunicationsHub(param) {
                                                                 size: 18
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 139,
+                                                                lineNumber: 182,
                                                                 columnNumber: 27
                                                             }, this),
                                                             " Schedule"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 138,
+                                                        lineNumber: 181,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                lineNumber: 134,
+                                                lineNumber: 177,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                        lineNumber: 97,
+                                        lineNumber: 140,
                                         columnNumber: 18
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                lineNumber: 89,
+                                lineNumber: 132,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                            lineNumber: 88,
+                            lineNumber: 131,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                        lineNumber: 87,
+                        lineNumber: 130,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4197,7 +4410,7 @@ function CommunicationsHub(param) {
                                     children: "TRANSMISSION LOG"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                    lineNumber: 149,
+                                    lineNumber: 193,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$scroll$2d$area$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollArea"], {
@@ -4215,7 +4428,7 @@ function CommunicationsHub(param) {
                                                                 children: item.channel
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 155,
+                                                                lineNumber: 199,
                                                                 columnNumber: 29
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4223,13 +4436,13 @@ function CommunicationsHub(param) {
                                                                 children: item.date
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 156,
+                                                                lineNumber: 200,
                                                                 columnNumber: 29
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 154,
+                                                        lineNumber: 198,
                                                         columnNumber: 26
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -4237,7 +4450,7 @@ function CommunicationsHub(param) {
                                                         children: item.title
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 158,
+                                                        lineNumber: 202,
                                                         columnNumber: 26
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4250,7 +4463,7 @@ function CommunicationsHub(param) {
                                                                         className: "w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                        lineNumber: 161,
+                                                                        lineNumber: 205,
                                                                         columnNumber: 32
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4258,13 +4471,13 @@ function CommunicationsHub(param) {
                                                                         children: item.status
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                        lineNumber: 162,
+                                                                        lineNumber: 206,
                                                                         columnNumber: 32
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 160,
+                                                                lineNumber: 204,
                                                                 columnNumber: 29
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4274,7 +4487,7 @@ function CommunicationsHub(param) {
                                                                         size: 12
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                        lineNumber: 165,
+                                                                        lineNumber: 209,
                                                                         columnNumber: 32
                                                                     }, this),
                                                                     " ",
@@ -4283,52 +4496,52 @@ function CommunicationsHub(param) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                                lineNumber: 164,
+                                                                lineNumber: 208,
                                                                 columnNumber: 29
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                        lineNumber: 159,
+                                                        lineNumber: 203,
                                                         columnNumber: 26
                                                     }, this)
                                                 ]
                                             }, item.id, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                                lineNumber: 153,
+                                                lineNumber: 197,
                                                 columnNumber: 23
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                        lineNumber: 151,
+                                        lineNumber: 195,
                                         columnNumber: 18
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                                    lineNumber: 150,
+                                    lineNumber: 194,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                            lineNumber: 148,
+                            lineNumber: 192,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                        lineNumber: 147,
+                        lineNumber: 191,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-                lineNumber: 86,
+                lineNumber: 128,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/CommunicationsHub.tsx",
-        lineNumber: 71,
+        lineNumber: 112,
         columnNumber: 5
     }, this);
 }

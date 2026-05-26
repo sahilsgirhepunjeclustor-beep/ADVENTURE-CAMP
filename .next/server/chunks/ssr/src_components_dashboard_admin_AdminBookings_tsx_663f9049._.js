@@ -2,11 +2,24 @@ module.exports = [
 "[project]/src/components/dashboard/admin/AdminBookings.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-__turbopack_context__.s([
+/**
+ * @file AdminBookings.tsx
+ * @description This component provides a comprehensive interface for administrators to manage all bookings on the platform.
+ * It includes features for viewing, filtering, searching, and updating booking statuses. It also allows for manual
+ * creation of bookings as an override mechanism.
+ *
+ * @requires react
+ * @requires lucide-react - for icons
+ * @requires @/lib/types - for application-specific type definitions (Booking, Camp)
+ * @requires @/lib/store - for data persistence and retrieval functions
+ * @requires @/lib/utils - for utility functions like formatting dates and currency
+ * @requires @/components/ui/* - for various UI components (Button, Badge, Table, Dialog, etc.)
+ */ __turbopack_context__.s([
     "default",
     ()=>AdminBookings
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+// Import necessary libraries, types, and components
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/store.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/utils.ts [app-ssr] (ecmascript)");
@@ -45,11 +58,16 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$s
 ;
 ;
 function AdminBookings({ initialFilter = 'All', onBack }) {
+    // --- STATE MANAGEMENT ---
+    // State for the current filter applied to the bookings table.
     const [filter, setFilter] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(initialFilter);
+    // State to trigger a refresh of the booking data.
     const [refreshKey, setRefreshKey] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
+    // State to control the visibility of the manual booking dialog.
     const [isManualBookingOpen, setIsManualBookingOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    // State for the search query used to filter bookings.
     const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
-    // Manual Booking Form State (Override)
+    // State for the manual booking form data.
     const [newBooking, setNewBooking] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         customer: '',
         customerEmail: '',
@@ -59,10 +77,14 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
         checkout: '',
         status: 'Confirmed'
     });
+    // --- DATA FETCHING & MEMOIZATION ---
+    // Memoized list of all approved camps, used for the manual booking form.
     const camps = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAllApprovedCamps"])(), []);
+    // Memoized and enriched booking data.
     const { enrichedBookings, summary } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
         const global = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getGlobalAppData"])();
         const allCamps = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAllApprovedCamps"])();
+        // Enrich bookings with organizer information and sort by date.
         const enriched = global.allBookings.map((b)=>{
             const camp = allCamps.find((c)=>c.id === b.campId);
             return {
@@ -70,6 +92,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                 organizer: camp?.organizer || 'Unknown Organizer'
             };
         }).sort((a, b)=>new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime());
+        // Calculate summary statistics.
         const confirmedCount = enriched.filter((b)=>b.status === 'Confirmed').length;
         const disputedCount = enriched.filter((b)=>b.status === 'Disputed').length;
         const totalRevenue = enriched.filter((b)=>b.status === 'Confirmed').reduce((s, b)=>s + b.amount, 0);
@@ -86,26 +109,39 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
         };
     }, [
         refreshKey
-    ]);
+    ]); // Recalculate when refreshKey changes.
+    // Filter bookings based on the current search query and filter selection.
     const filteredBookings = enrichedBookings.filter((b)=>{
         const matchesSearch = b.customer.toLowerCase().includes(searchQuery.toLowerCase()) || b.camp.toLowerCase().includes(searchQuery.toLowerCase()) || b.id.toLowerCase().includes(searchQuery.toLowerCase());
         if (filter === 'All') return matchesSearch;
         return b.status === filter && matchesSearch;
     });
-    const handleUpdateStatus = (bookingId, email, newStatus)=>{
+    // --- EVENT HANDLERS ---
+    /**
+   * @function handleUpdateStatus
+   * @description Updates the status of a specific booking.
+   * @param {string} bookingId - The ID of the booking to update.
+   * @param {string} email - The customer's email associated with the booking.
+   * @param {Booking['status']} newStatus - The new status to set.
+   */ const handleUpdateStatus = (bookingId, email, newStatus)=>{
         const data = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAppData"])(email);
         data.bookings = data.bookings.map((b)=>b.id === bookingId ? {
                 ...b,
                 status: newStatus
             } : b);
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["saveAppData"])(email, data);
-        setRefreshKey((prev)=>prev + 1);
+        setRefreshKey((prev)=>prev + 1); // Trigger a re-render
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"])({
             title: `Booking ${newStatus}`,
             description: `Action logged successfully for transaction #${bookingId}.`
         });
     };
-    const handleDelete = (bookingId, email)=>{
+    /**
+   * @function handleDelete
+   * @description Permanently deletes a booking record.
+   * @param {string} bookingId - The ID of the booking to delete.
+   * @param {string} email - The customer's email.
+   */ const handleDelete = (bookingId, email)=>{
         if (confirm('Permanently erase this transaction from platform records? This audit action cannot be undone.')) {
             const data = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAppData"])(email);
             data.bookings = data.bookings.filter((b)=>b.id !== bookingId);
@@ -117,11 +153,15 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
             });
         }
     };
-    const handleManualBookingSubmit = (e)=>{
+    /**
+   * @function handleManualBookingSubmit
+   * @description Handles the submission of the manual booking form.
+   * @param {React.FormEvent} e - The form submission event.
+   */ const handleManualBookingSubmit = (e)=>{
         e.preventDefault();
         if (!newBooking.customer || !newBooking.campId || !newBooking.amount) return;
         const selectedCamp = camps.find((c)=>c.id === newBooking.campId);
-        const email = newBooking.customerEmail || 'offline@trailwise.com';
+        const email = newBooking.customerEmail || 'offline@trailwise.com'; // Default email for offline bookings
         const data = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAppData"])(email);
         const amount = Number(newBooking.amount);
         const booking = {
@@ -138,6 +178,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
             addedAt: new Date().toISOString(),
             organizerNotice: true
         };
+        // Add the new booking and save the data.
         data.bookings = [
             booking,
             ...data.bookings
@@ -145,6 +186,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["saveAppData"])(email, data);
         setRefreshKey((prev)=>prev + 1);
         setIsManualBookingOpen(false);
+        // Reset the form state.
         setNewBooking({
             customer: '',
             customerEmail: '',
@@ -159,6 +201,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
             description: 'Manual transaction added to platform ledger.'
         });
     };
+    // --- RENDER METHOD ---
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "space-y-6 animate-in fade-in duration-500 font-sans max-w-7xl mx-auto px-4 md:px-0",
         children: [
@@ -178,12 +221,12 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                     className: "text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                    lineNumber: 176,
+                                    lineNumber: 240,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 170,
+                                lineNumber: 234,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -193,7 +236,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                         children: "Booking Control Center"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                        lineNumber: 180,
+                                        lineNumber: 244,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -201,19 +244,19 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                         children: "Platform-Wide Transaction Ledger"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                        lineNumber: 181,
+                                        lineNumber: 245,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 179,
+                                lineNumber: 243,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 168,
+                        lineNumber: 232,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -229,19 +272,19 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                             size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                            lineNumber: 187,
+                                            lineNumber: 252,
                                             columnNumber: 15
                                         }, this),
                                         " Override & New Booking"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                    lineNumber: 186,
+                                    lineNumber: 251,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 185,
+                                lineNumber: 250,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogContent"], {
@@ -254,20 +297,20 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                 children: "System Override Form"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 192,
+                                                lineNumber: 257,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                                 children: "Administrative override to manually insert offline or exception bookings into the platform ledger."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 193,
+                                                lineNumber: 258,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                        lineNumber: 191,
+                                        lineNumber: 256,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -278,7 +321,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                 children: "Manual Override"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 196,
+                                                lineNumber: 261,
                                                 columnNumber: 16
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -286,13 +329,13 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                 children: "Direct Injection into Transaction Ledger"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 197,
+                                                lineNumber: 262,
                                                 columnNumber: 16
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                        lineNumber: 195,
+                                        lineNumber: 260,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -307,7 +350,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                         children: "Explorer Full Name"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 201,
+                                                        lineNumber: 267,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -321,13 +364,13 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 202,
+                                                        lineNumber: 268,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 200,
+                                                lineNumber: 266,
                                                 columnNumber: 16
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -338,7 +381,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                         children: "Expedition Selection"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 205,
+                                                        lineNumber: 271,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Select"], {
@@ -353,12 +396,12 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                     placeholder: "Select Expedition"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                    lineNumber: 208,
+                                                                    lineNumber: 274,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                lineNumber: 207,
+                                                                lineNumber: 273,
                                                                 columnNumber: 21
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -369,24 +412,24 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                         children: c.name
                                                                     }, c.id, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                        lineNumber: 212,
+                                                                        lineNumber: 278,
                                                                         columnNumber: 25
                                                                     }, this))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                lineNumber: 210,
+                                                                lineNumber: 276,
                                                                 columnNumber: 21
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 206,
+                                                        lineNumber: 272,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 204,
+                                                lineNumber: 270,
                                                 columnNumber: 16
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -400,7 +443,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                 children: "Price Override (₹)"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                lineNumber: 219,
+                                                                lineNumber: 285,
                                                                 columnNumber: 22
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -415,13 +458,13 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                lineNumber: 220,
+                                                                lineNumber: 286,
                                                                 columnNumber: 22
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 218,
+                                                        lineNumber: 284,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -432,7 +475,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                 children: "Ledger Status"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                lineNumber: 223,
+                                                                lineNumber: 289,
                                                                 columnNumber: 22
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Select"], {
@@ -447,12 +490,12 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                             placeholder: "Confirmed"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                            lineNumber: 226,
+                                                                            lineNumber: 292,
                                                                             columnNumber: 28
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                        lineNumber: 225,
+                                                                        lineNumber: 291,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -464,7 +507,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                                 children: "Confirmed (Paid)"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                                lineNumber: 229,
+                                                                                lineNumber: 295,
                                                                                 columnNumber: 28
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -473,31 +516,31 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                                 children: "Pending (Unpaid)"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                                lineNumber: 230,
+                                                                                lineNumber: 296,
                                                                                 columnNumber: 28
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                        lineNumber: 228,
+                                                                        lineNumber: 294,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                lineNumber: 224,
+                                                                lineNumber: 290,
                                                                 columnNumber: 22
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 222,
+                                                        lineNumber: 288,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 217,
+                                                lineNumber: 283,
                                                 columnNumber: 16
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -506,31 +549,31 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                 children: "Commit Override"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 235,
+                                                lineNumber: 301,
                                                 columnNumber: 16
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                        lineNumber: 199,
+                                        lineNumber: 265,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 190,
+                                lineNumber: 255,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 184,
+                        lineNumber: 249,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                lineNumber: 167,
+                lineNumber: 231,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -544,7 +587,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: "GROSS REVENUE"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 244,
+                                lineNumber: 310,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -552,13 +595,13 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmt"])(summary.totalRevenue)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 245,
+                                lineNumber: 311,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 243,
+                        lineNumber: 309,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -569,7 +612,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: "PLATFORM COMMISSIONS"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 248,
+                                lineNumber: 314,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -577,13 +620,13 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmt"])(summary.totalCommission)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 249,
+                                lineNumber: 315,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 247,
+                        lineNumber: 313,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -594,7 +637,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: "ACTIVE DISPUTES"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 252,
+                                lineNumber: 318,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -602,13 +645,13 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: summary.disputedCount
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 253,
+                                lineNumber: 319,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 251,
+                        lineNumber: 317,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -619,7 +662,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: "TOTAL AUDIT SIZE"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 256,
+                                lineNumber: 322,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -630,19 +673,19 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 257,
+                                lineNumber: 323,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 255,
+                        lineNumber: 321,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                lineNumber: 242,
+                lineNumber: 308,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -656,7 +699,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 264,
+                                lineNumber: 330,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -666,13 +709,13 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 className: "pl-12 h-12 rounded-2xl bg-slate-50 border-none font-bold text-xs uppercase tracking-tight"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 265,
+                                lineNumber: 331,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 263,
+                        lineNumber: 329,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -690,18 +733,18 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: f === 'All' ? 'Full Ledger' : f
                             }, f, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 274,
+                                lineNumber: 340,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 272,
+                        lineNumber: 338,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                lineNumber: 262,
+                lineNumber: 328,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -720,7 +763,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                             children: "Expedition Identity"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                            lineNumber: 296,
+                                            lineNumber: 362,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -728,7 +771,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                             children: "Explorer"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                            lineNumber: 297,
+                                            lineNumber: 363,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -736,7 +779,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                             children: "Timeline"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                            lineNumber: 298,
+                                            lineNumber: 364,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -744,7 +787,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                             children: "Financials"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                            lineNumber: 299,
+                                            lineNumber: 365,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -752,7 +795,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                             children: "Audit State"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                            lineNumber: 300,
+                                            lineNumber: 366,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -760,18 +803,18 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                             children: "Operations"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                            lineNumber: 301,
+                                            lineNumber: 367,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                    lineNumber: 295,
+                                    lineNumber: 361,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 294,
+                                lineNumber: 360,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableBody"], {
@@ -786,12 +829,12 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                     size: 40
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                    lineNumber: 309,
+                                                    lineNumber: 375,
                                                     columnNumber: 24
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 308,
+                                                lineNumber: 374,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -799,18 +842,18 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                 children: "No Transactions Found"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 311,
+                                                lineNumber: 377,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                        lineNumber: 307,
+                                        lineNumber: 373,
                                         columnNumber: 19
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                    lineNumber: 306,
+                                    lineNumber: 372,
                                     columnNumber: 17
                                 }, this) : filteredBookings.map((b)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableRow"], {
                                         className: "group hover:bg-slate-50/50 transition-colors border-b border-slate-50",
@@ -823,7 +866,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                         children: b.camp
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 318,
+                                                        lineNumber: 385,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -837,18 +880,18 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                            lineNumber: 320,
+                                                            lineNumber: 387,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 319,
+                                                        lineNumber: 386,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 317,
+                                                lineNumber: 384,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -859,7 +902,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                         children: b.customer
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 324,
+                                                        lineNumber: 392,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -867,13 +910,13 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                         children: b.customerEmail
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 325,
+                                                        lineNumber: 393,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 323,
+                                                lineNumber: 391,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -887,19 +930,19 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                             children: "→"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                            lineNumber: 330,
+                                                            lineNumber: 399,
                                                             columnNumber: 25
                                                         }, this),
                                                         (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmtDate"])(b.checkout)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                    lineNumber: 328,
+                                                    lineNumber: 397,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 327,
+                                                lineNumber: 396,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -910,7 +953,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmt"])(b.amount)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 335,
+                                                        lineNumber: 405,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -921,13 +964,13 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                        lineNumber: 336,
+                                                        lineNumber: 406,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 334,
+                                                lineNumber: 404,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -938,12 +981,12 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                     children: b.status
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                    lineNumber: 339,
+                                                    lineNumber: 410,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 338,
+                                                lineNumber: 409,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$table$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TableCell"], {
@@ -959,12 +1002,12 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                 size: 16
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                lineNumber: 358,
+                                                                lineNumber: 431,
                                                                 columnNumber: 29
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                            lineNumber: 353,
+                                                            lineNumber: 426,
                                                             columnNumber: 27
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenu"], {
@@ -979,17 +1022,17 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                             size: 18
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                            lineNumber: 364,
+                                                                            lineNumber: 438,
                                                                             columnNumber: 115
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                        lineNumber: 364,
+                                                                        lineNumber: 438,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                    lineNumber: 363,
+                                                                    lineNumber: 437,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuContent"], {
@@ -1001,7 +1044,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                             children: "Security Ops"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                            lineNumber: 367,
+                                                                            lineNumber: 441,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         b.status !== 'Cancelled' && b.status !== 'Refunded' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -1013,14 +1056,14 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                                     className: "text-red-500"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                                    lineNumber: 371,
+                                                                                    lineNumber: 446,
                                                                                     columnNumber: 33
                                                                                 }, this),
                                                                                 " Cancel Booking"
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                            lineNumber: 370,
+                                                                            lineNumber: 445,
                                                                             columnNumber: 31
                                                                         }, this),
                                                                         b.status === 'Cancelled' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -1032,14 +1075,14 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                                     className: "text-rose-500"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                                    lineNumber: 377,
+                                                                                    lineNumber: 453,
                                                                                     columnNumber: 33
                                                                                 }, this),
                                                                                 " Process Refund"
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                            lineNumber: 376,
+                                                                            lineNumber: 452,
                                                                             columnNumber: 31
                                                                         }, this),
                                                                         b.status !== 'Disputed' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -1051,14 +1094,14 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                                     className: "text-amber-500"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                                    lineNumber: 383,
+                                                                                    lineNumber: 460,
                                                                                     columnNumber: 33
                                                                                 }, this),
                                                                                 " Mark Disputed"
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                            lineNumber: 382,
+                                                                            lineNumber: 459,
                                                                             columnNumber: 31
                                                                         }, this),
                                                                         b.status === 'Disputed' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -1070,21 +1113,21 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                                     className: "text-green-500"
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                                    lineNumber: 389,
+                                                                                    lineNumber: 467,
                                                                                     columnNumber: 33
                                                                                 }, this),
                                                                                 " Resolve Dispute"
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                            lineNumber: 388,
+                                                                            lineNumber: 466,
                                                                             columnNumber: 31
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuSeparator"], {
                                                                             className: "bg-slate-50"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                            lineNumber: 393,
+                                                                            lineNumber: 471,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -1095,64 +1138,64 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                                                                     size: 14
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                                    lineNumber: 395,
+                                                                                    lineNumber: 474,
                                                                                     columnNumber: 32
                                                                                 }, this),
                                                                                 " Terminate Record"
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                            lineNumber: 394,
+                                                                            lineNumber: 473,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                                    lineNumber: 366,
+                                                                    lineNumber: 440,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                            lineNumber: 362,
+                                                            lineNumber: 436,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                    lineNumber: 351,
+                                                    lineNumber: 423,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                                lineNumber: 350,
+                                                lineNumber: 422,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, b.id, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                        lineNumber: 316,
+                                        lineNumber: 382,
                                         columnNumber: 19
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 304,
+                                lineNumber: 370,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 293,
+                        lineNumber: 359,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                    lineNumber: 292,
+                    lineNumber: 358,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                lineNumber: 291,
+                lineNumber: 357,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1169,7 +1212,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 411,
+                        lineNumber: 490,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1182,7 +1225,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: "Prev"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 415,
+                                lineNumber: 495,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1190,7 +1233,7 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: "Page 1 of 1"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 416,
+                                lineNumber: 496,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1200,25 +1243,25 @@ function AdminBookings({ initialFilter = 'All', onBack }) {
                                 children: "Next"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                                lineNumber: 419,
+                                lineNumber: 499,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                        lineNumber: 414,
+                        lineNumber: 493,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-                lineNumber: 410,
+                lineNumber: 489,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminBookings.tsx",
-        lineNumber: 165,
+        lineNumber: 229,
         columnNumber: 5
     }, this);
 }
