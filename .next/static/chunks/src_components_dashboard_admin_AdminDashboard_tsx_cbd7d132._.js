@@ -220,42 +220,42 @@ function AdminDashboard(param) {
     // Configuration for the main statistics grid.
     const mainStats = [
         {
-            label: 'GROSS REVENUE',
+            label: 'Total Sales',
             value: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["fmt"])(totalRevenue),
             trend: '+12.5%',
             color: 'border-green-400',
             icon: '💰'
         },
         {
-            label: 'PLATFORM YIELD',
+            label: 'Platform Earnings',
             value: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["fmt"])(totalCommission),
             trend: '10% Fee',
             color: 'border-blue-400',
             icon: '📈'
         },
         {
-            label: 'REGISTRY SIZE',
+            label: 'Total Users',
             value: totalUsersCount,
-            trend: 'Total Users',
+            trend: 'All Users',
             color: 'border-slate-300',
             icon: '👥'
         },
         {
-            label: 'ACTIVE BASE',
+            label: 'Verified Users',
             value: approvedUsersList.length,
-            trend: 'Verified',
+            trend: 'Active',
             color: 'border-emerald-400',
             icon: '✅'
         },
         {
-            label: 'ACTIVE MEMBERS',
+            label: 'Paid Members',
             value: activeMembers,
             trend: 'Loyalty',
             color: 'border-orange-300',
             icon: '💎'
         },
         {
-            label: 'PENDING AUDIT',
+            label: 'Pending Approvals',
             value: auditTotal,
             trend: 'Priority',
             color: auditTotal > 0 ? 'border-orange-400' : 'border-slate-200',
@@ -480,7 +480,7 @@ function AdminDashboard(param) {
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-3xl font-bold text-slate-900 tracking-tight mb-2", s.shake && "text-orange-600"),
+                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("text-2xl font-bold text-slate-900 tracking-tight mb-2", s.shake && "text-orange-600"),
                                         children: s.value
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",

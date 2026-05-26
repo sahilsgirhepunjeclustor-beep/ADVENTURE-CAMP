@@ -686,6 +686,10 @@ h1, h2, h3, h4, h5, h6 {
   grid-column: 1 / -1;
 }
 
+.col-span-1 {
+  grid-column: span 1 / span 1;
+}
+
 .m-2 {
   margin: .5rem;
 }
@@ -2053,6 +2057,10 @@ h1, h2, h3, h4, h5, h6 {
   border-top-width: 8px;
 }
 
+.border-t-4 {
+  border-top-width: 4px;
+}
+
 .border-dashed {
   border-style: dashed;
 }
@@ -2260,6 +2268,36 @@ h1, h2, h3, h4, h5, h6 {
 
 .border-white\/40 {
   border-color: rgba(255, 255, 255, .4);
+}
+
+.border-gray-100 {
+  --tw-border-opacity: 1;
+  border-color: rgba(243, 244, 246, var(--tw-border-opacity, 1));
+}
+
+.border-gray-400 {
+  --tw-border-opacity: 1;
+  border-color: rgba(156, 163, 175, var(--tw-border-opacity, 1));
+}
+
+.border-yellow-400 {
+  --tw-border-opacity: 1;
+  border-color: rgba(250, 204, 21, var(--tw-border-opacity, 1));
+}
+
+.border-indigo-400 {
+  --tw-border-opacity: 1;
+  border-color: rgba(129, 140, 248, var(--tw-border-opacity, 1));
+}
+
+.border-purple-400 {
+  --tw-border-opacity: 1;
+  border-color: rgba(192, 132, 252, var(--tw-border-opacity, 1));
+}
+
+.border-teal-400 {
+  --tw-border-opacity: 1;
+  border-color: rgba(45, 212, 191, var(--tw-border-opacity, 1));
 }
 
 .border-b-transparent {
@@ -2731,6 +2769,46 @@ h1, h2, h3, h4, h5, h6 {
 
 .bg-red-900\/80 {
   background-color: rgba(127, 29, 29, .8);
+}
+
+.bg-\[\#10b981\] {
+  --tw-bg-opacity: 1;
+  background-color: rgba(16, 185, 129, var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#f9fafb\], .bg-gray-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(249, 250, 251, var(--tw-bg-opacity, 1));
+}
+
+.bg-yellow-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(254, 252, 232, var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#f0f2f5\] {
+  --tw-bg-opacity: 1;
+  background-color: rgba(240, 242, 245, var(--tw-bg-opacity, 1));
+}
+
+.bg-indigo-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(224, 231, 255, var(--tw-bg-opacity, 1));
+}
+
+.bg-purple-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(243, 232, 255, var(--tw-bg-opacity, 1));
+}
+
+.bg-teal-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(204, 251, 241, var(--tw-bg-opacity, 1));
+}
+
+.bg-yellow-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(254, 249, 195, var(--tw-bg-opacity, 1));
 }
 
 .bg-gradient-to-br {
@@ -3718,6 +3796,31 @@ h1, h2, h3, h4, h5, h6 {
 .text-gray-800 {
   --tw-text-opacity: 1;
   color: rgba(31, 41, 55, var(--tw-text-opacity, 1));
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-text-opacity, 1));
+}
+
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgba(107, 114, 128, var(--tw-text-opacity, 1));
+}
+
+.text-indigo-600 {
+  --tw-text-opacity: 1;
+  color: rgba(79, 70, 229, var(--tw-text-opacity, 1));
+}
+
+.text-teal-600 {
+  --tw-text-opacity: 1;
+  color: rgba(13, 148, 136, var(--tw-text-opacity, 1));
+}
+
+.text-yellow-600 {
+  --tw-text-opacity: 1;
+  color: rgba(202, 138, 4, var(--tw-text-opacity, 1));
 }
 
 .underline {
@@ -4728,6 +4831,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .hover\:bg-white\/20:hover {
   background-color: rgba(255, 255, 255, .2);
+}
+
+.hover\:bg-gray-50:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(249, 250, 251, var(--tw-bg-opacity, 1));
 }
 
 .hover\:text-accent-foreground:hover {
@@ -6321,6 +6429,14 @@ h1, h2, h3, h4, h5, h6 {
 
   .xl\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .xl\:grid-cols-7 {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
   }
 
   .xl\:flex-row {

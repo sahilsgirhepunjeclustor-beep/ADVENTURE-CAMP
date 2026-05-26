@@ -232,12 +232,12 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
 
   // Configuration for the main statistics grid.
   const mainStats = [
-    { label: 'GROSS REVENUE', value: fmt(totalRevenue), trend: '+12.5%', color: 'border-green-400', icon: '💰' },
-    { label: 'PLATFORM YIELD', value: fmt(totalCommission), trend: '10% Fee', color: 'border-blue-400', icon: '📈' },
-    { label: 'REGISTRY SIZE', value: totalUsersCount, trend: 'Total Users', color: 'border-slate-300', icon: '👥' },
-    { label: 'ACTIVE BASE', value: approvedUsersList.length, trend: 'Verified', color: 'border-emerald-400', icon: '✅' },
-    { label: 'ACTIVE MEMBERS', value: activeMembers, trend: 'Loyalty', color: 'border-orange-300', icon: '💎' },
-    { label: 'PENDING AUDIT', value: auditTotal, trend: 'Priority', color: auditTotal > 0 ? 'border-orange-400' : 'border-slate-200', icon: '⏳', shake: auditTotal > 0 },
+    { label: 'Total Sales', value: fmt(totalRevenue), trend: '+12.5%', color: 'border-green-400', icon: '💰' },
+    { label: 'Platform Earnings', value: fmt(totalCommission), trend: '10% Fee', color: 'border-blue-400', icon: '📈' },
+    { label: 'Total Users', value: totalUsersCount, trend: 'All Users', color: 'border-slate-300', icon: '👥' },
+    { label: 'Verified Users', value: approvedUsersList.length, trend: 'Active', color: 'border-emerald-400', icon: '✅' },
+    { label: 'Paid Members', value: activeMembers, trend: 'Loyalty', color: 'border-orange-300', icon: '💎' },
+    { label: 'Pending Approvals', value: auditTotal, trend: 'Priority', color: auditTotal > 0 ? 'border-orange-400' : 'border-slate-200', icon: '⏳', shake: auditTotal > 0 },
   ];
 
   // --- EVENT HANDLERS ---
@@ -353,7 +353,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
 
             <div>
               <div className={cn(
-                "text-3xl font-bold text-slate-900 tracking-tight mb-2",
+                "text-2xl font-bold text-slate-900 tracking-tight mb-2",
                 s.shake && "text-orange-600"
               )}>
                 {s.value}
