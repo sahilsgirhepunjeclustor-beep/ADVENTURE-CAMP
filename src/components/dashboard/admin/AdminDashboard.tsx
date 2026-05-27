@@ -112,7 +112,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
   const [isAuditOpen, setIsAuditOpen] = useState(false);
   // State for the document to be previewed.
   const [previewDoc, setPreviewDoc] = useState<{ label: string; doc?: UploadedDoc } | null>(null);
-  // State to trigger a refresh of the user data.
+  // State to trigger a refresh of user data.
   const [refreshKey, setRefreshKey] = useState(0);
   // State to store the reason for rejecting an organizer.
   const [rejectionReason, setRejectionReason] = useState('');
@@ -232,12 +232,12 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
 
   // Configuration for the main statistics grid.
   const mainStats = [
-    { label: 'Total Sales', value: fmt(totalRevenue), trend: '+12.5%', color: 'border-green-400', icon: '💰' },
-    { label: 'Platform Earnings', value: fmt(totalCommission), trend: '10% Fee', color: 'border-blue-400', icon: '📈' },
-    { label: 'Total Users', value: totalUsersCount, trend: 'All Users', color: 'border-slate-300', icon: '👥' },
-    { label: 'Verified Users', value: approvedUsersList.length, trend: 'Active', color: 'border-emerald-400', icon: '✅' },
-    { label: 'Paid Members', value: activeMembers, trend: 'Loyalty', color: 'border-orange-300', icon: '💎' },
-    { label: 'Pending Approvals', value: auditTotal, trend: 'Priority', color: auditTotal > 0 ? 'border-orange-400' : 'border-slate-200', icon: '⏳', shake: auditTotal > 0 },
+    { label: 'Total Sales', value: fmt(totalRevenue), trend: '+12.5%', color: 'border-green-400', textColor: 'text-green-600', icon: '💰' },
+    { label: 'Platform Earnings', value: fmt(totalCommission), trend: '10% Fee', color: 'border-blue-400', textColor: 'text-blue-600', icon: '📈' },
+    { label: 'Total Users', value: totalUsersCount, trend: 'All Users', color: 'border-slate-300', textColor: 'text-slate-500', icon: '👥' },
+    { label: 'Verified Users', value: approvedUsersList.length, trend: 'Active', color: 'border-emerald-400', textColor: 'text-emerald-600', icon: '✅' },
+    { label: 'Paid Members', value: activeMembers, trend: 'Loyalty', color: 'border-orange-300', textColor: 'text-orange-600', icon: '💎' },
+    { label: 'Pending Approvals', value: auditTotal, trend: 'Priority', color: auditTotal > 0 ? 'border-orange-400' : 'border-slate-200', textColor: auditTotal > 0 ? 'text-orange-600' : 'text-slate-500', icon: '⏳', shake: auditTotal > 0 },
   ];
 
   // --- EVENT HANDLERS ---
@@ -353,7 +353,8 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
 
             <div>
               <div className={cn(
-                "text-2xl font-bold text-slate-900 tracking-tight mb-2",
+                "text-2xl font-bold tracking-tight mb-2",
+                s.textColor,
                 s.shake && "text-orange-600"
               )}>
                 {s.value}
@@ -370,7 +371,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
         {/* --- Pending Organizer Approvals Section --- */}
         <div className="xl:col-span-5 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col h-full min-h-[480px]">
            <div className="flex justify-between items-center mb-8">
-              <h3 className="text-[10px] font-medium text-slate-600 uppercase tracking-widest">PENDING ORGANIZER APPROVALS</h3>
+              <h3 className="text-base font-semibold text-slate-800 uppercase tracking-wider">PENDING ORGANIZER APPROVALS</h3>
               <Button size="sm" variant="outline" onClick={() => onNavigate('organizers')} className="h-9 px-4 rounded-xl font-medium text-[9px] uppercase border-primary text-primary hover:bg-primary/5">See all</Button>
            </div>
            
@@ -383,7 +384,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
                  </div>
                  <div>
                    <h4 className="text-base font-medium text-slate-900 uppercase tracking-tight">All Caught Up!</h4>
-                   <p className="text-[11px] text-slate-400 font-medium mt-2 leading-relaxed px-12">Excellent! All organizer applications have been reviewed.</p>
+                   <p className="text-sm text-slate-500 mt-2 leading-relaxed px-12">Excellent! All organizer applications have been reviewed.</p>
                  </div>
                </div>
              ) : (
@@ -404,7 +405,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
                       </div>
                       <div>
                         <h4 className="text-base font-medium text-slate-900 uppercase tracking-tighter">{pendingOrganizers[pendingIdx].firstName} {pendingOrganizers[pendingIdx].lastName}</h4>
-                        <p className="text-[10px] text-slate-400 font-medium">{pendingOrganizers[pendingIdx].email}</p>
+                        <p className="text-sm text-slate-400 font-medium">{pendingOrganizers[pendingIdx].email}</p>
                       </div>
                     </div>
                     {/* Business Identity */}
@@ -443,51 +444,51 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
         <div className="xl:col-span-7 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col h-full min-h-[480px]">
            <div className="flex justify-between items-center mb-8">
               <div>
-                 <h3 className="text-[10px] font-medium text-slate-600 uppercase tracking-widest">USERS ACTIVE TODAY</h3>
-                 <p className="text-[9px] text-slate-600 font-medium mt-0.5">{approvedUsersList.length} verified users active on the platform</p>
+                 <h3 className="text-base font-semibold text-slate-800 uppercase tracking-wider">USERS ACTIVE TODAY</h3>
+                 <p className="text-sm text-slate-500 mt-1">{approvedUsersList.length} verified users active on the platform</p>
               </div>
               <div className="flex items-center gap-3">
-                 <Badge className="bg-green-50 text-green-600 border-green-100 text-[9px] font-medium uppercase px-2 py-0.5">{approvedUsersList.length} Verified</Badge>
+                 <Badge className="bg-green-50 text-green-600 border-green-100 text-xs font-medium uppercase px-2 py-1">{approvedUsersList.length} Verified</Badge>
                  <Button size="sm" onClick={() => onNavigate('users')} className="h-9 px-5 rounded-xl bg-primary hover:bg-accent font-medium text-[9px] uppercase text-white border-none">View all users</Button>
               </div>
            </div>
 
-           <div className="flex-1 overflow-x-auto custom-scrollbar">
+           <div className="flex-1 overflow-x-auto custom-scrollbar border rounded-2xl">
               <table className="w-full text-left">
                  <thead>
-                    <tr className="text-[8px] font-medium text-slate-600 uppercase tracking-widest border-b border-slate-50">
-                       <th className="pb-3 pl-2">NAME</th>
-                       <th className="pb-3">EMAIL</th>
-                       <th className="pb-3">ROLE</th>
-                       <th className="pb-3 pr-2 text-right">LOCATION</th>
+                    <tr className="text-xs font-bold tracking-wider uppercase text-slate-500 bg-slate-100/70">
+                       <th className="px-6 py-4">NAME</th>
+                       <th className="px-6 py-4">EMAIL</th>
+                       <th className="px-6 py-4">ROLE</th>
+                       <th className="px-6 py-4 text-right">LOCATION</th>
                     </tr>
                  </thead>
-                 <tbody className="divide-y divide-slate-50">
+                 <tbody className="divide-y divide-slate-100">
                     {activeUsers.length === 0 ? (
                       <tr>
-                        <td colSpan={4} className="py-20 text-center text-xs font-medium text-slate-300 uppercase italic">No verified active users found</td>
+                        <td colSpan={4} className="py-20 text-center text-sm font-medium text-slate-400 uppercase">No verified active users found</td>
                       </tr>
                     ) : (
                       activeUsers.map(u => (
                         <tr key={u.email} className="group hover:bg-slate-50/50 transition-colors">
-                          <td className="py-4 pl-2">
+                          <td className="px-6 py-4">
                              <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[10px] font-medium border border-white">
+                                <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-medium border border-white">
                                    {u.avatar ? <img src={u.avatar} className="w-full h-full object-cover rounded-full" /> : u.firstName[0]}
                                 </div>
-                                <span className="text-xs font-medium text-slate-800 uppercase tracking-tighter">{u.firstName} {u.lastName}</span>
+                                <span className="text-sm font-semibold text-slate-900 uppercase tracking-tight">{u.firstName} {u.lastName}</span>
                              </div>
                           </td>
-                          <td className="py-4 text-[11px] text-slate-500 font-medium">{u.email}</td>
-                          <td className="py-4">
+                          <td className="px-6 py-4 text-sm text-slate-600">{u.email}</td>
+                          <td className="px-6 py-4">
                              <Badge variant="outline" className={cn(
-                               "text-[8px] font-medium uppercase px-2 py-0.5 rounded-md border-none",
+                               "text-xs font-medium uppercase px-2 py-1 rounded-md border-none",
                                u.role === 'admin' ? "bg-orange-50 text-orange-600" :
                                u.role === 'organizer' ? "bg-blue-50 text-blue-600" :
                                "bg-green-50 text-green-600"
                              )}>{u.role}</Badge>
                           </td>
-                          <td className="py-4 pr-2 text-right text-[11px] text-slate-400 font-medium uppercase tracking-tight">{u.location || 'India'}</td>
+                          <td className="px-6 py-4 text-right text-sm text-slate-500 uppercase">{u.location || 'India'}</td>
                         </tr>
                       ))
                     )}
@@ -501,40 +502,40 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
         {/* --- Camp Performance Section --- */}
         <div className="xl:col-span-7 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
            <div className="flex justify-between items-center mb-8">
-              <h3 className="text-[10px] font-medium text-slate-600 uppercase tracking-widest">Camp Performance</h3>
+              <h3 className="text-base font-semibold text-slate-800 uppercase tracking-wider">Camp Performance</h3>
               <button onClick={() => onNavigate('camps')} className="text-primary text-[9px] font-medium uppercase tracking-widest hover:underline">Manage →</button>
            </div>
            
-           <div className="overflow-x-auto custom-scrollbar">
+           <div className="overflow-x-auto custom-scrollbar border rounded-2xl">
               <table className="w-full text-left">
                  <thead>
-                    <tr className="text-[8px] font-medium text-slate-600 uppercase tracking-widest border-b border-slate-50">
-                       <th className="pb-3 pl-2">CAMP</th>
-                       <th className="pb-3">LOCATION</th>
-                       <th className="pb-3">OCCUPANCY</th>
-                       <th className="pb-3 pr-2 text-right">PRICE</th>
+                    <tr className="text-xs font-bold tracking-wider uppercase text-slate-500 bg-slate-100/70">
+                       <th className="px-6 py-4">CAMP</th>
+                       <th className="px-6 py-4">LOCATION</th>
+                       <th className="px-6 py-4">OCCUPANCY</th>
+                       <th className="px-6 py-4 text-right">PRICE</th>
                     </tr>
                  </thead>
-                 <tbody className="divide-y divide-slate-50">
+                 <tbody className="divide-y divide-slate-100">
                     {camps.slice(0, 5).map(c => (
                       <tr key={c.id} className="group hover:bg-slate-50/50 transition-colors">
-                        <td className="py-4 pl-2">
+                        <td className="px-6 py-4">
                            <div className="flex items-center gap-3">
                               <span className="text-base">🏕️</span>
-                              <span className="text-xs font-medium text-slate-800 uppercase tracking-tighter">{c.name}</span>
+                              <span className="text-sm font-semibold text-slate-800 uppercase tracking-tight">{c.name}</span>
                            </div>
                         </td>
-                        <td className="py-4 text-[11px] text-slate-500 font-medium">{c.location}</td>
-                        <td className="py-4 w-32">
+                        <td className="px-6 py-4 text-sm text-slate-500 font-medium">{c.location}</td>
+                        <td className="px-6 py-4 w-32">
                            <div className="flex items-center gap-3">
                               <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
                                  <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: `${c.occupancy || 85}%` }} />
                               </div>
-                              <span className="text-[10px] font-medium text-slate-500">{c.occupancy || 85}%</span>
+                              <span className="text-xs font-medium text-slate-500">{c.occupancy || 85}%</span>
                            </div>
                         </td>
-                        <td className="py-4 pr-2 text-right">
-                           <span className="text-xs font-medium text-slate-900">{fmt(c.price)}</span>
+                        <td className="px-6 py-4 text-right">
+                           <span className="text-sm font-medium text-slate-900">{fmt(c.price)}</span>
                         </td>
                       </tr>
                     ))}
@@ -545,7 +546,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
 
         {/* --- Revenue & Booking Trend Section --- */}
         <div className="xl:col-span-5 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col">
-           <h3 className="text-[10px] font-medium text-slate-600 uppercase tracking-widest mb-8">Revenue & Booking Trend</h3>
+           <h3 className="text-base font-semibold text-slate-800 uppercase tracking-wider mb-8">Revenue & Booking Trend</h3>
            <div className="w-full h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                  <AreaChart data={liveChartData}>
@@ -575,11 +576,11 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
               <div className="flex items-center justify-center gap-6 mt-4">
                  <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-primary" />
-                    <span className="text-[9px] font-medium text-slate-600 uppercase tracking-widest">Revenue (₹)</span>
+                    <span className="text-xs font-medium text-slate-600 uppercase tracking-widest">Revenue (₹)</span>
                  </div>
                  <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-orange-500" />
-                    <span className="text-[9px] font-medium text-slate-600 uppercase tracking-widest">Bookings</span>
+                    <span className="text-xs font-medium text-slate-600 uppercase tracking-widest">Bookings</span>
                  </div>
               </div>
            </div>
