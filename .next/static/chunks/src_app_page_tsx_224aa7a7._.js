@@ -17,7 +17,7 @@
   "static/chunks/src_components_marketplace_67d18b38._.js",
   "static/chunks/src_components_layout_44e93cf2._.js",
   "static/chunks/src_77346c5c._.js",
-  "static/chunks/node_modules_lucide-react_dist_esm_de3fd063._.js",
+  "static/chunks/node_modules_lucide-react_dist_esm_4b2b58ae._.js",
   "static/chunks/node_modules_@radix-ui_c016da84._.js",
   "static/chunks/node_modules_lodash_0ce7be08._.js",
   "static/chunks/node_modules_recharts_es6_43204bee._.js",

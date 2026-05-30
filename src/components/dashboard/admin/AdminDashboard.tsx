@@ -1,8 +1,8 @@
 
 "use client";
 
-import React, { useMemo, useState, useEffect } from 'react';
-import { User, AppData, UploadedDoc, Camp, Activity as ActivityType, Review, Booking } from '@/lib/types';
+import React, { useMemo, useState, useEffect, FC, ReactNode } from 'react';
+import { User, AppData, Camp, Activity as ActivityType, Review, Booking } from '@/lib/types';
 import { cn, fmt, fmtDate, uid } from '@/lib/utils';
 import {
   getGlobalAppData,
@@ -36,7 +36,6 @@ import {
   CircleDollarSign,
   DollarSign,
   CreditCard,
-  Users,
   ShieldCheck,
   Briefcase,
   Activity,
@@ -64,7 +63,10 @@ import {
   Thermometer, 
   Wind, 
   Droplets, 
-  Sun
+  Sun,
+  Database,
+  LucideProps,
+  Users
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -99,7 +101,14 @@ import {
   Bar,
   LineChart,
   ComposedChart,
+  LegendProps,
 } from 'recharts';
+
+interface AdminDashboardProps {
+  currentUser: User;
+  data: AppData;
+  onNavigate: (page: string, params?: any) => void;
+}
 
 // Helper to format time differences into a human-readable format like "5m ago".
 const timeAgo = (date: string | Date): string => {
@@ -126,15 +135,20 @@ interface LiveFeedActivity {
     time: string;
 }
 
+interface TopOrganizersProps {
+    organizers: User[];
+    bookings: Booking[];
+}
+
 /**
  * TopOrganizers Component
- * @param {{organizers: User[], bookings: Booking[]}} props
+ * @param {TopOrganizersProps} props
  * @returns {JSX.Element}
  * Displays a ranked list of top organizers by revenue in the last 30 days.
  * It calculates revenue, total bookings, and average rating for each organizer.
  * The list is responsive and includes progress bars to visualize revenue comparison.
  */
-const TopOrganizers = ({ organizers, bookings }) => {
+const TopOrganizers: FC<TopOrganizersProps> = ({ organizers, bookings }) => {
     // Memoized calculation for top organizers to prevent re-computation on every render.
     const topOrganizers = useMemo(() => {
         const thirtyDaysAgo = new Date();
@@ -174,7 +188,7 @@ const TopOrganizers = ({ organizers, bookings }) => {
                                 <span className="relative">#{index + 1}</span>
                             </div>
                             <div className="flex-grow min-w-0">
-                                <p className="font-semibold text-slate-900 truncate">{org.organizerProfile.businessName}</p>
+                                <p className="font-semibold text-slate-900 truncate">{org.organizerProfile?.businessName || 'Unknown'}</p>
                                 <div className="flex items-center gap-2 sm:gap-3 text-xs text-slate-500 mt-1 flex-wrap">
                                     <span>{org.totalCamps} camps</span><span className="hidden sm:inline">•</span>
                                     <span>{org.totalBookings} bookings</span><span className="hidden sm:inline">•</span>
@@ -191,14 +205,19 @@ const TopOrganizers = ({ organizers, bookings }) => {
     );
 };
 
+interface TopPerformingCampsProps {
+    camps: Camp[];
+    bookings: Booking[];
+}
+
 /**
  * TopPerformingCamps Component
- * @param {{camps: Camp[], bookings: Booking[]}} props
+ * @param {TopPerformingCampsProps} props
  * @returns {JSX.Element}
  * Renders a list of top-performing camps based on revenue and occupancy.
  * The component is responsive and features progress bars for visual comparison.
  */
-const TopPerformingCamps = ({ camps, bookings }) => {
+const TopPerformingCamps: FC<TopPerformingCampsProps> = ({ camps, bookings }) => {
     // Memoized calculation for top camps.
     const topCamps = useMemo(() => {
         return camps.map(camp => {
@@ -252,7 +271,7 @@ const TopPerformingCamps = ({ camps, bookings }) => {
  * Displays simulated live weather data for key adventure locations. Includes responsive design and animations.
  * NOTE: The weather data is mocked. In a real app, this would be fetched from a live weather API.
  */
-const LiveWeatherWatch = () => {
+const LiveWeatherWatch: FC = () => {
     const weatherData = { himalaya: { temp: 24, wind: 32, humidity: 68 }, patagonia: { temp: 18, wind: 45, humidity: 75 }, bali: { temp: 31, wind: 15, humidity: 82 } };
 
     return (
@@ -296,8 +315,12 @@ const LiveWeatherWatch = () => {
     );
 };
 
+interface RecentBookingsProps {
+    bookings: Booking[];
+    users: User[];
+}
 
-const RecentBookings = ({ bookings, users }) => {
+const RecentBookings: FC<RecentBookingsProps> = ({ bookings, users }) => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
@@ -379,10 +402,12 @@ const RecentBookings = ({ bookings, users }) => {
   const totalPages = Math.ceil(filteredBookings.length / bookingsPerPage);
 
   const statusCounts = useMemo(() => {
-    const counts = { All: bookings.length, Confirmed: 0, Pending: 0, Cancelled: 0, Disputed: 0 };
+    const counts: {[key: string]: number} = { All: bookings.length, Confirmed: 0, Pending: 0, Cancelled: 0, Disputed: 0 };
     bookings.forEach(b => {
-      const statusKey = b.status.charAt(0).toUpperCase() + b.status.slice(1) as keyof typeof counts;
-      if (counts[statusKey] !== undefined) counts[statusKey]++;
+        const statusKey = b.status.charAt(0).toUpperCase() + b.status.slice(1);
+        if (counts[statusKey] !== undefined) {
+            counts[statusKey]++;
+        }
     });
     return counts;
   }, [bookings]);
@@ -497,7 +522,17 @@ const RecentBookings = ({ bookings, users }) => {
   );
 };
 
-const ModerationQueues = ({ pendingOrganizers, pendingCamps, onApproveOrg, onRejectOrg, onApproveCamp, onRejectCamp, onNavigate }) => (
+interface ModerationQueuesProps {
+    pendingOrganizers: User[];
+    pendingCamps: Camp[];
+    onApproveOrg: (email: string) => void;
+    onRejectOrg: (user: User) => void;
+    onApproveCamp: (id: string) => void;
+    onRejectCamp: (id: string) => void;
+    onNavigate: (page: string, params?: any) => void;
+}
+
+const ModerationQueues: FC<ModerationQueuesProps> = ({ pendingOrganizers, pendingCamps, onApproveOrg, onRejectOrg, onApproveCamp, onRejectCamp, onNavigate }) => (
   <div className="space-y-6">
     <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
         <div className="flex justify-between items-center mb-4">
@@ -540,7 +575,7 @@ const ModerationQueues = ({ pendingOrganizers, pendingCamps, onApproveOrg, onRej
                 <h4 className="font-semibold text-slate-800">Pending Camp Approvals</h4>
                 {pendingCamps.length > 0 && <Badge variant="destructive" className="border-none">{pendingCamps.length} pending</Badge>}
             </div>
-            <button onClick={() => onNavigate('approvals', { tab: 'camps'})} className="text-sm font-medium text-primary hover:underline">View all →</button>
+            <button onClick={() => onNavigate('approvals', { tab: 'camps' })} className="text-sm font-medium text-primary hover:underline">View all →</button>
         </div>
         <div className="space-y-1">
             {pendingCamps.slice(0, 3).map(camp => (
@@ -569,8 +604,8 @@ const ModerationQueues = ({ pendingOrganizers, pendingCamps, onApproveOrg, onRej
   </div>
 );
 
-const LiveActivityFeed = ({ activities, onNavigate }: { activities: LiveFeedActivity[], onNavigate: (page: string, params?: any) => void }) => {
-    const ICONS = {
+const LiveActivityFeed: FC<{ activities: LiveFeedActivity[], onNavigate: (page: string, params?: any) => void }> = ({ activities, onNavigate }) => {
+    const ICONS: {[key: string]: {icon: FC<LucideProps>, color: string, bg: string}} = {
         'Camp approved': { icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-100' },
         'New organizer registered': { icon: UserPlus, color: 'text-blue-600', bg: 'bg-blue-100' },
         'Refund processed': { icon: Undo2, color: 'text-amber-600', bg: 'bg-amber-100' },
@@ -607,19 +642,29 @@ const LiveActivityFeed = ({ activities, onNavigate }: { activities: LiveFeedActi
                             </div>
                         </div>
                     )
-                })
-            }
+                })}
             </div>
         </div>
     );
 };
 
-const StatCard = ({ icon: Icon, title, value, trend, trendDirection, subtext, chartData, iconBgColor }) => {
+interface StatCardProps {
+    icon: FC<LucideProps>;
+    title: string;
+    value: string | number;
+    trend?: string;
+    trendDirection?: 'up' | 'down' | 'stale';
+    subtext: string;
+    chartData: {value: number}[];
+    iconBgColor: string;
+}
+
+const StatCard: FC<StatCardProps> = ({ icon: Icon, title, value, trend, trendDirection, subtext, chartData, iconBgColor }) => {
   const trendColor = trendDirection === 'up' ? 'text-green-600' : (trendDirection === 'down' ? 'text-red-600' : 'text-amber-600');
   const trendBgColor = trendDirection === 'up' ? 'bg-green-100' : (trendDirection === 'down' ? 'bg-red-100' : 'bg-amber-100');
   const TrendIcon = trendDirection === 'up' ? TrendingUp : (trendDirection === 'down' ? TrendingDown : TrendingUp);
   const gradientId = `gradient-${title.replace(/\s+/g, '-')}`;
-  const chartColors = { 'bg-green-500': { hex: '#22c55e', stop: '#22c55e' }, 'bg-blue-500': { hex: '#3b82f6', stop: '#3b82f6' }, 'bg-red-500': { hex: '#ef4444', stop: '#ef4444' }, 'bg-amber-500': { hex: '#f59e0b', stop: '#f59e0b' } };
+  const chartColors: {[key: string]: {hex: string, stop: string}} = { 'bg-green-500': { hex: '#22c55e', stop: '#22c55e' }, 'bg-blue-500': { hex: '#3b82f6', stop: '#3b82f6' }, 'bg-red-500': { hex: '#ef4444', stop: '#ef4444' }, 'bg-amber-500': { hex: '#f59e0b', stop: '#f59e0b' } };
   const color = chartColors[iconBgColor] || chartColors['bg-green-500'];
 
   return (
@@ -652,7 +697,11 @@ const StatCard = ({ icon: Icon, title, value, trend, trendDirection, subtext, ch
   );
 };
 
-const RevenueAnalytics = ({ bookings }) => {
+interface RevenueAnalyticsProps {
+    bookings: Booking[];
+}
+
+const RevenueAnalytics: FC<RevenueAnalyticsProps> = ({ bookings }) => {
   const [timeRange, setTimeRange] = useState('7D');
 
   const analyticsData = useMemo(() => {
@@ -699,8 +748,10 @@ const RevenueAnalytics = ({ bookings }) => {
         
         if (dataMap.has(key)) {
           const entry = dataMap.get(key);
-          if (booking.status === 'Confirmed') entry.revenue += booking.amount;
-          else if (booking.status === 'Cancelled') entry.refunds += booking.amount;
+          if (entry) {
+            if (booking.status === 'Confirmed') entry.revenue += booking.amount;
+            else if (booking.status === 'Cancelled') entry.refunds += booking.amount;
+          }
         }
       }
     });
@@ -747,28 +798,32 @@ const RevenueAnalytics = ({ bookings }) => {
   );
 }
 
-const CampMix = ({ camps }) => {
+interface CampMixProps {
+    camps: Camp[];
+}
+
+const CampMix: FC<CampMixProps> = ({ camps }) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const data = useMemo(() => {
-    const categoryCounts = camps.reduce((acc, camp) => {
+    const categoryCounts: {[key: string]: number} = camps.reduce((acc, camp) => {
       const category = camp.category || 'Other';
       acc[category] = (acc[category] || 0) + 1;
       return acc;
-    }, {});
+    }, {} as {[key: string]: number});
     return Object.entries(categoryCounts).map(([name, value]) => ({ name, value }));
   }, [camps]);
 
-  const COLORS = { Mountain: '#16a34a', Desert: '#f97316', Beach: '#3b82f6', Forest: '#115e59', Other: '#64748b' };
-  const onPieEnter = (_, index) => setActiveIndex(index);
-  const renderActiveShape = (props) => {
+  const COLORS: {[key: string]: string} = { Mountain: '#16a34a', Desert: '#f97316', Beach: '#3b82f6', Forest: '#115e59', Other: '#64748b' };
+  const onPieEnter = (_: any, index: number) => setActiveIndex(index);
+  const renderActiveShape = (props: any) => {
     const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
     return <Sector cx={cx} cy={cy} innerRadius={innerRadius} outerRadius={outerRadius + 4} startAngle={startAngle} endAngle={endAngle} fill={fill} />;
   };
 
-  const CustomLegend = ({ payload }) => (
+  const CustomLegend: FC<LegendProps> = ({ payload }) => (
     <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4">
-      {payload.map((entry, index) => (
+      {payload?.map((entry, index) => (
         <div key={`item-${index}`} className="flex items-center gap-2 text-sm text-slate-600">
           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }}></div>
           <span>{entry.value}</span>
@@ -792,7 +847,7 @@ const CampMix = ({ camps }) => {
       <div className="h-[300px]">
          <ResponsiveContainer width="100%" height="100%">
             <PieChart onMouseLeave={() => setActiveIndex(null)}>
-              <Pie activeIndex={activeIndex} activeShape={renderActiveShape} onMouseEnter={onPieEnter} data={data} cx="50%" cy="45%" innerRadius={75} outerRadius={100} fill="#8884d8" paddingAngle={5} dataKey="value">
+              <Pie activeIndex={activeIndex ?? undefined} activeShape={renderActiveShape} onMouseEnter={onPieEnter} data={data} cx="50%" cy="45%" innerRadius={75} outerRadius={100} fill="#8884d8" paddingAngle={5} dataKey="value">
                 {data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[entry.name]} className="cursor-pointer"/>)}
               </Pie>
               <Tooltip />
@@ -804,7 +859,11 @@ const CampMix = ({ camps }) => {
   )
 }
 
-const BookingTrendsChart = ({ bookings }) => {
+interface BookingTrendsChartProps {
+    bookings: Booking[];
+}
+
+const BookingTrendsChart: FC<BookingTrendsChartProps> = ({ bookings }) => {
   const data = useMemo(() => {
     const trendData = Array.from({length: 7}, (_, i) => {
       const d = new Date();
@@ -818,7 +877,9 @@ const BookingTrendsChart = ({ bookings }) => {
       const diffDays = Math.ceil((today.getTime() - bookingDate.getTime()) / (1000 * 3600 * 24));
       if(diffDays <= 7 && diffDays > 0) {
         const dayIndex = 7 - diffDays;
-        trendData[dayIndex].bookings++;
+        if (trendData[dayIndex]) {
+            trendData[dayIndex].bookings++;
+        }
       }
     });
     return trendData;
@@ -851,7 +912,11 @@ const BookingTrendsChart = ({ bookings }) => {
   );
 };
 
-const UserGrowthChart = ({ users }) => {
+interface UserGrowthChartProps {
+    users: User[];
+}
+
+const UserGrowthChart: FC<UserGrowthChartProps> = ({ users }) => {
   const data = useMemo(() => {
     const weeks = 6;
     const weeklyData = Array.from({length: weeks}, (_, i) => ({
@@ -867,9 +932,11 @@ const UserGrowthChart = ({ users }) => {
       const diffWeeks = Math.floor((now.getTime() - userDate.getTime()) / (1000 * 3600 * 24 * 7));
       if(diffWeeks < weeks) {
         const weekIndex = weeks - 1 - diffWeeks;
-        weeklyData[weekIndex].total++;
-        if(user.role === 'organizer') weeklyData[weekIndex].organizers++;
-        else if(user.role === 'user') weeklyData[weekIndex].explorers++;
+        if(weeklyData[weekIndex]) {
+            weeklyData[weekIndex].total++;
+            if(user.role === 'organizer') weeklyData[weekIndex].organizers++;
+            else if(user.role === 'user') weeklyData[weekIndex].explorers++;
+        }
       }
     });
     return weeklyData.reverse();
@@ -904,7 +971,11 @@ const UserGrowthChart = ({ users }) => {
   )
 };
 
-const RevenueVsBookingsChart = ({ bookings }) => {
+interface RevenueVsBookingsChartProps {
+    bookings: Booking[];
+}
+
+const RevenueVsBookingsChart: FC<RevenueVsBookingsChartProps> = ({ bookings }) => {
   const data = useMemo(() => {
     const trendData = Array.from({length: 7}, (_, i) => {
       const d = new Date();
@@ -919,8 +990,10 @@ const RevenueVsBookingsChart = ({ bookings }) => {
       const diffDays = Math.ceil((today.getTime() - bookingDate.getTime()) / (1000 * 3600 * 24));
       if(diffDays <= 7 && diffDays > 0) {
         const dayIndex = 7 - diffDays;
-        trendData[dayIndex].revenue += b.amount;
-        trendData[dayIndex].bookings++;
+        if (trendData[dayIndex]) {
+            trendData[dayIndex].revenue += b.amount;
+            trendData[dayIndex].bookings++;
+        }
       }
     });
     return trendData;
@@ -955,9 +1028,176 @@ const RevenueVsBookingsChart = ({ bookings }) => {
   )
 };
 
+interface RecentTransactionsProps {
+    bookings: Booking[];
+}
+
+const RecentTransactions: FC<RecentTransactionsProps> = ({ bookings }) => {
+    const { recentTransactions, totalProcessed, successRate, refundRate, totalCommission } = useMemo(() => {
+        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+        const relevantBookings = bookings.filter(b => new Date(b.addedAt) > twentyFourHoursAgo);
+
+        const totalProcessed = relevantBookings.reduce((acc, b) => acc + b.amount, 0);
+        const successful = relevantBookings.filter(b => b.status === 'Confirmed').length;
+        const refunded = relevantBookings.filter(b => b.status === 'Cancelled').length;
+        const totalCommission = relevantBookings.reduce((acc, b) => acc + (b.commissionAmount || 0), 0);
+
+        return {
+            recentTransactions: bookings.slice(0, 5),
+            totalProcessed,
+            successRate: relevantBookings.length > 0 ? (successful / relevantBookings.length) * 100 : 100,
+            refundRate: relevantBookings.length > 0 ? (refunded / relevantBookings.length) * 100 : 0,
+            totalCommission
+        };
+    }, [bookings]);
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'Confirmed': return <Badge className="bg-green-100 text-green-700">Success</Badge>;
+      case 'Pending': return <Badge className="bg-amber-100 text-amber-700">Pending</Badge>;
+      case 'Cancelled': return <Badge className="bg-blue-100 text-blue-700">Refunded</Badge>;
+      case 'Disputed': return <Badge className="bg-red-100 text-red-700">Failed</Badge>;
+      default: return <Badge>{status}</Badge>;
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <h3 className="font-semibold text-slate-800">Recent Transactions</h3>
+          <p className="text-sm text-slate-500">Last 24 hours - {fmt(totalProcessed)} processed</p>
+        </div>
+        <a href="#" className="text-sm font-medium text-primary hover:underline">All →</a>
+      </div>
+      <div className="space-y-4">
+        {recentTransactions.map((t) => (
+          <div key={t.id} className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center">
+                <CreditCard size={20} className="text-slate-500"/>
+              </div>
+              <div>
+                <p className="font-medium text-slate-800">{t.customer}</p>
+                <p className="text-sm text-slate-500">{`BK-${t.id.substring(0,5).toUpperCase()}`}</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="font-bold text-slate-800">{fmt(t.amount)}</p>
+              {getStatusBadge(t.status)}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between items-center mt-6 pt-4 border-t border-slate-200 text-sm font-medium">
+        <div className="text-center">
+          <p className="text-green-600 font-bold">{successRate.toFixed(1)}%</p>
+          <p className="text-slate-500 text-xs">SUCCESS</p>
+        </div>
+        <div className="text-center">
+          <p className="text-blue-600 font-bold">{refundRate.toFixed(1)}%</p>
+          <p className="text-slate-500 text-xs">REFUND RATE</p>
+        </div>
+        <div className="text-center">
+          <p className="text-slate-800 font-bold">{fmt(totalCommission)}</p>
+          <p className="text-slate-500 text-xs">COMMISSION</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+interface SystemHealthProps {
+    bookings: Booking[];
+}
+
+const SystemHealth: FC<SystemHealthProps> = ({ bookings }) => {
+  const [apiUptime, setApiUptime] = useState(99.9);
+  const [serverHealth, setServerHealth] = useState(95);
+  const [databaseHealth, setDatabaseHealth] = useState(92);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setApiUptime(99.9 + (Math.random() * 0.1));
+      setServerHealth(95 + (Math.random() * 5));
+      setDatabaseHealth(90 + (Math.random() * 10));
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const failedPaymentsPercentage = useMemo(() => {
+    const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const recentBookings = bookings.filter(b => new Date(b.addedAt) > twentyFourHoursAgo);
+    if (recentBookings.length === 0) return 0;
+    const failed = recentBookings.filter(b => b.status === 'Disputed').length;
+    return (failed / recentBookings.length) * 100;
+  }, [bookings]);
+
+  const overallHealth = (apiUptime > 99.5 && serverHealth > 90 && databaseHealth > 85 && failedPaymentsPercentage < 5) ? 'HEALTHY' : 'DEGRADED';
+
+  return (
+    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="font-semibold text-slate-800">System Health</h3>
+        <Badge className={cn(overallHealth === 'HEALTHY' ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700")}>{overallHealth}</Badge>
+      </div>
+      <p className="text-sm text-slate-500 mb-4 flex items-center gap-2"><span className={cn("w-2 h-2 rounded-full", overallHealth === 'HEALTHY' ? "bg-green-500" : "bg-amber-500")}></span> All systems operational</p>
+      
+      <div className="space-y-5">
+        <div className="flex items-center">
+          <TrendingUp size={16} className="text-slate-500 mr-3"/>
+          <div className="flex-grow">
+            <div className="flex justify-between text-sm">
+              <p className="font-medium text-slate-700">API Uptime</p>
+              <p className={cn("font-semibold", apiUptime > 99.9 ? "text-green-600" : "text-amber-600")}>{apiUptime.toFixed(2)}%</p>
+            </div>
+            <Progress value={apiUptime} className="h-2 mt-1" indicatorClassName={apiUptime > 99.9 ? "bg-green-500" : "bg-amber-500"}/>
+            <p className="text-xs text-slate-400 mt-1">Last 30d</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center">
+          <Server size={16} className="text-slate-500 mr-3"/>
+          <div className="flex-grow">
+            <div className="flex justify-between text-sm">
+              <p className="font-medium text-slate-700">Server Health</p>
+              <p className={cn("font-semibold", serverHealth > 95 ? "text-green-600" : "text-amber-600")}>{serverHealth.toFixed(0)}%</p>
+            </div>
+            <Progress value={serverHealth} className="h-2 mt-1" indicatorClassName={serverHealth > 95 ? "bg-green-500" : "bg-amber-500"}/>
+            <p className="text-xs text-slate-400 mt-1">8 nodes - all green</p>
+          </div>
+        </div>
+
+        <div className="flex items-center">
+          <Database size={16} className="text-slate-500 mr-3"/>
+          <div className="flex-grow">
+            <div className="flex justify-between text-sm">
+              <p className="font-medium text-slate-700">Database</p>
+              <p className={cn("font-semibold", databaseHealth > 90 ? "text-blue-600" : "text-amber-600")}>{databaseHealth.toFixed(0)}%</p>
+            </div>
+            <Progress value={databaseHealth} className="h-2 mt-1" indicatorClassName={databaseHealth > 90 ? "bg-blue-500" : "bg-amber-500"}/>
+            <p className="text-xs text-slate-400 mt-1">p95 18ms</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center">
+          <Zap size={16} className="text-slate-500 mr-3"/>
+          <div className="flex-grow">
+            <div className="flex justify-between text-sm">
+              <p className="font-medium text-slate-700">Failed Payments</p>
+              <p className={cn("font-semibold", failedPaymentsPercentage < 5 ? "text-green-600" : "text-red-600")}>{failedPaymentsPercentage.toFixed(1)}%</p>
+            </div>
+            <Progress value={failedPaymentsPercentage} className="h-2 mt-1" indicatorClassName={failedPaymentsPercentage < 5 ? "bg-green-500" : "bg-red-500"}/>
+            <p className="text-xs text-slate-400 mt-1">Last 24h</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 export default function AdminDashboard({ currentUser, data, onNavigate }: AdminDashboardProps) {
-  const [allUsersState, setAllUsersState] = useState<Record<string, User>>({});
   const [refreshKey, setRefreshKey] = useState(0);
   const [rejectionReason, setRejectionReason] = useState('');
   const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
@@ -966,7 +1206,6 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
 
   // useEffect for setting up intervals to refresh data and update the current time.
   useEffect(() => {
-    setAllUsersState(getUsers());
     const timer = setInterval(() => setDateTime(new Date()), 1000 * 60); // Update time every minute
     const refreshInterval = setInterval(() => setRefreshKey(p => p + 1), 5000); // Refresh data every 5 seconds
     return () => {
@@ -976,7 +1215,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
   }, []);
 
   // Memoizing all data fetching and calculations to prevent unnecessary re-renders.
-  const allUsersArray = useMemo(() => Object.values(allUsersState), [allUsersState]);
+  const allUsersArray = useMemo(() => Object.values(getUsers()), [refreshKey]);
   const globalData = useMemo(() => getGlobalAppData(), [refreshKey]);
   const camps = useMemo(() => getAllApprovedCamps(), [refreshKey]);
   const pendingCamps = useMemo(() => getPendingCamps().sort((a,b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime()), [refreshKey]);
@@ -1059,7 +1298,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
     });
   };
 
-  const platformStats = useMemo(() => [
+  const platformStats: StatCardProps[] = useMemo(() => [
     { title: 'Total Revenue', value: fmt(totalRevenue), subtext: 'vs last 7d', trend: '12.4%', trendDirection: 'up', icon: DollarSign, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalRevenue/7, 7, 0.3) },
     { title: 'Platform Earnings', value: fmt(totalCommission), subtext: '15% commission', trend: '9.1%', trendDirection: 'up', icon: CreditCard, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalCommission/7, 7, 0.3) },
     { title: 'Total Users', value: totalUsersCount, subtext: '', trend: '6.2%', trendDirection: 'up', icon: Users, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(totalUsersCount/7, 7, 0.2) },
@@ -1076,25 +1315,42 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
 
   // Handlers for approving/rejecting organizers and camps. These update the data store and trigger a re-render.
   const handleOrgAction = (email: string, action: 'approve' | 'reject', reason?: string) => {
-    const updatedUsers = { ...allUsersState };
-    const user = { ...updatedUsers[email.toLowerCase()] };
+    const allUsers = getUsers();
+    const userToUpdate = allUsers[email.toLowerCase()];
+
+    if (!userToUpdate) {
+      toast({ variant: "destructive", title: "Error", description: "User not found." });
+      return;
+    }
+
+    const updatedUser = { ...userToUpdate };
+
     if (action === 'approve') {
-      user.isApproved = true; user.isRejected = false; user.rejectionReason = ''; user.status = 'active';
-      addUserNotification(user.email, { id: uid(), type: 'approval', title: 'Application Approved!', message: 'Congrats! Your organizer account is active.', time: new Date().toISOString(), read: false });
+      updatedUser.isApproved = true;
+      updatedUser.isRejected = false;
+      updatedUser.rejectionReason = '';
+      updatedUser.status = 'active';
+      addUserNotification(updatedUser.email, { id: uid(), type: 'approval', title: 'Application Approved!', message: 'Congrats! Your organizer account is active.', time: new Date().toISOString(), read: false });
       toast({ title: 'Partner Verified' });
     } else {
-      if (!reason) return;
-      user.isApproved = false; user.isRejected = true; user.rejectionReason = reason;
-      addUserNotification(user.email, { id: uid(), type: 'approval', title: 'Application Update', message: `Your application was rejected. Reason: ${reason}`, time: new Date().toISOString(), read: false });
+      if (!reason) {
+        toast({ variant: "destructive", title: "Error", description: "A reason is required for rejection." });
+        return;
+      }
+      updatedUser.isApproved = false;
+      updatedUser.isRejected = true;
+      updatedUser.rejectionReason = reason;
+      addUserNotification(updatedUser.email, { id: uid(), type: 'approval', title: 'Application Update', message: `Your application was rejected. Reason: ${reason}`, time: new Date().toISOString(), read: false });
       toast({ variant: 'destructive', title: 'Partner Rejected' });
     }
-    updatedUsers[email.toLowerCase()] = user;
-    setAllUsersState(updatedUsers);
+
+    const updatedUsers = { ...allUsers, [email.toLowerCase()]: updatedUser };
     saveUsers(updatedUsers);
-    setRefreshKey(p => p + 1);
+    
     setIsRejectDialogOpen(false);
     setRejectionReason('');
     setUserToProcess(null);
+    setRefreshKey(p => p + 1);
   };
 
   const handleCampAction = (campId: string, action: 'approve' | 'reject') => {
@@ -1161,6 +1417,33 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
       </div>
 
       <div className="space-y-6">
+        <div>
+            <h3 className="text-2xl font-bold text-slate-800">Platform overview</h3>
+            <p className="text-slate-500 mt-1">Key performance indicators across the marketplace</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
+          {platformStats.map(stat => <StatCard key={stat.title} {...stat} />)}
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="lg:col-span-7"><RevenueAnalytics bookings={globalData.allBookings} /></div>
+        <div className="lg:col-span-5"><CampMix camps={camps} /></div>
+      </div>
+
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <BookingTrendsChart bookings={globalData.allBookings} />
+          <UserGrowthChart users={allUsersArray} />
+          <RevenueVsBookingsChart bookings={globalData.allBookings} />
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+          <TopOrganizers organizers={approvedOrganizers} bookings={globalData.allBookings}/>
+          <TopPerformingCamps camps={camps} bookings={globalData.allBookings}/>
+          <LiveWeatherWatch />
+      </div>
+
+      <div className="space-y-6">
           <div className="flex flex-wrap justify-between items-center gap-4">
               <div>
                   <h3 className="text-2xl font-bold text-slate-800">Moderation queues</h3>
@@ -1189,34 +1472,12 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
           </div>
       </div>
 
-      <div className="space-y-6">
-        <div>
-            <h3 className="text-2xl font-bold text-slate-800">Platform overview</h3>
-            <p className="text-slate-500 mt-1">Key performance indicators across the marketplace</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
-          {platformStats.map(stat => <StatCard key={stat.title} {...stat} />)}
-        </div>
-      </div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-7"><RevenueAnalytics bookings={globalData.allBookings} /></div>
-        <div className="lg:col-span-5"><CampMix camps={camps} /></div>
-      </div>
-
-       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <BookingTrendsChart bookings={globalData.allBookings} />
-          <UserGrowthChart users={allUsersArray} />
-          <RevenueVsBookingsChart bookings={globalData.allBookings} />
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
-          <TopOrganizers organizers={approvedOrganizers} bookings={globalData.allBookings}/>
-          <TopPerformingCamps camps={camps} bookings={globalData.allBookings}/>
-          <LiveWeatherWatch />
-      </div>
-
       <RecentBookings bookings={globalData.allBookings} users={allUsersArray} />
+      
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <RecentTransactions bookings={globalData.allBookings} />
+        <SystemHealth bookings={globalData.allBookings} />
+      </div>
 
       <Dialog open={isRejectDialogOpen} onOpenChange={setIsRejectDialogOpen}>
         <DialogContent>
@@ -1235,7 +1496,14 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
   );
 }
 
-const HeaderStat = ({ icon: Icon, label, value, isHighlighted = false }) => (
+interface HeaderStatProps {
+    icon: FC<LucideProps>;
+    label: string;
+    value: string | number;
+    isHighlighted?: boolean;
+}
+
+const HeaderStat: FC<HeaderStatProps> = ({ icon: Icon, label, value, isHighlighted = false }) => (
   <div className={cn("flex flex-col items-center justify-center rounded-2xl p-4 transition-all", isHighlighted ? "bg-green-500/80 shadow-lg" : "bg-black/20")}>
     <div className={cn("p-3 rounded-full mb-2", isHighlighted ? "bg-white/20" : "bg-white/10")}>
       <Icon size={20} className="text-white" />

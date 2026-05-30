@@ -176,6 +176,8 @@ export interface BookingParticipant {
 }
 
 export interface Booking {
+  userEmail: string;
+  organizerEmail: string;
   id: string;
   customer: string;
   customerEmail: string;

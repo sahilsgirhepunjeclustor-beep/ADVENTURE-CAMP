@@ -522,11 +522,11 @@ const parseYMD = (d)=>{
     if (match) return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
     return new Date(d);
 };
-const fmt = (n)=>{
+const fmt = (n, p0)=>{
     if (n >= 100000) return `₹${(n / 100000).toFixed(2)}L`;
     return `₹${Number(n).toLocaleString('en-IN')}`;
 };
-const fmtDate = (d)=>{
+const fmtDate = (d, p0)=>{
     if (!d) return '';
     const dt = parseYMD(d);
     const months = [
