@@ -60,6 +60,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedCampId, setSelectedCampId] = useState<string | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   
   // Filtering & Discovery State
   const [searchQuery, setSearchQuery] = useState('');
@@ -85,6 +86,10 @@ export default function Home() {
 
   const triggerRefresh = () => setRefreshKey(p => p + 1);
 
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
+  
   const handleLogin = (u: User) => {
     setUser(u);
     const appData = getAppData(u.email);
@@ -560,9 +565,17 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen font-sans font-normal">
-      <div className="hidden md:block">
-        <Sidebar currentUser={user} currentPage={currentPage} onNavigate={onNavigate} onLogout={handleLogout} />
+    <div className="flex h-screen bg-slate-50 font-sans font-normal">
+       <div className={cn("hidden md:block transition-all duration-300", isSidebarCollapsed ? "w-20" : "w-[280px]")}>
+        <div className="sticky top-0 h-screen overflow-y-auto no-scrollbar">
+          <Sidebar 
+            currentUser={user} 
+            currentPage={currentPage} 
+            onNavigate={onNavigate} 
+            onLogout={handleLogout} 
+            isCollapsed={isSidebarCollapsed} 
+          />
+        </div>
       </div>
       
       <div className="flex-1 flex flex-col min-w-0">
@@ -571,6 +584,7 @@ export default function Home() {
           currentPage={currentPage} 
           onNavigate={onNavigate} 
           onLogout={handleLogout} 
+          toggleSidebar={toggleSidebar} 
         />
         <main className="flex-1 p-4 md:p-8 overflow-y-auto max-w-[1440px] mx-auto w-full relative no-scrollbar">
           {renderContent()}

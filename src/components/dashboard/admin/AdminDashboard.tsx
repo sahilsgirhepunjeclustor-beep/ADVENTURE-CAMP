@@ -1,60 +1,70 @@
-/**
- * @file AdminDashboard.tsx
- * @description This component renders the main dashboard for administrative users.
- * It provides a high-level overview of platform activity, including key statistics,
- * pending approvals, recent user activity, and financial performance.
- *
- * @requires react
- * @requires lucide-react - for icons
- * @requires recharts - for data visualization
- * @requires @/lib/types - for application-specific type definitions
- * @requires @/lib/utils - for utility functions like formatting
- * @requires @/lib/store - for accessing and manipulating application data
- * @requires @/components/ui/* - for various UI components like Button, Badge, Dialog, etc.
- */
 
 "use client";
 
-// Import necessary libraries and components
 import React, { useMemo, useState, useEffect } from 'react';
-import { User, AppData, UploadedDoc, Camp, Booking } from '@/lib/types';
+import { User, AppData, UploadedDoc, Camp, Activity as ActivityType, Review, Booking } from '@/lib/types';
 import { cn, fmt, fmtDate, uid } from '@/lib/utils';
 import {
   getGlobalAppData,
   getUsers,
   getAllApprovedCamps,
   getPendingCamps,
+  getRejectedCamps,
   saveUsers,
-  addUserNotification
+  addUserNotification,
+  savePendingCamps,
+  saveApprovedCamps,
+  saveRejectedCamps,
 } from '@/lib/store';
 import {
   Mountain,
-  Bell,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
   Eye,
-  Building2,
-  MapPin,
-  Calendar,
-  Phone,
-  Mail,
-  CreditCard,
-  FileText,
-  ShieldCheck,
-  X,
-  FileX,
   TrendingUp,
   Users as UsersIcon,
   ClipboardList,
   Star,
-  Activity,
   User as UserIcon,
-  ShieldAlert,
-  Lock,
-  HandCoins,
+  AlertTriangle,
+  Cloud,
+  MountainSnow,
+  Server,
+  Wifi,
+  BookOpenCheck,
+  CircleDollarSign,
+  DollarSign,
+  CreditCard,
+  Users,
+  ShieldCheck,
+  Briefcase,
+  Activity,
+  CalendarCheck,
+  ArrowLeftRight,
+  TrendingDown,
   Gem,
-  UserCheck
+  Target,
+  Clock,
+  Filter,
+  Download,
+  FileText,
+  MapPin,
+  Check,
+  X,
+  UserPlus,
+  Undo2,
+  UserX,
+  Search, 
+  File,
+  MoreHorizontal,
+  RefreshCw, 
+  Trophy,
+  Zap, 
+  Thermometer, 
+  Wind, 
+  Droplets, 
+  Sun
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -67,8 +77,10 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from "@/components/ui/textarea";
+import { Progress } from '@/components/ui/progress';
 import {
   AreaChart,
   Area,
@@ -77,544 +89,1158 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Line
+  Line,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  Sector,
+  BarChart,
+  Bar,
+  LineChart,
+  ComposedChart,
 } from 'recharts';
 
-/**
- * @interface AdminDashboardProps
- * @description Defines the props for the AdminDashboard component.
- * @property {User} currentUser - The currently logged-in administrative user.
- * @property {AppData} data - The global application data.
- * @property {(page: string, params?: any) => void} onNavigate - Function to handle navigation to different pages.
- */
-interface AdminDashboardProps {
-  currentUser: User;
-  data: AppData;
-  onNavigate: (page: string, params?: any) => void;
+// Helper to format time differences into a human-readable format like "5m ago".
+const timeAgo = (date: string | Date): string => {
+    const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
+    if (seconds < 0) return "just now";
+    if (seconds < 2) return "1s ago";
+    if (seconds < 60) return `${seconds}s ago`;
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 2) return "1m ago";
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 2) return "1h ago";
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    if (days < 2) return "1d ago";
+    return `${days}d ago`;
+};
+
+// Type definition for live feed activities.
+interface LiveFeedActivity {
+    id: string;
+    type: 'Camp approved' | 'New organizer registered' | 'Refund processed' | 'Booking completed' | 'Payment failed' | 'User suspended' | 'New review';
+    message: string;
+    time: string;
 }
 
 /**
- * @function AdminDashboard
- * @description The main component for the admin dashboard.
- * @param {AdminDashboardProps} props - The props for the component.
- * @returns {JSX.Element} - The rendered admin dashboard.
+ * TopOrganizers Component
+ * @param {{organizers: User[], bookings: Booking[]}} props
+ * @returns {JSX.Element}
+ * Displays a ranked list of top organizers by revenue in the last 30 days.
+ * It calculates revenue, total bookings, and average rating for each organizer.
+ * The list is responsive and includes progress bars to visualize revenue comparison.
  */
-export default function AdminDashboard({ currentUser, data, onNavigate }: AdminDashboardProps) {
-  // --- STATE MANAGEMENT ---
+const TopOrganizers = ({ organizers, bookings }) => {
+    // Memoized calculation for top organizers to prevent re-computation on every render.
+    const topOrganizers = useMemo(() => {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-  // State to hold all user data, initialized from the store.
-  const [allUsersState, setAllUsersState] = useState<Record<string, User>>({});
-  // State to manage the index of the currently displayed pending organizer.
-  const [pendingIdx, setPendingIdx] = useState(0);
-  // State to hold the user object being audited.
-  const [auditUser, setAuditUser] = useState<User | null>(null);
-  // State to control the visibility of the audit dialog.
-  const [isAuditOpen, setIsAuditOpen] = useState(false);
-  // State for the document to be previewed.
-  const [previewDoc, setPreviewDoc] = useState<{ label: string; doc?: UploadedDoc } | null>(null);
-  // State to trigger a refresh of user data.
-  const [refreshKey, setRefreshKey] = useState(0);
-  // State to store the reason for rejecting an organizer.
-  const [rejectionReason, setRejectionReason] = useState('');
-  // State to control the visibility of the rejection confirmation dialog.
-  const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
-  // State to hold the user being approved or rejected.
-  const [userToProcess, setUserToProcess] = useState<User | null>(null);
+        const orgData = organizers.map(org => {
+            const orgBookings = bookings.filter(b => b.organizerEmail === org.email && new Date(b.addedAt) > thirtyDaysAgo && b.status === 'Confirmed');
+            const revenue = orgBookings.reduce((acc, b) => acc + b.amount, 0);
+            return {
+                ...org,
+                revenue,
+                totalBookings: orgBookings.length,
+                totalCamps: org.camps?.length || 0,
+                rating: (org.reviews?.reduce((acc, r) => acc + r.rating, 0) || 0) / (org.reviews?.length || 1)
+            };
+        });
 
-  // --- DATA FETCHING & SIDE EFFECTS ---
+        return orgData.sort((a, b) => b.revenue - a.revenue).slice(0, 4);
+    }, [organizers, bookings]);
 
-  /**
-   * @effect
-   * @description Fetches all users from the store whenever the `refreshKey` changes.
-   * This allows for periodic refreshing of user data.
-   */
-  useEffect(() => {
-    setAllUsersState(getUsers());
-  }, [refreshKey]);
+    const maxRevenue = topOrganizers[0]?.revenue || 1;
+    const RANK_COLORS = ['bg-amber-400', 'bg-blue-400', 'bg-green-500', 'bg-slate-400'];
 
-  /**
-   * @effect
-   * @description Sets up an interval to periodically increment `refreshKey`,
-   * which in turn triggers a refetch of user data.
-   * The interval is cleared on component unmount to prevent memory leaks.
-   */
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRefreshKey(p => p + 1);
-    }, 5000); // Refreshes every 5 seconds
-    return () => clearInterval(interval);
-  }, []);
+    return (
+        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full">
+            <div className="flex justify-between items-center mb-2">
+                <h3 className="font-semibold text-slate-800">Top Organizers</h3>
+                <a href="#" className="text-sm font-medium text-primary hover:underline">All →</a>
+            </div>
+            <p className="text-sm text-slate-500 mb-4">By revenue this month</p>
+            <div className="space-y-5">
+                {topOrganizers.map((org, index) => (
+                    <div key={org.email} className="animate-in fade-in duration-500">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                            <div className={cn(RANK_COLORS[index], "w-10 h-10 rounded-full flex items-center justify-center text-white font-bold shrink-0 shadow-sm")}>
+                                <Trophy size={16} className="absolute opacity-20"/>
+                                <span className="relative">#{index + 1}</span>
+                            </div>
+                            <div className="flex-grow min-w-0">
+                                <p className="font-semibold text-slate-900 truncate">{org.organizerProfile.businessName}</p>
+                                <div className="flex items-center gap-2 sm:gap-3 text-xs text-slate-500 mt-1 flex-wrap">
+                                    <span>{org.totalCamps} camps</span><span className="hidden sm:inline">•</span>
+                                    <span>{org.totalBookings} bookings</span><span className="hidden sm:inline">•</span>
+                                    <span className="flex items-center gap-1"><Star size={12} className="text-amber-400"/>{org.rating.toFixed(1)}</span>
+                                </div>
+                            </div>
+                            <p className="font-bold text-slate-800 text-base sm:text-lg">{fmt(org.revenue, 'compact')}</p>
+                        </div>
+                        <Progress value={(org.revenue / maxRevenue) * 100} className="mt-2 h-1.5" indicatorClassName={RANK_COLORS[index]}/>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
 
-  // --- MEMOIZED COMPUTATIONS ---
-  // Using useMemo to optimize performance by caching expensive calculations.
+/**
+ * TopPerformingCamps Component
+ * @param {{camps: Camp[], bookings: Booking[]}} props
+ * @returns {JSX.Element}
+ * Renders a list of top-performing camps based on revenue and occupancy.
+ * The component is responsive and features progress bars for visual comparison.
+ */
+const TopPerformingCamps = ({ camps, bookings }) => {
+    // Memoized calculation for top camps.
+    const topCamps = useMemo(() => {
+        return camps.map(camp => {
+            const campBookings = bookings.filter(b => b.campId === camp.id && b.status === 'Confirmed');
+            const revenue = campBookings.reduce((acc, b) => acc + b.amount, 0);
+            // Simple occupancy calculation. This can be made more complex based on booking dates and camp availability.
+            const occupancy = camp.capacity > 0 ? Math.min(100, (campBookings.length / (camp.capacity * 0.2)) * 100) : 0;
+            return { ...camp, revenue, occupancy, bookingsCount: campBookings.length };
+        }).sort((a,b) => b.revenue - a.revenue).slice(0, 4);
+    }, [camps, bookings]);
 
-  // Memoized calculation for the total number of users.
-  const totalUsersCount = useMemo(() => Object.keys(allUsersState).length, [allUsersState]);
+    return (
+        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full">
+            <div className="flex justify-between items-center mb-2">
+                <h3 className="font-semibold text-slate-800">Top Performing Camps</h3>
+                <a href="#" className="text-sm font-medium text-primary hover:underline">All →</a>
+            </div>
+            <p className="text-sm text-slate-500 mb-4">Occupancy & revenue leaders</p>
+            <div className="space-y-3">
+                {topCamps.map((camp, index) => (
+                    <div key={camp.id} className="p-2 rounded-lg hover:bg-slate-50/50 relative animate-in fade-in duration-500">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                            <div className="w-10 h-10 rounded-full bg-green-700 text-white flex items-center justify-center shrink-0 font-bold shadow-sm">
+                               <span>#{index + 1}</span>
+                            </div>
+                            <div className="flex-grow min-w-0">
+                                <p className="font-semibold text-slate-900 truncate">{camp.name}</p>
+                                 <div className="flex items-center gap-2 sm:gap-3 text-xs text-slate-500 mt-1 flex-wrap">
+                                    <span className="flex items-center gap-1"><MapPin size={12}/>{camp.location}</span><span className="hidden sm:inline">•</span>
+                                    <span>{fmt(camp.revenue, 'compact')}</span><span className="hidden sm:inline">•</span>
+                                    <span>{camp.bookingsCount} bk</span><span className="hidden sm:inline">•</span>
+                                    <span className="flex items-center gap-1"><Star size={12} className="text-amber-400"/>{camp.rating.toFixed(1)}</span>
+                                 </div>
+                            </div>
+                            <div className="flex items-center gap-2 shrink-0">
+                               <Badge className="bg-green-100 text-green-700 gap-1 border-none hidden lg:flex"><Zap size={12}/> Hot</Badge>
+                               <p className="text-sm font-bold text-slate-600">{Math.round(camp.occupancy)}%</p>
+                            </div>
+                        </div>
+                        <Progress value={camp.occupancy} className="absolute bottom-1 left-0 right-0 h-1 mx-2 opacity-50" indicatorClassName="bg-amber-400" />
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
 
-  // Memoized list of organizers pending approval.
-  const pendingOrganizers = useMemo(() =>
-    Object.values(allUsersState).filter(u => u.role === 'organizer' && !u.isApproved && !u.isRejected),
-    [allUsersState]
+/**
+ * LiveWeatherWatch Component
+ * @returns {JSX.Element}
+ * Displays simulated live weather data for key adventure locations. Includes responsive design and animations.
+ * NOTE: The weather data is mocked. In a real app, this would be fetched from a live weather API.
+ */
+const LiveWeatherWatch = () => {
+    const weatherData = { himalaya: { temp: 24, wind: 32, humidity: 68 }, patagonia: { temp: 18, wind: 45, humidity: 75 }, bali: { temp: 31, wind: 15, humidity: 82 } };
+
+    return (
+        <div className="bg-gradient-to-br from-blue-500 to-cyan-400 rounded-2xl p-6 text-white shadow-lg h-full relative overflow-hidden">
+            <Sun size={80} className="absolute -top-5 -right-5 text-white/20 animate-pulse duration-2000"/>
+            <div className="relative z-10">
+                <p className="text-sm font-medium uppercase tracking-wider text-white/80">Live Weather Watch</p>
+                <h3 className="text-2xl font-bold mt-1">Adventure Conditions</h3>
+                
+                <div className="grid grid-cols-3 gap-2 sm:gap-3 mt-4 text-center">
+                    <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm">
+                        <p className="font-bold text-xl sm:text-2xl flex items-center justify-center"><Thermometer size={16} className="mr-1"/>{weatherData.himalaya.temp}°</p>
+                        <p className="text-xs text-white/80">Himalaya</p>
+                    </div>
+                     <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm">
+                        <p className="font-bold text-xl sm:text-2xl flex items-center justify-center"><Wind size={16} className="mr-1"/>{weatherData.patagonia.wind}km/h</p>
+                        <p className="text-xs text-white/80">Patagonia</p>
+                    </div>
+                     <div className="bg-white/20 p-3 rounded-lg backdrop-blur-sm">
+                        <p className="font-bold text-xl sm:text-2xl flex items-center justify-center"><Droplets size={16} className="mr-1"/>{weatherData.bali.humidity}%</p>
+                        <p className="text-xs text-white/80">Bali</p>
+                    </div>
+                </div>
+
+                <div className="bg-white/20 p-4 rounded-lg mt-4 backdrop-blur-sm animate-in fade-in duration-500">
+                    <div className="flex items-center gap-3">
+                        <AlertTriangle size={24} className="text-yellow-300 animate-shake"/>
+                        <div>
+                           <p className="font-bold">Storm advisory - Patagonia</p>
+                           <p className="text-xs text-white/80">6 active camps in zone • 142 guests notified</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex justify-between items-center mt-4 text-sm">
+                    <p className="flex items-center gap-2"><MapPin size={14}/> 18 risk zones tracked</p>
+                    <a href="#" className="font-semibold hover:underline">Open map →</a>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
+const RecentBookings = ({ bookings, users }) => {
+  const [filter, setFilter] = useState('All');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [page, setPage] = useState(1);
+  const [sort, setSort] = useState({ key: 'addedAt', order: 'desc' });
+  const bookingsPerPage = 7;
+
+  const handleExportCSV = () => {
+    if (filteredBookings.length === 0) {
+        toast({ title: "No data to export", variant: "destructive"});
+        return;
+    }
+    const toCsv = (value: any): string => {
+        const str = String(value ?? '').replace(/"/g, '""');
+        return `"${str}"`;
+    };
+    const headers = ["Booking ID", "User", "Camp", "Date", "Amount", "Status", "Payment"];
+    const csvRows = filteredBookings.map(b => {
+        const payment = getPaymentStatus(b);
+        const row = [
+            `BK-${b.id.substring(0,5).toUpperCase()}`,
+            b.customer,
+            b.camp,
+            fmtDate(b.addedAt, {month: 'short', day: 'numeric', year: 'numeric'}),
+            b.amount,
+            b.status,
+            payment.text
+        ];
+        return row.map(toCsv).join(',');
+    });
+    const csvContent = [headers.join(','), ...csvRows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'bookings.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast({ title: "CSV Export Successful" });
+  };
+  
+  const handleExportPDF = () => {
+      toast({
+          title: "PDF Export Unavailable",
+          description: "This feature is currently under development. Please use CSV export.",
+      });
+  };
+
+  const handleFilterClick = () => {
+      toast({
+          title: "Advanced Filters",
+          description: "Advanced filtering options are under development.",
+      });
+  };
+
+  const filteredBookings = useMemo(() => {
+    return bookings
+      .filter(b => filter === 'All' || b.status === filter)
+      .filter(b => 
+        !searchTerm ||
+        b.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        b.camp.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        b.customer.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+      .sort((a,b) => {
+        if (sort.key === 'amount') {
+            return sort.order === 'asc' ? a.amount - b.amount : b.amount - a.amount;
+        }
+        return sort.order === 'asc' ? new Date(a.addedAt).getTime() - new Date(b.addedAt).getTime() : new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime();
+      });
+  }, [bookings, filter, searchTerm, sort]);
+
+  const paginatedBookings = useMemo(() => {
+    const startIndex = (page - 1) * bookingsPerPage;
+    return filteredBookings.slice(startIndex, startIndex + bookingsPerPage);
+  }, [filteredBookings, page]);
+
+  const totalPages = Math.ceil(filteredBookings.length / bookingsPerPage);
+
+  const statusCounts = useMemo(() => {
+    const counts = { All: bookings.length, Confirmed: 0, Pending: 0, Cancelled: 0, Disputed: 0 };
+    bookings.forEach(b => {
+      const statusKey = b.status.charAt(0).toUpperCase() + b.status.slice(1) as keyof typeof counts;
+      if (counts[statusKey] !== undefined) counts[statusKey]++;
+    });
+    return counts;
+  }, [bookings]);
+
+  const getPaymentStatus = (booking: Booking) => {
+    if (booking.status === 'Cancelled') return { text: 'Refunded', color: 'text-blue-600 bg-blue-100' };
+    if (booking.status === 'Pending') return { text: 'Pending', color: 'text-amber-600 bg-amber-100' };
+    if (booking.status === 'Disputed') return { text: 'Held', color: 'text-red-600 bg-red-100' };
+    return { text: 'Paid', color: 'text-green-600 bg-green-100' };
+  }
+
+  return (
+    <div className="bg-white rounded-2xl p-6 lg:p-8 border border-slate-100 shadow-sm">
+        <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+            <div>
+                <h3 className="text-xl font-bold text-slate-800">Recent Bookings</h3>
+                <p className="text-sm text-slate-500 mt-1">{bookings.length} bookings • updated {timeAgo(new Date(Date.now() - 120000))}</p>
+            </div>
+            <div className="flex items-center gap-2">
+                <div className="relative">
+                    <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"/>
+                    <Input placeholder="Search bookings..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-9 w-40 md:w-48 h-9 rounded-lg"/>
+                </div>
+                <Button variant="outline" onClick={handleFilterClick} className="h-9 gap-1.5"><Filter size={14}/> Filter</Button>
+                <Button variant="outline" onClick={handleExportCSV} className="h-9 gap-1.5"><File size={14}/> CSV</Button>
+                <Button onClick={handleExportPDF} className="h-9 gap-1.5 bg-slate-800 hover:bg-slate-700 text-white"><FileText size={14}/> PDF</Button>
+            </div>
+        </div>
+        <div className="flex gap-4 border-b border-slate-200 mb-2">
+            {Object.entries(statusCounts).map(([status, count]) => (
+                <button key={status} onClick={() => setFilter(status)} className={cn("py-2.5 px-1 text-sm font-semibold border-b-2", filter === status ? "text-primary border-primary" : "text-slate-500 border-transparent hover:text-slate-700")}>
+                    {status} <span className="text-slate-400 font-medium ml-1">{count}</span>
+                </button>
+            ))}
+        </div>
+        <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+                <thead>
+                    <tr className="text-xs text-slate-400 uppercase bg-slate-50/50">
+                        <th className="p-3 w-8 font-medium"><Checkbox /></th>
+                        <th className="p-3 font-medium">Booking</th>
+                        <th className="p-3 font-medium">User</th>
+                        <th className="p-3 font-medium">Camp</th>
+                        <th className="p-3 font-medium">Date</th>
+                        <th className="p-3 font-medium cursor-pointer" onClick={() => setSort(s => ({ key: 'amount', order: s.order === 'asc' ? 'desc' : 'asc' }))}>Amount <span className={cn("text-slate-400", {'text-primary': sort.key === 'amount'})}>{sort.key === 'amount' ? (sort.order === 'asc' ? '↑' : '↓') : ''}</span></th>
+                        <th className="p-3 font-medium">Status</th>
+                        <th className="p-3 font-medium">Payment</th>
+                        <th className="p-3 font-medium text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {paginatedBookings.map(b => {
+                        const user = users.find(u => u.email === b.userEmail);
+                        const payment = getPaymentStatus(b);
+                        return (
+                            <tr key={b.id} className="border-b border-slate-100 hover:bg-slate-50/50">
+                                <td className="p-3"><Checkbox /></td>
+                                <td className="p-3 font-semibold text-slate-700">{`BK-${b.id.substring(0,5).toUpperCase()}`}</td>
+                                <td className="p-3">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-xs shrink-0">{user ? `${user.firstName[0]}${user.lastName[0]}` : '??'}</div>
+                                        <span className="font-medium text-slate-800 truncate">{b.customer}</span>
+                                    </div>
+                                </td>
+                                <td className="p-3 text-slate-600 max-w-xs truncate">{b.camp}</td>
+                                <td className="p-3 text-slate-600">{fmtDate(b.addedAt, {month: 'short', day: 'numeric', year: 'numeric'})}</td>
+                                <td className="p-3 font-semibold text-slate-800">{fmt(b.amount)}</td>
+                                <td className="p-3">
+                                    <Badge className={cn("font-semibold border-none text-xs", `bg-${b.status === 'Confirmed' ? 'green' : b.status === 'Pending' ? 'amber' : b.status === 'Cancelled' ? 'slate' : 'red'}-100`, `text-${b.status === 'Confirmed' ? 'green' : b.status === 'Pending' ? 'amber' : b.status === 'Cancelled' ? 'slate' : 'red'}-700`)}>{b.status}</Badge>
+                                </td>
+                                <td className="p-3"><Badge className={cn("font-semibold border-none text-xs", payment.color)}>{payment.text}</Badge></td>
+                                <td className="p-3">
+                                    <div className="flex gap-1 justify-end">
+                                        <Button variant="ghost" size="icon" className="w-8 h-8"><Eye size={16}/></Button>
+                                        <Button variant="ghost" size="icon" className="w-8 h-8"><RefreshCw size={16}/></Button>
+                                        <Button variant="ghost" size="icon" className="w-8 h-8 text-red-500"><X size={16}/></Button>
+                                        <Button variant="ghost" size="icon" className="w-8 h-8"><Download size={16}/></Button>
+                                        <Button variant="ghost" size="icon" className="w-8 h-8"><MoreHorizontal size={16}/></Button>
+                                    </div>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+        </div>
+        <div className="flex flex-wrap justify-between items-center mt-4 text-sm gap-4">
+            <p className="text-slate-500">Showing {paginatedBookings.length > 0 ? (page-1)*bookingsPerPage + 1 : 0} - {(page-1)*bookingsPerPage + paginatedBookings.length} of {filteredBookings.length} bookings</p>
+            <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" onClick={() => setPage(p => Math.max(1, p-1))} disabled={page===1}>← Prev</Button>
+                <div className="flex items-center gap-1">
+                    {Array.from({length: totalPages > 5 ? 5 : totalPages}, (_, i) => {
+                        let pageNum = i + 1;
+                        if (totalPages > 5 && page > 3) {
+                            if (i === 0) pageNum = 1;
+                            else if (i === 1) return <span key="dots-start" className="px-2 py-1">...</span>;
+                            else if (page >= totalPages - 2) pageNum = totalPages - (4-i);
+                            else pageNum = page - (2-i);
+                        } 
+                        if (totalPages > 5 && page <= 3 && i > 2 && i < 4) {
+                             return <span key="dots-end" className="px-2 py-1">...</span>;
+                        }
+                        if(totalPages > 5 && page <= 3 && i === 4) pageNum = totalPages;
+
+                        return <Button key={pageNum} variant={page === pageNum ? 'default' : 'outline'} size="sm" className="w-8 h-8 p-0" onClick={() => setPage(pageNum)}>{pageNum}</Button>
+                    })}
+                </div>
+                <Button variant="outline" size="sm" onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page===totalPages}>Next →</Button>
+            </div>
+        </div>
+    </div>
+  );
+};
+
+const ModerationQueues = ({ pendingOrganizers, pendingCamps, onApproveOrg, onRejectOrg, onApproveCamp, onRejectCamp, onNavigate }) => (
+  <div className="space-y-6">
+    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+        <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-3">
+                <h4 className="font-semibold text-slate-800">Pending Organizer Approvals</h4>
+                {pendingOrganizers.length > 0 && <Badge className="bg-amber-100 text-amber-700 font-semibold border-none">{pendingOrganizers.length} PENDING</Badge>}
+            </div>
+            <button onClick={() => onNavigate('approvals')} className="text-sm font-medium text-primary hover:underline">View all →</button>
+        </div>
+        <div className="space-y-1">
+            {pendingOrganizers.slice(0, 3).map(org => (
+                <div key={org.email} className="flex items-center gap-4 p-2 rounded-xl hover:bg-slate-50/50">
+                    <div className="w-10 h-10 rounded-full bg-green-100 text-green-700 font-bold flex items-center justify-center shrink-0">
+                        {org.organizerProfile?.businessName.slice(0,2).toUpperCase() || 'U'}
+                    </div>
+                    <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                           <p className="font-semibold text-sm text-slate-900 truncate">{org.organizerProfile?.businessName}</p>
+                           <Badge className="bg-amber-100 text-amber-700 font-semibold border-none px-1.5 py-0.5 text-[10px] shrink-0">PENDING</Badge>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-slate-500 mt-1 flex-wrap">
+                            <span>{org.firstName} {org.lastName}</span><span className="text-slate-300">•</span>
+                            <span className="flex items-center gap-1"><MapPin size={12}/>{org.location}</span><span className="text-slate-300">•</span>
+                            <span className="flex items-center gap-1"><FileText size={12}/>{org.organizerProfile?.documents?.length || 0} docs</span><span className="text-slate-300">•</span>
+                            <span>{timeAgo(org.createdAt)}</span>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="icon" className="w-9 h-9 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200"><Eye size={16}/></Button>
+                        <Button variant="ghost" size="icon" onClick={() => onRejectOrg(org)} className="w-9 h-9 rounded-full bg-red-100 text-red-600 hover:bg-red-200"><X size={16}/></Button>
+                        <Button variant="ghost" size="icon" onClick={() => onApproveOrg(org.email)} className="w-9 h-9 rounded-full bg-green-100 text-green-600 hover:bg-green-200"><Check size={16}/></Button>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+    <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm">
+        <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-3">
+                <h4 className="font-semibold text-slate-800">Pending Camp Approvals</h4>
+                {pendingCamps.length > 0 && <Badge variant="destructive" className="border-none">{pendingCamps.length} pending</Badge>}
+            </div>
+            <button onClick={() => onNavigate('approvals', { tab: 'camps'})} className="text-sm font-medium text-primary hover:underline">View all →</button>
+        </div>
+        <div className="space-y-1">
+            {pendingCamps.slice(0, 3).map(camp => (
+                <div key={camp.id} className="flex items-center gap-4 p-2 rounded-xl hover:bg-slate-50/50">
+                    <div className="w-10 h-10 rounded-full bg-green-700 text-white flex items-center justify-center shrink-0">
+                        <Mountain size={20}/>
+                    </div>
+                    <div className="flex-1">
+                        <p className="font-semibold text-sm text-slate-900 truncate">{camp.name}</p>
+                        <div className="flex items-center gap-3 text-xs text-slate-500 mt-1 flex-wrap">
+                            <span className="truncate">{camp.organizer}</span><span className="text-slate-300">•</span>
+                            <span className="flex items-center gap-1"><MapPin size={12}/>{camp.location}</span><span className="text-slate-300">•</span>
+                            <Badge variant="outline" className="border-green-200 bg-green-50 text-green-700 font-medium">{camp.category}</Badge>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="icon" className="w-9 h-9 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200"><Eye size={16}/></Button>
+                        <Button variant="ghost" size="icon" className="w-9 h-9 rounded-full bg-amber-100 text-amber-600 hover:bg-amber-200"><Star size={16}/></Button>
+                        <Button variant="ghost" size="icon" onClick={() => onRejectCamp(camp.id)} className="w-9 h-9 rounded-full bg-red-100 text-red-600 hover:bg-red-200"><X size={16}/></Button>
+                        <Button variant="ghost" size="icon" onClick={() => onApproveCamp(camp.id)} className="w-9 h-9 rounded-full bg-green-100 text-green-600 hover:bg-green-200"><Check size={16}/></Button>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+  </div>
+);
+
+const LiveActivityFeed = ({ activities, onNavigate }: { activities: LiveFeedActivity[], onNavigate: (page: string, params?: any) => void }) => {
+    const ICONS = {
+        'Camp approved': { icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-100' },
+        'New organizer registered': { icon: UserPlus, color: 'text-blue-600', bg: 'bg-blue-100' },
+        'Refund processed': { icon: Undo2, color: 'text-amber-600', bg: 'bg-amber-100' },
+        'Booking completed': { icon: CalendarCheck, color: 'text-slate-600', bg: 'bg-slate-100' },
+        'Payment failed': { icon: AlertTriangle, color: 'text-red-600', bg: 'bg-red-100' },
+        'User suspended': { icon: UserX, color: 'text-red-600', bg: 'bg-red-100' },
+        'New review': { icon: Star, color: 'text-yellow-600', bg: 'bg-yellow-100' },
+    };
+
+    return (
+        <div className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm h-full">
+            <div className="flex justify-between items-center mb-6">
+                <div className="flex items-center gap-3">
+                    <h4 className="font-semibold text-slate-800">Live Activity</h4>
+                     <div className="flex items-center gap-1.5 text-xs text-slate-500">
+                        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                        Streaming - real-time
+                    </div>
+                </div>
+                <button onClick={() => onNavigate('reports', {tab: 'audit'})} className="text-sm font-medium text-primary hover:underline">Audit log →</button>
+            </div>
+            <div className="relative space-y-6">
+              <div className="absolute left-4 top-2 bottom-2 w-0.5 bg-slate-200 z-0"></div>
+                {activities.map(act => {
+                    const { icon: Icon, color, bg } = ICONS[act.type] || { icon: Activity, color: 'text-slate-500', bg: 'bg-slate-100' };
+                    return (
+                        <div key={act.id} className="flex gap-4 items-start relative z-10">
+                            <div className={cn("w-8 h-8 rounded-full flex items-center justify-center shrink-0 border-4 border-white", bg)}>
+                                <Icon size={16} className={color} />
+                            </div>
+                            <div>
+                                <p className="text-sm font-medium text-slate-800">{act.message}</p>
+                                <p className="text-xs text-slate-500">{timeAgo(act.time)}</p>
+                            </div>
+                        </div>
+                    )
+                })
+            }
+            </div>
+        </div>
+    );
+};
+
+const StatCard = ({ icon: Icon, title, value, trend, trendDirection, subtext, chartData, iconBgColor }) => {
+  const trendColor = trendDirection === 'up' ? 'text-green-600' : (trendDirection === 'down' ? 'text-red-600' : 'text-amber-600');
+  const trendBgColor = trendDirection === 'up' ? 'bg-green-100' : (trendDirection === 'down' ? 'bg-red-100' : 'bg-amber-100');
+  const TrendIcon = trendDirection === 'up' ? TrendingUp : (trendDirection === 'down' ? TrendingDown : TrendingUp);
+  const gradientId = `gradient-${title.replace(/\s+/g, '-')}`;
+  const chartColors = { 'bg-green-500': { hex: '#22c55e', stop: '#22c55e' }, 'bg-blue-500': { hex: '#3b82f6', stop: '#3b82f6' }, 'bg-red-500': { hex: '#ef4444', stop: '#ef4444' }, 'bg-amber-500': { hex: '#f59e0b', stop: '#f59e0b' } };
+  const color = chartColors[iconBgColor] || chartColors['bg-green-500'];
+
+  return (
+    <div className="group bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col relative overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
+      <div className={`absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full ${iconBgColor} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}></div>
+      <div className="flex justify-between items-start z-10">
+        <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center shrink-0", iconBgColor)}>
+          <Icon className="text-white group-hover:scale-110 transition-transform duration-300" size={20} />
+        </div>
+        {trend && <div className={cn("flex items-center gap-1 text-xs font-semibold rounded-md px-2 py-1 ml-2", trendBgColor, trendColor)}><TrendIcon size={14} /><span>{trend}</span></div>}
+      </div>
+      <div className="flex-grow flex flex-col justify-end z-10 mt-4">
+        <div>
+          <p className="text-xs text-slate-500 uppercase tracking-wider">{title}</p>
+          <h3 className="text-2xl font-bold text-slate-800 mt-1">{value}</h3>
+        </div>
+        <div className="flex justify-between items-end mt-2">
+          <p className="text-xs text-slate-400">{subtext}</p>
+          <div className="w-24 h-10 -mr-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={chartData} margin={{ top: 5, right: 0, left: 0, bottom: 0 }}>
+                <defs><linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={color.stop} stopOpacity={0.3} /><stop offset="95%" stopColor={color.stop} stopOpacity={0} /></linearGradient></defs>
+                <Area type="monotone" dataKey="value" stroke={color.hex} strokeWidth={2} fillOpacity={1} fill={`url(#${gradientId})`} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const RevenueAnalytics = ({ bookings }) => {
+  const [timeRange, setTimeRange] = useState('7D');
+
+  const analyticsData = useMemo(() => {
+    const now = new Date();
+    let startDate = new Date(now);
+    const endDate = new Date(now);
+    let interval = 'day';
+    let format = (d: Date) => d.toLocaleDateString('en-US', {weekday: 'short'});
+
+    switch(timeRange) {
+      case '7D': startDate.setDate(now.getDate() - 6); break;
+      case '30D': startDate.setDate(now.getDate() - 29); format = (d) => d.toLocaleDateString('en-US', {month: 'short', day: 'numeric'}); break;
+      case '90D': startDate.setDate(now.getDate() - 89); format = (d) => d.toLocaleDateString('en-US', {month: 'short', day: 'numeric'}); break;
+      case '12M': startDate.setMonth(now.getMonth() - 11); startDate.setDate(1); interval = 'month'; format = (d) => d.toLocaleDateString('en-US', {month: 'short'}); break;
+      default: startDate.setDate(now.getDate() - 6);
+    }
+
+    const dataMap = new Map();
+    let d = new Date(startDate);
+
+    if (interval === 'day') {
+      while (d <= endDate) {
+        dataMap.set(d.toISOString().split('T')[0], { name: format(d), revenue: 0, refunds: 0 });
+        d.setDate(d.getDate() + 1);
+      }
+    } else { // month interval
+        d = new Date(startDate);
+        for(let i=0; i < 12; i++) {
+            const key = `${d.getFullYear()}-${d.getMonth()}`;
+            dataMap.set(key, { name: format(d), revenue: 0, refunds: 0 });
+            d.setMonth(d.getMonth() + 1);
+        }
+    }
+
+    bookings.forEach(booking => {
+      const bookingDate = new Date(booking.addedAt);
+      if (bookingDate >= startDate && bookingDate <= endDate) {
+        let key;
+        if(interval === 'day') {
+            key = bookingDate.toISOString().split('T')[0];
+        } else {
+            key = `${bookingDate.getFullYear()}-${bookingDate.getMonth()}`;
+        }
+        
+        if (dataMap.has(key)) {
+          const entry = dataMap.get(key);
+          if (booking.status === 'Confirmed') entry.revenue += booking.amount;
+          else if (booking.status === 'Cancelled') entry.refunds += booking.amount;
+        }
+      }
+    });
+    
+    return Array.from(dataMap.values());
+  }, [timeRange, bookings]);
+
+  return (
+    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-full">
+      <div className="flex flex-wrap justify-between items-start mb-4">
+        <div>
+          <h3 className="text-lg font-semibold text-slate-800">Revenue Analytics</h3>
+          <p className="text-sm text-slate-500">Revenue, membership & refunds — {timeRange}</p>
+        </div>
+        <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 text-xs bg-slate-100 p-1 rounded-md">
+            {['7D', '30D', '90D', '12M'].map(range => (
+              <button key={range} onClick={() => setTimeRange(range)} className={cn('px-2 py-1 rounded-md', timeRange === range ? 'bg-white shadow-sm text-primary font-semibold' : 'text-slate-500')}>
+                {range}
+              </button>
+            ))}
+          </div>
+          <Button variant="ghost" size="icon" className="text-slate-500"><Filter size={16} /></Button>
+          <Button variant="ghost" size="icon" className="text-slate-500"><Download size={16} /></Button>
+        </div>
+      </div>
+      <div className="h-[300px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={analyticsData}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
+            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12}} dy={10}/>
+            <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12}} width={40} tickFormatter={(value) => `${value/1000}k`}/>
+            <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #f1f5f9', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}/>
+            <defs>
+              <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#10b981" stopOpacity={0.1}/><stop offset="95%" stopColor="#10b981" stopOpacity={0}/></linearGradient>
+              <linearGradient id="colorRefunds" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#ef4444" stopOpacity={0.1}/><stop offset="95%" stopColor="#ef4444" stopOpacity={0}/></linearGradient>
+            </defs>
+            <Area type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={2} fill="url(#colorRevenue)" name="Revenue"/>
+            <Area type="monotone" dataKey="refunds" stroke="#ef4444" strokeWidth={2} fill="url(#colorRefunds)" name="Refunds"/>
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+}
+
+const CampMix = ({ camps }) => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const data = useMemo(() => {
+    const categoryCounts = camps.reduce((acc, camp) => {
+      const category = camp.category || 'Other';
+      acc[category] = (acc[category] || 0) + 1;
+      return acc;
+    }, {});
+    return Object.entries(categoryCounts).map(([name, value]) => ({ name, value }));
+  }, [camps]);
+
+  const COLORS = { Mountain: '#16a34a', Desert: '#f97316', Beach: '#3b82f6', Forest: '#115e59', Other: '#64748b' };
+  const onPieEnter = (_, index) => setActiveIndex(index);
+  const renderActiveShape = (props) => {
+    const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = props;
+    return <Sector cx={cx} cy={cy} innerRadius={innerRadius} outerRadius={outerRadius + 4} startAngle={startAngle} endAngle={endAngle} fill={fill} />;
+  };
+
+  const CustomLegend = ({ payload }) => (
+    <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4">
+      {payload.map((entry, index) => (
+        <div key={`item-${index}`} className="flex items-center gap-2 text-sm text-slate-600">
+          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }}></div>
+          <span>{entry.value}</span>
+        </div>
+      ))}
+    </div>
   );
 
-  // Memoized list of all approved and active users.
+  return (
+    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-full">
+      <div className="flex justify-between items-center mb-4">
+        <div>
+           <h3 className="text-lg font-semibold text-slate-800">Camp Mix</h3>
+           <p className="text-sm text-slate-500">Active camps by category</p>
+        </div>
+        <div className="flex items-center gap-1">
+           <Button variant="ghost" size="icon" className="text-slate-500"><Filter size={16} /></Button>
+           <Button variant="ghost" size="icon" className="text-slate-500"><Download size={16} /></Button>
+        </div>
+      </div>
+      <div className="h-[300px]">
+         <ResponsiveContainer width="100%" height="100%">
+            <PieChart onMouseLeave={() => setActiveIndex(null)}>
+              <Pie activeIndex={activeIndex} activeShape={renderActiveShape} onMouseEnter={onPieEnter} data={data} cx="50%" cy="45%" innerRadius={75} outerRadius={100} fill="#8884d8" paddingAngle={5} dataKey="value">
+                {data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[entry.name]} className="cursor-pointer"/>)}
+              </Pie>
+              <Tooltip />
+              <Legend content={<CustomLegend />} verticalAlign="bottom" wrapperStyle={{ marginTop: '20px' }}/>
+            </PieChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  )
+}
+
+const BookingTrendsChart = ({ bookings }) => {
+  const data = useMemo(() => {
+    const trendData = Array.from({length: 7}, (_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      return { name: d.toLocaleDateString('en-US', {weekday: 'short'}), bookings: 0 };
+    }).reverse();
+
+    bookings.forEach(b => {
+      const bookingDate = new Date(b.addedAt);
+      const today = new Date();
+      const diffDays = Math.ceil((today.getTime() - bookingDate.getTime()) / (1000 * 3600 * 24));
+      if(diffDays <= 7 && diffDays > 0) {
+        const dayIndex = 7 - diffDays;
+        trendData[dayIndex].bookings++;
+      }
+    });
+    return trendData;
+  }, [bookings]);
+
+  return (
+    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <h3 className="text-lg font-semibold text-slate-800">Booking Trends</h3>
+          <p className="text-sm text-slate-500">Daily bookings for last 7 days</p>
+        </div>
+        <div className="flex items-center gap-1">
+           <Button variant="ghost" size="icon" className="text-slate-500"><Filter size={16} /></Button>
+           <Button variant="ghost" size="icon" className="text-slate-500"><Download size={16} /></Button>
+        </div>
+      </div>
+      <div className="h-[250px]">
+        <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
+              <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12}} dy={10} />
+              <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12}} width={30} />
+              <Tooltip cursor={{fill: 'rgba(22, 163, 74, 0.1)'}} contentStyle={{ borderRadius: '12px', border: '1px solid #f1f5f9'}} />
+              <Bar dataKey="bookings" fill="#16a34a" radius={[4, 4, 0, 0]} barSize={20}/>
+            </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+};
+
+const UserGrowthChart = ({ users }) => {
+  const data = useMemo(() => {
+    const weeks = 6;
+    const weeklyData = Array.from({length: weeks}, (_, i) => ({
+      name: `W${weeks-i}`,
+      total: 0,
+      organizers: 0,
+      explorers: 0,
+    }));
+
+    const now = new Date();
+    users.forEach(user => {
+      const userDate = new Date(user.createdAt);
+      const diffWeeks = Math.floor((now.getTime() - userDate.getTime()) / (1000 * 3600 * 24 * 7));
+      if(diffWeeks < weeks) {
+        const weekIndex = weeks - 1 - diffWeeks;
+        weeklyData[weekIndex].total++;
+        if(user.role === 'organizer') weeklyData[weekIndex].organizers++;
+        else if(user.role === 'user') weeklyData[weekIndex].explorers++;
+      }
+    });
+    return weeklyData.reverse();
+  }, [users]);
+  
+  return (
+     <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <h3 className="text-lg font-semibold text-slate-800">User Growth</h3>
+          <p className="text-sm text-slate-500">New signups over last 6 weeks</p>
+        </div>
+        <div className="flex items-center gap-1">
+           <Button variant="ghost" size="icon" className="text-slate-500"><Filter size={16} /></Button>
+           <Button variant="ghost" size="icon" className="text-slate-500"><Download size={16} /></Button>
+        </div>
+      </div>
+      <div className="h-[250px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
+            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12}} dy={10} />
+            <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12}} width={40} />
+            <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #f1f5f9'}} />
+            <Line type="monotone" dataKey="total" stroke="#f97316" strokeWidth={2} name="Total Users" />
+            <Line type="monotone" dataKey="organizers" stroke="#16a34a" strokeWidth={2} name="Organizers" />
+            <Line type="monotone" dataKey="explorers" stroke="#3b82f6" strokeWidth={2} name="Explorers" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  )
+};
+
+const RevenueVsBookingsChart = ({ bookings }) => {
+  const data = useMemo(() => {
+    const trendData = Array.from({length: 7}, (_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      return { name: d.toLocaleDateString('en-US', {weekday: 'short'}), revenue: 0, bookings: 0 };
+    }).reverse();
+
+    bookings.forEach(b => {
+      if (b.status !== 'Confirmed') return;
+      const bookingDate = new Date(b.addedAt);
+      const today = new Date();
+      const diffDays = Math.ceil((today.getTime() - bookingDate.getTime()) / (1000 * 3600 * 24));
+      if(diffDays <= 7 && diffDays > 0) {
+        const dayIndex = 7 - diffDays;
+        trendData[dayIndex].revenue += b.amount;
+        trendData[dayIndex].bookings++;
+      }
+    });
+    return trendData;
+  }, [bookings]);
+
+  return (
+     <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <h3 className="text-lg font-semibold text-slate-800">Revenue vs Bookings</h3>
+          <p className="text-sm text-slate-500">Last 7 days comparative growth</p>
+        </div>
+         <div className="flex items-center gap-1">
+           <Button variant="ghost" size="icon" className="text-slate-500"><Filter size={16} /></Button>
+           <Button variant="ghost" size="icon" className="text-slate-500"><Download size={16} /></Button>
+        </div>
+      </div>
+      <div className="h-[250px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <ComposedChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
+            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12}} dy={10} />
+            <YAxis yAxisId="left" orientation="left" axisLine={false} tickLine={false} tick={{fontSize: 12}} width={40} tickFormatter={(val) => `${val/1000}k`} />
+            <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{fontSize: 12}} width={30}/>
+            <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #f1f5f9'}} />
+            <Bar yAxisId="left" dataKey="revenue" fill="#16a34a" radius={[4, 4, 0, 0]} barSize={20}/>
+            <Line yAxisId="right" type="monotone" dataKey="bookings" stroke="#f97316" strokeWidth={2} />
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  )
+};
+
+
+export default function AdminDashboard({ currentUser, data, onNavigate }: AdminDashboardProps) {
+  const [allUsersState, setAllUsersState] = useState<Record<string, User>>({});
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [rejectionReason, setRejectionReason] = useState('');
+  const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
+  const [userToProcess, setUserToProcess] = useState<User | null>(null);
+  const [dateTime, setDateTime] = useState(new Date());
+
+  // useEffect for setting up intervals to refresh data and update the current time.
+  useEffect(() => {
+    setAllUsersState(getUsers());
+    const timer = setInterval(() => setDateTime(new Date()), 1000 * 60); // Update time every minute
+    const refreshInterval = setInterval(() => setRefreshKey(p => p + 1), 5000); // Refresh data every 5 seconds
+    return () => {
+      clearInterval(timer);
+      clearInterval(refreshInterval);
+    }
+  }, []);
+
+  // Memoizing all data fetching and calculations to prevent unnecessary re-renders.
+  const allUsersArray = useMemo(() => Object.values(allUsersState), [allUsersState]);
+  const globalData = useMemo(() => getGlobalAppData(), [refreshKey]);
+  const camps = useMemo(() => getAllApprovedCamps(), [refreshKey]);
+  const pendingCamps = useMemo(() => getPendingCamps().sort((a,b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime()), [refreshKey]);
+  
+  const totalUsersCount = allUsersArray.length;
+
+  const pendingOrganizers = useMemo(() =>
+    allUsersArray.filter(u => u.role === 'organizer' && !u.isApproved && !u.isRejected).sort((a,b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
+    [allUsersArray]
+  );
+
+  const approvedOrganizers = useMemo(() => 
+    allUsersArray.filter(u => u.role === 'organizer' && u.isApproved), 
+  [allUsersArray]);
+
   const approvedUsersList = useMemo(() =>
-    Object.values(allUsersState).filter(u => {
+    allUsersArray.filter(u => {
       if (u.role === 'admin') return true;
       if (u.role === 'organizer') return u.isApproved === true && u.status !== 'suspended' && u.status !== 'blocked';
       return u.status !== 'suspended' && u.status !== 'blocked';
     }),
-    [allUsersState]
+    [allUsersArray]
   );
 
-  // Memoized list of the first 5 active users for display.
-  const activeUsers = useMemo(() =>
-    approvedUsersList.slice(0, 5),
-    [approvedUsersList]
-  );
-
-  // Memoized lists of all and pending camps.
-  const camps = useMemo(() => getAllApprovedCamps(), []);
-  const pendingCamps = useMemo(() => getPendingCamps(), []);
-  // Get global application data.
-  const globalData = getGlobalAppData();
-
-  // Calculate total revenue from confirmed bookings.
-  const totalRevenue = globalData.allBookings.reduce((sum, b) =>
-    sum + (b.status === 'Confirmed' ? b.amount : 0), 0
-  );
-
-  // Calculate total commission from confirmed bookings.
-  const totalCommission = globalData.allBookings.reduce((sum, b) =>
-    sum + (b.status === 'Confirmed' ? (b.commissionAmount || 0) : 0), 0
-  );
-
-  // Calculate the number of active members.
-  const activeMembers = Object.values(allUsersState).filter(u => u.membership?.status === 'active').length;
-
-  // Memoized data for the live revenue and bookings chart.
-  const liveChartData = useMemo(() => {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const currentMonth = new Date().getMonth();
-    const last6Months: Array<{ name: string; revenue: number; bookings: number; monthIdx: number }> = [];
-
-    // Initialize the last 6 months for the chart.
-    for (let i = 5; i >= 0; i--) {
-      const monthIdx = (currentMonth - i + 12) % 12;
-      last6Months.push({
-        name: months[monthIdx],
-        revenue: 0,
-        bookings: 0,
-        monthIdx
-      });
-    }
-
-    // Populate the chart data with booking information.
+  const allActivities = useMemo(() => {
+    const activities: LiveFeedActivity[] = [];
+    const recentCamps = camps.filter(c => new Date(c.addedAt) > new Date(Date.now() - 3 * 24 * 60 * 60 * 1000));
+    recentCamps.forEach(c => activities.push({ id: `camp-appr-${c.id}`, type: 'Camp approved', message: `Camp '${c.name}' approved`, time: c.addedAt }));
+    const recentUsers = allUsersArray.filter(u => new Date(u.createdAt) > new Date(Date.now() - 3 * 24 * 60 * 60 * 1000));
+    recentUsers.forEach(u => activities.push({ id: `usr-${u.email}`, type: 'New organizer registered', message: `New organizer '${u.organizerProfile?.businessName || u.firstName}' registered`, time: u.createdAt }));
     globalData.allBookings.forEach(b => {
-      const bDate = new Date(b.addedAt);
-      const bMonth = bDate.getMonth();
-      const chartPoint = last6Months.find(m => m.monthIdx === bMonth);
-      if (chartPoint) {
-        chartPoint.bookings++;
-        if (b.status === 'Confirmed') {
-          chartPoint.revenue += b.amount;
-        }
-      }
+        activities.push({
+            id: `bk-${b.id}`,
+            type: b.status === 'Confirmed' ? 'Booking completed' : 'Refund processed',
+            message: b.status === 'Confirmed' ? `Booking ${b.id.substring(0,5)} by ${b.customer}` : `Refund for BK-${b.id.substring(0,5)} (${fmt(b.amount)})`,
+            time: b.addedAt,
+        });
     });
+    globalData.allReviews.forEach((r: Review) => {
+        activities.push({ id: `rev-${r.id}`, type: 'New review', message: `New ${r.rating}★ review on '${r.camp}'`, time: r.date });
+    });
+    return activities.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()).slice(0,7);
+  }, [globalData, allUsersArray, camps]);
 
-    return last6Months;
-  }, [globalData.allBookings]);
+  const totalRevenue = globalData.allBookings.reduce((sum, b) => sum + (b.status === 'Confirmed' ? b.amount : 0), 0);
+  const revenueToday = globalData.allBookings.filter(b => {
+    const bookingDate = new Date(b.addedAt);
+    const today = new Date();
+    return bookingDate.getDate() === today.getDate() && bookingDate.getMonth() === today.getMonth() && bookingDate.getFullYear() === today.getFullYear() && b.status === 'Confirmed';
+  }).reduce((sum, b) => sum + b.amount, 0);
 
-  // Total number of items pending audit (camps + organizers).
+  const totalCommission = globalData.allBookings.reduce((sum, b) => sum + (b.status === 'Confirmed' ? (b.commissionAmount || 0) : 0), 0);
+  const activeMembers = allUsersArray.filter(u => u.membership?.status === 'active').length;
   const auditTotal = pendingCamps.length + pendingOrganizers.length;
+  const activeOrganizers = approvedOrganizers.length;
+  const totalCamps = camps.length;
+  const liveBookings = globalData.allBookings.filter(b => b.status === 'Confirmed').length;
+  
+  const { monthlyGrowth, conversionRate, refundRequests } = useMemo(() => {
+    const now = new Date();
+    const last30DaysStart = new Date();
+    last30DaysStart.setDate(now.getDate() - 30);
+    const prev30DaysStart = new Date();
+    prev30DaysStart.setDate(now.getDate() - 60);
+    const last30DaysRevenue = globalData.allBookings.filter(b => new Date(b.addedAt) >= last30DaysStart && b.status === 'Confirmed').reduce((sum, b) => sum + b.amount, 0);
+    const prev30DaysRevenue = globalData.allBookings.filter(b => new Date(b.addedAt) >= prev30DaysStart && new Date(b.addedAt) < last30DaysStart && b.status === 'Confirmed').reduce((sum, b) => sum + b.amount, 0);
+    let growth = prev30DaysRevenue > 0 ? ((last30DaysRevenue - prev30DaysRevenue) / prev30DaysRevenue) * 100 : (last30DaysRevenue > 0 ? 100 : 0);
+    const usersWithBookings = new Set(globalData.allBookings.map(b => b.userEmail)).size;
+    const rate = totalUsersCount > 0 ? (usersWithBookings / totalUsersCount) * 100 : 0;
+    const refunds = globalData.allBookings.filter(b => b.status === 'Cancelled').length;
+    return { monthlyGrowth: `${growth.toFixed(1)}%`, conversionRate: `${rate.toFixed(2)}%`, refundRequests: refunds };
+  }, [globalData.allBookings, totalUsersCount]);
 
-  // --- UI DATA & CONFIGURATION ---
+  const generateDynamicChartData = (base = 50, points = 7, variance = 0.5) => {
+    let lastValue = base;
+    return Array.from({ length: points }, () => {
+      const change = (Math.random() - 0.5) * 2 * variance * lastValue;
+      lastValue = Math.max(10, lastValue + change);
+      return { value: lastValue };
+    });
+  };
 
-  // Configuration for the main statistics grid.
-  const mainStats = [
-    { label: 'Total Sales', value: fmt(totalRevenue), trend: '+12.5%', color: 'border-green-400', textColor: 'text-green-600', icon: '💰' },
-    { label: 'Platform Earnings', value: fmt(totalCommission), trend: '10% Fee', color: 'border-blue-400', textColor: 'text-blue-600', icon: '📈' },
-    { label: 'Total Users', value: totalUsersCount, trend: 'All Users', color: 'border-slate-300', textColor: 'text-slate-500', icon: '👥' },
-    { label: 'Verified Users', value: approvedUsersList.length, trend: 'Active', color: 'border-emerald-400', textColor: 'text-emerald-600', icon: '✅' },
-    { label: 'Paid Members', value: activeMembers, trend: 'Loyalty', color: 'border-orange-300', textColor: 'text-orange-600', icon: '💎' },
-    { label: 'Pending Approvals', value: auditTotal, trend: 'Priority', color: auditTotal > 0 ? 'border-orange-400' : 'border-slate-200', textColor: auditTotal > 0 ? 'text-orange-600' : 'text-slate-500', icon: '⏳', shake: auditTotal > 0 },
-  ];
+  const platformStats = useMemo(() => [
+    { title: 'Total Revenue', value: fmt(totalRevenue), subtext: 'vs last 7d', trend: '12.4%', trendDirection: 'up', icon: DollarSign, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalRevenue/7, 7, 0.3) },
+    { title: 'Platform Earnings', value: fmt(totalCommission), subtext: '15% commission', trend: '9.1%', trendDirection: 'up', icon: CreditCard, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalCommission/7, 7, 0.3) },
+    { title: 'Total Users', value: totalUsersCount, subtext: '', trend: '6.2%', trendDirection: 'up', icon: Users, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(totalUsersCount/7, 7, 0.2) },
+    { title: 'Verified Users', value: approvedUsersList.length, subtext: `${totalUsersCount > 0 ? Math.round((approvedUsersList.length/totalUsersCount)*100) : 0}% verified`, trend: '4.7%', trendDirection: 'up', icon: ShieldCheck, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(approvedUsersList.length/7, 7, 0.2) },
+    { title: 'Active Organizers', value: activeOrganizers, subtext: '', trend: '3.1%', trendDirection: 'up', icon: Briefcase, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(activeOrganizers/7, 7, 0.1) },
+    { title: 'Total Camps', value: totalCamps, subtext: '', trend: '8.4%', trendDirection: 'up', icon: Mountain, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalCamps/7, 7, 0.1) },
+    { title: 'Active Bookings', value: liveBookings, subtext: '', trend: '18.6%', trendDirection: 'up', icon: CalendarCheck, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(liveBookings/7, 7, 0.4) },
+    { title: 'Refund Requests', value: refundRequests, subtext: '3 urgent', trend: '14.2%', trendDirection: 'down', icon: ArrowLeftRight, iconBgColor: 'bg-red-500', chartData: generateDynamicChartData(refundRequests/7, 7, 0.8) },
+    { title: 'Pending Approvals', value: auditTotal, subtext: 'Action required', trend: '2%', trendDirection: 'stale', icon: Clock, iconBgColor: 'bg-amber-500', chartData: generateDynamicChartData(auditTotal/7, 7, 0.5) },
+    { title: 'Membership Subs', value: activeMembers, subtext: '', trend: '7.3%', trendDirection: 'stale', icon: Gem, iconBgColor: 'bg-amber-500', chartData: generateDynamicChartData(activeMembers/7, 7, 0.2) },
+    { title: 'Monthly Growth', value: monthlyGrowth, subtext: '', trend: '2.4%', trendDirection: 'up', icon: TrendingUp, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(50, 7, 0.6) },
+    { title: 'Conversion Rate', value: conversionRate, subtext: '', trend: '0.8%', trendDirection: 'up', icon: Target, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(5, 7, 0.1) },
+  ], [totalRevenue, totalCommission, totalUsersCount, approvedUsersList.length, activeOrganizers, totalCamps, liveBookings, refundRequests, auditTotal, activeMembers, monthlyGrowth, conversionRate]);
 
-  // --- EVENT HANDLERS ---
-
-  /**
-   * @function handleOrgAction
-   * @description Handles the approval or rejection of an organizer.
-   * @param {string} email - The email of the organizer to process.
-   * @param {'approve' | 'reject'} action - The action to perform.
-   * @param {string} [reason] - The reason for rejection (required for rejection).
-   */
+  // Handlers for approving/rejecting organizers and camps. These update the data store and trigger a re-render.
   const handleOrgAction = (email: string, action: 'approve' | 'reject', reason?: string) => {
     const updatedUsers = { ...allUsersState };
     const user = { ...updatedUsers[email.toLowerCase()] };
-
     if (action === 'approve') {
-      // Approve the user
-      user.isApproved = true;
-      user.isRejected = false;
-      user.rejectionReason = ''; // Clear any previous rejection reason
-      user.status = 'active';
-      // Add a notification for the user
-      addUserNotification(user.email, {
-        id: uid(),
-        type: 'approval',
-        title: 'Application Approved!',
-        message: 'Congratulations! Your organizer account is now active and you can list your camps.',
-        time: new Date().toISOString(),
-        read: false
-      });
+      user.isApproved = true; user.isRejected = false; user.rejectionReason = ''; user.status = 'active';
+      addUserNotification(user.email, { id: uid(), type: 'approval', title: 'Application Approved!', message: 'Congrats! Your organizer account is active.', time: new Date().toISOString(), read: false });
       toast({ title: 'Partner Verified' });
     } else {
-      // Reject the user
-      if (!reason) return; // Reason is mandatory for rejection
-      user.isApproved = false;
-      user.isRejected = true;
-      user.rejectionReason = reason;
-
-      // Add a notification for the user
-      addUserNotification(user.email, {
-        id: uid(),
-        type: 'approval',
-        title: 'Application Update',
-        message: `Your organizer application was rejected. Reason: ${reason}`,
-        time: new Date().toISOString(),
-        read: false
-      });
-
+      if (!reason) return;
+      user.isApproved = false; user.isRejected = true; user.rejectionReason = reason;
+      addUserNotification(user.email, { id: uid(), type: 'approval', title: 'Application Update', message: `Your application was rejected. Reason: ${reason}`, time: new Date().toISOString(), read: false });
       toast({ variant: 'destructive', title: 'Partner Rejected' });
     }
-
-    // Update the user in the local state and save to the store.
     updatedUsers[email.toLowerCase()] = user;
     setAllUsersState(updatedUsers);
     saveUsers(updatedUsers);
-
-    // Reset the UI state.
-    setIsAuditOpen(false);
+    setRefreshKey(p => p + 1);
     setIsRejectDialogOpen(false);
     setRejectionReason('');
     setUserToProcess(null);
   };
 
-  // Get today's date formatted as a string.
-  const todayStr = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-  // Count the number of unread notifications.
-  const unreadAlerts = data.notifications?.filter(n => !n.read).length || 0;
+  const handleCampAction = (campId: string, action: 'approve' | 'reject') => {
+    const pending = getPendingCamps();
+    const campIndex = pending.findIndex(c => c.id === campId);
+    if (campIndex === -1) return;
+    const campToProcess = pending[campIndex];
+    const updatedPending = pending.filter(c => c.id !== campId);
+    savePendingCamps(updatedPending);
+    if (action === 'approve') {
+      campToProcess.status = 'approved'; campToProcess.isHidden = false;
+      const approved = getAllApprovedCamps();
+      saveApprovedCamps([campToProcess, ...approved]);
+      addUserNotification(campToProcess.addedBy, { id: uid(), type: 'approval', title: 'Your Camp is Live!', message: `Congrats! "${campToProcess.name}" is approved.`, time: new Date().toISOString(), read: false });
+      toast({ title: 'Camp Approved' });
+    } else {
+      campToProcess.status = 'rejected';
+      const rejected = getRejectedCamps();
+      saveRejectedCamps([campToProcess, ...rejected]);
+      addUserNotification(campToProcess.addedBy, { id: uid(), type: 'approval', title: 'Camp Submission Update', message: `"${campToProcess.name}" was rejected.`, time: new Date().toISOString(), read: false });
+      toast({ variant: 'destructive', title: 'Camp Rejected' });
+    }
+    setRefreshKey(p => p + 1);
+  };
 
-  // --- RENDER METHOD ---
+  const handleRejectOrg = (user: User) => {
+    setUserToProcess(user);
+    setIsRejectDialogOpen(true);
+  };
+
+  const formattedDate = dateTime.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const formattedTime = dateTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  const activeTrips = camps.length;
 
   return (
     <div className="space-y-8 pb-12 font-sans font-normal animate-in fade-in duration-500">
-      {/* Header Section */}
-      <div className="bg-[#153c1c] rounded-[24px] p-8 text-white flex flex-col md:flex-row justify-between items-start md:items-center shadow-xl gap-6 relative overflow-hidden border border-white/5">
+       <div className="bg-gradient-to-br from-green-800 to-green-600 rounded-3xl p-6 md:p-8 text-white shadow-2xl relative overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
         <div className="relative z-10">
-          <h2 className="text-3xl font-medium mb-1 tracking-tight uppercase">Admin Dashboard</h2>
-          <p className="text-xs text-green-200/60 font-medium uppercase tracking-widest">Platform-wide overview & controls — {todayStr}</p>
-        </div>
-        {/* Action Buttons */}
-        <div className="flex flex-wrap gap-3 relative z-10">
-          <Button onClick={() => onNavigate('memberships')} className="bg-[#c28664] hover:bg-[#b0785a] h-11 px-6 rounded-xl font-medium text-[10px] uppercase tracking-widest shadow-lg border-none text-white">
-            <Gem size={14} className="mr-2" /> Memberships
-          </Button>
-          <Button onClick={() => onNavigate('camps')} className="bg-[#16a34a] hover:bg-[#15803d] h-11 px-6 rounded-xl font-medium text-[10px] uppercase tracking-widest shadow-lg border-none text-white">
-            <Mountain size={14} className="mr-2" /> Manage Camps
-          </Button>
-          <Button onClick={() => onNavigate('bookings')} className="bg-[#0d2a1d] hover:bg-black/20 h-11 px-6 rounded-xl font-medium text-[10px] uppercase tracking-widest shadow-lg border border-white/10 text-white">
-            <ClipboardList size={14} className="mr-2" /> Bookings Ledger
-          </Button>
-        </div>
-        {/* Decorative skewed element */}
-        <div className="absolute top-0 right-0 w-96 h-full bg-white/5 skew-x-[-20deg] translate-x-32 pointer-events-none" />
-      </div>
-
-      {/* --- Main Statistics Grid --- */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
-        {mainStats.map(s => (
-          <div
-            key={s.label}
-            className={cn(
-              "bg-white rounded-[24px] border-t-[8px] shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between min-h-[140px]",
-              s.color
-            )}
-          >
-            <div className="flex justify-between items-start mb-3">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider leading-tight">
-                {s.label}
-              </span>
-              <span className={cn("text-2xl opacity-50 grayscale", s.shake && "animate-shake opacity-100 grayscale-0")}>
-                {s.icon}
-              </span>
-            </div>
-
-            <div>
-              <div className={cn(
-                "text-2xl font-bold tracking-tight mb-2",
-                s.textColor,
-                s.shake && "text-orange-600"
-              )}>
-                {s.value}
-              </div>
-              <div className={cn("text-[11px] font-medium uppercase flex items-center gap-1", s.trend.includes('+') ? "text-green-600" : "text-slate-500")}>
-                {s.trend.includes('+') && <TrendingUp size={12} />} {s.trend}
-              </div>
+          <div className="flex flex-wrap justify-between items-start mb-6">
+            <div className="text-xs font-medium flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+              Operations live - {formattedDate} - {formattedTime}
             </div>
           </div>
-        ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            <div>
+              <h2 className="text-4xl font-bold tracking-tighter mb-2">Good morning, {currentUser.firstName} <span className="wave-hand">👋</span></h2>
+              <p className="text-green-200 max-w-lg">Here what moving across the Wildhaven platform today — {pendingOrganizers.length} organizers awaiting approval, {pendingCamps.length} camps in moderation, and 2 weather advisories near active expeditions.</p>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+              <HeaderStat icon={Mountain} label="Active Trips" value={activeTrips} />
+              <HeaderStat icon={BookOpenCheck} label="Live Bookings" value={liveBookings} />
+              <HeaderStat icon={CircleDollarSign} label="Revenue Today" value={fmt(revenueToday)} />
+              <HeaderStat icon={AlertTriangle} label="Pending" value={auditTotal} isHighlighted />
+            </div>
+          </div>
+          <div className="mt-8 pt-4 border-t border-white/10 text-xs font-medium flex flex-wrap gap-x-6 gap-y-2">
+            <div className="flex items-center gap-2"><Cloud size={14} /> Patagonia - Storm advisory - 6 camps</div>
+            <div className="flex items-center gap-2"><MountainSnow size={14} /> Himalayan zone - 24 active trips</div>
+            <div className="flex items-center gap-2 ml-auto"><Server size={14} /> API uptime 99.98% - p95 142ms</div>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        {/* --- Pending Organizer Approvals Section --- */}
-        <div className="xl:col-span-5 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col h-full min-h-[480px]">
-           <div className="flex justify-between items-center mb-8">
-              <h3 className="text-base font-semibold text-slate-800 uppercase tracking-wider">PENDING ORGANIZER APPROVALS</h3>
-              <Button size="sm" variant="outline" onClick={() => onNavigate('organizers')} className="h-9 px-4 rounded-xl font-medium text-[9px] uppercase border-primary text-primary hover:bg-primary/5">See all</Button>
-           </div>
-           
-           <div className="flex-1 flex flex-col justify-center">
-             {pendingOrganizers.length === 0 ? (
-               // Displayed when there are no pending organizers
-               <div className="text-center space-y-6">
-                 <div className="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center mx-auto shadow-sm">
-                   <CheckCircle2 size={32} className="text-green-500" />
-                 </div>
-                 <div>
-                   <h4 className="text-base font-medium text-slate-900 uppercase tracking-tight">All Caught Up!</h4>
-                   <p className="text-sm text-slate-500 mt-2 leading-relaxed px-12">Excellent! All organizer applications have been reviewed.</p>
-                 </div>
-               </div>
-             ) : (
-               // Displayed when there are pending organizers
-               <div className="space-y-6">
-                  <div className="bg-slate-50/50 p-6 rounded-[28px] border border-slate-100 relative">
-                    {/* Button to open the audit dialog */}
-                    <button
-                      onClick={() => { setAuditUser(pendingOrganizers[pendingIdx]); setIsAuditOpen(true); }}
-                      className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-white text-slate-400 flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-sm"
-                    >
-                      <Eye size={20} />
-                    </button>
-                    {/* Organizer Information */}
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-14 h-14 rounded-2xl bg-primary text-white flex items-center justify-center text-2xl font-medium animate-shake">
-                        {pendingOrganizers[pendingIdx].firstName[0]}
-                      </div>
-                      <div>
-                        <h4 className="text-base font-medium text-slate-900 uppercase tracking-tighter">{pendingOrganizers[pendingIdx].firstName} {pendingOrganizers[pendingIdx].lastName}</h4>
-                        <p className="text-sm text-slate-400 font-medium">{pendingOrganizers[pendingIdx].email}</p>
-                      </div>
-                    </div>
-                    {/* Business Identity */}
-                    <div className="bg-white p-4 rounded-2xl border border-slate-100 mb-6">
-                       <p className="text-[9px] font-medium text-slate-400 uppercase tracking-widest mb-1">Business Identity</p>
-                       <p className="text-sm font-medium text-slate-800 uppercase leading-none">{pendingOrganizers[pendingIdx].organizerProfile?.businessName}</p>
-                       <p className="text-[10px] text-slate-400 font-medium truncate mt-1">{pendingOrganizers[pendingIdx].organizerProfile?.businessAddress}</p>
-                    </div>
-                    {/* Action Buttons */}
-                    <div className="flex gap-3">
-                      <Button onClick={() => handleOrgAction(pendingOrganizers[pendingIdx].email, 'approve')} className="flex-1 h-12 rounded-xl bg-primary hover:bg-accent font-medium text-[10px] uppercase shadow-lg shadow-primary/10 text-white border-none">Verify Partner</Button>
-                      <Button
-                        onClick={() => {
-                          setUserToProcess(pendingOrganizers[pendingIdx]);
-                          setIsRejectDialogOpen(true);
-                        }}
-                        variant="outline"
-                        className="flex-1 h-12 rounded-xl text-red-500 border-red-200 bg-red-50 hover:bg-red-500 hover:text-white hover:border-red-500 font-medium text-[10px] uppercase transition-all"
-                      >
-                        Reject
-                      </Button>
-                    </div>
-                  </div>
-                  {/* Pagination for pending organizers */}
-                  <div className="flex items-center justify-center gap-6">
-                    <Button variant="outline" size="icon" onClick={() => setPendingIdx(p => Math.max(0, p - 1))} disabled={pendingIdx === 0} className="h-10 w-10 rounded-xl"><ChevronLeft size={16} /></Button>
-                    <span className="text-[9px] font-medium text-slate-400 uppercase tracking-widest">{pendingIdx + 1} / {pendingOrganizers.length}</span>
-                    <Button variant="outline" size="icon" onClick={() => setPendingIdx(p => Math.min(pendingOrganizers.length - 1, p + 1))} disabled={pendingIdx === pendingOrganizers.length - 1} className="h-10 w-10 rounded-xl"><ChevronRight size={16} /></Button>
-                  </div>
-               </div>
-             )}
-           </div>
-        </div>
-
-        {/* --- Active Users Section --- */}
-        <div className="xl:col-span-7 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col h-full min-h-[480px]">
-           <div className="flex justify-between items-center mb-8">
+      <div className="space-y-6">
+          <div className="flex flex-wrap justify-between items-center gap-4">
               <div>
-                 <h3 className="text-base font-semibold text-slate-800 uppercase tracking-wider">USERS ACTIVE TODAY</h3>
-                 <p className="text-sm text-slate-500 mt-1">{approvedUsersList.length} verified users active on the platform</p>
+                  <h3 className="text-2xl font-bold text-slate-800">Moderation queues</h3>
+                  <p className="text-slate-500 mt-1">Awaiting your review — act fast to keep operations flowing</p>
               </div>
-              <div className="flex items-center gap-3">
-                 <Badge className="bg-green-50 text-green-600 border-green-100 text-xs font-medium uppercase px-2 py-1">{approvedUsersList.length} Verified</Badge>
-                 <Button size="sm" onClick={() => onNavigate('users')} className="h-9 px-5 rounded-xl bg-primary hover:bg-accent font-medium text-[9px] uppercase text-white border-none">View all users</Button>
+              <Button variant="outline" onClick={() => onNavigate('approvals')}>Open moderation hub →</Button>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <div className="lg:col-span-8">
+                  <ModerationQueues
+                      pendingOrganizers={pendingOrganizers}
+                      pendingCamps={pendingCamps}
+                      onApproveOrg={(email) => handleOrgAction(email, 'approve')}
+                      onRejectOrg={handleRejectOrg}
+                      onApproveCamp={(id) => handleCampAction(id, 'approve')}
+                      onRejectCamp={(id) => handleCampAction(id, 'reject')}
+                      onNavigate={onNavigate}
+                  />
               </div>
-           </div>
-
-           <div className="flex-1 overflow-x-auto custom-scrollbar border rounded-2xl">
-              <table className="w-full text-left">
-                 <thead>
-                    <tr className="text-xs font-bold tracking-wider uppercase text-slate-500 bg-slate-100/70">
-                       <th className="px-6 py-4">NAME</th>
-                       <th className="px-6 py-4">EMAIL</th>
-                       <th className="px-6 py-4">ROLE</th>
-                       <th className="px-6 py-4 text-right">LOCATION</th>
-                    </tr>
-                 </thead>
-                 <tbody className="divide-y divide-slate-100">
-                    {activeUsers.length === 0 ? (
-                      <tr>
-                        <td colSpan={4} className="py-20 text-center text-sm font-medium text-slate-400 uppercase">No verified active users found</td>
-                      </tr>
-                    ) : (
-                      activeUsers.map(u => (
-                        <tr key={u.email} className="group hover:bg-slate-50/50 transition-colors">
-                          <td className="px-6 py-4">
-                             <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-medium border border-white">
-                                   {u.avatar ? <img src={u.avatar} className="w-full h-full object-cover rounded-full" /> : u.firstName[0]}
-                                </div>
-                                <span className="text-sm font-semibold text-slate-900 uppercase tracking-tight">{u.firstName} {u.lastName}</span>
-                             </div>
-                          </td>
-                          <td className="px-6 py-4 text-sm text-slate-600">{u.email}</td>
-                          <td className="px-6 py-4">
-                             <Badge variant="outline" className={cn(
-                               "text-xs font-medium uppercase px-2 py-1 rounded-md border-none",
-                               u.role === 'admin' ? "bg-orange-50 text-orange-600" :
-                               u.role === 'organizer' ? "bg-blue-50 text-blue-600" :
-                               "bg-green-50 text-green-600"
-                             )}>{u.role}</Badge>
-                          </td>
-                          <td className="px-6 py-4 text-right text-sm text-slate-500 uppercase">{u.location || 'India'}</td>
-                        </tr>
-                      ))
-                    )}
-                 </tbody>
-              </table>
-           </div>
-        </div>
+              <div className="lg:col-span-4">
+                  <LiveActivityFeed 
+                      activities={allActivities}
+                      onNavigate={onNavigate} 
+                  />
+              </div>
+          </div>
       </div>
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
-        {/* --- Camp Performance Section --- */}
-        <div className="xl:col-span-7 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm">
-           <div className="flex justify-between items-center mb-8">
-              <h3 className="text-base font-semibold text-slate-800 uppercase tracking-wider">Camp Performance</h3>
-              <button onClick={() => onNavigate('camps')} className="text-primary text-[9px] font-medium uppercase tracking-widest hover:underline">Manage →</button>
-           </div>
-           
-           <div className="overflow-x-auto custom-scrollbar border rounded-2xl">
-              <table className="w-full text-left">
-                 <thead>
-                    <tr className="text-xs font-bold tracking-wider uppercase text-slate-500 bg-slate-100/70">
-                       <th className="px-6 py-4">CAMP</th>
-                       <th className="px-6 py-4">LOCATION</th>
-                       <th className="px-6 py-4">OCCUPANCY</th>
-                       <th className="px-6 py-4 text-right">PRICE</th>
-                    </tr>
-                 </thead>
-                 <tbody className="divide-y divide-slate-100">
-                    {camps.slice(0, 5).map(c => (
-                      <tr key={c.id} className="group hover:bg-slate-50/50 transition-colors">
-                        <td className="px-6 py-4">
-                           <div className="flex items-center gap-3">
-                              <span className="text-base">🏕️</span>
-                              <span className="text-sm font-semibold text-slate-800 uppercase tracking-tight">{c.name}</span>
-                           </div>
-                        </td>
-                        <td className="px-6 py-4 text-sm text-slate-500 font-medium">{c.location}</td>
-                        <td className="px-6 py-4 w-32">
-                           <div className="flex items-center gap-3">
-                              <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                 <div className="h-full bg-primary rounded-full transition-all duration-1000" style={{ width: `${c.occupancy || 85}%` }} />
-                              </div>
-                              <span className="text-xs font-medium text-slate-500">{c.occupancy || 85}%</span>
-                           </div>
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                           <span className="text-sm font-medium text-slate-900">{fmt(c.price)}</span>
-                        </td>
-                      </tr>
-                    ))}
-                 </tbody>
-              </table>
-           </div>
+      <div className="space-y-6">
+        <div>
+            <h3 className="text-2xl font-bold text-slate-800">Platform overview</h3>
+            <p className="text-slate-500 mt-1">Key performance indicators across the marketplace</p>
         </div>
-
-        {/* --- Revenue & Booking Trend Section --- */}
-        <div className="xl:col-span-5 bg-white p-8 rounded-[32px] border border-slate-100 shadow-sm flex flex-col">
-           <h3 className="text-base font-semibold text-slate-800 uppercase tracking-wider mb-8">Revenue & Booking Trend</h3>
-           <div className="w-full h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                 <AreaChart data={liveChartData}>
-                    <defs>
-                       <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#16a34a" stopOpacity={0.1}/>
-                          <stop offset="95%" stopColor="#16a34a" stopOpacity={0}/>
-                       </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                    <XAxis
-                       dataKey="name"
-                       axisLine={false}
-                       tickLine={false}
-                       tick={{ fontSize: 9, fontWeight: 500, fill: '#94a3b8' }}
-                       dy={10}
-                    />
-                    <YAxis hide />
-                    <Tooltip
-                       contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', fontSize: '10px', fontWeight: '500' }}
-                    />
-                    <Area type="monotone" dataKey="revenue" stroke="#16a34a" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
-                    <Line type="monotone" dataKey="bookings" stroke="#f97316" strokeWidth={2} dot={{ r: 4, fill: '#f97316' }} />
-                 </AreaChart>
-              </ResponsiveContainer>
-              {/* Chart Legend */}
-              <div className="flex items-center justify-center gap-6 mt-4">
-                 <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-primary" />
-                    <span className="text-xs font-medium text-slate-600 uppercase tracking-widest">Revenue (₹)</span>
-                 </div>
-                 <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-orange-500" />
-                    <span className="text-xs font-medium text-slate-600 uppercase tracking-widest">Bookings</span>
-                 </div>
-              </div>
-           </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
+          {platformStats.map(stat => <StatCard key={stat.title} {...stat} />)}
         </div>
       </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="lg:col-span-7"><RevenueAnalytics bookings={globalData.allBookings} /></div>
+        <div className="lg:col-span-5"><CampMix camps={camps} /></div>
+      </div>
 
-      {/* Rejection Confirmation Dialog */}
+       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <BookingTrendsChart bookings={globalData.allBookings} />
+          <UserGrowthChart users={allUsersArray} />
+          <RevenueVsBookingsChart bookings={globalData.allBookings} />
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+          <TopOrganizers organizers={approvedOrganizers} bookings={globalData.allBookings}/>
+          <TopPerformingCamps camps={camps} bookings={globalData.allBookings}/>
+          <LiveWeatherWatch />
+      </div>
+
+      <RecentBookings bookings={globalData.allBookings} users={allUsersArray} />
+
       <Dialog open={isRejectDialogOpen} onOpenChange={setIsRejectDialogOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Reason for Rejection</DialogTitle>
-            <DialogDescription>
-              Please provide a clear reason for rejecting this organizer. This will be sent to them.
-            </DialogDescription>
+            <DialogDescription>Please provide a clear reason for rejecting this organizer. This will be sent to them.</DialogDescription>
           </DialogHeader>
-          <div className="py-4">
-            <Textarea
-              placeholder="e.g., Business license is not valid..."
-              value={rejectionReason}
-              onChange={(e) => setRejectionReason(e.target.value)}
-            />
-          </div>
+          <div className="py-4"><Textarea placeholder="e.g., Business license is not valid..." value={rejectionReason} onChange={(e) => setRejectionReason(e.target.value)} /></div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsRejectDialogOpen(false)}>Cancel</Button>
-            <Button
-              variant="destructive"
-              onClick={() => userToProcess && handleOrgAction(userToProcess.email, 'reject', rejectionReason)}
-              disabled={!rejectionReason.trim()}
-            >
-              Confirm Rejection
-            </Button>
+            <Button variant="destructive" onClick={() => userToProcess && handleOrgAction(userToProcess.email, 'reject', rejectionReason)} disabled={!rejectionReason.trim()}>Confirm Rejection</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
   );
 }
+
+const HeaderStat = ({ icon: Icon, label, value, isHighlighted = false }) => (
+  <div className={cn("flex flex-col items-center justify-center rounded-2xl p-4 transition-all", isHighlighted ? "bg-green-500/80 shadow-lg" : "bg-black/20")}>
+    <div className={cn("p-3 rounded-full mb-2", isHighlighted ? "bg-white/20" : "bg-white/10")}>
+      <Icon size={20} className="text-white" />
+    </div>
+    <div className="text-2xl font-bold text-white">{value}</div>
+    <div className="text-[10px] font-semibold text-green-200 uppercase tracking-wider">{label}</div>
+  </div>
+);
