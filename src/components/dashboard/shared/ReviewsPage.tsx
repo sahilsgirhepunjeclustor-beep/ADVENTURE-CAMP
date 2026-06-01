@@ -37,7 +37,7 @@ import { cn } from '@/lib/utils';
 interface ReviewsPageProps {
   currentUser: User;
   data: AppData;
-  onBack?: void;
+  onBack?: () => void;
 }
 
 export default function ReviewsPage({ currentUser, data, onBack }: ReviewsPageProps) {

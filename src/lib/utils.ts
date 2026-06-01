@@ -21,7 +21,7 @@ export const fmt = (n: number, p0: string) => {
   return `₹${Number(n).toLocaleString('en-IN')}`;
 };
 
-export const fmtDate = (d: string | Date | undefined, p0: { month: string; day: string; year: string; }) => {
+export const fmtDate = (d: string | Date | undefined, _p0?: { month: string; day: string; year: string; }) => {
   if (!d) return '';
   const dt = parseYMD(d);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

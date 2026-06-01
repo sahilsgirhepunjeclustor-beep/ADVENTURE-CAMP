@@ -73,6 +73,7 @@ import { fmtDate, cn } from '@/lib/utils';
  */
 interface AdminUsersProps {
   onBack?: () => void;
+  initialTab?: 'all' | 'verified' | 'suspended' | 'reports';
 }
 
 /**
@@ -81,11 +82,13 @@ interface AdminUsersProps {
  * @param {AdminUsersProps} props - The component's props.
  * @returns {JSX.Element} The rendered component.
  */
-export default function AdminUsers({ onBack }: AdminUsersProps) {
+export default function AdminUsers({ onBack, initialTab }: AdminUsersProps) {
   // --- STATE MANAGEMENT ---
 
   // State to hold all user data.
   const [allUsers, setAllUsers] = useState<Record<string, User>>({});
+  // State for the currently active tab.
+  const [activeTab, setActiveTab] = useState<'all' | 'verified' | 'suspended' | 'reports'>(initialTab || 'all');
   // State for the search query to filter users.
   const [searchQuery, setSearchQuery] = useState('');
   // State to hold the user object being edited.
@@ -110,8 +113,20 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
   // Memoized list of all users, derived from the `allUsers` state.
   const usersList = useMemo(() => Object.values(allUsers), [allUsers]);
 
+  const verifiedUsers = useMemo(() => usersList.filter(u => u.isApproved && !u.isRejected), [usersList]);
+  const suspendedUsers = useMemo(() => usersList.filter(u => u.status === 'suspended'), [usersList]);
+  const reportUsers = useMemo(() => usersList.filter(u => u.isRejected || u.status === 'blocked'), [usersList]);
+
+  const currentList = activeTab === 'all'
+    ? usersList
+    : activeTab === 'verified'
+      ? verifiedUsers
+      : activeTab === 'suspended'
+        ? suspendedUsers
+        : reportUsers;
+
   // Memoized list of users filtered by the search query.
-  const filteredUsers = usersList.filter(u =>
+  const filteredUsers = currentList.filter(u =>
     u.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     u.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
     u.email.toLowerCase().includes(searchQuery.toLowerCase())
@@ -127,6 +142,12 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
       users: list.filter(u => u.role === 'user').length,
     };
   }, [allUsers]);
+
+  useEffect(() => {
+    if (initialTab && initialTab !== activeTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   // --- EVENT HANDLERS ---
 
@@ -269,6 +290,26 @@ export default function AdminUsers({ onBack }: AdminUsersProps) {
         <div className="px-4 h-9 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center">
            <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{filteredUsers.length} Directory Entries</span>
         </div>
+      </div>
+
+      <div className="flex flex-wrap gap-2 bg-slate-50 p-2 rounded-3xl border border-slate-100">
+        {[
+          { key: 'all', label: 'All Users', count: usersList.length },
+          { key: 'verified', label: 'Verified Users', count: verifiedUsers.length },
+          { key: 'suspended', label: 'Suspended', count: suspendedUsers.length },
+          { key: 'reports', label: 'Reports', count: reportUsers.length },
+        ].map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key as typeof activeTab)}
+            className={cn(
+              'px-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-2 whitespace-nowrap',
+              activeTab === tab.key ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-slate-400 hover:bg-white hover:text-slate-900'
+            )}
+          >
+            {tab.label} ({tab.count})
+          </button>
+        ))}
       </div>
 
       {/* Users Table */}

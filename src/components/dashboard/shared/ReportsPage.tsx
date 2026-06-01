@@ -59,10 +59,18 @@ const MONTHLY_DATA = [
 
 interface ReportsPageProps {
   onBack?: () => void;
+  initialSection?: 'revenue' | 'bookings' | 'growth' | 'performance';
 }
 
-export default function ReportsPage({ onBack }: ReportsPageProps) {
+export default function ReportsPage({ onBack, initialSection = 'revenue' }: ReportsPageProps) {
   const [refreshKey, setRefreshKey] = useState(0);
+  const [activeSection, setActiveSection] = useState<'revenue' | 'bookings' | 'growth' | 'performance'>(initialSection);
+
+  useEffect(() => {
+    if (initialSection && initialSection !== activeSection) {
+      setActiveSection(initialSection);
+    }
+  }, [initialSection]);
 
   // Poll for data freshness to ensure instant reflection
   useEffect(() => {
@@ -206,6 +214,29 @@ export default function ReportsPage({ onBack }: ReportsPageProps) {
            <Button onClick={handleGeneratePDF} className="h-12 rounded-2xl bg-primary hover:bg-accent text-white font-black text-[10px] uppercase tracking-widest px-6 shadow-xl shadow-primary/20 gap-2">
               <FileText size={14} /> Generate PDF
            </Button>
+        </div>
+      </div>
+
+      <div className="bg-slate-50 rounded-[32px] p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
+          {[
+            { value: 'revenue', label: 'Revenue', icon: BarChart3 },
+            { value: 'bookings', label: 'Bookings', icon: ClipboardList },
+            { value: 'growth', label: 'User Growth', icon: UsersIcon },
+            { value: 'performance', label: 'Camp Performance', icon: Mountain },
+          ].map((item) => (
+            <button
+              key={item.value}
+              onClick={() => setActiveSection(item.value as any)}
+              className={cn(
+                'rounded-2xl px-5 py-3 text-left transition-all border',
+                activeSection === item.value ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-50 border-transparent hover:border-slate-200'
+              )}
+            >
+              <div className="flex items-center gap-3 text-slate-600 mb-2"><item.icon size={16} /> <span className="text-[10px] font-black uppercase tracking-widest">{item.label}</span></div>
+              <p className="text-2xl font-black text-slate-900">{item.label}</p>
+            </button>
+          ))}
         </div>
       </div>
 

@@ -62,6 +62,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
  */
 interface AdminMembershipsProps {
   onBack?: () => void;
+  initialTab?: 'plans' | 'subscribers' | 'renewals';
 }
 
 /**
@@ -70,13 +71,15 @@ interface AdminMembershipsProps {
  * @param {AdminMembershipsProps} props - The component's props.
  * @returns {JSX.Element} The rendered component.
  */
-export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
+export default function AdminMemberships({ onBack, initialTab }: AdminMembershipsProps) {
   // --- STATE MANAGEMENT ---
 
   // State for storing the list of membership plans.
   const [plans, setPlans] = useState<MembershipPlan[]>([]);
   // State for storing all user data.
   const [allUsers, setAllUsers] = useState<Record<string, User>>({});
+  // State for the active memberships tab.
+  const [activeTab, setActiveTab] = useState<'plans' | 'subscribers' | 'renewals'>(initialTab || 'plans');
   // State for the search query for filtering subscribers.
   const [searchQuery, setSearchQuery] = useState('');
   // State to control the visibility of the plan creation/editing dialog.
@@ -104,6 +107,12 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
     setPlans(getMembershipPlans());
     setAllUsers(getUsers());
   }, []);
+
+  useEffect(() => {
+    if (initialTab && initialTab !== activeTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   // --- MEMOIZED COMPUTATIONS ---
 
@@ -273,14 +282,53 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
 
         {/* Subscribers and Pending Approvals Section */}
         <div className="lg:col-span-8">
-           <Tabs defaultValue="members" className="w-full">
+           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="bg-slate-50 p-1 rounded-2xl mb-6 h-12">
-                 <TabsTrigger value="members" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest">Subscriber Ledger</TabsTrigger>
-                 <TabsTrigger value="requests" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest">Pending Approvals</TabsTrigger>
+                 <TabsTrigger value="plans" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest">Plans</TabsTrigger>
+                 <TabsTrigger value="subscribers" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest">Subscribers</TabsTrigger>
+                 <TabsTrigger value="renewals" className="rounded-xl px-8 font-black uppercase text-[10px] tracking-widest">Renewals</TabsTrigger>
               </TabsList>
 
-              {/* Subscriber Ledger Tab */}
-              <TabsContent value="members" className="space-y-6">
+              <TabsContent value="plans" className="space-y-6">
+                 <div className="space-y-4">
+                    {plans.length === 0 ? (
+                      <div className="bg-white p-20 text-center rounded-[40px] border border-dashed border-slate-200 opacity-40">
+                         <CheckCircle2 size={48} className="mx-auto mb-4 text-green-500/20" />
+                         <p className="text-sm font-black uppercase tracking-widest text-slate-400">No membership plans have been created yet</p>
+                      </div>
+                    ) : (
+                      plans.map(plan => (
+                        <div key={plan.id} className={cn(
+                          "bg-white p-6 rounded-[28px] border-l-[6px] shadow-sm relative overflow-hidden group",
+                          plan.isActive ? "border-primary" : "border-slate-200 opacity-60"
+                        )}>
+                           <div className="flex justify-between items-start mb-4">
+                              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                                 <Gem size={20} />
+                              </div>
+                              <button onClick={() => togglePlanStatus(plan.id)} className="text-[9px] font-black uppercase text-primary hover:underline">
+                                 {plan.isActive ? 'Suspend' : 'Activate'}
+                              </button>
+                           </div>
+                           <h4 className="text-sm font-black text-slate-900 uppercase tracking-tight mb-1">{plan.name}</h4>
+                           <div className="text-xl font-black text-slate-900 mb-4">{fmt(plan.price)} <span className="text-[10px] text-slate-400 font-bold uppercase">/ Year</span></div>
+                           <div className="space-y-2">
+                              <div className="flex items-center gap-2 text-[10px] font-bold text-green-600 uppercase">
+                                 <Zap size={12} fill="currentColor" /> {plan.discountPercentage}% Camp Discount
+                              </div>
+                              {plan.features.slice(0, 2).map((f, i) => (
+                                <div key={i} className="flex items-center gap-2 text-[9px] font-bold text-slate-400 uppercase">
+                                   <div className="w-1 h-1 rounded-full bg-slate-300" /> {f}
+                                </div>
+                              ))}
+                           </div>
+                        </div>
+                      ))
+                    )}
+                 </div>
+              </TabsContent>
+
+              <TabsContent value="subscribers" className="space-y-6">
                  <div className="relative">
                     <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
                     <Input
@@ -308,7 +356,6 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
                           ) : (
                             filteredSubscribers.map(u => (
                               <tr key={u.email} className="group hover:bg-slate-50/50 transition-colors">
-                                 {/* User Information */}
                                  <td className="px-8 py-5">
                                     <div className="flex items-center gap-3">
                                        <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-[11px] font-black text-slate-500 overflow-hidden border border-white">
@@ -320,22 +367,18 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
                                        </div>
                                     </div>
                                  </td>
-                                 {/* Membership Tier */}
                                  <td className="px-8 py-5">
                                     <Badge className="bg-orange-50 text-orange-600 border-none font-black text-[9px] px-2 py-0.5 rounded-lg">{u.membership?.planName}</Badge>
                                  </td>
-                                 {/* Expiry Date */}
                                  <td className="px-8 py-5">
                                     <div className="text-[10px] font-bold text-slate-500 uppercase">{fmtDate(u.membership?.expiryDate)}</div>
                                  </td>
-                                 {/* Membership Status */}
                                  <td className="px-8 py-5">
                                     <div className="flex items-center gap-2">
                                        <div className={cn("w-1.5 h-1.5 rounded-full", u.membership?.status === 'active' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : "bg-amber-500")} />
                                        <span className="text-[9px] font-black uppercase text-slate-500">{u.membership?.status}</span>
                                     </div>
                                  </td>
-                                 {/* Action Button */}
                                  <td className="px-8 py-5 text-right">
                                     <button onClick={() => handleMembershipAction(u.email, u.membership?.status === 'active' ? 'revoke' : 'approve')} className="text-slate-300 hover:text-red-500 transition-colors">
                                        {u.membership?.status === 'active' ? <Ban size={18} /> : <CheckCircle2 size={18} className="text-green-500" />}
@@ -349,27 +392,41 @@ export default function AdminMemberships({ onBack }: AdminMembershipsProps) {
                  </div>
               </TabsContent>
 
-              {/* Pending Approvals Tab */}
-              <TabsContent value="requests">
+              <TabsContent value="renewals">
                  <div className="space-y-4">
-                    {subscribers.filter(u => u.membership?.status === 'pending').length === 0 ? (
+                    {subscribers.filter(u => {
+                       if (!u.membership?.expiryDate) return false;
+                       return new Date(u.membership.expiryDate).getTime() <= Date.now() + 1000 * 60 * 60 * 24 * 30;
+                    }).length === 0 ? (
                       <div className="bg-white p-20 text-center rounded-[40px] border border-dashed border-slate-200 opacity-40">
                          <CheckCircle2 size={48} className="mx-auto mb-4 text-green-500/20" />
-                         <p className="text-sm font-black uppercase tracking-widest text-slate-400">All membership audits complete</p>
+                         <p className="text-sm font-black uppercase tracking-widest text-slate-400">No upcoming renewal cases in the next 30 days</p>
                       </div>
                     ) : (
-                      subscribers.filter(u => u.membership?.status === 'pending').map(u => (
-                        <div key={u.email} className="bg-white p-6 rounded-[28px] border border-slate-100 shadow-sm flex items-center justify-between">
-                           <div className="flex items-center gap-5">
-                              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary text-xl font-black">{u.firstName[0]}</div>
-                              <div>
-                                 <h4 className="text-base font-black text-slate-900 uppercase tracking-tighter">{u.firstName} {u.lastName}</h4>
-                                 <p className="text-[10px] text-slate-400 font-bold">Requesting <span className="text-primary">{u.membership?.planName}</span></p>
+                      subscribers.filter(u => {
+                        if (!u.membership?.expiryDate) return false;
+                        return new Date(u.membership.expiryDate).getTime() <= Date.now() + 1000 * 60 * 60 * 24 * 30;
+                      }).map(u => (
+                        <div key={u.email} className="bg-white p-6 rounded-[28px] border border-slate-100 shadow-sm flex flex-col gap-4">
+                           <div className="flex items-center justify-between gap-4">
+                              <div className="flex items-center gap-4">
+                                 <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-600 font-black">{u.firstName[0]}</div>
+                                 <div>
+                                    <h4 className="text-base font-black text-slate-900 uppercase tracking-tighter">{u.firstName} {u.lastName}</h4>
+                                    <p className="text-[10px] text-slate-400 uppercase tracking-widest">Expires {fmtDate(u.membership!.expiryDate)}</p>
+                                 </div>
                               </div>
+                              <Badge className="bg-amber-50 text-amber-600 border-none font-black text-[9px] px-2 py-0.5 rounded-lg uppercase">{u.membership?.status}</Badge>
                            </div>
-                           <div className="flex gap-3">
-                              <Button onClick={() => handleMembershipAction(u.email, 'revoke')} variant="ghost" className="h-11 px-4 text-red-500 hover:bg-red-50 rounded-xl"><XCircle size={20} /></Button>
-                              <Button onClick={() => handleMembershipAction(u.email, 'approve')} className="h-11 px-6 rounded-xl font-black text-[10px] uppercase tracking-widest text-white">Approve Member</Button>
+                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div className="space-y-1">
+                                 <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest">Plan</p>
+                                 <p className="text-sm font-black text-slate-900 uppercase">{u.membership?.planName}</p>
+                              </div>
+                              <div className="space-y-1">
+                                 <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest">Renewal Action</p>
+                                 <Button size="sm" className="rounded-xl h-11 px-4 bg-primary text-white font-black uppercase tracking-widest">Send Renewal</Button>
+                              </div>
                            </div>
                         </div>
                       ))

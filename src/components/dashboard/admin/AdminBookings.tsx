@@ -90,6 +90,12 @@ export default function AdminBookings({ initialFilter = 'All', onBack }: AdminBo
   const [filter, setFilter] = useState(initialFilter);
   // State to trigger a refresh of the booking data.
   const [refreshKey, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    if (initialFilter !== filter) {
+      setFilter(initialFilter);
+    }
+  }, [initialFilter]);
   // State to control the visibility of the manual booking dialog.
   const [isManualBookingOpen, setIsManualBookingOpen] = useState(false);
   // State for the search query used to filter bookings.

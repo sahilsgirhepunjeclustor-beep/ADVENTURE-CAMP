@@ -52,6 +52,7 @@ import { DialogTitle } from '@/components/ui/dialog';
  */
 interface ContentManagementProps {
   onBack?: () => void;
+  initialTab?: 'homepage' | 'blogs' | 'faqs' | 'legal' | 'seo';
 }
 
 /**
@@ -60,11 +61,18 @@ interface ContentManagementProps {
  * @param {ContentManagementProps} props - The component's props.
  * @returns {JSX.Element | null} The rendered component, or null if content is not yet loaded.
  */
-export default function ContentManagement({ onBack }: ContentManagementProps) {
+export default function ContentManagement({ onBack, initialTab = 'homepage' }: ContentManagementProps) {
   // --- STATE MANAGEMENT ---
 
   // State to hold the entire CMS content structure.
   const [content, setContent] = useState<CMSContent | null>(null);
+  const [activeTab, setActiveTab] = useState<'homepage' | 'blogs' | 'faqs' | 'legal' | 'seo'>(initialTab);
+
+  useEffect(() => {
+    if (initialTab && initialTab !== activeTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   // --- DATA FETCHING ---
 
@@ -149,7 +157,7 @@ export default function ContentManagement({ onBack }: ContentManagementProps) {
         </Button>
       </div>
 
-      <Tabs defaultValue="homepage" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="bg-slate-50 p-1 rounded-2xl mb-8 h-12 flex overflow-x-auto no-scrollbar w-full sm:w-auto">
           <TabsTrigger value="homepage" className="flex-1 sm:flex-none rounded-xl px-6 font-black uppercase text-[10px] tracking-widest gap-2"><Home size={14} /> Homepage</TabsTrigger>
           <TabsTrigger value="blogs" className="flex-1 sm:flex-none rounded-xl px-6 font-black uppercase text-[10px] tracking-widest gap-2"><BookOpen size={14} /> Blogs</TabsTrigger>

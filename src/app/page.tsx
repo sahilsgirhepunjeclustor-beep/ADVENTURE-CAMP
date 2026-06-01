@@ -22,8 +22,11 @@ import AdminOrganizers from '@/components/dashboard/admin/AdminOrganizers';
 import AdminUsers from '@/components/dashboard/admin/AdminUsers';
 import AdminBookings from '@/components/dashboard/admin/AdminBookings';
 import AdminMemberships from '@/components/dashboard/admin/AdminMemberships';
+import AdminPayments from '@/components/dashboard/admin/AdminPayments';
 import AdminReviews from '@/components/dashboard/admin/AdminReviews';
 import AdminSupport from '@/components/dashboard/admin/AdminSupport';
+import AdminMarketing from '@/components/dashboard/admin/AdminMarketing';
+import AdminSecurity from '@/components/dashboard/admin/AdminSecurity';
 import CouponManagement from '@/components/dashboard/admin/CouponManagement';
 import ContentManagement from '@/components/dashboard/admin/ContentManagement';
 import CommunicationsHub from '@/components/dashboard/admin/CommunicationsHub';
@@ -348,23 +351,27 @@ export default function Home() {
       
       case 'approvals':
         if (user.role !== 'admin') return null;
-        return <AdminApprovals onBack={backToDashboard} />;
+        return <AdminApprovals onBack={backToDashboard} initialTab={pageParams?.tab || 'pending'} />;
       
       case 'organizers':
         if (user.role !== 'admin') return null;
-        return <AdminOrganizers onBack={backToDashboard} />;
+        return <AdminOrganizers onBack={backToDashboard} initialTab={pageParams?.tab || 'pending'} />;
 
       case 'memberships':
         if (user.role !== 'admin') return null;
-        return <AdminMemberships onBack={backToDashboard} />;
+        return <AdminMemberships onBack={backToDashboard} initialTab={pageParams?.tab || 'plans'} />;
 
       case 'coupons':
         if (user.role !== 'admin') return null;
         return <CouponManagement onBack={backToDashboard} />;
 
+      case 'marketing':
+        if (user.role !== 'admin') return null;
+        return <AdminMarketing onBack={backToDashboard} initialTab={pageParams?.tab || 'coupons'} />;
+
       case 'cms':
         if (user.role !== 'admin') return null;
-        return <ContentManagement onBack={backToDashboard} />;
+        return <ContentManagement onBack={backToDashboard} initialTab={pageParams?.tab || 'homepage'} />;
 
       case 'communications':
         if (user.role !== 'admin') return null;
@@ -372,25 +379,30 @@ export default function Home() {
 
       case 'users':
         if (user.role !== 'admin') return null;
-        return <AdminUsers onBack={backToDashboard} />;
+        return <AdminUsers onBack={backToDashboard} initialTab={pageParams?.tab || 'all'} />;
 
       case 'support':
-        if (user.role === 'admin') return <AdminSupport onBack={backToDashboard} />;
+        if (user.role === 'admin') return <AdminSupport onBack={backToDashboard} initialTab={pageParams?.tab || 'all'} />;
         return <UserSupport currentUser={user} onBack={backToDashboard} />;
       
       case 'action_center':
         if (user.role !== 'admin') return null;
         return <ActionCenter currentUser={user} onNavigate={onNavigate} onBack={backToDashboard} />;
 
+      case 'security':
+        if (user.role !== 'admin') return null;
+        return <AdminSecurity onBack={backToDashboard} initialTab={pageParams?.tab || 'audit'} />;
+
       case 'bookings':
-        if (user.role === 'admin') return <AdminBookings initialFilter={pageParams?.filter || 'All'} onBack={backToDashboard} />;
+        if (user.role === 'admin') return <AdminBookings initialFilter={pageParams?.tab || 'All'} onBack={backToDashboard} />;
         return <OrganizerBookings currentUser={user} onBack={backToDashboard} onRefresh={triggerRefresh} />;
+
+      case 'payments':
+        if (user.role === 'admin') return <AdminPayments onBack={backToDashboard} initialTab={pageParams?.tab || 'transactions'} />;
+        return <UserPayments currentUser={user} data={data!} onBack={backToDashboard} />;
 
       case 'wishlist':
         return <UserWishlist currentUser={user} data={data!} onBack={backToDashboard} onNavigate={onNavigate} onToggleWishlist={toggleWishlist} />;
-
-      case 'payments':
-        return <UserPayments currentUser={user} data={data!} onBack={backToDashboard} />;
 
       case 'organizer_reports':
         return <OrganizerReports currentUser={user} data={data!} onBack={backToDashboard} />;
@@ -402,7 +414,7 @@ export default function Home() {
         return <CheckoutPage bookingData={pageParams} onBack={() => setSelectedCampId(pageParams.campId)} onConfirm={handleConfirmBooking} currentUser={user} />;
 
       case 'reports':
-        return <ReportsPage onBack={backToDashboard} />;
+        return <ReportsPage onBack={backToDashboard} initialSection={pageParams?.tab || 'revenue'} />;
 
       case 'camps':
         if (user.role === 'organizer') return <OrganizerCamps currentUser={user} />;
@@ -552,7 +564,7 @@ export default function Home() {
 
       case 'reviews':
       case 'my_reviews':
-        if (user.role === 'admin' && currentPage === 'reviews') return <AdminReviews onBack={backToDashboard} />;
+        if (user.role === 'admin' && currentPage === 'reviews') return <AdminReviews onBack={backToDashboard} initialTab={pageParams?.tab || 'pending'} />;
         if (user.role === 'organizer' && currentPage === 'reviews') return <OrganizerReviews currentUser={user} onBack={backToDashboard} />;
         return <ReviewsPage currentUser={user} data={data!} onBack={backToDashboard} />;
 
@@ -574,8 +586,10 @@ export default function Home() {
           <Sidebar 
             currentUser={user} 
             currentPage={currentPage} 
+            pageParams={pageParams}
             onNavigate={onNavigate} 
             onLogout={handleLogout} 
+            toggleSidebar={toggleSidebar}
             isCollapsed={isSidebarCollapsed} 
           />
         </div>

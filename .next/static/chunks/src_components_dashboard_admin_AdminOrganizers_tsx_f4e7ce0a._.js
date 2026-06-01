@@ -63,7 +63,7 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 function AdminOrganizers(param) {
-    let { onBack } = param;
+    let { onBack, initialTab } = param;
     var _selectedUser_organizerProfile, _selectedUser_organizerProfile1, _selectedUser_organizerProfile2, _selectedUser_organizerProfile3, _selectedUser_organizerProfile4, _selectedUser_organizerProfile5, _editingUser_organizerProfile, _editingUser_organizerProfile1, _editingUser_organizerProfile2, _editingUser_organizerProfile3, _editingUser_organizerProfile4, _editingUser_organizerProfile5, _previewDoc_doc;
     _s();
     // --- STATE MANAGEMENT ---
@@ -71,6 +71,18 @@ function AdminOrganizers(param) {
     const [allUsers, setAllUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({});
     // State for the currently selected organizer's email (ID).
     const [selectedId, setSelectedId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    // The currently active organizer view tab.
+    const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(initialTab || 'pending');
+    // Sync tab state when the parent sends a new tab prop.
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "AdminOrganizers.useEffect": ()=>{
+            if (initialTab && initialTab !== activeTab) {
+                setActiveTab(initialTab);
+            }
+        }
+    }["AdminOrganizers.useEffect"], [
+        initialTab
+    ]);
     // State to control the preview of a compliance document.
     const [previewDoc, setPreviewDoc] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     // State to hold the user object being edited.
@@ -78,23 +90,11 @@ function AdminOrganizers(param) {
     // --- DATA FETCHING & INITIALIZATION ---
     /**
    * @effect
-   * @description Fetches all users on component mount and sets the initially selected organizer.
-   * It prioritizes selecting a pending organizer, otherwise falls back to the first available organizer.
+   * @description Fetches all users on component mount.
    */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AdminOrganizers.useEffect": ()=>{
             const users = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["getUsers"])();
             setAllUsers(users);
-            const pending = Object.values(users).filter({
-                "AdminOrganizers.useEffect.pending": (u)=>u.role === 'organizer' && !u.isApproved && !u.isRejected
-            }["AdminOrganizers.useEffect.pending"]);
-            if (pending.length > 0 && !selectedId) {
-                setSelectedId(pending[0].email);
-            } else if (Object.keys(users).length > 0 && !selectedId) {
-                const firstOrg = Object.values(users).find({
-                    "AdminOrganizers.useEffect.firstOrg": (u)=>u.role === 'organizer'
-                }["AdminOrganizers.useEffect.firstOrg"]);
-                if (firstOrg) setSelectedId(firstOrg.email);
-            }
         }
     }["AdminOrganizers.useEffect"], []);
     // --- DATA FILTERING ---
@@ -102,8 +102,35 @@ function AdminOrganizers(param) {
     const organizers = Object.values(allUsers).filter((u)=>u.role === 'organizer');
     // Further filter for pending organizers.
     const pending = organizers.filter((u)=>!u.isApproved && !u.isRejected);
+    // Approved organizers who are currently active.
+    const approvedOrgs = organizers.filter((u)=>u.isApproved && u.status === 'active');
+    // Suspended partners.
+    const suspendedOrgs = organizers.filter((u)=>u.status === 'suspended');
+    // Organizers with compliance documentation.
+    const documentOrgs = organizers.filter((u)=>{
+        var _u_organizerProfile, _u_organizerProfile1, _u_organizerProfile2;
+        return !!(((_u_organizerProfile = u.organizerProfile) === null || _u_organizerProfile === void 0 ? void 0 : _u_organizerProfile.govIdDoc) || ((_u_organizerProfile1 = u.organizerProfile) === null || _u_organizerProfile1 === void 0 ? void 0 : _u_organizerProfile1.registrationDoc) || ((_u_organizerProfile2 = u.organizerProfile) === null || _u_organizerProfile2 === void 0 ? void 0 : _u_organizerProfile2.safetyDoc));
+    });
     // Filter for organizers who have been either approved or rejected (history).
     const history = organizers.filter((u)=>u.isApproved || u.isRejected);
+    const currentList = activeTab === 'pending' ? pending : activeTab === 'approved' ? approvedOrgs : activeTab === 'suspended' ? suspendedOrgs : documentOrgs;
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "AdminOrganizers.useEffect": ()=>{
+            if (!currentList.length) {
+                setSelectedId(null);
+                return;
+            }
+            if (!selectedId || !currentList.some({
+                "AdminOrganizers.useEffect": (u)=>u.email === selectedId
+            }["AdminOrganizers.useEffect"])) {
+                setSelectedId(currentList[0].email);
+            }
+        }
+    }["AdminOrganizers.useEffect"], [
+        activeTab,
+        currentList,
+        selectedId
+    ]);
     // The currently selected user object based on `selectedId`.
     const selectedUser = selectedId ? allUsers[selectedId.toLowerCase()] : null;
     // --- EVENT HANDLERS ---
@@ -186,68 +213,119 @@ function AdminOrganizers(param) {
         className: "space-y-8 pb-20 max-w-[1600px] mx-auto animate-in fade-in duration-700 px-2 sm:px-4 md:px-6 font-sans",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex items-center gap-4",
+                className: "flex flex-col gap-6",
                 children: [
-                    onBack && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
-                        variant: "outline",
-                        size: "icon",
-                        onClick: onBack,
-                        className: "rounded-full h-10 w-10 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__["ArrowLeft"], {
-                            size: 18,
-                            className: "text-slate-600"
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                            lineNumber: 192,
-                            columnNumber: 13
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                        lineNumber: 186,
-                        columnNumber: 11
-                    }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shrink-0 border border-primary/20",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
-                            size: 24
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                            lineNumber: 196,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                        lineNumber: 195,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center gap-4",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-2xl font-black text-[#0d2a1d] uppercase tracking-tight leading-none",
-                                children: "Organizer Moderation"
+                            onBack && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                variant: "outline",
+                                size: "icon",
+                                onClick: onBack,
+                                className: "rounded-full h-10 w-10 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__["ArrowLeft"], {
+                                    size: 18,
+                                    className: "text-slate-600"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
+                                    lineNumber: 219,
+                                    columnNumber: 15
+                                }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 199,
+                                lineNumber: 213,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shrink-0 border border-primary/20",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
+                                    size: 24
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
+                                    lineNumber: 223,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
+                                lineNumber: 222,
                                 columnNumber: 11
                             }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-[11px] text-slate-400 font-black uppercase tracking-widest mt-1.5 opacity-70",
-                                children: "Approve, verify identity, or moderate partner operational status."
-                            }, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                        className: "text-2xl font-black text-[#0d2a1d] uppercase tracking-tight leading-none",
+                                        children: "Organizer Moderation"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
+                                        lineNumber: 226,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-[11px] text-slate-400 font-black uppercase tracking-widest mt-1.5 opacity-70",
+                                        children: "Approve, verify identity, or moderate partner operational status."
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
+                                        lineNumber: 227,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 200,
+                                lineNumber: 225,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                        lineNumber: 198,
+                        lineNumber: 211,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex flex-wrap gap-2 bg-slate-50 p-2 rounded-3xl border border-slate-100",
+                        children: [
+                            {
+                                key: 'pending',
+                                label: 'Pending Approvals',
+                                count: pending.length
+                            },
+                            {
+                                key: 'approved',
+                                label: 'Approved',
+                                count: approvedOrgs.length
+                            },
+                            {
+                                key: 'suspended',
+                                label: 'Suspended',
+                                count: suspendedOrgs.length
+                            },
+                            {
+                                key: 'documents',
+                                label: 'Documents',
+                                count: documentOrgs.length
+                            }
+                        ].map((tab)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setActiveTab(tab.key),
+                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('px-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-3', activeTab === tab.key ? 'bg-primary text-white shadow-xl' : 'text-slate-400 hover:bg-white hover:text-slate-900'),
+                                children: [
+                                    tab.label,
+                                    " (",
+                                    tab.count,
+                                    ")"
+                                ]
+                            }, tab.key, true, {
+                                fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
+                                lineNumber: 238,
+                                columnNumber: 13
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
+                        lineNumber: 231,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                lineNumber: 184,
+                lineNumber: 210,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -258,17 +336,17 @@ function AdminOrganizers(param) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                                 className: "text-[11px] font-black text-slate-400 uppercase tracking-[0.25em] px-1",
-                                children: "VERIFICATION QUEUE"
+                                children: activeTab === 'pending' ? 'VERIFICATION QUEUE' : activeTab === 'approved' ? 'ACTIVE ORGANIZERS' : activeTab === 'suspended' ? 'SUSPENDED PARTNERS' : 'DOCUMENT REVIEW'
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 207,
+                                lineNumber: 255,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$scroll$2d$area$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollArea"], {
                                 className: "h-[400px] lg:h-[600px] pr-4",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "space-y-4",
-                                    children: pending.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    children: currentList.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "bg-white p-16 text-center rounded-[32px] border border-dashed border-slate-200 opacity-50",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
@@ -276,23 +354,23 @@ function AdminOrganizers(param) {
                                                 className: "mx-auto mb-4 text-green-500/20"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 212,
+                                                lineNumber: 260,
                                                 columnNumber: 21
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                 className: "text-[11px] font-black text-slate-400 uppercase tracking-widest",
-                                                children: "No pending applications"
+                                                children: activeTab === 'pending' ? 'No pending applications' : activeTab === 'approved' ? 'No approved partners yet' : activeTab === 'suspended' ? 'No suspended partners' : 'No organizers with documents'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 213,
+                                                lineNumber: 261,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 211,
+                                        lineNumber: 259,
                                         columnNumber: 19
-                                    }, this) : pending.map((user)=>{
+                                    }, this) : currentList.map((user)=>{
                                         var _user_organizerProfile, _user_organizerProfile1;
                                         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             onClick: ()=>setSelectedId(user.email),
@@ -308,12 +386,12 @@ function AdminOrganizers(param) {
                                                                 className: "w-full h-full object-cover"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 229,
+                                                                lineNumber: 279,
                                                                 columnNumber: 42
                                                             }, this) : user.firstName[0]
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 228,
+                                                            lineNumber: 278,
                                                             columnNumber: 25
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -324,7 +402,7 @@ function AdminOrganizers(param) {
                                                                     children: (_user_organizerProfile = user.organizerProfile) === null || _user_organizerProfile === void 0 ? void 0 : _user_organizerProfile.businessName
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                    lineNumber: 232,
+                                                                    lineNumber: 282,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -332,7 +410,7 @@ function AdminOrganizers(param) {
                                                                     children: user.email
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                    lineNumber: 233,
+                                                                    lineNumber: 283,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -344,12 +422,12 @@ function AdminOrganizers(param) {
                                                                                 size: 10
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                                lineNumber: 235,
+                                                                                lineNumber: 285,
                                                                                 columnNumber: 110
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                            lineNumber: 235,
+                                                                            lineNumber: 285,
                                                                             columnNumber: 30
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -357,25 +435,25 @@ function AdminOrganizers(param) {
                                                                             children: ((_user_organizerProfile1 = user.organizerProfile) === null || _user_organizerProfile1 === void 0 ? void 0 : _user_organizerProfile1.businessState) || 'PARTNER'
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                            lineNumber: 236,
+                                                                            lineNumber: 286,
                                                                             columnNumber: 30
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                    lineNumber: 234,
+                                                                    lineNumber: 284,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 231,
+                                                            lineNumber: 281,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 227,
+                                                    lineNumber: 277,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -390,7 +468,7 @@ function AdminOrganizers(param) {
                                                             children: "Verify"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 241,
+                                                            lineNumber: 291,
                                                             columnNumber: 26
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -402,36 +480,36 @@ function AdminOrganizers(param) {
                                                             children: "Reject"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 242,
+                                                            lineNumber: 292,
                                                             columnNumber: 26
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 240,
+                                                    lineNumber: 290,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, user.email, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 217,
+                                            lineNumber: 267,
                                             columnNumber: 21
                                         }, this);
                                     })
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 209,
+                                    lineNumber: 257,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 208,
+                                lineNumber: 256,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                        lineNumber: 206,
+                        lineNumber: 254,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -442,7 +520,7 @@ function AdminOrganizers(param) {
                                 children: "OPERATIONAL IDENTITY"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 253,
+                                lineNumber: 303,
                                 columnNumber: 12
                             }, this),
                             selectedUser ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -464,19 +542,19 @@ function AdminOrganizers(param) {
                                                                     className: "w-full h-full object-cover"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                    lineNumber: 262,
+                                                                    lineNumber: 312,
                                                                     columnNumber: 30
                                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                     className: "w-full h-full bg-primary flex items-center justify-center text-white text-3xl font-black",
                                                                     children: selectedUser.firstName[0]
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                    lineNumber: 264,
+                                                                    lineNumber: 314,
                                                                     columnNumber: 30
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 260,
+                                                                lineNumber: 310,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -486,7 +564,7 @@ function AdminOrganizers(param) {
                                                                         children: (_selectedUser_organizerProfile = selectedUser.organizerProfile) === null || _selectedUser_organizerProfile === void 0 ? void 0 : _selectedUser_organizerProfile.businessName
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 270,
+                                                                        lineNumber: 320,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -497,7 +575,7 @@ function AdminOrganizers(param) {
                                                                                 children: selectedUser.status === 'suspended' ? 'SUSPENDED' : selectedUser.isApproved ? 'VERIFIED PARTNER' : 'PENDING AUDIT'
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                                lineNumber: 272,
+                                                                                lineNumber: 322,
                                                                                 columnNumber: 29
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -508,45 +586,45 @@ function AdminOrganizers(param) {
                                                                                         className: selectedUser.isApproved ? "text-green-500" : "text-slate-300"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                                        lineNumber: 280,
+                                                                                        lineNumber: 330,
                                                                                         columnNumber: 31
                                                                                     }, this),
                                                                                     " IDENTITY HUB"
                                                                                 ]
                                                                             }, void 0, true, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                                lineNumber: 279,
+                                                                                lineNumber: 329,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 271,
+                                                                        lineNumber: 321,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 269,
+                                                                lineNumber: 319,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 259,
+                                                        lineNumber: 309,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "absolute top-0 right-0 w-32 h-full bg-primary/5 skew-x-[-20deg] translate-x-12 group-hover:translate-x-10 transition-transform duration-700"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 285,
+                                                        lineNumber: 335,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 258,
+                                                lineNumber: 308,
                                                 columnNumber: 20
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -560,7 +638,7 @@ function AdminOrganizers(param) {
                                                                 children: "ADMIN CONTACT:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 291,
+                                                                lineNumber: 341,
                                                                 columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -572,13 +650,13 @@ function AdminOrganizers(param) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 292,
+                                                                lineNumber: 342,
                                                                 columnNumber: 26
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 290,
+                                                        lineNumber: 340,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -589,7 +667,7 @@ function AdminOrganizers(param) {
                                                                 children: "EMAIL ADDRESS:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 295,
+                                                                lineNumber: 345,
                                                                 columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -597,13 +675,13 @@ function AdminOrganizers(param) {
                                                                 children: selectedUser.email
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 296,
+                                                                lineNumber: 346,
                                                                 columnNumber: 26
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 294,
+                                                        lineNumber: 344,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -614,7 +692,7 @@ function AdminOrganizers(param) {
                                                                 children: "ESTABLISHED YEAR:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 299,
+                                                                lineNumber: 349,
                                                                 columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -622,13 +700,13 @@ function AdminOrganizers(param) {
                                                                 children: ((_selectedUser_organizerProfile1 = selectedUser.organizerProfile) === null || _selectedUser_organizerProfile1 === void 0 ? void 0 : _selectedUser_organizerProfile1.establishedYear) || '2023'
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 300,
+                                                                lineNumber: 350,
                                                                 columnNumber: 26
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 298,
+                                                        lineNumber: 348,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -639,7 +717,7 @@ function AdminOrganizers(param) {
                                                                 children: "BATCH CAPACITY:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 303,
+                                                                lineNumber: 353,
                                                                 columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -650,19 +728,19 @@ function AdminOrganizers(param) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 304,
+                                                                lineNumber: 354,
                                                                 columnNumber: 26
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 302,
+                                                        lineNumber: 352,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 289,
+                                                lineNumber: 339,
                                                 columnNumber: 20
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -673,7 +751,7 @@ function AdminOrganizers(param) {
                                                         children: "COMPLIANCE ASSETS (IDENTITY VERIFICATION):"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 310,
+                                                        lineNumber: 360,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -709,7 +787,7 @@ function AdminOrganizers(param) {
                                                                         className: item.color
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 322,
+                                                                        lineNumber: 372,
                                                                         columnNumber: 30
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -717,30 +795,30 @@ function AdminOrganizers(param) {
                                                                         children: item.label
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 323,
+                                                                        lineNumber: 373,
                                                                         columnNumber: 30
                                                                     }, this)
                                                                 ]
                                                             }, item.label, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 317,
+                                                                lineNumber: 367,
                                                                 columnNumber: 27
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 311,
+                                                        lineNumber: 361,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 309,
+                                                lineNumber: 359,
                                                 columnNumber: 20
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 256,
+                                        lineNumber: 306,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -758,14 +836,14 @@ function AdminOrganizers(param) {
                                                                 className: "mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 339,
+                                                                lineNumber: 389,
                                                                 columnNumber: 26
                                                             }, this),
                                                             " Verify & Activate"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 335,
+                                                        lineNumber: 385,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -778,14 +856,14 @@ function AdminOrganizers(param) {
                                                                 className: "mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 346,
+                                                                lineNumber: 396,
                                                                 columnNumber: 26
                                                             }, this),
                                                             " Reject"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 341,
+                                                        lineNumber: 391,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
@@ -801,14 +879,14 @@ function AdminOrganizers(param) {
                                                                 className: "mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 357,
+                                                                lineNumber: 407,
                                                                 columnNumber: 29
                                                             }, this),
                                                             " Reactivate Partner"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 353,
+                                                        lineNumber: 403,
                                                         columnNumber: 27
                                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                                         onClick: ()=>handleStatusUpdate(selectedUser.email, 'suspended'),
@@ -819,14 +897,14 @@ function AdminOrganizers(param) {
                                                                 className: "mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 364,
+                                                                lineNumber: 414,
                                                                 columnNumber: 29
                                                             }, this),
                                                             " Suspend Operations"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 360,
+                                                        lineNumber: 410,
                                                         columnNumber: 27
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -839,14 +917,14 @@ function AdminOrganizers(param) {
                                                                 className: "mr-2"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 372,
+                                                                lineNumber: 422,
                                                                 columnNumber: 27
                                                             }, this),
                                                             " Revoke Access"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 367,
+                                                        lineNumber: 417,
                                                         columnNumber: 25
                                                     }, this)
                                                 ]
@@ -861,26 +939,26 @@ function AdminOrganizers(param) {
                                                         className: "mr-2 text-orange-400"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 381,
+                                                        lineNumber: 431,
                                                         columnNumber: 22
                                                     }, this),
                                                     " Edit Info"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 376,
+                                                lineNumber: 426,
                                                 columnNumber: 20
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 331,
+                                        lineNumber: 381,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 255,
+                                lineNumber: 305,
                                 columnNumber: 14
                             }, this) : // Placeholder when no organizer is selected
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -892,12 +970,12 @@ function AdminOrganizers(param) {
                                             size: 48
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 389,
+                                            lineNumber: 439,
                                             columnNumber: 20
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 388,
+                                        lineNumber: 438,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -905,7 +983,7 @@ function AdminOrganizers(param) {
                                         children: "Select partner to moderate"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 391,
+                                        lineNumber: 441,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -913,25 +991,25 @@ function AdminOrganizers(param) {
                                         children: "Information intelligence will appear here"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 392,
+                                        lineNumber: 442,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 387,
+                                lineNumber: 437,
                                 columnNumber: 14
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                        lineNumber: 252,
+                        lineNumber: 302,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                lineNumber: 204,
+                lineNumber: 252,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -945,7 +1023,7 @@ function AdminOrganizers(param) {
                                 children: "VERIFICATION HISTORY"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 401,
+                                lineNumber: 451,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -956,13 +1034,13 @@ function AdminOrganizers(param) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 402,
+                                lineNumber: 452,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                        lineNumber: 400,
+                        lineNumber: 450,
                         columnNumber: 10
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -982,7 +1060,7 @@ function AdminOrganizers(param) {
                                                     children: "BUSINESS IDENTITY"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 410,
+                                                    lineNumber: 460,
                                                     columnNumber: 24
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -990,7 +1068,7 @@ function AdminOrganizers(param) {
                                                     children: "OPERATIONAL STATUS"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 411,
+                                                    lineNumber: 461,
                                                     columnNumber: 24
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -998,7 +1076,7 @@ function AdminOrganizers(param) {
                                                     children: "CONTACT EMAIL"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 412,
+                                                    lineNumber: 462,
                                                     columnNumber: 24
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1006,18 +1084,18 @@ function AdminOrganizers(param) {
                                                     children: "AUDIT RESULT"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 413,
+                                                    lineNumber: 463,
                                                     columnNumber: 24
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 409,
+                                            lineNumber: 459,
                                             columnNumber: 21
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 408,
+                                        lineNumber: 458,
                                         columnNumber: 18
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -1029,12 +1107,12 @@ function AdminOrganizers(param) {
                                                 children: "No historic verification records found."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 419,
+                                                lineNumber: 469,
                                                 columnNumber: 25
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 418,
+                                            lineNumber: 468,
                                             columnNumber: 23
                                         }, this) : history.map((u)=>{
                                             var _u_organizerProfile;
@@ -1053,12 +1131,12 @@ function AdminOrganizers(param) {
                                                                         className: "w-full h-full object-cover"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 427,
+                                                                        lineNumber: 477,
                                                                         columnNumber: 48
                                                                     }, this) : u.firstName[0]
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                    lineNumber: 426,
+                                                                    lineNumber: 476,
                                                                     columnNumber: 33
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1066,18 +1144,18 @@ function AdminOrganizers(param) {
                                                                     children: (_u_organizerProfile = u.organizerProfile) === null || _u_organizerProfile === void 0 ? void 0 : _u_organizerProfile.businessName
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                    lineNumber: 429,
+                                                                    lineNumber: 479,
                                                                     columnNumber: 33
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 425,
+                                                            lineNumber: 475,
                                                             columnNumber: 30
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 424,
+                                                        lineNumber: 474,
                                                         columnNumber: 27
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1088,12 +1166,12 @@ function AdminOrganizers(param) {
                                                             children: u.status || 'Active'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 433,
+                                                            lineNumber: 483,
                                                             columnNumber: 30
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 432,
+                                                        lineNumber: 482,
                                                         columnNumber: 27
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1101,7 +1179,7 @@ function AdminOrganizers(param) {
                                                         children: u.email
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 441,
+                                                        lineNumber: 491,
                                                         columnNumber: 27
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1111,46 +1189,46 @@ function AdminOrganizers(param) {
                                                             children: u.isApproved ? 'IDENTITY VERIFIED' : 'IDENTITY REJECTED'
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 443,
+                                                            lineNumber: 493,
                                                             columnNumber: 30
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 442,
+                                                        lineNumber: 492,
                                                         columnNumber: 27
                                                     }, this)
                                                 ]
                                             }, u.email, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 423,
+                                                lineNumber: 473,
                                                 columnNumber: 25
                                             }, this);
                                         })
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 416,
+                                        lineNumber: 466,
                                         columnNumber: 18
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                lineNumber: 407,
+                                lineNumber: 457,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                            lineNumber: 406,
+                            lineNumber: 456,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                        lineNumber: 405,
+                        lineNumber: 455,
                         columnNumber: 10
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                lineNumber: 399,
+                lineNumber: 449,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -1166,20 +1244,20 @@ function AdminOrganizers(param) {
                                     children: "Business Registry Audit"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 463,
+                                    lineNumber: 513,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Review and manually update business registry information for administrative purposes."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 464,
+                                    lineNumber: 514,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                            lineNumber: 462,
+                            lineNumber: 512,
                             columnNumber: 11
                         }, this),
                         editingUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -1199,12 +1277,12 @@ function AdminOrganizers(param) {
                                                         className: "w-full h-full object-cover"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 471,
+                                                        lineNumber: 521,
                                                         columnNumber: 46
                                                     }, this) : editingUser.firstName[0]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 470,
+                                                    lineNumber: 520,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1214,7 +1292,7 @@ function AdminOrganizers(param) {
                                                             children: (_editingUser_organizerProfile = editingUser.organizerProfile) === null || _editingUser_organizerProfile === void 0 ? void 0 : _editingUser_organizerProfile.businessName
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 474,
+                                                            lineNumber: 524,
                                                             columnNumber: 24
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1225,32 +1303,32 @@ function AdminOrganizers(param) {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 475,
+                                                            lineNumber: 525,
                                                             columnNumber: 24
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 473,
+                                                    lineNumber: 523,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 469,
+                                            lineNumber: 519,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "absolute top-0 right-0 w-48 h-full bg-white/5 skew-x-[-25deg] translate-x-12"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 478,
+                                            lineNumber: 528,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 468,
+                                    lineNumber: 518,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$scroll$2d$area$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ScrollArea"], {
@@ -1269,7 +1347,7 @@ function AdminOrganizers(param) {
                                                                 children: "Legal Business Name"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 485,
+                                                                lineNumber: 535,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1280,7 +1358,7 @@ function AdminOrganizers(param) {
                                                                         className: "absolute left-3.5 top-1/2 -translate-y-1/2 text-primary"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 487,
+                                                                        lineNumber: 537,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1295,19 +1373,19 @@ function AdminOrganizers(param) {
                                                                         className: "rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 488,
+                                                                        lineNumber: 538,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 486,
+                                                                lineNumber: 536,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 484,
+                                                        lineNumber: 534,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1318,7 +1396,7 @@ function AdminOrganizers(param) {
                                                                 children: "Admin Contact"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 496,
+                                                                lineNumber: 546,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1329,7 +1407,7 @@ function AdminOrganizers(param) {
                                                                         className: "absolute left-3.5 top-1/2 -translate-y-1/2 text-primary"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 498,
+                                                                        lineNumber: 548,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1338,25 +1416,25 @@ function AdminOrganizers(param) {
                                                                         className: "rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50/50 border-slate-100 opacity-60"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 499,
+                                                                        lineNumber: 549,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 497,
+                                                                lineNumber: 547,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 495,
+                                                        lineNumber: 545,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 483,
+                                                lineNumber: 533,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1370,7 +1448,7 @@ function AdminOrganizers(param) {
                                                                 children: "Established Year"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 510,
+                                                                lineNumber: 560,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1381,7 +1459,7 @@ function AdminOrganizers(param) {
                                                                         className: "absolute left-3.5 top-1/2 -translate-y-1/2 text-primary"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 512,
+                                                                        lineNumber: 562,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1397,19 +1475,19 @@ function AdminOrganizers(param) {
                                                                         className: "rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 513,
+                                                                        lineNumber: 563,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 511,
+                                                                lineNumber: 561,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 509,
+                                                        lineNumber: 559,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1420,7 +1498,7 @@ function AdminOrganizers(param) {
                                                                 children: "Batch Capacity"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 522,
+                                                                lineNumber: 572,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1431,7 +1509,7 @@ function AdminOrganizers(param) {
                                                                         className: "absolute left-3.5 top-1/2 -translate-y-1/2 text-primary"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 524,
+                                                                        lineNumber: 574,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1447,19 +1525,19 @@ function AdminOrganizers(param) {
                                                                         className: "rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 525,
+                                                                        lineNumber: 575,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 523,
+                                                                lineNumber: 573,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 521,
+                                                        lineNumber: 571,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1470,7 +1548,7 @@ function AdminOrganizers(param) {
                                                                 children: "Registry Region"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 534,
+                                                                lineNumber: 584,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1481,7 +1559,7 @@ function AdminOrganizers(param) {
                                                                         className: "absolute left-3.5 top-1/2 -translate-y-1/2 text-primary"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 536,
+                                                                        lineNumber: 586,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1496,25 +1574,25 @@ function AdminOrganizers(param) {
                                                                         className: "rounded-2xl h-12 font-bold text-sm pl-11 bg-slate-50 border-slate-100"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                        lineNumber: 537,
+                                                                        lineNumber: 587,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 535,
+                                                                lineNumber: 585,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 533,
+                                                        lineNumber: 583,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 508,
+                                                lineNumber: 558,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1525,7 +1603,7 @@ function AdminOrganizers(param) {
                                                         children: "HQ Physical Address"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 547,
+                                                        lineNumber: 597,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1536,7 +1614,7 @@ function AdminOrganizers(param) {
                                                                 className: "absolute left-3.5 top-4 text-primary"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 549,
+                                                                lineNumber: 599,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -1551,19 +1629,19 @@ function AdminOrganizers(param) {
                                                                 className: "w-full rounded-2xl min-h-[80px] p-4 pl-11 font-bold text-sm bg-slate-50 border border-slate-100 outline-none focus:ring-2 focus:ring-primary/20"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 550,
+                                                                lineNumber: 600,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 548,
+                                                        lineNumber: 598,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 546,
+                                                lineNumber: 596,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1576,12 +1654,12 @@ function AdminOrganizers(param) {
                                                             className: "text-primary"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                            lineNumber: 560,
+                                                            lineNumber: 610,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 559,
+                                                        lineNumber: 609,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1592,7 +1670,7 @@ function AdminOrganizers(param) {
                                                                 children: "Identity Sync"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 563,
+                                                                lineNumber: 613,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1600,13 +1678,13 @@ function AdminOrganizers(param) {
                                                                 children: "Updates will be audited by the platform security engine."
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                                lineNumber: 564,
+                                                                lineNumber: 614,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 562,
+                                                        lineNumber: 612,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1614,24 +1692,24 @@ function AdminOrganizers(param) {
                                                         children: editingUser.isApproved ? 'Verified' : 'Audit Pending'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 566,
+                                                        lineNumber: 616,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 558,
+                                                lineNumber: 608,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 482,
+                                        lineNumber: 532,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 481,
+                                    lineNumber: 531,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1645,7 +1723,7 @@ function AdminOrganizers(param) {
                                             children: "Dismiss"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 577,
+                                            lineNumber: 627,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1654,30 +1732,30 @@ function AdminOrganizers(param) {
                                             children: "Commit Registry Updates"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 578,
+                                            lineNumber: 628,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 576,
+                                    lineNumber: 626,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                            lineNumber: 467,
+                            lineNumber: 517,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                    lineNumber: 461,
+                    lineNumber: 511,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                lineNumber: 460,
+                lineNumber: 510,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -1693,20 +1771,20 @@ function AdminOrganizers(param) {
                                     children: "Audit Asset Preview"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 589,
+                                    lineNumber: 639,
                                     columnNumber: 14
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "A high-resolution preview of partner verification documents for platform security audit."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 590,
+                                    lineNumber: 640,
                                     columnNumber: 14
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                            lineNumber: 588,
+                            lineNumber: 638,
                             columnNumber: 12
                         }, this),
                         previewDoc && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1723,12 +1801,12 @@ function AdminOrganizers(param) {
                                                     size: 16
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 596,
+                                                    lineNumber: 646,
                                                     columnNumber: 119
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 596,
+                                                lineNumber: 646,
                                                 columnNumber: 23
                                             }, this),
                                             previewDoc.label,
@@ -1736,12 +1814,12 @@ function AdminOrganizers(param) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 595,
+                                        lineNumber: 645,
                                         columnNumber: 20
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 594,
+                                    lineNumber: 644,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1753,7 +1831,7 @@ function AdminOrganizers(param) {
                                             className: "max-w-full max-h-[65vh] rounded-[24px] shadow-2xl object-contain border border-slate-100"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 604,
+                                            lineNumber: 654,
                                             columnNumber: 28
                                         }, this) : // Fallback for non-image files, e.g., PDFs
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1765,12 +1843,12 @@ function AdminOrganizers(param) {
                                                         size: 48
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                        lineNumber: 608,
+                                                        lineNumber: 658,
                                                         columnNumber: 156
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 608,
+                                                    lineNumber: 658,
                                                     columnNumber: 31
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1778,7 +1856,7 @@ function AdminOrganizers(param) {
                                                     children: previewDoc.doc.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 609,
+                                                    lineNumber: 659,
                                                     columnNumber: 31
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1786,7 +1864,7 @@ function AdminOrganizers(param) {
                                                     children: "PDF DOCUMENT DETECTED"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 610,
+                                                    lineNumber: 660,
                                                     columnNumber: 31
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1794,18 +1872,18 @@ function AdminOrganizers(param) {
                                                     children: "Download Document"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 611,
+                                                    lineNumber: 661,
                                                     columnNumber: 31
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                            lineNumber: 607,
+                                            lineNumber: 657,
                                             columnNumber: 28
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 602,
+                                        lineNumber: 652,
                                         columnNumber: 22
                                     }, this) : // Displayed when a document is missing
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1817,12 +1895,12 @@ function AdminOrganizers(param) {
                                                     size: 44
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                    lineNumber: 619,
+                                                    lineNumber: 669,
                                                     columnNumber: 28
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 618,
+                                                lineNumber: 668,
                                                 columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -1830,7 +1908,7 @@ function AdminOrganizers(param) {
                                                 children: "Compliance Asset Missing"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 621,
+                                                lineNumber: 671,
                                                 columnNumber: 25
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1838,45 +1916,45 @@ function AdminOrganizers(param) {
                                                 children: "The organizer did not submit this mandatory compliance asset during registration."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                                lineNumber: 622,
+                                                lineNumber: 672,
                                                 columnNumber: 25
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                        lineNumber: 617,
+                                        lineNumber: 667,
                                         columnNumber: 22
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                                    lineNumber: 600,
+                                    lineNumber: 650,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                            lineNumber: 593,
+                            lineNumber: 643,
                             columnNumber: 14
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                    lineNumber: 587,
+                    lineNumber: 637,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-                lineNumber: 586,
+                lineNumber: 636,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminOrganizers.tsx",
-        lineNumber: 182,
+        lineNumber: 208,
         columnNumber: 5
     }, this);
 }
-_s(AdminOrganizers, "fX4Mb7w6/CS0tHpgfAcSRNAo6D0=");
+_s(AdminOrganizers, "LeYbfAzy8cRNJIAuAbUDthkl8uw=");
 _c = AdminOrganizers;
 var _c;
 __turbopack_context__.k.register(_c, "AdminOrganizers");

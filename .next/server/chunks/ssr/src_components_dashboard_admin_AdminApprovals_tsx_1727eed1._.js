@@ -38,6 +38,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$left$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-left.js [app-ssr] (ecmascript) <export default as ChevronLeft>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$right$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronRight$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chevron-right.js [app-ssr] (ecmascript) <export default as ChevronRight>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-left.js [app-ssr] (ecmascript) <export default as ArrowLeft>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/star.js [app-ssr] (ecmascript) <export default as Star>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$history$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__History$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/history.js [app-ssr] (ecmascript) <export default as History>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$undo$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Undo2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/undo-2.js [app-ssr] (ecmascript) <export default as Undo2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$pause$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__PauseCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-pause.js [app-ssr] (ecmascript) <export default as PauseCircle>");
@@ -69,7 +70,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$t
 ;
 ;
 const ITEMS_PER_PAGE = 8;
-function AdminApprovals({ onBack }) {
+function AdminApprovals({ onBack, initialTab }) {
     // --- STATE MANAGEMENT ---
     // The currently active tab (e.g., pending, approved).
     const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('pending');
@@ -108,6 +109,13 @@ function AdminApprovals({ onBack }) {
    */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         loadData();
     }, []);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (initialTab) {
+            setActiveTab(initialTab);
+        }
+    }, [
+        initialTab
+    ]);
     /**
    * @effect
    * @description Resets pagination to the first page whenever the active tab changes.
@@ -122,6 +130,7 @@ function AdminApprovals({ onBack }) {
         if (activeTab === 'pending') return pending;
         if (activeTab === 'approved') return approved;
         if (activeTab === 'rejected') return rejected;
+        if (activeTab === 'featured') return approved.filter((c)=>c.isFeatured);
         return archived;
     }, [
         activeTab,
@@ -289,12 +298,12 @@ function AdminApprovals({ onBack }) {
                                     className: "text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 291,
+                                    lineNumber: 299,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 290,
+                                lineNumber: 298,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -305,7 +314,7 @@ function AdminApprovals({ onBack }) {
                                         children: "Inventory Moderation"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                        lineNumber: 295,
+                                        lineNumber: 303,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -313,19 +322,19 @@ function AdminApprovals({ onBack }) {
                                         children: "Submissions & lifecycle audit"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                        lineNumber: 296,
+                                        lineNumber: 304,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 294,
+                                lineNumber: 302,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                        lineNumber: 288,
+                        lineNumber: 296,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -339,7 +348,7 @@ function AdminApprovals({ onBack }) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                        lineNumber: 301,
+                                        lineNumber: 309,
                                         columnNumber: 14
                                     }, this),
                                     " Audit (",
@@ -348,7 +357,7 @@ function AdminApprovals({ onBack }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 300,
+                                lineNumber: 308,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -359,7 +368,7 @@ function AdminApprovals({ onBack }) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                        lineNumber: 304,
+                                        lineNumber: 312,
                                         columnNumber: 14
                                     }, this),
                                     " Live (",
@@ -368,7 +377,27 @@ function AdminApprovals({ onBack }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 303,
+                                lineNumber: 311,
+                                columnNumber: 12
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setActiveTab('featured'),
+                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("px-4 md:px-5 py-2 rounded-xl text-[9px] font-black uppercase transition-all flex items-center gap-2 whitespace-nowrap", activeTab === 'featured' ? "bg-white text-primary shadow-xl" : "text-slate-400 hover:text-slate-600"),
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__["Star"], {
+                                        size: 14
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
+                                        lineNumber: 315,
+                                        columnNumber: 14
+                                    }, this),
+                                    " Featured (",
+                                    approved.filter((c)=>c.isFeatured).length,
+                                    ")"
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
+                                lineNumber: 314,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -379,7 +408,7 @@ function AdminApprovals({ onBack }) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                        lineNumber: 307,
+                                        lineNumber: 318,
                                         columnNumber: 14
                                     }, this),
                                     " Lifecycle (",
@@ -388,7 +417,7 @@ function AdminApprovals({ onBack }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 306,
+                                lineNumber: 317,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -399,7 +428,7 @@ function AdminApprovals({ onBack }) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                        lineNumber: 310,
+                                        lineNumber: 321,
                                         columnNumber: 14
                                     }, this),
                                     " Rejected (",
@@ -408,19 +437,19 @@ function AdminApprovals({ onBack }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 309,
+                                lineNumber: 320,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                        lineNumber: 299,
+                        lineNumber: 307,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                lineNumber: 287,
+                lineNumber: 295,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -434,7 +463,7 @@ function AdminApprovals({ onBack }) {
                                 className: "text-slate-200 mb-6"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 319,
+                                lineNumber: 330,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -442,13 +471,13 @@ function AdminApprovals({ onBack }) {
                                 children: "Queue Empty"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 320,
+                                lineNumber: 331,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                        lineNumber: 318,
+                        lineNumber: 329,
                         columnNumber: 11
                     }, this) : paginatedList.map((camp)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "bg-white p-4 md:p-5 rounded-[32px] border border-slate-100 shadow-sm flex flex-col md:flex-row items-center gap-5 md:gap-6 hover:shadow-xl transition-all group",
@@ -460,12 +489,12 @@ function AdminApprovals({ onBack }) {
                                         className: "w-full h-full object-cover transition-transform group-hover:scale-110 duration-700"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                        lineNumber: 326,
+                                        lineNumber: 337,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 325,
+                                    lineNumber: 336,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -479,7 +508,7 @@ function AdminApprovals({ onBack }) {
                                                     children: camp.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 331,
+                                                    lineNumber: 342,
                                                     columnNumber: 20
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -487,13 +516,13 @@ function AdminApprovals({ onBack }) {
                                                     children: camp.status.toUpperCase()
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 332,
+                                                    lineNumber: 343,
                                                     columnNumber: 20
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 330,
+                                            lineNumber: 341,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -507,7 +536,7 @@ function AdminApprovals({ onBack }) {
                                                             className: "text-primary"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 343,
+                                                            lineNumber: 354,
                                                             columnNumber: 62
                                                         }, this),
                                                         " ",
@@ -515,7 +544,7 @@ function AdminApprovals({ onBack }) {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 343,
+                                                    lineNumber: 354,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -526,7 +555,7 @@ function AdminApprovals({ onBack }) {
                                                             className: "text-primary"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 344,
+                                                            lineNumber: 355,
                                                             columnNumber: 62
                                                         }, this),
                                                         " ",
@@ -534,19 +563,19 @@ function AdminApprovals({ onBack }) {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 344,
+                                                    lineNumber: 355,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 342,
+                                            lineNumber: 353,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 329,
+                                    lineNumber: 340,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -561,12 +590,12 @@ function AdminApprovals({ onBack }) {
                                                 size: 18
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                lineNumber: 350,
+                                                lineNumber: 361,
                                                 columnNumber: 215
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 350,
+                                            lineNumber: 361,
                                             columnNumber: 17
                                         }, this),
                                         activeTab === 'pending' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -577,7 +606,7 @@ function AdminApprovals({ onBack }) {
                                                     children: "Approve"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 354,
+                                                    lineNumber: 365,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -591,12 +620,12 @@ function AdminApprovals({ onBack }) {
                                                         size: 18
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                        lineNumber: 355,
+                                                        lineNumber: 366,
                                                         columnNumber: 219
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 355,
+                                                    lineNumber: 366,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
@@ -608,7 +637,7 @@ function AdminApprovals({ onBack }) {
                                             children: "Deactivate"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 360,
+                                            lineNumber: 371,
                                             columnNumber: 19
                                         }, this),
                                         activeTab === 'archived' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -619,7 +648,7 @@ function AdminApprovals({ onBack }) {
                                                     children: "Make Live"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 366,
+                                                    lineNumber: 377,
                                                     columnNumber: 23
                                                 }, this),
                                                 camp.status === 'completed' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -630,14 +659,14 @@ function AdminApprovals({ onBack }) {
                                                             size: 14
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 370,
+                                                            lineNumber: 381,
                                                             columnNumber: 25
                                                         }, this),
                                                         " Completed"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 369,
+                                                    lineNumber: 380,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
@@ -650,26 +679,26 @@ function AdminApprovals({ onBack }) {
                                                     size: 16
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 378,
+                                                    lineNumber: 389,
                                                     columnNumber: 21
                                                 }, this),
                                                 " Restore"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 377,
+                                            lineNumber: 388,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 349,
+                                    lineNumber: 360,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, camp.id, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                            lineNumber: 324,
+                            lineNumber: 335,
                             columnNumber: 13
                         }, this)),
                     totalPages > 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -685,12 +714,12 @@ function AdminApprovals({ onBack }) {
                                     size: 18
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 389,
+                                    lineNumber: 400,
                                     columnNumber: 183
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 389,
+                                lineNumber: 400,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -703,7 +732,7 @@ function AdminApprovals({ onBack }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 390,
+                                lineNumber: 401,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -716,24 +745,24 @@ function AdminApprovals({ onBack }) {
                                     size: 18
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 391,
+                                    lineNumber: 402,
                                     columnNumber: 201
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                lineNumber: 391,
+                                lineNumber: 402,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                        lineNumber: 388,
+                        lineNumber: 399,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                lineNumber: 316,
+                lineNumber: 327,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -750,7 +779,7 @@ function AdminApprovals({ onBack }) {
                                     children: "Rejection Protocol"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 400,
+                                    lineNumber: 411,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
@@ -758,13 +787,13 @@ function AdminApprovals({ onBack }) {
                                     children: "Provide a technical reason for declining this expedition submission to guide the partner's correction process."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 401,
+                                    lineNumber: 412,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                            lineNumber: 399,
+                            lineNumber: 410,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -778,7 +807,7 @@ function AdminApprovals({ onBack }) {
                                             children: "Rejection Intelligence (Reason)"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 405,
+                                            lineNumber: 416,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -788,13 +817,13 @@ function AdminApprovals({ onBack }) {
                                             className: "min-h-[120px] rounded-2xl bg-slate-50"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 406,
+                                            lineNumber: 417,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 404,
+                                    lineNumber: 415,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -807,7 +836,7 @@ function AdminApprovals({ onBack }) {
                                             children: "Cancel"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 409,
+                                            lineNumber: 420,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -816,30 +845,30 @@ function AdminApprovals({ onBack }) {
                                             children: "Reject"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 410,
+                                            lineNumber: 421,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 408,
+                                    lineNumber: 419,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                            lineNumber: 403,
+                            lineNumber: 414,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                    lineNumber: 398,
+                    lineNumber: 409,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                lineNumber: 397,
+                lineNumber: 408,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -855,20 +884,20 @@ function AdminApprovals({ onBack }) {
                                     children: "Deep Audit Intelligence View"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 420,
+                                    lineNumber: 431,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                     children: "Full technical review of expedition logistics, itineraries, and safety compliance protocols."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 421,
+                                    lineNumber: 432,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                            lineNumber: 419,
+                            lineNumber: 430,
                             columnNumber: 11
                         }, this),
                         selectedCamp && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -882,14 +911,14 @@ function AdminApprovals({ onBack }) {
                                             className: "w-full h-full object-cover"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 427,
+                                            lineNumber: 438,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 428,
+                                            lineNumber: 439,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -903,7 +932,7 @@ function AdminApprovals({ onBack }) {
                                                             children: selectedCamp.category
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 431,
+                                                            lineNumber: 442,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -915,13 +944,13 @@ function AdminApprovals({ onBack }) {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 432,
+                                                            lineNumber: 443,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 430,
+                                                    lineNumber: 441,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -929,19 +958,19 @@ function AdminApprovals({ onBack }) {
                                                     children: selectedCamp.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 436,
+                                                    lineNumber: 447,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                            lineNumber: 429,
+                                            lineNumber: 440,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 426,
+                                    lineNumber: 437,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -965,17 +994,17 @@ function AdminApprovals({ onBack }) {
                                                             children: t
                                                         }, t, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 446,
+                                                            lineNumber: 457,
                                                             columnNumber: 27
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                    lineNumber: 444,
+                                                    lineNumber: 455,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                lineNumber: 443,
+                                                lineNumber: 454,
                                                 columnNumber: 20
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1004,14 +1033,14 @@ function AdminApprovals({ onBack }) {
                                                                                                     className: "text-primary"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                    lineNumber: 466,
+                                                                                                    lineNumber: 477,
                                                                                                     columnNumber: 44
                                                                                                 }, this),
                                                                                                 " Technical Narrative"
                                                                                             ]
                                                                                         }, void 0, true, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 465,
+                                                                                            lineNumber: 476,
                                                                                             columnNumber: 41
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1019,13 +1048,13 @@ function AdminApprovals({ onBack }) {
                                                                                             children: selectedCamp.description || 'No description provided.'
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 468,
+                                                                                            lineNumber: 479,
                                                                                             columnNumber: 41
                                                                                         }, this)
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 464,
+                                                                                    lineNumber: 475,
                                                                                     columnNumber: 38
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1038,14 +1067,14 @@ function AdminApprovals({ onBack }) {
                                                                                                     className: "text-primary"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                    lineNumber: 475,
+                                                                                                    lineNumber: 486,
                                                                                                     columnNumber: 44
                                                                                                 }, this),
                                                                                                 " Media Assets"
                                                                                             ]
                                                                                         }, void 0, true, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 474,
+                                                                                            lineNumber: 485,
                                                                                             columnNumber: 41
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1057,29 +1086,29 @@ function AdminApprovals({ onBack }) {
                                                                                                         className: "w-full h-full object-cover hover:scale-110 transition-transform duration-700"
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                        lineNumber: 480,
+                                                                                                        lineNumber: 491,
                                                                                                         columnNumber: 49
                                                                                                     }, this)
                                                                                                 }, i, false, {
                                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                    lineNumber: 479,
+                                                                                                    lineNumber: 490,
                                                                                                     columnNumber: 46
                                                                                                 }, this))
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 477,
+                                                                                            lineNumber: 488,
                                                                                             columnNumber: 41
                                                                                         }, this)
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 473,
+                                                                                    lineNumber: 484,
                                                                                     columnNumber: 38
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                            lineNumber: 463,
+                                                                            lineNumber: 474,
                                                                             columnNumber: 35
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1093,7 +1122,7 @@ function AdminApprovals({ onBack }) {
                                                                                             children: "FINANCIAL YIELD"
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 489,
+                                                                                            lineNumber: 500,
                                                                                             columnNumber: 41
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1101,7 +1130,7 @@ function AdminApprovals({ onBack }) {
                                                                                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmt"])(selectedCamp.price)
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 490,
+                                                                                            lineNumber: 501,
                                                                                             columnNumber: 41
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1109,13 +1138,13 @@ function AdminApprovals({ onBack }) {
                                                                                             children: "Base Price per Participant"
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 491,
+                                                                                            lineNumber: 502,
                                                                                             columnNumber: 41
                                                                                         }, this)
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 488,
+                                                                                    lineNumber: 499,
                                                                                     columnNumber: 38
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1126,7 +1155,7 @@ function AdminApprovals({ onBack }) {
                                                                                             children: "LOGISTICS SNAPSHOT"
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 495,
+                                                                                            lineNumber: 506,
                                                                                             columnNumber: 41
                                                                                         }, this),
                                                                                         [
@@ -1160,7 +1189,7 @@ function AdminApprovals({ onBack }) {
                                                                                                                 className: "text-primary size-4"
                                                                                                             }, void 0, false, {
                                                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                                lineNumber: 504,
+                                                                                                                lineNumber: 515,
                                                                                                                 columnNumber: 49
                                                                                                             }, this),
                                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1168,13 +1197,13 @@ function AdminApprovals({ onBack }) {
                                                                                                                 children: item.label
                                                                                                             }, void 0, false, {
                                                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                                lineNumber: 505,
+                                                                                                                lineNumber: 516,
                                                                                                                 columnNumber: 49
                                                                                                             }, this)
                                                                                                         ]
                                                                                                     }, void 0, true, {
                                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                        lineNumber: 503,
+                                                                                                        lineNumber: 514,
                                                                                                         columnNumber: 46
                                                                                                     }, this),
                                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1182,46 +1211,46 @@ function AdminApprovals({ onBack }) {
                                                                                                         children: item.val
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                        lineNumber: 507,
+                                                                                                        lineNumber: 518,
                                                                                                         columnNumber: 46
                                                                                                     }, this)
                                                                                                 ]
                                                                                             }, item.label, true, {
                                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                lineNumber: 502,
+                                                                                                lineNumber: 513,
                                                                                                 columnNumber: 43
                                                                                             }, this))
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 494,
+                                                                                    lineNumber: 505,
                                                                                     columnNumber: 38
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                            lineNumber: 487,
+                                                                            lineNumber: 498,
                                                                             columnNumber: 35
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                    lineNumber: 462,
+                                                                    lineNumber: 473,
                                                                     columnNumber: 32
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                lineNumber: 461,
+                                                                lineNumber: 472,
                                                                 columnNumber: 29
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 460,
+                                                            lineNumber: 471,
                                                             columnNumber: 26
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                        lineNumber: 459,
+                                                        lineNumber: 470,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -1240,14 +1269,14 @@ function AdminApprovals({ onBack }) {
                                                                                 className: "text-primary"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                lineNumber: 522,
+                                                                                lineNumber: 533,
                                                                                 columnNumber: 35
                                                                             }, this),
                                                                             " Day-by-Day manifest"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                        lineNumber: 521,
+                                                                        lineNumber: 532,
                                                                         columnNumber: 32
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1260,7 +1289,7 @@ function AdminApprovals({ onBack }) {
                                                                                         children: step.day
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                        lineNumber: 528,
+                                                                                        lineNumber: 539,
                                                                                         columnNumber: 42
                                                                                     }, this),
                                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1270,7 +1299,7 @@ function AdminApprovals({ onBack }) {
                                                                                                 children: step.title
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                lineNumber: 532,
+                                                                                                lineNumber: 543,
                                                                                                 columnNumber: 45
                                                                                             }, this),
                                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1282,47 +1311,47 @@ function AdminApprovals({ onBack }) {
                                                                                                 ]
                                                                                             }, void 0, true, {
                                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                lineNumber: 533,
+                                                                                                lineNumber: 544,
                                                                                                 columnNumber: 45
                                                                                             }, this)
                                                                                         ]
                                                                                     }, void 0, true, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                        lineNumber: 531,
+                                                                                        lineNumber: 542,
                                                                                         columnNumber: 42
                                                                                     }, this)
                                                                                 ]
                                                                             }, idx, true, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                lineNumber: 527,
+                                                                                lineNumber: 538,
                                                                                 columnNumber: 39
                                                                             }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                             className: "p-8 text-center bg-slate-50 rounded-2xl md:rounded-3xl border border-dashed border-slate-200 text-slate-400 font-black text-[10px] uppercase tracking-widest",
                                                                             children: "No itinerary steps defined."
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                            lineNumber: 538,
+                                                                            lineNumber: 549,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                        lineNumber: 524,
+                                                                        lineNumber: 535,
                                                                         columnNumber: 32
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                lineNumber: 520,
+                                                                lineNumber: 531,
                                                                 columnNumber: 29
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 519,
+                                                            lineNumber: 530,
                                                             columnNumber: 26
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                        lineNumber: 518,
+                                                        lineNumber: 529,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -1346,14 +1375,14 @@ function AdminApprovals({ onBack }) {
                                                                                             className: "text-primary"
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 554,
+                                                                                            lineNumber: 565,
                                                                                             columnNumber: 41
                                                                                         }, this),
                                                                                         " Technical Equipment"
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 553,
+                                                                                    lineNumber: 564,
                                                                                     columnNumber: 38
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1368,12 +1397,12 @@ function AdminApprovals({ onBack }) {
                                                                                                         className: "text-green-500"
                                                                                                     }, void 0, false, {
                                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                        lineNumber: 559,
+                                                                                                        lineNumber: 570,
                                                                                                         columnNumber: 162
                                                                                                     }, this)
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                    lineNumber: 559,
+                                                                                                    lineNumber: 570,
                                                                                                     columnNumber: 46
                                                                                                 }, this),
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1381,24 +1410,24 @@ function AdminApprovals({ onBack }) {
                                                                                                     children: eq
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                    lineNumber: 560,
+                                                                                                    lineNumber: 571,
                                                                                                     columnNumber: 46
                                                                                                 }, this)
                                                                                             ]
                                                                                         }, i, true, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 558,
+                                                                                            lineNumber: 569,
                                                                                             columnNumber: 43
                                                                                         }, this))
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 556,
+                                                                                    lineNumber: 567,
                                                                                     columnNumber: 38
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                            lineNumber: 552,
+                                                                            lineNumber: 563,
                                                                             columnNumber: 35
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1412,14 +1441,14 @@ function AdminApprovals({ onBack }) {
                                                                                             className: "text-primary"
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 568,
+                                                                                            lineNumber: 579,
                                                                                             columnNumber: 41
                                                                                         }, this),
                                                                                         " Wilderness Cuisines"
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 567,
+                                                                                    lineNumber: 578,
                                                                                     columnNumber: 38
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1429,12 +1458,12 @@ function AdminApprovals({ onBack }) {
                                                                                             children: f
                                                                                         }, i, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 572,
+                                                                                            lineNumber: 583,
                                                                                             columnNumber: 43
                                                                                         }, this))
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 570,
+                                                                                    lineNumber: 581,
                                                                                     columnNumber: 38
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1447,12 +1476,12 @@ function AdminApprovals({ onBack }) {
                                                                                                 className: "size-6 md:size-8"
                                                                                             }, void 0, false, {
                                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                lineNumber: 579,
+                                                                                                lineNumber: 590,
                                                                                                 columnNumber: 44
                                                                                             }, this)
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 578,
+                                                                                            lineNumber: 589,
                                                                                             columnNumber: 41
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1462,7 +1491,7 @@ function AdminApprovals({ onBack }) {
                                                                                                     children: "Weather Intelligence"
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                    lineNumber: 582,
+                                                                                                    lineNumber: 593,
                                                                                                     columnNumber: 44
                                                                                                 }, this),
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1470,46 +1499,46 @@ function AdminApprovals({ onBack }) {
                                                                                                     children: selectedCamp.weatherInfo || 'Standard alpine weather expected.'
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                    lineNumber: 583,
+                                                                                                    lineNumber: 594,
                                                                                                     columnNumber: 44
                                                                                                 }, this)
                                                                                             ]
                                                                                         }, void 0, true, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 581,
+                                                                                            lineNumber: 592,
                                                                                             columnNumber: 41
                                                                                         }, this)
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 577,
+                                                                                    lineNumber: 588,
                                                                                     columnNumber: 38
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                            lineNumber: 566,
+                                                                            lineNumber: 577,
                                                                             columnNumber: 35
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                    lineNumber: 551,
+                                                                    lineNumber: 562,
                                                                     columnNumber: 32
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                lineNumber: 550,
+                                                                lineNumber: 561,
                                                                 columnNumber: 29
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 549,
+                                                            lineNumber: 560,
                                                             columnNumber: 26
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                        lineNumber: 548,
+                                                        lineNumber: 559,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -1532,14 +1561,14 @@ function AdminApprovals({ onBack }) {
                                                                                             className: "text-rose-400 size-6 md:size-8"
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 599,
+                                                                                            lineNumber: 610,
                                                                                             columnNumber: 41
                                                                                         }, this),
                                                                                         " Critical Safety Audit"
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 598,
+                                                                                    lineNumber: 609,
                                                                                     columnNumber: 38
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1552,7 +1581,7 @@ function AdminApprovals({ onBack }) {
                                                                                                     children: i + 1
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                    lineNumber: 605,
+                                                                                                    lineNumber: 616,
                                                                                                     columnNumber: 48
                                                                                                 }, this),
                                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1560,76 +1589,76 @@ function AdminApprovals({ onBack }) {
                                                                                                     children: ins
                                                                                                 }, void 0, false, {
                                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                                    lineNumber: 606,
+                                                                                                    lineNumber: 617,
                                                                                                     columnNumber: 48
                                                                                                 }, this)
                                                                                             ]
                                                                                         }, i, true, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                            lineNumber: 604,
+                                                                                            lineNumber: 615,
                                                                                             columnNumber: 45
                                                                                         }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                                         className: "col-span-full text-center text-rose-300/40 font-bold text-[10px] uppercase tracking-widest py-10",
                                                                                         children: "No specific safety instructions documented."
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                        lineNumber: 610,
+                                                                                        lineNumber: 621,
                                                                                         columnNumber: 43
                                                                                     }, this)
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                                    lineNumber: 601,
+                                                                                    lineNumber: 612,
                                                                                     columnNumber: 38
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                            lineNumber: 597,
+                                                                            lineNumber: 608,
                                                                             columnNumber: 35
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                             className: "absolute top-0 right-0 w-32 md:w-64 h-full bg-white/5 skew-x-[-20deg] translate-x-16 md:translate-x-32"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                            lineNumber: 614,
+                                                                            lineNumber: 625,
                                                                             columnNumber: 35
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                    lineNumber: 596,
+                                                                    lineNumber: 607,
                                                                     columnNumber: 32
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                                lineNumber: 595,
+                                                                lineNumber: 606,
                                                                 columnNumber: 29
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                            lineNumber: 594,
+                                                            lineNumber: 605,
                                                             columnNumber: 26
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                        lineNumber: 593,
+                                                        lineNumber: 604,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                                lineNumber: 457,
+                                                lineNumber: 468,
                                                 columnNumber: 20
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                        lineNumber: 442,
+                                        lineNumber: 453,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 441,
+                                    lineNumber: 452,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1640,35 +1669,35 @@ function AdminApprovals({ onBack }) {
                                         children: "Dismiss Preview"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                        lineNumber: 625,
+                                        lineNumber: 636,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                                    lineNumber: 624,
+                                    lineNumber: 635,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                            lineNumber: 424,
+                            lineNumber: 435,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                    lineNumber: 418,
+                    lineNumber: 429,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-                lineNumber: 417,
+                lineNumber: 428,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminApprovals.tsx",
-        lineNumber: 285,
+        lineNumber: 293,
         columnNumber: 5
     }, this);
 }

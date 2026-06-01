@@ -3943,6 +3943,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/utils.ts [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/badge.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/chart-column.js [app-client] (ecmascript) <export default as BarChart3>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/users.js [app-client] (ecmascript) <export default as Users>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clipboard$2d$list$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ClipboardList$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/clipboard-list.js [app-client] (ecmascript) <export default as ClipboardList>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/star.js [app-client] (ecmascript) <export default as Star>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mountain$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Mountain$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/mountain.js [app-client] (ecmascript) <export default as Mountain>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$waves$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Waves$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/waves.js [app-client] (ecmascript) <export default as Waves>");
@@ -4029,9 +4031,19 @@ const MONTHLY_DATA = [
     }
 ];
 function ReportsPage(param) {
-    let { onBack } = param;
+    let { onBack, initialSection = 'revenue' } = param;
     _s();
     const [refreshKey, setRefreshKey] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const [activeSection, setActiveSection] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(initialSection);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ReportsPage.useEffect": ()=>{
+            if (initialSection && initialSection !== activeSection) {
+                setActiveSection(initialSection);
+            }
+        }
+    }["ReportsPage.useEffect"], [
+        initialSection
+    ]);
     // Poll for data freshness to ensure instant reflection
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ReportsPage.useEffect": ()=>{
@@ -4216,12 +4228,12 @@ function ReportsPage(param) {
                                     className: "text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                    lineNumber: 189,
+                                    lineNumber: 197,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 185,
+                                lineNumber: 193,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4233,12 +4245,12 @@ function ReportsPage(param) {
                                             size: 24
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                            lineNumber: 194,
+                                            lineNumber: 202,
                                             columnNumber: 16
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 193,
+                                        lineNumber: 201,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4248,7 +4260,7 @@ function ReportsPage(param) {
                                                 children: "System Analytics"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                lineNumber: 197,
+                                                lineNumber: 205,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4256,25 +4268,25 @@ function ReportsPage(param) {
                                                 children: "Platform Performance & Growth Audit"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                lineNumber: 198,
+                                                lineNumber: 206,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 196,
+                                        lineNumber: 204,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 192,
+                                lineNumber: 200,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                        lineNumber: 183,
+                        lineNumber: 191,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4289,14 +4301,14 @@ function ReportsPage(param) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 204,
+                                        lineNumber: 212,
                                         columnNumber: 15
                                     }, this),
                                     " Export CSV"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 203,
+                                lineNumber: 211,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -4307,26 +4319,104 @@ function ReportsPage(param) {
                                         size: 14
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 207,
+                                        lineNumber: 215,
                                         columnNumber: 15
                                     }, this),
                                     " Generate PDF"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 206,
+                                lineNumber: 214,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                        lineNumber: 202,
+                        lineNumber: 210,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                lineNumber: 182,
+                lineNumber: 190,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "bg-slate-50 rounded-[32px] p-6",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "grid grid-cols-1 sm:grid-cols-4 gap-3",
+                    children: [
+                        {
+                            value: 'revenue',
+                            label: 'Revenue',
+                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$column$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BarChart3$3e$__["BarChart3"]
+                        },
+                        {
+                            value: 'bookings',
+                            label: 'Bookings',
+                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clipboard$2d$list$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ClipboardList$3e$__["ClipboardList"]
+                        },
+                        {
+                            value: 'growth',
+                            label: 'User Growth',
+                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$users$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Users$3e$__["Users"]
+                        },
+                        {
+                            value: 'performance',
+                            label: 'Camp Performance',
+                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mountain$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Mountain$3e$__["Mountain"]
+                        }
+                    ].map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: ()=>setActiveSection(item.value),
+                            className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])('rounded-2xl px-5 py-3 text-left transition-all border', activeSection === item.value ? 'bg-white border-slate-200 shadow-sm' : 'bg-slate-50 border-transparent hover:border-slate-200'),
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center gap-3 text-slate-600 mb-2",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(item.icon, {
+                                            size: 16
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
+                                            lineNumber: 236,
+                                            columnNumber: 76
+                                        }, this),
+                                        " ",
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-[10px] font-black uppercase tracking-widest",
+                                            children: item.label
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
+                                            lineNumber: 236,
+                                            columnNumber: 100
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
+                                    lineNumber: 236,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: "text-2xl font-black text-slate-900",
+                                    children: item.label
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
+                                    lineNumber: 237,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, item.value, true, {
+                            fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
+                            lineNumber: 228,
+                            columnNumber: 13
+                        }, this))
+                }, void 0, false, {
+                    fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
+                    lineNumber: 221,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
+                lineNumber: 220,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4378,7 +4468,7 @@ function ReportsPage(param) {
                                         children: s.label
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 223,
+                                        lineNumber: 254,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(s.icon, {
@@ -4386,13 +4476,13 @@ function ReportsPage(param) {
                                         className: "text-slate-300"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 224,
+                                        lineNumber: 255,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 222,
+                                lineNumber: 253,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4400,7 +4490,7 @@ function ReportsPage(param) {
                                 children: s.value
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 226,
+                                lineNumber: 257,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4408,18 +4498,18 @@ function ReportsPage(param) {
                                 children: s.sub
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 227,
+                                lineNumber: 258,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, s.label, true, {
                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                        lineNumber: 221,
+                        lineNumber: 252,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                lineNumber: 213,
+                lineNumber: 244,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4440,7 +4530,7 @@ function ReportsPage(param) {
                                                     children: "Platform Growth Analytics"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 238,
+                                                    lineNumber: 269,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4448,13 +4538,13 @@ function ReportsPage(param) {
                                                     children: "Multi-layered trajectory of users and revenue"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 239,
+                                                    lineNumber: 270,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                            lineNumber: 237,
+                                            lineNumber: 268,
                                             columnNumber: 16
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4467,7 +4557,7 @@ function ReportsPage(param) {
                                                             className: "w-2.5 h-2.5 rounded-full bg-primary"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 243,
+                                                            lineNumber: 274,
                                                             columnNumber: 22
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4475,13 +4565,13 @@ function ReportsPage(param) {
                                                             children: "Comm."
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 244,
+                                                            lineNumber: 275,
                                                             columnNumber: 22
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 242,
+                                                    lineNumber: 273,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4491,7 +4581,7 @@ function ReportsPage(param) {
                                                             className: "w-2.5 h-2.5 rounded-full bg-orange-400"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 247,
+                                                            lineNumber: 278,
                                                             columnNumber: 22
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4499,25 +4589,25 @@ function ReportsPage(param) {
                                                             children: "Users"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 248,
+                                                            lineNumber: 279,
                                                             columnNumber: 22
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 246,
+                                                    lineNumber: 277,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                            lineNumber: 241,
+                                            lineNumber: 272,
                                             columnNumber: 16
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                    lineNumber: 236,
+                                    lineNumber: 267,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4543,7 +4633,7 @@ function ReportsPage(param) {
                                                                     stopOpacity: 0.15
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                    lineNumber: 258,
+                                                                    lineNumber: 289,
                                                                     columnNumber: 28
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("stop", {
@@ -4552,13 +4642,13 @@ function ReportsPage(param) {
                                                                     stopOpacity: 0
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                    lineNumber: 259,
+                                                                    lineNumber: 290,
                                                                     columnNumber: 28
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 257,
+                                                            lineNumber: 288,
                                                             columnNumber: 25
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("linearGradient", {
@@ -4574,7 +4664,7 @@ function ReportsPage(param) {
                                                                     stopOpacity: 0.15
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                    lineNumber: 262,
+                                                                    lineNumber: 293,
                                                                     columnNumber: 28
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("stop", {
@@ -4583,19 +4673,19 @@ function ReportsPage(param) {
                                                                     stopOpacity: 0
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                    lineNumber: 263,
+                                                                    lineNumber: 294,
                                                                     columnNumber: 28
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 261,
+                                                            lineNumber: 292,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 256,
+                                                    lineNumber: 287,
                                                     columnNumber: 22
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$CartesianGrid$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CartesianGrid"], {
@@ -4604,7 +4694,7 @@ function ReportsPage(param) {
                                                     stroke: "#f1f5f9"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 266,
+                                                    lineNumber: 297,
                                                     columnNumber: 22
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["XAxis"], {
@@ -4620,14 +4710,14 @@ function ReportsPage(param) {
                                                     dy: 15
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 267,
+                                                    lineNumber: 298,
                                                     columnNumber: 22
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["YAxis"], {
                                                     hide: true
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 274,
+                                                    lineNumber: 305,
                                                     columnNumber: 22
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Tooltip"], {
@@ -4646,7 +4736,7 @@ function ReportsPage(param) {
                                                     }
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 275,
+                                                    lineNumber: 306,
                                                     columnNumber: 22
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Area$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Area"], {
@@ -4658,7 +4748,7 @@ function ReportsPage(param) {
                                                     fill: "url(#colorComm)"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 279,
+                                                    lineNumber: 310,
                                                     columnNumber: 22
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Area$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Area"], {
@@ -4670,34 +4760,34 @@ function ReportsPage(param) {
                                                     fill: "url(#colorUser)"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 280,
+                                                    lineNumber: 311,
                                                     columnNumber: 22
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                            lineNumber: 255,
+                                            lineNumber: 286,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 254,
+                                        lineNumber: 285,
                                         columnNumber: 16
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                    lineNumber: 253,
+                                    lineNumber: 284,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                            lineNumber: 235,
+                            lineNumber: 266,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                        lineNumber: 234,
+                        lineNumber: 265,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4712,7 +4802,7 @@ function ReportsPage(param) {
                                             children: "Booking Lifecycle Report"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                            lineNumber: 292,
+                                            lineNumber: 323,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4753,7 +4843,7 @@ function ReportsPage(param) {
                                                                     className: item.color
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                    lineNumber: 302,
+                                                                    lineNumber: 333,
                                                                     columnNumber: 29
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -4761,13 +4851,13 @@ function ReportsPage(param) {
                                                                     children: item.label
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                    lineNumber: 303,
+                                                                    lineNumber: 334,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 301,
+                                                            lineNumber: 332,
                                                             columnNumber: 26
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4775,29 +4865,29 @@ function ReportsPage(param) {
                                                             children: item.val
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 305,
+                                                            lineNumber: 336,
                                                             columnNumber: 26
                                                         }, this)
                                                     ]
                                                 }, item.label, true, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 300,
+                                                    lineNumber: 331,
                                                     columnNumber: 23
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                            lineNumber: 293,
+                                            lineNumber: 324,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                    lineNumber: 291,
+                                    lineNumber: 322,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 290,
+                                lineNumber: 321,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4808,7 +4898,7 @@ function ReportsPage(param) {
                                         children: "Top Performing Partners"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 314,
+                                        lineNumber: 345,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4824,7 +4914,7 @@ function ReportsPage(param) {
                                                                 children: i + 1
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 319,
+                                                                lineNumber: 350,
                                                                 columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4834,7 +4924,7 @@ function ReportsPage(param) {
                                                                         children: org.name
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                        lineNumber: 323,
+                                                                        lineNumber: 354,
                                                                         columnNumber: 29
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4845,26 +4935,26 @@ function ReportsPage(param) {
                                                                                 className: "text-green-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                                lineNumber: 325,
+                                                                                lineNumber: 356,
                                                                                 columnNumber: 32
                                                                             }, this),
                                                                             " Top Performer"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                        lineNumber: 324,
+                                                                        lineNumber: 355,
                                                                         columnNumber: 29
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 322,
+                                                                lineNumber: 353,
                                                                 columnNumber: 26
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 318,
+                                                        lineNumber: 349,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4875,7 +4965,7 @@ function ReportsPage(param) {
                                                                 children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["fmt"])(org.revenue)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 330,
+                                                                lineNumber: 361,
                                                                 columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4883,42 +4973,42 @@ function ReportsPage(param) {
                                                                 children: "Gross Revenue"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 331,
+                                                                lineNumber: 362,
                                                                 columnNumber: 26
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 329,
+                                                        lineNumber: 360,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, org.name, true, {
                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                lineNumber: 317,
+                                                lineNumber: 348,
                                                 columnNumber: 20
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 315,
+                                        lineNumber: 346,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 313,
+                                lineNumber: 344,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                        lineNumber: 288,
+                        lineNumber: 319,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                lineNumber: 232,
+                lineNumber: 263,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4935,7 +5025,7 @@ function ReportsPage(param) {
                                         children: "Popular Camps Registry"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 344,
+                                        lineNumber: 375,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4944,18 +5034,18 @@ function ReportsPage(param) {
                                             size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                            lineNumber: 345,
+                                            lineNumber: 376,
                                             columnNumber: 113
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 345,
+                                        lineNumber: 376,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 343,
+                                lineNumber: 374,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4970,12 +5060,12 @@ function ReportsPage(param) {
                                                     className: "w-full h-full object-cover transition-transform group-hover:scale-110"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 351,
+                                                    lineNumber: 382,
                                                     columnNumber: 23
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                lineNumber: 350,
+                                                lineNumber: 381,
                                                 columnNumber: 20
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4986,7 +5076,7 @@ function ReportsPage(param) {
                                                         children: camp.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 354,
+                                                        lineNumber: 385,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4994,7 +5084,7 @@ function ReportsPage(param) {
                                                         children: camp.location
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 355,
+                                                        lineNumber: 386,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5009,12 +5099,12 @@ function ReportsPage(param) {
                                                                     }
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                    lineNumber: 358,
+                                                                    lineNumber: 389,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 357,
+                                                                lineNumber: 388,
                                                                 columnNumber: 26
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5025,36 +5115,36 @@ function ReportsPage(param) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 360,
+                                                                lineNumber: 391,
                                                                 columnNumber: 26
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 356,
+                                                        lineNumber: 387,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                lineNumber: 353,
+                                                lineNumber: 384,
                                                 columnNumber: 20
                                             }, this)
                                         ]
                                     }, camp.id, true, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 349,
+                                        lineNumber: 380,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 347,
+                                lineNumber: 378,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                        lineNumber: 342,
+                        lineNumber: 373,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5068,7 +5158,7 @@ function ReportsPage(param) {
                                         children: "Inventory Yield Summary"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 371,
+                                        lineNumber: 402,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -5077,13 +5167,13 @@ function ReportsPage(param) {
                                         children: "Live Ledger"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                        lineNumber: 372,
+                                        lineNumber: 403,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 370,
+                                lineNumber: 401,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5101,7 +5191,7 @@ function ReportsPage(param) {
                                                         children: "EXPEDITION IDENTITY"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 378,
+                                                        lineNumber: 409,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -5109,7 +5199,7 @@ function ReportsPage(param) {
                                                         children: "PRICING"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 379,
+                                                        lineNumber: 410,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -5117,7 +5207,7 @@ function ReportsPage(param) {
                                                         children: "YIELD / OCCUPANCY"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 380,
+                                                        lineNumber: 411,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -5125,18 +5215,18 @@ function ReportsPage(param) {
                                                         children: "TAG"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 381,
+                                                        lineNumber: 412,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                lineNumber: 377,
+                                                lineNumber: 408,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                            lineNumber: 376,
+                                            lineNumber: 407,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -5147,21 +5237,21 @@ function ReportsPage(param) {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 386,
+                                                        lineNumber: 417,
                                                         columnNumber: 38
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$waves$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Waves$3e$__["Waves"], {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 386,
+                                                        lineNumber: 417,
                                                         columnNumber: 62
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$tree$2d$pine$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__TreePine$3e$__["TreePine"], {
                                                         size: 14
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                        lineNumber: 386,
+                                                        lineNumber: 417,
                                                         columnNumber: 83
                                                     }, this)
                                                 ];
@@ -5178,7 +5268,7 @@ function ReportsPage(param) {
                                                                         children: icons[i % 3]
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                        lineNumber: 391,
+                                                                        lineNumber: 422,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5188,7 +5278,7 @@ function ReportsPage(param) {
                                                                                 children: c.name
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                                lineNumber: 395,
+                                                                                lineNumber: 426,
                                                                                 columnNumber: 37
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -5196,24 +5286,24 @@ function ReportsPage(param) {
                                                                                 children: c.location
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                                lineNumber: 396,
+                                                                                lineNumber: 427,
                                                                                 columnNumber: 37
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                        lineNumber: 394,
+                                                                        lineNumber: 425,
                                                                         columnNumber: 34
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 390,
+                                                                lineNumber: 421,
                                                                 columnNumber: 31
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 389,
+                                                            lineNumber: 420,
                                                             columnNumber: 28
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -5223,12 +5313,12 @@ function ReportsPage(param) {
                                                                 children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["fmt"])(c.price)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 401,
+                                                                lineNumber: 432,
                                                                 columnNumber: 31
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 400,
+                                                            lineNumber: 431,
                                                             columnNumber: 28
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -5245,12 +5335,12 @@ function ReportsPage(param) {
                                                                             }
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                            lineNumber: 406,
+                                                                            lineNumber: 437,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                        lineNumber: 405,
+                                                                        lineNumber: 436,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -5261,18 +5351,18 @@ function ReportsPage(param) {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                        lineNumber: 408,
+                                                                        lineNumber: 439,
                                                                         columnNumber: 34
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 404,
+                                                                lineNumber: 435,
                                                                 columnNumber: 31
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 403,
+                                                            lineNumber: 434,
                                                             columnNumber: 28
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -5283,57 +5373,57 @@ function ReportsPage(param) {
                                                                 children: c.category
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                                lineNumber: 412,
+                                                                lineNumber: 443,
                                                                 columnNumber: 31
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                            lineNumber: 411,
+                                                            lineNumber: 442,
                                                             columnNumber: 28
                                                         }, this)
                                                     ]
                                                 }, c.id, true, {
                                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                                    lineNumber: 388,
+                                                    lineNumber: 419,
                                                     columnNumber: 25
                                                 }, this);
                                             })
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                            lineNumber: 384,
+                                            lineNumber: 415,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                    lineNumber: 375,
+                                    lineNumber: 406,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                                lineNumber: 374,
+                                lineNumber: 405,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                        lineNumber: 369,
+                        lineNumber: 400,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-                lineNumber: 340,
+                lineNumber: 371,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/shared/ReportsPage.tsx",
-        lineNumber: 180,
+        lineNumber: 188,
         columnNumber: 5
     }, this);
 }
-_s(ReportsPage, "ia6p22JENijBfhskHfmOeiaMw70=");
+_s(ReportsPage, "TAahodT/hxXpCOCi7FOMylVMtoI=");
 _c = ReportsPage;
 var _c;
 __turbopack_context__.k.register(_c, "ReportsPage");

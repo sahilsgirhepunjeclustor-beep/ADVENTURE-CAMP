@@ -46,6 +46,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
  */
 interface AdminReviewsProps {
   onBack?: () => void;
+  initialTab?: 'pending' | 'approved' | 'hidden';
 }
 
 /**
@@ -54,7 +55,7 @@ interface AdminReviewsProps {
  * @param {AdminReviewsProps} props - The component's props.
  * @returns {JSX.Element} The rendered component.
  */
-export default function AdminReviews({ onBack }: AdminReviewsProps) {
+export default function AdminReviews({ onBack, initialTab = 'pending' }: AdminReviewsProps) {
   // --- STATE MANAGEMENT ---
 
   // State to hold all reviews.
@@ -62,7 +63,13 @@ export default function AdminReviews({ onBack }: AdminReviewsProps) {
   // State for the search query used to filter reviews.
   const [searchQuery, setSearchQuery] = useState('');
   // State to manage the active tab (pending, approved, hidden).
-  const [activeTab, setActiveTab] = useState<'pending' | 'approved' | 'hidden'>('pending');
+  const [activeTab, setActiveTab] = useState<'pending' | 'approved' | 'hidden'>(initialTab);
+
+  useEffect(() => {
+    if (initialTab && initialTab !== activeTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   // --- DATA FETCHING ---
 

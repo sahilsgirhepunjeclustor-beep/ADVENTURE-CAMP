@@ -83,6 +83,7 @@ const ITEMS_PER_PAGE = 8;
  */
 interface AdminApprovalsProps {
   onBack?: () => void;
+  initialTab?: 'pending' | 'approved' | 'rejected' | 'archived' | 'featured';
 }
 
 /**
@@ -91,11 +92,11 @@ interface AdminApprovalsProps {
  * @param {AdminApprovalsProps} props - The component's props.
  * @returns {JSX.Element} The rendered component.
  */
-export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
+export default function AdminApprovals({ onBack, initialTab }: AdminApprovalsProps) {
   // --- STATE MANAGEMENT ---
 
   // The currently active tab (e.g., pending, approved).
-  const [activeTab, setActiveTab] = useState<'pending' | 'approved' | 'rejected' | 'archived'>('pending');
+  const [activeTab, setActiveTab] = useState<'pending' | 'approved' | 'rejected' | 'archived' | 'featured'>('pending');
   // State for camps pending approval.
   const [pending, setPending] = useState<Camp[]>([]);
   // State for approved camps.
@@ -137,6 +138,12 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
+
   /**
    * @effect
    * @description Resets pagination to the first page whenever the active tab changes.
@@ -152,6 +159,7 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
     if (activeTab === 'pending') return pending;
     if (activeTab === 'approved') return approved;
     if (activeTab === 'rejected') return rejected;
+    if (activeTab === 'featured') return approved.filter(c => c.isFeatured);
     return archived;
   }, [activeTab, pending, approved, rejected, archived]);
 
@@ -302,6 +310,9 @@ export default function AdminApprovals({ onBack }: AdminApprovalsProps) {
            </button>
            <button onClick={() => setActiveTab('approved')} className={cn("px-4 md:px-5 py-2 rounded-xl text-[9px] font-black uppercase transition-all flex items-center gap-2 whitespace-nowrap", activeTab === 'approved' ? "bg-white text-primary shadow-xl" : "text-slate-400 hover:text-slate-600")}>
              <LayoutGrid size={14} /> Live ({approved.length})
+           </button>
+           <button onClick={() => setActiveTab('featured')} className={cn("px-4 md:px-5 py-2 rounded-xl text-[9px] font-black uppercase transition-all flex items-center gap-2 whitespace-nowrap", activeTab === 'featured' ? "bg-white text-primary shadow-xl" : "text-slate-400 hover:text-slate-600")}>
+             <Star size={14} /> Featured ({approved.filter(c => c.isFeatured).length})
            </button>
            <button onClick={() => setActiveTab('archived')} className={cn("px-4 md:px-5 py-2 rounded-xl text-[9px] font-black uppercase transition-all flex items-center gap-2 whitespace-nowrap", activeTab === 'archived' ? "bg-white text-slate-900 shadow-xl" : "text-slate-400 hover:text-slate-600")}>
              <PauseCircle size={14} /> Lifecycle ({archived.length})

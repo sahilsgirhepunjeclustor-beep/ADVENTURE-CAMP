@@ -55,6 +55,7 @@ import {
  */
 interface AdminSupportProps {
   onBack?: () => void;
+  initialTab?: 'all' | 'Open' | 'In-Progress' | 'Resolved';
 }
 
 /**
@@ -63,7 +64,7 @@ interface AdminSupportProps {
  * @param {AdminSupportProps} props - The component's props.
  * @returns {JSX.Element} The rendered component.
  */
-export default function AdminSupport({ onBack }: AdminSupportProps) {
+export default function AdminSupport({ onBack, initialTab = 'all' }: AdminSupportProps) {
   // --- STATE MANAGEMENT ---
 
   // State to hold all support tickets.
@@ -71,7 +72,13 @@ export default function AdminSupport({ onBack }: AdminSupportProps) {
   // State for the search query.
   const [searchQuery, setSearchQuery] = useState('');
   // State for the active filter tab.
-  const [activeTab, setActiveTab] = useState<'all' | 'Open' | 'In-Progress' | 'Resolved'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'Open' | 'In-Progress' | 'Resolved'>(initialTab);
+
+  useEffect(() => {
+    if (initialTab && initialTab !== activeTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
 
   // --- DATA FETCHING ---
 

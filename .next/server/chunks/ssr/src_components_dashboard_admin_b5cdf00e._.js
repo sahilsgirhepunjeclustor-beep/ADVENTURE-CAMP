@@ -51,12 +51,14 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$t
 ;
 ;
 ;
-function AdminMemberships({ onBack }) {
+function AdminMemberships({ onBack, initialTab }) {
     // --- STATE MANAGEMENT ---
     // State for storing the list of membership plans.
     const [plans, setPlans] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     // State for storing all user data.
     const [allUsers, setAllUsers] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({});
+    // State for the active memberships tab.
+    const [activeTab, setActiveTab] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(initialTab || 'plans');
     // State for the search query for filtering subscribers.
     const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     // State to control the visibility of the plan creation/editing dialog.
@@ -80,6 +82,13 @@ function AdminMemberships({ onBack }) {
         setPlans((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getMembershipPlans"])());
         setAllUsers((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getUsers"])());
     }, []);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        if (initialTab && initialTab !== activeTab) {
+            setActiveTab(initialTab);
+        }
+    }, [
+        initialTab
+    ]);
     // --- MEMOIZED COMPUTATIONS ---
     // Memoized list of all users who have a membership.
     const subscribers = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>Object.values(allUsers).filter((u)=>u.membership), [
@@ -173,12 +182,12 @@ function AdminMemberships({ onBack }) {
                                     className: "text-slate-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 188,
+                                    lineNumber: 197,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 187,
+                                lineNumber: 196,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -188,7 +197,7 @@ function AdminMemberships({ onBack }) {
                                         children: "Membership Management"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 192,
+                                        lineNumber: 201,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -196,19 +205,19 @@ function AdminMemberships({ onBack }) {
                                         children: "Loyalty & Exclusive Access Controls"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 193,
+                                        lineNumber: 202,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 191,
+                                lineNumber: 200,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                        lineNumber: 185,
+                        lineNumber: 194,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -224,19 +233,19 @@ function AdminMemberships({ onBack }) {
                                             size: 16
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 200,
+                                            lineNumber: 209,
                                             columnNumber: 15
                                         }, this),
                                         " New Membership Plan"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 199,
+                                    lineNumber: 208,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 198,
+                                lineNumber: 207,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogContent"], {
@@ -249,20 +258,20 @@ function AdminMemberships({ onBack }) {
                                                 children: "Create Membership Plan"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 205,
+                                                lineNumber: 214,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                                 children: "Define new loyalty tiers and benefits for platform explorers."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 206,
+                                                lineNumber: 215,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 204,
+                                        lineNumber: 213,
                                         columnNumber: 14
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -273,7 +282,7 @@ function AdminMemberships({ onBack }) {
                                                 children: "Plan Configuration"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 209,
+                                                lineNumber: 218,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -281,13 +290,13 @@ function AdminMemberships({ onBack }) {
                                                 children: "Define new loyalty tier benefits"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 210,
+                                                lineNumber: 219,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 208,
+                                        lineNumber: 217,
                                         columnNumber: 14
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -302,7 +311,7 @@ function AdminMemberships({ onBack }) {
                                                         children: "Plan Name"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 215,
+                                                        lineNumber: 224,
                                                         columnNumber: 20
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -315,13 +324,13 @@ function AdminMemberships({ onBack }) {
                                                         required: true
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 216,
+                                                        lineNumber: 225,
                                                         columnNumber: 20
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 214,
+                                                lineNumber: 223,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -335,7 +344,7 @@ function AdminMemberships({ onBack }) {
                                                                 children: "Annual Price (₹)"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 220,
+                                                                lineNumber: 229,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -348,13 +357,13 @@ function AdminMemberships({ onBack }) {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 221,
+                                                                lineNumber: 230,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 219,
+                                                        lineNumber: 228,
                                                         columnNumber: 20
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -365,7 +374,7 @@ function AdminMemberships({ onBack }) {
                                                                 children: "Expedition Discount (%)"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 224,
+                                                                lineNumber: 233,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -378,19 +387,19 @@ function AdminMemberships({ onBack }) {
                                                                 required: true
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 225,
+                                                                lineNumber: 234,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 223,
+                                                        lineNumber: 232,
                                                         columnNumber: 20
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 218,
+                                                lineNumber: 227,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -401,7 +410,7 @@ function AdminMemberships({ onBack }) {
                                                         children: "Features (Comma separated)"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 229,
+                                                        lineNumber: 238,
                                                         columnNumber: 20
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -413,13 +422,13 @@ function AdminMemberships({ onBack }) {
                                                         placeholder: "VIP access, Insurance, etc."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 230,
+                                                        lineNumber: 239,
                                                         columnNumber: 20
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 228,
+                                                lineNumber: 237,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -428,31 +437,31 @@ function AdminMemberships({ onBack }) {
                                                 children: "Activate Plan"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 232,
+                                                lineNumber: 241,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 213,
+                                        lineNumber: 222,
                                         columnNumber: 14
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 203,
+                                lineNumber: 212,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                        lineNumber: 197,
+                        lineNumber: 206,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                lineNumber: 184,
+                lineNumber: 193,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -466,7 +475,7 @@ function AdminMemberships({ onBack }) {
                                 children: "ACTIVE TIERS"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 241,
+                                lineNumber: 250,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -483,12 +492,12 @@ function AdminMemberships({ onBack }) {
                                                             size: 20
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                            lineNumber: 250,
+                                                            lineNumber: 259,
                                                             columnNumber: 24
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 249,
+                                                        lineNumber: 258,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -497,13 +506,13 @@ function AdminMemberships({ onBack }) {
                                                         children: plan.isActive ? 'Suspend' : 'Activate'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 252,
+                                                        lineNumber: 261,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 248,
+                                                lineNumber: 257,
                                                 columnNumber: 18
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -511,7 +520,7 @@ function AdminMemberships({ onBack }) {
                                                 children: plan.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 256,
+                                                lineNumber: 265,
                                                 columnNumber: 18
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -524,13 +533,13 @@ function AdminMemberships({ onBack }) {
                                                         children: "/ Year"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 257,
+                                                        lineNumber: 266,
                                                         columnNumber: 92
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 257,
+                                                lineNumber: 266,
                                                 columnNumber: 18
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -544,7 +553,7 @@ function AdminMemberships({ onBack }) {
                                                                 fill: "currentColor"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 261,
+                                                                lineNumber: 270,
                                                                 columnNumber: 24
                                                             }, this),
                                                             " ",
@@ -553,7 +562,7 @@ function AdminMemberships({ onBack }) {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 260,
+                                                        lineNumber: 269,
                                                         columnNumber: 21
                                                     }, this),
                                                     plan.features.slice(0, 2).map((f, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -563,7 +572,7 @@ function AdminMemberships({ onBack }) {
                                                                     className: "w-1 h-1 rounded-full bg-slate-300"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 265,
+                                                                    lineNumber: 274,
                                                                     columnNumber: 26
                                                                 }, this),
                                                                 " ",
@@ -571,30 +580,30 @@ function AdminMemberships({ onBack }) {
                                                             ]
                                                         }, i, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                            lineNumber: 264,
+                                                            lineNumber: 273,
                                                             columnNumber: 23
                                                         }, this))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 259,
+                                                lineNumber: 268,
                                                 columnNumber: 18
                                             }, this)
                                         ]
                                     }, plan.id, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 244,
+                                        lineNumber: 253,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                lineNumber: 242,
+                                lineNumber: 251,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                        lineNumber: 240,
+                        lineNumber: 249,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -612,7 +621,7 @@ function AdminMemberships({ onBack }) {
                                             children: "Subscriber Ledger"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 278,
+                                            lineNumber: 287,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -621,13 +630,13 @@ function AdminMemberships({ onBack }) {
                                             children: "Pending Approvals"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 279,
+                                            lineNumber: 288,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 277,
+                                    lineNumber: 286,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -642,7 +651,7 @@ function AdminMemberships({ onBack }) {
                                                     className: "absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                    lineNumber: 285,
+                                                    lineNumber: 294,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -652,13 +661,13 @@ function AdminMemberships({ onBack }) {
                                                     className: "pl-12 h-14 rounded-2xl bg-white border-slate-100 shadow-xl font-bold uppercase text-[11px] tracking-tight"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                    lineNumber: 286,
+                                                    lineNumber: 295,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 284,
+                                            lineNumber: 293,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -676,7 +685,7 @@ function AdminMemberships({ onBack }) {
                                                                     children: "EXPEDITIONIST"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 298,
+                                                                    lineNumber: 307,
                                                                     columnNumber: 30
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -684,7 +693,7 @@ function AdminMemberships({ onBack }) {
                                                                     children: "TIER"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 299,
+                                                                    lineNumber: 308,
                                                                     columnNumber: 30
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -692,7 +701,7 @@ function AdminMemberships({ onBack }) {
                                                                     children: "EXPIRY"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 300,
+                                                                    lineNumber: 309,
                                                                     columnNumber: 30
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -700,7 +709,7 @@ function AdminMemberships({ onBack }) {
                                                                     children: "STATUS"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 301,
+                                                                    lineNumber: 310,
                                                                     columnNumber: 30
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -708,18 +717,18 @@ function AdminMemberships({ onBack }) {
                                                                     children: "ACTION"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 302,
+                                                                    lineNumber: 311,
                                                                     columnNumber: 30
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                            lineNumber: 297,
+                                                            lineNumber: 306,
                                                             columnNumber: 27
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 296,
+                                                        lineNumber: 305,
                                                         columnNumber: 24
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -731,12 +740,12 @@ function AdminMemberships({ onBack }) {
                                                                 children: "No active subscribers found"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 307,
+                                                                lineNumber: 316,
                                                                 columnNumber: 33
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                            lineNumber: 307,
+                                                            lineNumber: 316,
                                                             columnNumber: 29
                                                         }, this) : filteredSubscribers.map((u)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                                                 className: "group hover:bg-slate-50/50 transition-colors",
@@ -753,12 +762,12 @@ function AdminMemberships({ onBack }) {
                                                                                         className: "w-full h-full object-cover"
                                                                                     }, void 0, false, {
                                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                        lineNumber: 315,
+                                                                                        lineNumber: 324,
                                                                                         columnNumber: 55
                                                                                     }, this) : u.firstName[0]
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                    lineNumber: 314,
+                                                                                    lineNumber: 323,
                                                                                     columnNumber: 40
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -772,7 +781,7 @@ function AdminMemberships({ onBack }) {
                                                                                             ]
                                                                                         }, void 0, true, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                            lineNumber: 318,
+                                                                                            lineNumber: 327,
                                                                                             columnNumber: 43
                                                                                         }, this),
                                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -780,24 +789,24 @@ function AdminMemberships({ onBack }) {
                                                                                             children: u.email
                                                                                         }, void 0, false, {
                                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                            lineNumber: 319,
+                                                                                            lineNumber: 328,
                                                                                             columnNumber: 43
                                                                                         }, this)
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                    lineNumber: 317,
+                                                                                    lineNumber: 326,
                                                                                     columnNumber: 40
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 313,
+                                                                            lineNumber: 322,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 312,
+                                                                        lineNumber: 321,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -807,12 +816,12 @@ function AdminMemberships({ onBack }) {
                                                                             children: u.membership?.planName
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 325,
+                                                                            lineNumber: 334,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 324,
+                                                                        lineNumber: 333,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -822,12 +831,12 @@ function AdminMemberships({ onBack }) {
                                                                             children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmtDate"])(u.membership?.expiryDate)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 329,
+                                                                            lineNumber: 338,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 328,
+                                                                        lineNumber: 337,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -839,7 +848,7 @@ function AdminMemberships({ onBack }) {
                                                                                     className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("w-1.5 h-1.5 rounded-full", u.membership?.status === 'active' ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : "bg-amber-500")
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                    lineNumber: 334,
+                                                                                    lineNumber: 343,
                                                                                     columnNumber: 40
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -847,18 +856,18 @@ function AdminMemberships({ onBack }) {
                                                                                     children: u.membership?.status
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                    lineNumber: 335,
+                                                                                    lineNumber: 344,
                                                                                     columnNumber: 40
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 333,
+                                                                            lineNumber: 342,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 332,
+                                                                        lineNumber: 341,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -870,52 +879,52 @@ function AdminMemberships({ onBack }) {
                                                                                 size: 18
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                lineNumber: 341,
+                                                                                lineNumber: 350,
                                                                                 columnNumber: 77
                                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
                                                                                 size: 18,
                                                                                 className: "text-green-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                lineNumber: 341,
+                                                                                lineNumber: 350,
                                                                                 columnNumber: 97
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                            lineNumber: 340,
+                                                                            lineNumber: 349,
                                                                             columnNumber: 37
                                                                         }, this)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 339,
+                                                                        lineNumber: 348,
                                                                         columnNumber: 34
                                                                     }, this)
                                                                 ]
                                                             }, u.email, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 310,
+                                                                lineNumber: 319,
                                                                 columnNumber: 31
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 305,
+                                                        lineNumber: 314,
                                                         columnNumber: 24
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 295,
+                                                lineNumber: 304,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 294,
+                                            lineNumber: 303,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 283,
+                                    lineNumber: 292,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -930,7 +939,7 @@ function AdminMemberships({ onBack }) {
                                                     className: "mx-auto mb-4 text-green-500/20"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                    lineNumber: 357,
+                                                    lineNumber: 366,
                                                     columnNumber: 26
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -938,13 +947,13 @@ function AdminMemberships({ onBack }) {
                                                     children: "All membership audits complete"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                    lineNumber: 358,
+                                                    lineNumber: 367,
                                                     columnNumber: 26
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                            lineNumber: 356,
+                                            lineNumber: 365,
                                             columnNumber: 23
                                         }, this) : subscribers.filter((u)=>u.membership?.status === 'pending').map((u)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "bg-white p-6 rounded-[28px] border border-slate-100 shadow-sm flex items-center justify-between",
@@ -957,7 +966,7 @@ function AdminMemberships({ onBack }) {
                                                                 children: u.firstName[0]
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 364,
+                                                                lineNumber: 373,
                                                                 columnNumber: 31
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -971,7 +980,7 @@ function AdminMemberships({ onBack }) {
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 366,
+                                                                        lineNumber: 375,
                                                                         columnNumber: 34
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -983,25 +992,25 @@ function AdminMemberships({ onBack }) {
                                                                                 children: u.membership?.planName
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                                lineNumber: 367,
+                                                                                lineNumber: 376,
                                                                                 columnNumber: 97
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                        lineNumber: 367,
+                                                                        lineNumber: 376,
                                                                         columnNumber: 34
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 365,
+                                                                lineNumber: 374,
                                                                 columnNumber: 31
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 363,
+                                                        lineNumber: 372,
                                                         columnNumber: 28
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1015,12 +1024,12 @@ function AdminMemberships({ onBack }) {
                                                                     size: 20
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                    lineNumber: 371,
+                                                                    lineNumber: 380,
                                                                     columnNumber: 175
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 371,
+                                                                lineNumber: 380,
                                                                 columnNumber: 31
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1029,52 +1038,52 @@ function AdminMemberships({ onBack }) {
                                                                 children: "Approve Member"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                                lineNumber: 372,
+                                                                lineNumber: 381,
                                                                 columnNumber: 31
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                        lineNumber: 370,
+                                                        lineNumber: 379,
                                                         columnNumber: 28
                                                     }, this)
                                                 ]
                                             }, u.email, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                                lineNumber: 362,
+                                                lineNumber: 371,
                                                 columnNumber: 25
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                        lineNumber: 354,
+                                        lineNumber: 363,
                                         columnNumber: 18
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                                    lineNumber: 353,
+                                    lineNumber: 362,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                            lineNumber: 276,
+                            lineNumber: 285,
                             columnNumber: 12
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                        lineNumber: 275,
+                        lineNumber: 284,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-                lineNumber: 238,
+                lineNumber: 247,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminMemberships.tsx",
-        lineNumber: 182,
+        lineNumber: 191,
         columnNumber: 5
     }, this);
 }

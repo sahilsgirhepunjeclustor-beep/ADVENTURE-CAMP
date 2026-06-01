@@ -58,6 +58,7 @@ import { Label } from "@/components/ui/label";
  */
 interface AdminOrganizersProps {
   onBack?: () => void;
+  initialTab?: 'pending' | 'approved' | 'suspended' | 'documents';
 }
 
 /**
@@ -66,13 +67,21 @@ interface AdminOrganizersProps {
  * @param {AdminOrganizersProps} props - The component's props.
  * @returns {JSX.Element} The rendered component.
  */
-export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
+export default function AdminOrganizers({ onBack, initialTab }: AdminOrganizersProps) {
   // --- STATE MANAGEMENT ---
 
   // State to hold all user data.
   const [allUsers, setAllUsers] = useState<Record<string, User>>({});
   // State for the currently selected organizer's email (ID).
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // The currently active organizer view tab.
+  const [activeTab, setActiveTab] = useState<'pending' | 'approved' | 'suspended' | 'documents'>(initialTab || 'pending');
+  // Sync tab state when the parent sends a new tab prop.
+  useEffect(() => {
+    if (initialTab && initialTab !== activeTab) {
+      setActiveTab(initialTab);
+    }
+  }, [initialTab]);
   // State to control the preview of a compliance document.
   const [previewDoc, setPreviewDoc] = useState<{ label: string; doc?: UploadedDoc } | null>(null);
   // State to hold the user object being edited.
@@ -82,20 +91,11 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
 
   /**
    * @effect
-   * @description Fetches all users on component mount and sets the initially selected organizer.
-   * It prioritizes selecting a pending organizer, otherwise falls back to the first available organizer.
+   * @description Fetches all users on component mount.
    */
   useEffect(() => {
     const users = getUsers();
     setAllUsers(users);
-
-    const pending = Object.values(users).filter(u => u.role === 'organizer' && !u.isApproved && !u.isRejected);
-    if (pending.length > 0 && !selectedId) {
-      setSelectedId(pending[0].email);
-    } else if (Object.keys(users).length > 0 && !selectedId) {
-      const firstOrg = Object.values(users).find(u => u.role === 'organizer');
-      if (firstOrg) setSelectedId(firstOrg.email);
-    }
   }, []);
 
   // --- DATA FILTERING ---
@@ -104,8 +104,34 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
   const organizers = Object.values(allUsers).filter(u => u.role === 'organizer');
   // Further filter for pending organizers.
   const pending = organizers.filter(u => !u.isApproved && !u.isRejected);
+  // Approved organizers who are currently active.
+  const approvedOrgs = organizers.filter(u => u.isApproved && u.status === 'active');
+  // Suspended partners.
+  const suspendedOrgs = organizers.filter(u => u.status === 'suspended');
+  // Organizers with compliance documentation.
+  const documentOrgs = organizers.filter(u =>
+    !!(u.organizerProfile?.govIdDoc || u.organizerProfile?.registrationDoc || u.organizerProfile?.safetyDoc)
+  );
   // Filter for organizers who have been either approved or rejected (history).
   const history = organizers.filter(u => u.isApproved || u.isRejected);
+
+  const currentList = activeTab === 'pending'
+    ? pending
+    : activeTab === 'approved'
+      ? approvedOrgs
+      : activeTab === 'suspended'
+        ? suspendedOrgs
+        : documentOrgs;
+
+  useEffect(() => {
+    if (!currentList.length) {
+      setSelectedId(null);
+      return;
+    }
+    if (!selectedId || !currentList.some(u => u.email === selectedId)) {
+      setSelectedId(currentList[0].email);
+    }
+  }, [activeTab, currentList, selectedId]);
 
   // The currently selected user object based on `selectedId`.
   const selectedUser = selectedId ? allUsers[selectedId.toLowerCase()] : null;
@@ -181,39 +207,63 @@ export default function AdminOrganizers({ onBack }: AdminOrganizersProps) {
   return (
     <div className="space-y-8 pb-20 max-w-[1600px] mx-auto animate-in fade-in duration-700 px-2 sm:px-4 md:px-6 font-sans">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        {onBack && (
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={onBack}
-            className="rounded-full h-10 w-10 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0"
-          >
-            <ArrowLeft size={18} className="text-slate-600" />
-          </Button>
-        )}
-        <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shrink-0 border border-primary/20">
-          <Shield size={24} />
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center gap-4">
+          {onBack && (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={onBack}
+              className="rounded-full h-10 w-10 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0"
+            >
+              <ArrowLeft size={18} className="text-slate-600" />
+            </Button>
+          )}
+          <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary shrink-0 border border-primary/20">
+            <Shield size={24} />
+          </div>
+          <div>
+            <h2 className="text-2xl font-black text-[#0d2a1d] uppercase tracking-tight leading-none">Organizer Moderation</h2>
+            <p className="text-[11px] text-slate-400 font-black uppercase tracking-widest mt-1.5 opacity-70">Approve, verify identity, or moderate partner operational status.</p>
+          </div>
         </div>
-        <div>
-          <h2 className="text-2xl font-black text-[#0d2a1d] uppercase tracking-tight leading-none">Organizer Moderation</h2>
-          <p className="text-[11px] text-slate-400 font-black uppercase tracking-widest mt-1.5 opacity-70">Approve, verify identity, or moderate partner operational status.</p>
+
+        <div className="flex flex-wrap gap-2 bg-slate-50 p-2 rounded-3xl border border-slate-100">
+          {[
+            { key: 'pending', label: 'Pending Approvals', count: pending.length },
+            { key: 'approved', label: 'Approved', count: approvedOrgs.length },
+            { key: 'suspended', label: 'Suspended', count: suspendedOrgs.length },
+            { key: 'documents', label: 'Documents', count: documentOrgs.length },
+          ].map(tab => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key as typeof activeTab)}
+              className={cn(
+                'px-4 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-3',
+                activeTab === tab.key ? 'bg-primary text-white shadow-xl' : 'text-slate-400 hover:bg-white hover:text-slate-900'
+              )}
+            >
+              {tab.label} ({tab.count})
+            </button>
+          ))}
         </div>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
         {/* Left Panel: Verification Queue */}
         <div className="xl:col-span-5 space-y-6">
-           <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em] px-1">VERIFICATION QUEUE</h3>
+           <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.25em] px-1">{activeTab === 'pending' ? 'VERIFICATION QUEUE' : activeTab === 'approved' ? 'ACTIVE ORGANIZERS' : activeTab === 'suspended' ? 'SUSPENDED PARTNERS' : 'DOCUMENT REVIEW'}</h3>
            <ScrollArea className="h-[400px] lg:h-[600px] pr-4">
               <div className="space-y-4">
-                {pending.length === 0 ? (
+                {currentList.length === 0 ? (
                   <div className="bg-white p-16 text-center rounded-[32px] border border-dashed border-slate-200 opacity-50">
                     <CheckCircle2 size={40} className="mx-auto mb-4 text-green-500/20" />
-                    <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">No pending applications</p>
+                    <p className="text-[11px] font-black text-slate-400 uppercase tracking-widest">
+                      {activeTab === 'pending' ? 'No pending applications' : activeTab === 'approved' ? 'No approved partners yet' : activeTab === 'suspended' ? 'No suspended partners' : 'No organizers with documents'}
+                    </p>
                   </div>
                 ) : (
-                  pending.map(user => (
+                  currentList.map(user => (
                     <div
                       key={user.email}
                       onClick={() => setSelectedId(user.email)}
