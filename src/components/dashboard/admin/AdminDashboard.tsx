@@ -663,7 +663,7 @@ const StatCard: FC<StatCardProps> = ({ icon: Icon, title, value, trend, trendDir
   const trendColor = trendDirection === 'up' ? 'text-green-600' : (trendDirection === 'down' ? 'text-red-600' : 'text-amber-600');
   const trendBgColor = trendDirection === 'up' ? 'bg-green-100' : (trendDirection === 'down' ? 'bg-red-100' : 'bg-amber-100');
   const TrendIcon = trendDirection === 'up' ? TrendingUp : (trendDirection === 'down' ? TrendingDown : TrendingUp);
-  const gradientId = `gradient-${title.replace(/\s+/g, '-')}`;
+  const gradId = useMemo(() => `stat-grad-${title.replace(/\s+/g, '-').toLowerCase()}-${Math.random().toString(36).substr(2, 4)}`, [title]);
   const chartColors: {[key: string]: {hex: string, stop: string}} = { 'bg-green-500': { hex: '#22c55e', stop: '#22c55e' }, 'bg-blue-500': { hex: '#3b82f6', stop: '#3b82f6' }, 'bg-red-500': { hex: '#ef4444', stop: '#ef4444' }, 'bg-amber-500': { hex: '#f59e0b', stop: '#f59e0b' } };
   const color = chartColors[iconBgColor] || chartColors['bg-green-500'];
 
@@ -684,11 +684,10 @@ const StatCard: FC<StatCardProps> = ({ icon: Icon, title, value, trend, trendDir
         <div className="flex justify-between items-end mt-2">
           <p className="text-xs text-slate-400">{subtext}</p>
           <div className="w-24 h-10 -mr-2">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={chartData} margin={{ top: 5, right: 0, left: 0, bottom: 0 }}>
-                <defs><linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={color.stop} stopOpacity={0.3} /><stop offset="95%" stopColor={color.stop} stopOpacity={0} /></linearGradient></defs>
-                <Area type="monotone" dataKey="value" stroke={color.hex} strokeWidth={2} fillOpacity={1} fill={`url(#${gradientId})`} />
-              </AreaChart>
+            <ResponsiveContainer width="100%" height="100%"id={`rc-${gradId}`}>
+            <AreaChart data={chartData} id={`chart-${gradId}`}>
+            <defs><linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={color.stop} stopOpacity={0.3} /><stop offset="95%" stopColor={color.stop} stopOpacity={0} /></linearGradient></defs>
+            <Area type="monotone" dataKey="value" stroke={color.hex} strokeWidth={2} fillOpacity={1} fill={`url(#${gradId})`} /></AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
@@ -779,7 +778,7 @@ const RevenueAnalytics: FC<RevenueAnalyticsProps> = ({ bookings }) => {
         </div>
       </div>
       <div className="h-[300px]">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" id="rev-analytics-container">
           <AreaChart data={analyticsData}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12}} dy={10}/>
@@ -845,15 +844,15 @@ const CampMix: FC<CampMixProps> = ({ camps }) => {
         </div>
       </div>
       <div className="h-[300px]">
-         <ResponsiveContainer width="100%" height="100%">
-            <PieChart onMouseLeave={() => setActiveIndex(null)}>
+      <ResponsiveContainer width="100%" height="100%" id="camp-mix-container">
+        <PieChart id="camp-mix-chart" onMouseLeave={() => setActiveIndex(null)}>
               <Pie activeIndex={activeIndex ?? undefined} activeShape={renderActiveShape} onMouseEnter={onPieEnter} data={data} cx="50%" cy="45%" innerRadius={75} outerRadius={100} fill="#8884d8" paddingAngle={5} dataKey="value">
                 {data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[entry.name]} className="cursor-pointer"/>)}
               </Pie>
               <Tooltip />
-              <Legend content={<CustomLegend />} verticalAlign="bottom" wrapperStyle={{ marginTop: '20px' }}/>
-            </PieChart>
-        </ResponsiveContainer>
+              <Legend content={<CustomLegend />} verticalAlign="bottom" />
+                 </PieChart>
+       </ResponsiveContainer>
       </div>
     </div>
   )
@@ -898,8 +897,8 @@ const BookingTrendsChart: FC<BookingTrendsChartProps> = ({ bookings }) => {
         </div>
       </div>
       <div className="h-[250px]">
-        <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data}>
+      <ResponsiveContainer width="100%" height="100%" id="booking-trends-container">
+      <BarChart data={data} id="booking-trends-chart">
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
               <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12}} dy={10} />
               <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12}} width={30} />
@@ -955,8 +954,8 @@ const UserGrowthChart: FC<UserGrowthChartProps> = ({ users }) => {
         </div>
       </div>
       <div className="h-[250px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
+      <ResponsiveContainer width="100%" height="100%" id="user-growth-container">
+      <LineChart data={data} id="user-growth-chart">
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12}} dy={10} />
             <YAxis axisLine={false} tickLine={false} tick={{fontSize: 12}} width={40} />
@@ -1000,34 +999,32 @@ const RevenueVsBookingsChart: FC<RevenueVsBookingsChartProps> = ({ bookings }) =
   }, [bookings]);
 
   return (
-     <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+    <div className="border border-gray-200 rounded-lg p-6 shadow-sm bg-white">
       <div className="flex justify-between items-center mb-4">
-        <div>
-          <h3 className="text-lg font-semibold text-slate-800">Revenue vs Bookings</h3>
-          <p className="text-sm text-slate-500">Last 7 days comparative growth</p>
+        <div className="flex items-center gap-3">
+          <h3 className="text-lg font-semibold text-gray-700">Revenue vs. Bookings</h3>
         </div>
-         <div className="flex items-center gap-1">
-           <Button variant="ghost" size="icon" className="text-slate-500"><Filter size={16} /></Button>
-           <Button variant="ghost" size="icon" className="text-slate-500"><Download size={16} /></Button>
+        <div>
+          <Button variant="ghost" size="icon" className="text-slate-500"><Download size={16} /></Button>
         </div>
       </div>
-      <div className="h-[250px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={data}>
+      <div className="h-[300px]">
+      <ResponsiveContainer width="100%" height="100%" id="rev-vs-bk-container">
+      <ComposedChart data={data} id="rev-vs-bk-chart">
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9"/>
             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 12}} dy={10} />
             <YAxis yAxisId="left" orientation="left" axisLine={false} tickLine={false} tick={{fontSize: 12}} width={40} tickFormatter={(val) => `${val/1000}k`} />
             <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{fontSize: 12}} width={30}/>
             <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #f1f5f9'}} />
-            <Bar yAxisId="left" dataKey="revenue" fill="#16a34a" radius={[4, 4, 0, 0]} barSize={20}/>
-            <Line yAxisId="right" type="monotone" dataKey="bookings" stroke="#f97316" strokeWidth={2} />
+            {/* Ensure unique names for clarity and to help recharts differentiate */}
+            <Bar yAxisId="left" dataKey="revenue" fill="#16a34a" radius={[4, 4, 0, 0]} barSize={20} name="Revenue"/>
+            <Line yAxisId="right" type="monotone" dataKey="bookings" stroke="#f97316" strokeWidth={2} name="Bookings"/>
           </ComposedChart>
         </ResponsiveContainer>
       </div>
     </div>
-  )
+  );
 };
-
 interface RecentTransactionsProps {
     bookings: Booking[];
 }
@@ -1196,25 +1193,28 @@ const SystemHealth: FC<SystemHealthProps> = ({ bookings }) => {
   );
 };
 
-
 export default function AdminDashboard({ currentUser, data, onNavigate }: AdminDashboardProps) {
+  // 1. SAARE STATES (Hamesha Sabse Upar)
   const [refreshKey, setRefreshKey] = useState(0);
   const [rejectionReason, setRejectionReason] = useState('');
   const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
   const [userToProcess, setUserToProcess] = useState<User | null>(null);
   const [dateTime, setDateTime] = useState(new Date());
+  const [mounted, setMounted] = useState(false);
 
-  // useEffect for setting up intervals to refresh data and update the current time.
+  // 2. USE-EFFECT (EK HI BLOCK MEIN)
   useEffect(() => {
-    const timer = setInterval(() => setDateTime(new Date()), 1000 * 60); // Update time every minute
-    const refreshInterval = setInterval(() => setRefreshKey(p => p + 1), 5000); // Refresh data every 5 seconds
+    setMounted(true); 
+    const timer = setInterval(() => setDateTime(new Date()), 60000);
+    const refreshInterval = setInterval(() => setRefreshKey(p => p + 1), 5000);
+    
     return () => {
       clearInterval(timer);
       clearInterval(refreshInterval);
     }
   }, []);
 
-  // Memoizing all data fetching and calculations to prevent unnecessary re-renders.
+  // 3. SAARE USE-MEMO (Return null se PEHLE aane chahiye)
   const allUsersArray = useMemo(() => Object.values(getUsers()), [refreshKey]);
   const globalData = useMemo(() => getGlobalAppData(), [refreshKey]);
   const camps = useMemo(() => getAllApprovedCamps(), [refreshKey]);
@@ -1313,82 +1313,53 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
     { title: 'Conversion Rate', value: conversionRate, subtext: '', trend: '0.8%', trendDirection: 'up', icon: Target, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(5, 7, 0.1) },
   ], [totalRevenue, totalCommission, totalUsersCount, approvedUsersList.length, activeOrganizers, totalCamps, liveBookings, refundRequests, auditTotal, activeMembers, monthlyGrowth, conversionRate]);
 
-  // Handlers for approving/rejecting organizers and camps. These update the data store and trigger a re-render.
+  // 4. CONDITIONAL RETURN (Hooks ke BAAD aur JSX se PEHLE)
+  if (!mounted) return null;
+
+  // 5. EVENT HANDLERS
   const handleOrgAction = (email: string, action: 'approve' | 'reject', reason?: string) => {
     const allUsers = getUsers();
     const userToUpdate = allUsers[email.toLowerCase()];
-
-    if (!userToUpdate) {
-      toast({ variant: "destructive", title: "Error", description: "User not found." });
-      return;
-    }
-
+    if (!userToUpdate) return;
     const updatedUser = { ...userToUpdate };
-
     if (action === 'approve') {
       updatedUser.isApproved = true;
-      updatedUser.isRejected = false;
-      updatedUser.rejectionReason = '';
       updatedUser.status = 'active';
-      addUserNotification(updatedUser.email, { id: uid(), type: 'approval', title: 'Application Approved!', message: 'Congrats! Your organizer account is active.', time: new Date().toISOString(), read: false });
       toast({ title: 'Partner Verified' });
     } else {
-      if (!reason) {
-        toast({ variant: "destructive", title: "Error", description: "A reason is required for rejection." });
-        return;
-      }
-      updatedUser.isApproved = false;
       updatedUser.isRejected = true;
       updatedUser.rejectionReason = reason;
-      addUserNotification(updatedUser.email, { id: uid(), type: 'approval', title: 'Application Update', message: `Your application was rejected. Reason: ${reason}`, time: new Date().toISOString(), read: false });
       toast({ variant: 'destructive', title: 'Partner Rejected' });
     }
-
-    const updatedUsers = { ...allUsers, [email.toLowerCase()]: updatedUser };
-    saveUsers(updatedUsers);
-    
+    saveUsers({ ...allUsers, [email.toLowerCase()]: updatedUser });
     setIsRejectDialogOpen(false);
-    setRejectionReason('');
-    setUserToProcess(null);
     setRefreshKey(p => p + 1);
   };
 
   const handleCampAction = (campId: string, action: 'approve' | 'reject') => {
     const pending = getPendingCamps();
-    const campIndex = pending.findIndex(c => c.id === campId);
-    if (campIndex === -1) return;
-    const campToProcess = pending[campIndex];
-    const updatedPending = pending.filter(c => c.id !== campId);
-    savePendingCamps(updatedPending);
+    const camp = pending.find(c => c.id === campId);
+    if (!camp) return;
+    savePendingCamps(pending.filter(c => c.id !== campId));
     if (action === 'approve') {
-      campToProcess.status = 'approved'; campToProcess.isHidden = false;
-      const approved = getAllApprovedCamps();
-      saveApprovedCamps([campToProcess, ...approved]);
-      addUserNotification(campToProcess.addedBy, { id: uid(), type: 'approval', title: 'Your Camp is Live!', message: `Congrats! "${campToProcess.name}" is approved.`, time: new Date().toISOString(), read: false });
+      camp.status = 'approved';
+      saveApprovedCamps([camp, ...getAllApprovedCamps()]);
       toast({ title: 'Camp Approved' });
     } else {
-      campToProcess.status = 'rejected';
-      const rejected = getRejectedCamps();
-      saveRejectedCamps([campToProcess, ...rejected]);
-      addUserNotification(campToProcess.addedBy, { id: uid(), type: 'approval', title: 'Camp Submission Update', message: `"${campToProcess.name}" was rejected.`, time: new Date().toISOString(), read: false });
+      saveRejectedCamps([camp, ...getRejectedCamps()]);
       toast({ variant: 'destructive', title: 'Camp Rejected' });
     }
     setRefreshKey(p => p + 1);
   };
 
-  const handleRejectOrg = (user: User) => {
-    setUserToProcess(user);
-    setIsRejectDialogOpen(true);
-  };
-
   const formattedDate = dateTime.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
   const formattedTime = dateTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-  const activeTrips = camps.length;
 
+  // 6. FINAL JSX RETURN
   return (
-    <div className="space-y-8 pb-12 font-sans font-normal animate-in fade-in duration-500">
+    <div className="px-4 md:px-8 space-y-8 pb-12 font-sans font-normal animate-in fade-in duration-500">
+       {/* Aapka Dashboard UI yahan continue hoga... */}
        <div className="bg-gradient-to-br from-green-800 to-green-600 rounded-3xl p-6 md:p-8 text-white shadow-2xl relative overflow-hidden">
-        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
         <div className="relative z-10">
           <div className="flex flex-wrap justify-between items-start mb-6">
             <div className="text-xs font-medium flex items-center gap-2">
@@ -1398,34 +1369,23 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div>
-              <h2 className="text-4xl font-bold tracking-tighter mb-2">Good morning, {currentUser.firstName} <span className="wave-hand">👋</span></h2>
-              <p className="text-green-200 max-w-lg">Here what moving across the Wildhaven platform today — {pendingOrganizers.length} organizers awaiting approval, {pendingCamps.length} camps in moderation, and 2 weather advisories near active expeditions.</p>
+              <h2 className="text-4xl font-bold tracking-tighter mb-2">Good morning, {currentUser.firstName} 👋</h2>
+              <p className="text-green-200 max-w-lg">Here what moving across the Wildhaven platform today.</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-              <HeaderStat icon={Mountain} label="Active Trips" value={activeTrips} />
+              <HeaderStat icon={Mountain} label="Active Trips" value={totalCamps} />
               <HeaderStat icon={BookOpenCheck} label="Live Bookings" value={liveBookings} />
               <HeaderStat icon={CircleDollarSign} label="Revenue Today" value={fmt(revenueToday)} />
               <HeaderStat icon={AlertTriangle} label="Pending" value={auditTotal} isHighlighted />
             </div>
           </div>
-          <div className="mt-8 pt-4 border-t border-white/10 text-xs font-medium flex flex-wrap gap-x-6 gap-y-2">
-            <div className="flex items-center gap-2"><Cloud size={14} /> Patagonia - Storm advisory - 6 camps</div>
-            <div className="flex items-center gap-2"><MountainSnow size={14} /> Himalayan zone - 24 active trips</div>
-            <div className="flex items-center gap-2 ml-auto"><Server size={14} /> API uptime 99.98% - p95 142ms</div>
-          </div>
         </div>
       </div>
 
-      <div className="space-y-6">
-        <div>
-            <h3 className="text-2xl font-bold text-slate-800">Platform overview</h3>
-            <p className="text-slate-500 mt-1">Key performance indicators across the marketplace</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr">
-          {platformStats.map(stat => <StatCard key={stat.title} {...stat} />)}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {platformStats.map(stat => <StatCard key={stat.title} {...stat} />)}
       </div>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-7"><RevenueAnalytics bookings={globalData.allBookings} /></div>
         <div className="lg:col-span-5"><CampMix camps={camps} /></div>
@@ -1436,44 +1396,28 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
           <UserGrowthChart users={allUsersArray} />
           <RevenueVsBookingsChart bookings={globalData.allBookings} />
       </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
-          <TopOrganizers organizers={approvedOrganizers} bookings={globalData.allBookings}/>
-          <TopPerformingCamps camps={camps} bookings={globalData.allBookings}/>
-          <LiveWeatherWatch />
-      </div>
 
       <div className="space-y-6">
-          <div className="flex flex-wrap justify-between items-center gap-4">
-              <div>
-                  <h3 className="text-2xl font-bold text-slate-800">Moderation queues</h3>
-                  <p className="text-slate-500 mt-1">Awaiting your review — act fast to keep operations flowing</p>
-              </div>
-              <Button variant="outline" onClick={() => onNavigate('approvals')}>Open moderation hub →</Button>
-          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               <div className="lg:col-span-8">
                   <ModerationQueues
                       pendingOrganizers={pendingOrganizers}
                       pendingCamps={pendingCamps}
                       onApproveOrg={(email) => handleOrgAction(email, 'approve')}
-                      onRejectOrg={handleRejectOrg}
+                      onRejectOrg={(user) => { setUserToProcess(user); setIsRejectDialogOpen(true); }}
                       onApproveCamp={(id) => handleCampAction(id, 'approve')}
                       onRejectCamp={(id) => handleCampAction(id, 'reject')}
                       onNavigate={onNavigate}
                   />
               </div>
               <div className="lg:col-span-4">
-                  <LiveActivityFeed 
-                      activities={allActivities}
-                      onNavigate={onNavigate} 
-                  />
+                  <LiveActivityFeed activities={allActivities} onNavigate={onNavigate} />
               </div>
           </div>
       </div>
 
       <RecentBookings bookings={globalData.allBookings} users={allUsersArray} />
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         <RecentTransactions bookings={globalData.allBookings} />
         <SystemHealth bookings={globalData.allBookings} />
@@ -1481,14 +1425,11 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
 
       <Dialog open={isRejectDialogOpen} onOpenChange={setIsRejectDialogOpen}>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Reason for Rejection</DialogTitle>
-            <DialogDescription>Please provide a clear reason for rejecting this organizer. This will be sent to them.</DialogDescription>
-          </DialogHeader>
-          <div className="py-4"><Textarea placeholder="e.g., Business license is not valid..." value={rejectionReason} onChange={(e) => setRejectionReason(e.target.value)} /></div>
+          <DialogHeader><DialogTitle>Reason for Rejection</DialogTitle></DialogHeader>
+          <div className="py-4"><Textarea placeholder="Reason..." value={rejectionReason} onChange={(e) => setRejectionReason(e.target.value)} /></div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsRejectDialogOpen(false)}>Cancel</Button>
-            <Button variant="destructive" onClick={() => userToProcess && handleOrgAction(userToProcess.email, 'reject', rejectionReason)} disabled={!rejectionReason.trim()}>Confirm Rejection</Button>
+            <Button variant="destructive" onClick={() => userToProcess && handleOrgAction(userToProcess.email, 'reject', rejectionReason)}>Confirm Rejection</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

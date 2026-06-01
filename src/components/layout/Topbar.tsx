@@ -2,7 +2,25 @@
 
 import React, { useState, useEffect } from 'react';
 import { User, Notification } from '@/lib/types';
-import { Bell, PanelLeft, Menu, CheckCircle2, AlertCircle, Search, Gift, MessageSquare, ChevronDown, Zap, Mountain, UserCheck, PlusCircle, Settings, LogOut } from 'lucide-react';
+import { 
+  Bell, 
+  PanelLeft, 
+  Menu, 
+  CheckCircle2, 
+  AlertCircle, 
+  Search, 
+  Gift, 
+  MessageSquare, 
+  ChevronDown, 
+  Zap, 
+  Mountain, 
+  UserCheck, 
+  PlusCircle, 
+  Settings, 
+  LogOut, 
+  Command,
+  Sparkles
+} from 'lucide-react';
 import { 
   Sheet, 
   SheetContent, 
@@ -34,12 +52,19 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { getAppData, saveAppData } from '@/lib/store';
 import { fmtDate, cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { Badge } from '@/components/ui/badge';
 
 interface TopbarProps {
   currentUser: User;
@@ -60,10 +85,7 @@ export default function Topbar({ currentUser, currentPage, onNavigate, onLogout,
     };
     fetchNotifs();
     const notifTimer = setInterval(fetchNotifs, 5000);
-    
-    return () => {
-      clearInterval(notifTimer);
-    };
+    return () => clearInterval(notifTimer);
   }, [currentUser.email]);
 
   const unreadNotifications = notifications.filter(n => !n.read).length;
@@ -78,11 +100,11 @@ export default function Topbar({ currentUser, currentPage, onNavigate, onLogout,
 
   const quickActions = {
     admin: [
-      { label: 'Approve Camps', icon: Mountain, page: 'approvals' },
-      { label: 'Verify Partners', icon: UserCheck, page: 'organizers' },
+      { label: 'Approve Camps', icon: Mountain, page: 'approvals', desc: 'Review submissions' },
+      { label: 'Verify Partners', icon: UserCheck, page: 'organizers', desc: 'Check identity' },
     ],
     organizer: [
-      { label: 'Add New Camp', icon: PlusCircle, page: 'camps' },
+      { label: 'Add New Camp', icon: PlusCircle, page: 'camps', desc: 'Create listing' },
     ],
     user: [],
   };
@@ -90,160 +112,211 @@ export default function Topbar({ currentUser, currentPage, onNavigate, onLogout,
   const actions = quickActions[currentUser.role] || [];
 
   return (
-    <>
-      <div id="topbar" className="h-[72px] bg-white flex items-center justify-between px-4 sm:px-6 border-b border-gray-200 sticky top-0 z-50">
-        <div className="flex items-center gap-3 sm:gap-4 flex-1">
-          <button onClick={toggleSidebar} className="p-2 text-gray-600 rounded-lg hover:bg-gray-100 hidden md:block">
-            <PanelLeft size={20} />
-          </button>
+    <TooltipProvider delayDuration={200}>
+      <header className="h-[72px] w-full bg-white/90 backdrop-blur-xl border-b border-slate-100/80 sticky top-0 z-[45] flex items-center justify-between px-6">
+        
+        {/* Left Section */}
+        <div className="flex items-center gap-4 flex-1">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={toggleSidebar} 
+            className="hidden md:flex h-9 w-9 text-slate-500 hover:bg-slate-50 hover:text-emerald-600 rounded-lg transition-all"
+          >
+            <PanelLeft size={19} />
+          </Button>
+
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <button className="p-2 text-gray-600 rounded-lg hover:bg-gray-100">
-                  <Menu size={20} />
-                </button>
+                <Button variant="ghost" size="icon" className="h-10 w-10 text-slate-600 hover:bg-slate-50 rounded-xl">
+                  <Menu size={22} />
+                </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="p-0 w-[280px]">
+              <SheetContent side="left" className="p-0 w-[280px] border-r-0 shadow-2xl">
                 <VisuallyHidden>
                   <SheetTitle>Mobile Menu</SheetTitle>
-                  <SheetDescription>Navigation menu for mobile devices.</SheetDescription>
+                  <SheetDescription>Main navigation</SheetDescription>
                 </VisuallyHidden>
                 <Sidebar currentUser={currentUser} currentPage={currentPage} onNavigate={onNavigate} onLogout={onLogout} isMobile />
               </SheetContent>
             </Sheet>
           </div>
 
-          <div className="relative flex-1 max-w-lg">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+          <div className="relative max-w-sm w-full hidden sm:block group">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+              <Search size={16} />
+            </div>
             <Input 
-              placeholder="Search users, camps, organizers, bookings, payments..."
-              className="bg-gray-100/70 border-none w-full h-11 rounded-lg pl-10 pr-16 text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white"
+              placeholder="Search platform..."
+              className="bg-slate-50 border-transparent w-full h-9 rounded-lg pl-10 pr-12 text-sm transition-all focus:bg-white focus:ring-4 focus:ring-emerald-500/5 focus:border-emerald-500/20"
             />
-            <div className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs font-sans text-gray-400 bg-white border border-gray-200/80 rounded-md px-1.5 py-0.5">
-              ⌘K
+            <div className="absolute right-2 top-1/2 -translate-y-1/2">
+              <kbd className="pointer-events-none h-5 select-none items-center gap-1 rounded bg-white border border-slate-200 px-1.5 font-mono text-[9px] font-bold text-slate-400 flex shadow-sm">
+                <Command size={9} />K
+              </kbd>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3 ml-4">
+        {/* Right Section */}
+        <div className="flex items-center gap-3">
+          
           {actions.length > 0 && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button className="bg-green-500 hover:bg-green-600 text-white rounded-lg px-4 h-11 hidden sm:flex items-center gap-2 transition-all">
-                  <Zap size={16} />
-                  <span className="font-medium">Quick Actions</span>
+                <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg px-4 h-9 gap-2 shadow-sm shadow-emerald-600/10 active:scale-95 transition-all hidden lg:flex">
+                  <Sparkles size={14} className="text-emerald-100" />
+                  Quick Action
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 mt-2" align="end">
-                <DropdownMenuLabel>Quick Actions</DropdownMenuLabel>
-                <DropdownMenuSeparator />
+              <DropdownMenuContent className="w-56 mt-2 p-1.5 rounded-xl border-slate-200 shadow-xl" align="end">
+                <DropdownMenuLabel className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2.5 py-2">Suggested</DropdownMenuLabel>
                 {actions.map(action => (
-                  <DropdownMenuItem key={action.page} onClick={() => onNavigate(action.page)}>
-                    <action.icon className="mr-2 h-4 w-4" />
-                    <span>{action.label}</span>
+                  <DropdownMenuItem key={action.page} onClick={() => onNavigate(action.page)} className="flex items-center gap-3 p-2.5 rounded-lg cursor-pointer focus:bg-emerald-50 group">
+                    <action.icon size={16} className="text-slate-500 group-focus:text-emerald-600" />
+                    <div className="flex flex-col">
+                      <span className="font-bold text-[13px] text-slate-700 group-focus:text-emerald-700">{action.label}</span>
+                      <span className="text-[10px] text-slate-400 font-medium">{action.desc}</span>
+                    </div>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
             </DropdownMenu>
           )}
 
-          <div className="flex items-center gap-1">
-            <button className="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">
-              <Gift size={20} />
-            </button>
+          {/* Icon Group */}
+          <div className="flex items-center gap-0.5 bg-slate-50 p-1 rounded-xl">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-white transition-all">
+                  <Gift size={18} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent sideOffset={10}>Offers</TooltipContent>
+            </Tooltip>
 
-            <button className="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors relative">
-              <MessageSquare size={20} />
-            </button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-white transition-all">
+                  <MessageSquare size={18} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent sideOffset={10}>Messages</TooltipContent>
+            </Tooltip>
 
             <Popover onOpenChange={(open) => open && unreadNotifications > 0 && markAllRead()}>
-              <PopoverTrigger asChild>
-                <button className="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors relative">
-                  <Bell size={20} className={cn(unreadNotifications > 0 && "text-gray-700")} />
-                  {unreadNotifications > 0 && (
-                    <span className="absolute top-0.5 right-0.5 block h-5 w-5 rounded-full bg-red-500 text-white text-[10px] font-semibold flex items-center justify-center border-2 border-white">
-                      {unreadNotifications}
-                    </span>
-                  )}
-                </button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[320px] p-0 rounded-xl overflow-hidden shadow-2xl mr-4" align="end">
-                  <div className="bg-gray-50 p-3 border-b border-gray-100">
-                      <h3 className="text-sm font-medium text-gray-800">Notifications</h3>
-                  </div>
-                  <ScrollArea className="max-h-[350px]">
+              <Tooltip>
+                <PopoverTrigger asChild>
+                  <TooltipTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-white relative">
+                      <Bell size={18} className={cn(unreadNotifications > 0 && "text-emerald-600")} />
+                      {unreadNotifications > 0 && (
+                        <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" />
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                </PopoverTrigger>
+                <TooltipContent sideOffset={10}>Inbox</TooltipContent>
+              </Tooltip>
+              
+              <PopoverContent className="w-[340px] p-0 rounded-xl border-none shadow-2xl mt-4" align="end">
+                <div className="p-4 border-b border-slate-50 flex items-center justify-between">
+                  <h3 className="font-bold text-slate-800 text-sm">Notifications</h3>
+                  {unreadNotifications > 0 && <Badge className="bg-emerald-500 text-[10px] h-5 border-none px-2">{unreadNotifications} New</Badge>}
+                </div>
+                <ScrollArea className="max-h-[380px]">
                   {notifications.length === 0 ? (
-                    <div className="p-10 text-center text-xs text-gray-500 italic">
-                      No new notifications
+                    <div className="flex flex-col items-center justify-center py-10 px-6 text-slate-400">
+                      <p className="text-xs font-medium">No new notifications</p>
                     </div>
                   ) : (
-                    <div className="divide-y divide-gray-100">
+                    <div className="divide-y divide-slate-50">
                       {notifications.map(n => (
-                        <div key={n.id} className={cn("p-3 flex gap-3 items-start", !n.read && "bg-emerald-50/40")}>
-                          <div className={cn("w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5", n.type === 'approval' ? "bg-green-100 text-green-600" : "bg-blue-100 text-blue-600")}>
-                             {n.type === 'approval' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
+                        <div key={n.id} className={cn("p-4 flex gap-3 transition-all hover:bg-slate-50 cursor-pointer", !n.read && "bg-emerald-50/20")}>
+                          <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center shrink-0", n.type === 'approval' ? "bg-emerald-100 text-emerald-600" : "bg-blue-100 text-blue-600")}>
+                            {n.type === 'approval' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
                           </div>
-                          <div>
-                             <p className="text-xs font-semibold text-gray-800">{n.title}</p>
-                             <p className="text-xs text-gray-500 leading-snug">{n.message}</p>
-                             <p className="text-[10px] text-gray-400 mt-1">{fmtDate(n.time)}</p>
+                          <div className="flex-1">
+                             <p className="text-[12px] font-bold text-slate-800 leading-tight">{n.title}</p>
+                             <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">{n.message}</p>
                           </div>
                         </div>
                       ))}
                     </div>
                   )}
-                 </ScrollArea>
+                </ScrollArea>
               </PopoverContent>
             </Popover>
           </div>
 
-          <div className="h-8 w-px bg-gray-200 mx-2 hidden sm:block"></div>
+          <div className="h-6 w-px bg-slate-200/80 mx-1 hidden sm:block" />
 
+          {/* REFINED USER PROFILE SECTION */}
           <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm overflow-hidden shrink-0">
-                          {currentUser.avatar 
-                              ? <img src={currentUser.avatar} className="w-full h-full object-cover" /> 
-                              : `${(currentUser.firstName?.[0] || '')}${(currentUser.lastName?.[0] || '')}`.toUpperCase()}
-                      </div>
-                      <div className="text-left hidden lg:block">
-                          <div className="text-sm font-semibold text-gray-800">{currentUser.firstName} {currentUser.lastName}</div>
-                          <div className="text-xs text-gray-500">{currentUser.role === 'admin' ? 'Super Admin' : currentUser.role}</div>
-                      </div>
-                      <ChevronDown size={16} className="text-gray-400 hidden lg:block" />
-                  </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 mt-2" align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => onNavigate('settings')}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Account Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setShowLogoutConfirm(true); }}>
-                      <LogOut className="mr-2 h-4 w-4" />
-                      <span>Sign Out</span>
-                  </DropdownMenuItem>
-              </DropdownMenuContent>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2.5 pl-1.5 pr-1 py-1 rounded-xl hover:bg-slate-50 transition-all outline-none group border border-transparent hover:border-slate-100">
+                <div className="relative">
+                  <div className="h-9 w-9 rounded-lg bg-emerald-600 p-[1.5px] shadow-sm group-hover:shadow-md transition-shadow">
+                    <div className="h-full w-full rounded-[7px] bg-white flex items-center justify-center overflow-hidden">
+                       {currentUser.avatar 
+                          ? <img src={currentUser.avatar} className="h-full w-full object-cover" alt="avatar" /> 
+                          : <span className="font-extrabold text-emerald-700 text-[11px]">{(currentUser.firstName?.[0] || '') + (currentUser.lastName?.[0] || '')}</span>}
+                    </div>
+                  </div>
+                  <div className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 bg-green-500 border-2 border-white rounded-full shadow-sm" />
+                </div>
+                
+                {/* Name & Role with reduced spacing */}
+                <div className="text-left hidden lg:flex flex-col justify-center leading-none py-0.5">
+                  <span className="text-[14px] font-bold text-slate-800 tracking-tight leading-none">
+                    {currentUser.firstName}
+                  </span>
+                  <span className="text-[9.5px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1">
+                    {currentUser.role}
+                  </span>
+                </div>
+                
+                <ChevronDown size={14} className="text-slate-300 transition-transform group-data-[state=open]:rotate-180 ml-0.5" />
+              </button>
+            </DropdownMenuTrigger>
+            
+            <DropdownMenuContent className="w-56 mt-2.5 p-1.5 rounded-xl border-slate-200 shadow-2xl" align="end">
+              <div className="px-3 py-2.5">
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5">Signed in as</p>
+                  <p className="text-[13px] font-bold text-slate-800 truncate">{currentUser.email}</p>
+              </div>
+              <DropdownMenuSeparator className="bg-slate-50" />
+              <DropdownMenuItem onClick={() => onNavigate('settings')} className="p-2.5 rounded-lg cursor-pointer flex items-center gap-3 text-slate-600 hover:bg-slate-50 font-semibold text-[13px]">
+                  <Settings size={16} />
+                  Account Settings
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-slate-50" />
+              <DropdownMenuItem onSelect={(e) => { e.preventDefault(); setShowLogoutConfirm(true); }} className="p-2.5 rounded-lg cursor-pointer text-red-600 hover:bg-red-50 focus:bg-red-50 focus:text-red-600 flex items-center gap-3 font-bold text-[13px]">
+                  <LogOut size={16} />
+                  Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
           </DropdownMenu>
-        </div>
-      </div>
 
+        </div>
+      </header>
+
+      {/* Logout Dialog */}
       <AlertDialog open={showLogoutConfirm} onOpenChange={setShowLogoutConfirm}>
-        <AlertDialogContent>
+        <AlertDialogContent className="rounded-2xl max-w-[380px] border-none shadow-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure you want to sign out?</AlertDialogTitle>
-            <AlertDialogDescription>
-              You are about to sign out as {currentUser.firstName}. You will be returned to the login page.
+            <AlertDialogTitle className="text-lg font-bold text-slate-800">Ready to sign out?</AlertDialogTitle>
+            <AlertDialogDescription className="text-[13px] text-slate-500 mt-2 leading-relaxed">
+              You'll need to log back in to access your dashboard and manage operations.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={onLogout} className="bg-red-500 hover:bg-red-600">Sign Out</AlertDialogAction>
+          <AlertDialogFooter className="mt-6 gap-2">
+            <AlertDialogCancel className="rounded-xl font-bold border-slate-100 text-slate-500 text-[13px]">Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={onLogout} className="bg-red-500 hover:bg-red-600 rounded-xl font-bold text-[13px] shadow-lg shadow-red-500/10">Sign Out</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </TooltipProvider>
   );
 }

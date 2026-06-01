@@ -51,6 +51,7 @@ import { X, Search, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { fmtDate, cn, uid } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
+import { useRouter } from 'next/navigation'; // For client-side navigation
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
@@ -137,10 +138,12 @@ export default function Home() {
       checkin: bookingData.checkin || '',
       checkout: bookingData.checkout || '',
       amount: amount,
-      commissionAmount: amount * 0.10, 
+      commissionAmount: amount * 0.10,
       status: 'Confirmed',
       addedAt: new Date().toISOString(),
-      participants: participants || []
+      participants: participants || [],
+      userEmail: '',
+      organizerEmail: ''
     };
 
     const activity: Activity = {
@@ -592,5 +595,6 @@ export default function Home() {
       </div>
       <Toaster />
     </div>
-  );
+  );  
 }
+

@@ -16,8 +16,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trending-up.js [app-ssr] (ecmascript) <export default as TrendingUp>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$star$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Star$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/star.js [app-ssr] (ecmascript) <export default as Star>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/triangle-alert.js [app-ssr] (ecmascript) <export default as AlertTriangle>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$cloud$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Cloud$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/cloud.js [app-ssr] (ecmascript) <export default as Cloud>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mountain$2d$snow$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MountainSnow$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/mountain-snow.js [app-ssr] (ecmascript) <export default as MountainSnow>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$server$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Server$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/server.js [app-ssr] (ecmascript) <export default as Server>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$book$2d$open$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__BookOpenCheck$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/book-open-check.js [app-ssr] (ecmascript) <export default as BookOpenCheck>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$dollar$2d$sign$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CircleDollarSign$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-dollar-sign.js [app-ssr] (ecmascript) <export default as CircleDollarSign>");
@@ -2300,7 +2298,9 @@ const StatCard = ({ icon: Icon, title, value, trend, trendDirection, subtext, ch
     const trendColor = trendDirection === 'up' ? 'text-green-600' : trendDirection === 'down' ? 'text-red-600' : 'text-amber-600';
     const trendBgColor = trendDirection === 'up' ? 'bg-green-100' : trendDirection === 'down' ? 'bg-red-100' : 'bg-amber-100';
     const TrendIcon = trendDirection === 'up' ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"] : trendDirection === 'down' ? __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingDown$3e$__["TrendingDown"] : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"];
-    const gradientId = `gradient-${title.replace(/\s+/g, '-')}`;
+    const gradId = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>`stat-grad-${title.replace(/\s+/g, '-').toLowerCase()}-${Math.random().toString(36).substr(2, 4)}`, [
+        title
+    ]);
     const chartColors = {
         'bg-green-500': {
             hex: '#22c55e',
@@ -2420,18 +2420,14 @@ const StatCard = ({ icon: Icon, title, value, trend, trendDirection, subtext, ch
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
                                     width: "100%",
                                     height: "100%",
+                                    id: `rc-${gradId}`,
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$AreaChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AreaChart"], {
                                         data: chartData,
-                                        margin: {
-                                            top: 5,
-                                            right: 0,
-                                            left: 0,
-                                            bottom: 0
-                                        },
+                                        id: `chart-${gradId}`,
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("defs", {
                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("linearGradient", {
-                                                    id: gradientId,
+                                                    id: gradId,
                                                     x1: "0",
                                                     y1: "0",
                                                     x2: "0",
@@ -2444,7 +2440,7 @@ const StatCard = ({ icon: Icon, title, value, trend, trendDirection, subtext, ch
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
                                                             lineNumber: 689,
-                                                            columnNumber: 83
+                                                            columnNumber: 75
                                                         }, ("TURBOPACK compile-time value", void 0)),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("stop", {
                                                             offset: "95%",
@@ -2453,18 +2449,18 @@ const StatCard = ({ icon: Icon, title, value, trend, trendDirection, subtext, ch
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
                                                             lineNumber: 689,
-                                                            columnNumber: 144
+                                                            columnNumber: 136
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
                                                     lineNumber: 689,
-                                                    columnNumber: 23
+                                                    columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
                                                 lineNumber: 689,
-                                                columnNumber: 17
+                                                columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Area$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Area"], {
                                                 type: "monotone",
@@ -2472,17 +2468,17 @@ const StatCard = ({ icon: Icon, title, value, trend, trendDirection, subtext, ch
                                                 stroke: color.hex,
                                                 strokeWidth: 2,
                                                 fillOpacity: 1,
-                                                fill: `url(#${gradientId})`
+                                                fill: `url(#${gradId})`
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
                                                 lineNumber: 690,
-                                                columnNumber: 17
+                                                columnNumber: 13
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
                                         lineNumber: 688,
-                                        columnNumber: 15
+                                        columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
@@ -2611,7 +2607,7 @@ const RevenueAnalytics = ({ bookings })=>{
                                 children: "Revenue Analytics"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 766,
+                                lineNumber: 765,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2622,13 +2618,13 @@ const RevenueAnalytics = ({ bookings })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 767,
+                                lineNumber: 766,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 765,
+                        lineNumber: 764,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2647,12 +2643,12 @@ const RevenueAnalytics = ({ bookings })=>{
                                         children: range
                                     }, range, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 772,
+                                        lineNumber: 771,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 770,
+                                lineNumber: 769,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2663,12 +2659,12 @@ const RevenueAnalytics = ({ bookings })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 777,
+                                    lineNumber: 776,
                                     columnNumber: 74
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 777,
+                                lineNumber: 776,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2679,24 +2675,24 @@ const RevenueAnalytics = ({ bookings })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 778,
+                                    lineNumber: 777,
                                     columnNumber: 74
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 778,
+                                lineNumber: 777,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 769,
+                        lineNumber: 768,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 764,
+                lineNumber: 763,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2704,6 +2700,7 @@ const RevenueAnalytics = ({ bookings })=>{
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
                     width: "100%",
                     height: "100%",
+                    id: "rev-analytics-container",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$AreaChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AreaChart"], {
                         data: analyticsData,
                         children: [
@@ -2713,7 +2710,7 @@ const RevenueAnalytics = ({ bookings })=>{
                                 stroke: "#f1f5f9"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 784,
+                                lineNumber: 783,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["XAxis"], {
@@ -2726,7 +2723,7 @@ const RevenueAnalytics = ({ bookings })=>{
                                 dy: 10
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 785,
+                                lineNumber: 784,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["YAxis"], {
@@ -2739,7 +2736,7 @@ const RevenueAnalytics = ({ bookings })=>{
                                 tickFormatter: (value)=>`${value / 1000}k`
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 786,
+                                lineNumber: 785,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
@@ -2750,7 +2747,7 @@ const RevenueAnalytics = ({ bookings })=>{
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 787,
+                                lineNumber: 786,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("defs", {
@@ -2768,7 +2765,7 @@ const RevenueAnalytics = ({ bookings })=>{
                                                 stopOpacity: 0.1
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 789,
+                                                lineNumber: 788,
                                                 columnNumber: 77
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("stop", {
@@ -2777,13 +2774,13 @@ const RevenueAnalytics = ({ bookings })=>{
                                                 stopOpacity: 0
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 789,
+                                                lineNumber: 788,
                                                 columnNumber: 134
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 789,
+                                        lineNumber: 788,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("linearGradient", {
@@ -2799,7 +2796,7 @@ const RevenueAnalytics = ({ bookings })=>{
                                                 stopOpacity: 0.1
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 790,
+                                                lineNumber: 789,
                                                 columnNumber: 77
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("stop", {
@@ -2808,19 +2805,19 @@ const RevenueAnalytics = ({ bookings })=>{
                                                 stopOpacity: 0
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 790,
+                                                lineNumber: 789,
                                                 columnNumber: 134
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 790,
+                                        lineNumber: 789,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 788,
+                                lineNumber: 787,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Area$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Area"], {
@@ -2832,7 +2829,7 @@ const RevenueAnalytics = ({ bookings })=>{
                                 name: "Revenue"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 792,
+                                lineNumber: 791,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Area$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Area"], {
@@ -2844,29 +2841,29 @@ const RevenueAnalytics = ({ bookings })=>{
                                 name: "Refunds"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 793,
+                                lineNumber: 792,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 783,
+                        lineNumber: 782,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 782,
+                    lineNumber: 781,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 781,
+                lineNumber: 780,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-        lineNumber: 763,
+        lineNumber: 762,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -2905,7 +2902,7 @@ const CampMix = ({ camps })=>{
             fill: fill
         }, void 0, false, {
             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-            lineNumber: 821,
+            lineNumber: 820,
             columnNumber: 12
         }, ("TURBOPACK compile-time value", void 0));
     };
@@ -2921,25 +2918,25 @@ const CampMix = ({ camps })=>{
                             }
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                            lineNumber: 828,
+                            lineNumber: 827,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                             children: entry.value
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                            lineNumber: 829,
+                            lineNumber: 828,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     ]
                 }, `item-${index}`, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 827,
+                    lineNumber: 826,
                     columnNumber: 9
                 }, ("TURBOPACK compile-time value", void 0)))
         }, void 0, false, {
             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-            lineNumber: 825,
+            lineNumber: 824,
             columnNumber: 5
         }, ("TURBOPACK compile-time value", void 0));
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2955,7 +2952,7 @@ const CampMix = ({ camps })=>{
                                 children: "Camp Mix"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 839,
+                                lineNumber: 838,
                                 columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2963,13 +2960,13 @@ const CampMix = ({ camps })=>{
                                 children: "Active camps by category"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 840,
+                                lineNumber: 839,
                                 columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 838,
+                        lineNumber: 837,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2983,12 +2980,12 @@ const CampMix = ({ camps })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 843,
+                                    lineNumber: 842,
                                     columnNumber: 75
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 843,
+                                lineNumber: 842,
                                 columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2999,24 +2996,24 @@ const CampMix = ({ camps })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 844,
+                                    lineNumber: 843,
                                     columnNumber: 75
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 844,
+                                lineNumber: 843,
                                 columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 842,
+                        lineNumber: 841,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 837,
+                lineNumber: 836,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3024,7 +3021,9 @@ const CampMix = ({ camps })=>{
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
                     width: "100%",
                     height: "100%",
+                    id: "camp-mix-container",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$PieChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PieChart"], {
+                        id: "camp-mix-chart",
                         onMouseLeave: ()=>setActiveIndex(null),
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$polar$2f$Pie$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Pie"], {
@@ -3044,54 +3043,51 @@ const CampMix = ({ camps })=>{
                                         className: "cursor-pointer"
                                     }, `cell-${index}`, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 851,
+                                        lineNumber: 850,
                                         columnNumber: 45
                                     }, ("TURBOPACK compile-time value", void 0)))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 850,
+                                lineNumber: 849,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {}, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 853,
+                                lineNumber: 852,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Legend$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Legend"], {
                                 content: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(CustomLegend, {}, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 854,
+                                    lineNumber: 853,
                                     columnNumber: 32
                                 }, void 0),
-                                verticalAlign: "bottom",
-                                wrapperStyle: {
-                                    marginTop: '20px'
-                                }
+                                verticalAlign: "bottom"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 854,
+                                lineNumber: 853,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 849,
-                        columnNumber: 13
+                        lineNumber: 848,
+                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 848,
-                    columnNumber: 10
+                    lineNumber: 847,
+                    columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 847,
+                lineNumber: 846,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-        lineNumber: 836,
+        lineNumber: 835,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -3137,7 +3133,7 @@ const BookingTrendsChart = ({ bookings })=>{
                                 children: "Booking Trends"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 892,
+                                lineNumber: 891,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3145,13 +3141,13 @@ const BookingTrendsChart = ({ bookings })=>{
                                 children: "Daily bookings for last 7 days"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 893,
+                                lineNumber: 892,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 891,
+                        lineNumber: 890,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3165,12 +3161,12 @@ const BookingTrendsChart = ({ bookings })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 896,
+                                    lineNumber: 895,
                                     columnNumber: 75
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 896,
+                                lineNumber: 895,
                                 columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3181,24 +3177,24 @@ const BookingTrendsChart = ({ bookings })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 897,
+                                    lineNumber: 896,
                                     columnNumber: 75
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 897,
+                                lineNumber: 896,
                                 columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 895,
+                        lineNumber: 894,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 890,
+                lineNumber: 889,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3206,8 +3202,10 @@ const BookingTrendsChart = ({ bookings })=>{
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
                     width: "100%",
                     height: "100%",
+                    id: "booking-trends-container",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$BarChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["BarChart"], {
                         data: data,
+                        id: "booking-trends-chart",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$CartesianGrid$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CartesianGrid"], {
                                 strokeDasharray: "3 3",
@@ -3215,7 +3213,7 @@ const BookingTrendsChart = ({ bookings })=>{
                                 stroke: "#f1f5f9"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 903,
+                                lineNumber: 902,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["XAxis"], {
@@ -3228,7 +3226,7 @@ const BookingTrendsChart = ({ bookings })=>{
                                 dy: 10
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 904,
+                                lineNumber: 903,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["YAxis"], {
@@ -3240,7 +3238,7 @@ const BookingTrendsChart = ({ bookings })=>{
                                 width: 30
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 905,
+                                lineNumber: 904,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
@@ -3253,7 +3251,7 @@ const BookingTrendsChart = ({ bookings })=>{
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 906,
+                                lineNumber: 905,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Bar$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Bar"], {
@@ -3268,29 +3266,29 @@ const BookingTrendsChart = ({ bookings })=>{
                                 barSize: 20
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 907,
+                                lineNumber: 906,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 902,
-                        columnNumber: 13
+                        lineNumber: 901,
+                        columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 901,
-                    columnNumber: 9
+                    lineNumber: 900,
+                    columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 900,
+                lineNumber: 899,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-        lineNumber: 889,
+        lineNumber: 888,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -3335,7 +3333,7 @@ const UserGrowthChart = ({ users })=>{
                                 children: "User Growth"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 949,
+                                lineNumber: 948,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3343,13 +3341,13 @@ const UserGrowthChart = ({ users })=>{
                                 children: "New signups over last 6 weeks"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 950,
+                                lineNumber: 949,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 948,
+                        lineNumber: 947,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3363,12 +3361,12 @@ const UserGrowthChart = ({ users })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 953,
+                                    lineNumber: 952,
                                     columnNumber: 75
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 953,
+                                lineNumber: 952,
                                 columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3379,24 +3377,24 @@ const UserGrowthChart = ({ users })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 954,
+                                    lineNumber: 953,
                                     columnNumber: 75
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 954,
+                                lineNumber: 953,
                                 columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 952,
+                        lineNumber: 951,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 947,
+                lineNumber: 946,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3404,8 +3402,10 @@ const UserGrowthChart = ({ users })=>{
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
                     width: "100%",
                     height: "100%",
+                    id: "user-growth-container",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$LineChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LineChart"], {
                         data: data,
+                        id: "user-growth-chart",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$CartesianGrid$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CartesianGrid"], {
                                 strokeDasharray: "3 3",
@@ -3413,7 +3413,7 @@ const UserGrowthChart = ({ users })=>{
                                 stroke: "#f1f5f9"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 960,
+                                lineNumber: 959,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["XAxis"], {
@@ -3426,7 +3426,7 @@ const UserGrowthChart = ({ users })=>{
                                 dy: 10
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 961,
+                                lineNumber: 960,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["YAxis"], {
@@ -3438,7 +3438,7 @@ const UserGrowthChart = ({ users })=>{
                                 width: 40
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 962,
+                                lineNumber: 961,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
@@ -3448,7 +3448,7 @@ const UserGrowthChart = ({ users })=>{
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 963,
+                                lineNumber: 962,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
@@ -3459,7 +3459,7 @@ const UserGrowthChart = ({ users })=>{
                                 name: "Total Users"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 964,
+                                lineNumber: 963,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
@@ -3470,7 +3470,7 @@ const UserGrowthChart = ({ users })=>{
                                 name: "Organizers"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 965,
+                                lineNumber: 964,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
@@ -3481,29 +3481,29 @@ const UserGrowthChart = ({ users })=>{
                                 name: "Explorers"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 966,
+                                lineNumber: 965,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 959,
-                        columnNumber: 11
+                        lineNumber: 958,
+                        columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 958,
-                    columnNumber: 9
+                    lineNumber: 957,
+                    columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 957,
+                lineNumber: 956,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-        lineNumber: 946,
+        lineNumber: 945,
         columnNumber: 6
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -3540,89 +3540,63 @@ const RevenueVsBookingsChart = ({ bookings })=>{
         bookings
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "bg-white p-6 rounded-2xl shadow-sm border border-slate-100",
+        className: "border border-gray-200 rounded-lg p-6 shadow-sm bg-white",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex justify-between items-center mb-4",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                className: "text-lg font-semibold text-slate-800",
-                                children: "Revenue vs Bookings"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1006,
-                                columnNumber: 11
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-sm text-slate-500",
-                                children: "Last 7 days comparative growth"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1007,
-                                columnNumber: 11
-                            }, ("TURBOPACK compile-time value", void 0))
-                        ]
-                    }, void 0, true, {
+                        className: "flex items-center gap-3",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                            className: "text-lg font-semibold text-gray-700",
+                            children: "Revenue vs. Bookings"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                            lineNumber: 1005,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0))
+                    }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1005,
+                        lineNumber: 1004,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center gap-1",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                                variant: "ghost",
-                                size: "icon",
-                                className: "text-slate-500",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$filter$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Filter$3e$__["Filter"], {
-                                    size: 16
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 1010,
-                                    columnNumber: 75
-                                }, ("TURBOPACK compile-time value", void 0))
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                            variant: "ghost",
+                            size: "icon",
+                            className: "text-slate-500",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
+                                size: 16
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1010,
-                                columnNumber: 12
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                                variant: "ghost",
-                                size: "icon",
-                                className: "text-slate-500",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
-                                    size: 16
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 1011,
-                                    columnNumber: 75
-                                }, ("TURBOPACK compile-time value", void 0))
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1011,
-                                columnNumber: 12
+                                lineNumber: 1008,
+                                columnNumber: 74
                             }, ("TURBOPACK compile-time value", void 0))
-                        ]
-                    }, void 0, true, {
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                            lineNumber: 1008,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0))
+                    }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1009,
-                        columnNumber: 10
+                        lineNumber: 1007,
+                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1004,
+                lineNumber: 1003,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "h-[250px]",
+                className: "h-[300px]",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$ResponsiveContainer$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ResponsiveContainer"], {
                     width: "100%",
                     height: "100%",
+                    id: "rev-vs-bk-container",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$chart$2f$ComposedChart$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ComposedChart"], {
                         data: data,
+                        id: "rev-vs-bk-chart",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$CartesianGrid$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CartesianGrid"], {
                                 strokeDasharray: "3 3",
@@ -3630,7 +3604,7 @@ const RevenueVsBookingsChart = ({ bookings })=>{
                                 stroke: "#f1f5f9"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1017,
+                                lineNumber: 1014,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$XAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["XAxis"], {
@@ -3643,7 +3617,7 @@ const RevenueVsBookingsChart = ({ bookings })=>{
                                 dy: 10
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1018,
+                                lineNumber: 1015,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["YAxis"], {
@@ -3658,7 +3632,7 @@ const RevenueVsBookingsChart = ({ bookings })=>{
                                 tickFormatter: (val)=>`${val / 1000}k`
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1019,
+                                lineNumber: 1016,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$YAxis$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["YAxis"], {
@@ -3672,7 +3646,7 @@ const RevenueVsBookingsChart = ({ bookings })=>{
                                 width: 30
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1020,
+                                lineNumber: 1017,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$component$2f$Tooltip$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Tooltip"], {
@@ -3682,7 +3656,7 @@ const RevenueVsBookingsChart = ({ bookings })=>{
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1021,
+                                lineNumber: 1018,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Bar$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Bar"], {
@@ -3695,10 +3669,11 @@ const RevenueVsBookingsChart = ({ bookings })=>{
                                     0,
                                     0
                                 ],
-                                barSize: 20
+                                barSize: 20,
+                                name: "Revenue"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1022,
+                                lineNumber: 1020,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$recharts$2f$es6$2f$cartesian$2f$Line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Line"], {
@@ -3706,33 +3681,34 @@ const RevenueVsBookingsChart = ({ bookings })=>{
                                 type: "monotone",
                                 dataKey: "bookings",
                                 stroke: "#f97316",
-                                strokeWidth: 2
+                                strokeWidth: 2,
+                                name: "Bookings"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1023,
+                                lineNumber: 1021,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1016,
-                        columnNumber: 11
+                        lineNumber: 1013,
+                        columnNumber: 7
                     }, ("TURBOPACK compile-time value", void 0))
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 1015,
-                    columnNumber: 9
+                    lineNumber: 1012,
+                    columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1014,
+                lineNumber: 1011,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-        lineNumber: 1003,
-        columnNumber: 6
+        lineNumber: 1002,
+        columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
 const RecentTransactions = ({ bookings })=>{
@@ -3761,7 +3737,7 @@ const RecentTransactions = ({ bookings })=>{
                     children: "Success"
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 1056,
+                    lineNumber: 1053,
                     columnNumber: 32
                 }, ("TURBOPACK compile-time value", void 0));
             case 'Pending':
@@ -3770,7 +3746,7 @@ const RecentTransactions = ({ bookings })=>{
                     children: "Pending"
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 1057,
+                    lineNumber: 1054,
                     columnNumber: 30
                 }, ("TURBOPACK compile-time value", void 0));
             case 'Cancelled':
@@ -3779,7 +3755,7 @@ const RecentTransactions = ({ bookings })=>{
                     children: "Refunded"
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 1058,
+                    lineNumber: 1055,
                     columnNumber: 32
                 }, ("TURBOPACK compile-time value", void 0));
             case 'Disputed':
@@ -3788,7 +3764,7 @@ const RecentTransactions = ({ bookings })=>{
                     children: "Failed"
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 1059,
+                    lineNumber: 1056,
                     columnNumber: 31
                 }, ("TURBOPACK compile-time value", void 0));
             default:
@@ -3796,7 +3772,7 @@ const RecentTransactions = ({ bookings })=>{
                     children: status
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 1060,
+                    lineNumber: 1057,
                     columnNumber: 23
                 }, ("TURBOPACK compile-time value", void 0));
         }
@@ -3814,7 +3790,7 @@ const RecentTransactions = ({ bookings })=>{
                                 children: "Recent Transactions"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1068,
+                                lineNumber: 1065,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3826,13 +3802,13 @@ const RecentTransactions = ({ bookings })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1069,
+                                lineNumber: 1066,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1067,
+                        lineNumber: 1064,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -3841,13 +3817,13 @@ const RecentTransactions = ({ bookings })=>{
                         children: "All →"
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1071,
+                        lineNumber: 1068,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1066,
+                lineNumber: 1063,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3865,12 +3841,12 @@ const RecentTransactions = ({ bookings })=>{
                                             className: "text-slate-500"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                            lineNumber: 1078,
+                                            lineNumber: 1075,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1077,
+                                        lineNumber: 1074,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3880,7 +3856,7 @@ const RecentTransactions = ({ bookings })=>{
                                                 children: t.customer
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1081,
+                                                lineNumber: 1078,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3888,19 +3864,19 @@ const RecentTransactions = ({ bookings })=>{
                                                 children: `BK-${t.id.substring(0, 5).toUpperCase()}`
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1082,
+                                                lineNumber: 1079,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1080,
+                                        lineNumber: 1077,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1076,
+                                lineNumber: 1073,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3911,25 +3887,25 @@ const RecentTransactions = ({ bookings })=>{
                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmt"])(t.amount)
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1086,
+                                        lineNumber: 1083,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     getStatusBadge(t.status)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1085,
+                                lineNumber: 1082,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, t.id, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1075,
+                        lineNumber: 1072,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1073,
+                lineNumber: 1070,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3946,7 +3922,7 @@ const RecentTransactions = ({ bookings })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1094,
+                                lineNumber: 1091,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3954,13 +3930,13 @@ const RecentTransactions = ({ bookings })=>{
                                 children: "SUCCESS"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1095,
+                                lineNumber: 1092,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1093,
+                        lineNumber: 1090,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3974,7 +3950,7 @@ const RecentTransactions = ({ bookings })=>{
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1098,
+                                lineNumber: 1095,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3982,13 +3958,13 @@ const RecentTransactions = ({ bookings })=>{
                                 children: "REFUND RATE"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1099,
+                                lineNumber: 1096,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1097,
+                        lineNumber: 1094,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3999,7 +3975,7 @@ const RecentTransactions = ({ bookings })=>{
                                 children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmt"])(totalCommission)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1102,
+                                lineNumber: 1099,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4007,25 +3983,25 @@ const RecentTransactions = ({ bookings })=>{
                                 children: "COMMISSION"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1103,
+                                lineNumber: 1100,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1101,
+                        lineNumber: 1098,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1092,
+                lineNumber: 1089,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-        lineNumber: 1065,
+        lineNumber: 1062,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -4062,7 +4038,7 @@ const SystemHealth = ({ bookings })=>{
                         children: "System Health"
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1141,
+                        lineNumber: 1138,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -4070,13 +4046,13 @@ const SystemHealth = ({ bookings })=>{
                         children: overallHealth
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1142,
+                        lineNumber: 1139,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1140,
+                lineNumber: 1137,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4086,14 +4062,14 @@ const SystemHealth = ({ bookings })=>{
                         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("w-2 h-2 rounded-full", overallHealth === 'HEALTHY' ? "bg-green-500" : "bg-amber-500")
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1144,
+                        lineNumber: 1141,
                         columnNumber: 74
                     }, ("TURBOPACK compile-time value", void 0)),
                     " All systems operational"
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1144,
+                lineNumber: 1141,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4107,7 +4083,7 @@ const SystemHealth = ({ bookings })=>{
                                 className: "text-slate-500 mr-3"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1148,
+                                lineNumber: 1145,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4121,7 +4097,7 @@ const SystemHealth = ({ bookings })=>{
                                                 children: "API Uptime"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1151,
+                                                lineNumber: 1148,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4132,13 +4108,13 @@ const SystemHealth = ({ bookings })=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1152,
+                                                lineNumber: 1149,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1150,
+                                        lineNumber: 1147,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$progress$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Progress"], {
@@ -4147,7 +4123,7 @@ const SystemHealth = ({ bookings })=>{
                                         indicatorClassName: apiUptime > 99.9 ? "bg-green-500" : "bg-amber-500"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1154,
+                                        lineNumber: 1151,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4155,19 +4131,19 @@ const SystemHealth = ({ bookings })=>{
                                         children: "Last 30d"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1155,
+                                        lineNumber: 1152,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1149,
+                                lineNumber: 1146,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1147,
+                        lineNumber: 1144,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4178,7 +4154,7 @@ const SystemHealth = ({ bookings })=>{
                                 className: "text-slate-500 mr-3"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1160,
+                                lineNumber: 1157,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4192,7 +4168,7 @@ const SystemHealth = ({ bookings })=>{
                                                 children: "Server Health"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1163,
+                                                lineNumber: 1160,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4203,13 +4179,13 @@ const SystemHealth = ({ bookings })=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1164,
+                                                lineNumber: 1161,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1162,
+                                        lineNumber: 1159,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$progress$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Progress"], {
@@ -4218,7 +4194,7 @@ const SystemHealth = ({ bookings })=>{
                                         indicatorClassName: serverHealth > 95 ? "bg-green-500" : "bg-amber-500"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1166,
+                                        lineNumber: 1163,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4226,19 +4202,19 @@ const SystemHealth = ({ bookings })=>{
                                         children: "8 nodes - all green"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1167,
+                                        lineNumber: 1164,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1161,
+                                lineNumber: 1158,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1159,
+                        lineNumber: 1156,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4249,7 +4225,7 @@ const SystemHealth = ({ bookings })=>{
                                 className: "text-slate-500 mr-3"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1172,
+                                lineNumber: 1169,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4263,7 +4239,7 @@ const SystemHealth = ({ bookings })=>{
                                                 children: "Database"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1175,
+                                                lineNumber: 1172,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4274,13 +4250,13 @@ const SystemHealth = ({ bookings })=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1176,
+                                                lineNumber: 1173,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1174,
+                                        lineNumber: 1171,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$progress$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Progress"], {
@@ -4289,7 +4265,7 @@ const SystemHealth = ({ bookings })=>{
                                         indicatorClassName: databaseHealth > 90 ? "bg-blue-500" : "bg-amber-500"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1178,
+                                        lineNumber: 1175,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4297,19 +4273,19 @@ const SystemHealth = ({ bookings })=>{
                                         children: "p95 18ms"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1179,
+                                        lineNumber: 1176,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1173,
+                                lineNumber: 1170,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1171,
+                        lineNumber: 1168,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4320,7 +4296,7 @@ const SystemHealth = ({ bookings })=>{
                                 className: "text-slate-500 mr-3"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1184,
+                                lineNumber: 1181,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -4334,7 +4310,7 @@ const SystemHealth = ({ bookings })=>{
                                                 children: "Failed Payments"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1187,
+                                                lineNumber: 1184,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4345,13 +4321,13 @@ const SystemHealth = ({ bookings })=>{
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1188,
+                                                lineNumber: 1185,
                                                 columnNumber: 15
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1186,
+                                        lineNumber: 1183,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$progress$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Progress"], {
@@ -4360,7 +4336,7 @@ const SystemHealth = ({ bookings })=>{
                                         indicatorClassName: failedPaymentsPercentage < 5 ? "bg-green-500" : "bg-red-500"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1190,
+                                        lineNumber: 1187,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0)),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -4368,50 +4344,53 @@ const SystemHealth = ({ bookings })=>{
                                         children: "Last 24h"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1191,
+                                        lineNumber: 1188,
                                         columnNumber: 13
                                     }, ("TURBOPACK compile-time value", void 0))
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1185,
+                                lineNumber: 1182,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1183,
+                        lineNumber: 1180,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1146,
+                lineNumber: 1143,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-        lineNumber: 1139,
+        lineNumber: 1136,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
 function AdminDashboard({ currentUser, data, onNavigate }) {
+    // 1. SAARE STATES (Hamesha Sabse Upar)
     const [refreshKey, setRefreshKey] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const [rejectionReason, setRejectionReason] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const [isRejectDialogOpen, setIsRejectDialogOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [userToProcess, setUserToProcess] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [dateTime, setDateTime] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(new Date());
-    // useEffect for setting up intervals to refresh data and update the current time.
+    const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    // 2. USE-EFFECT (EK HI BLOCK MEIN)
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        const timer = setInterval(()=>setDateTime(new Date()), 1000 * 60); // Update time every minute
-        const refreshInterval = setInterval(()=>setRefreshKey((p)=>p + 1), 5000); // Refresh data every 5 seconds
+        setMounted(true);
+        const timer = setInterval(()=>setDateTime(new Date()), 60000);
+        const refreshInterval = setInterval(()=>setRefreshKey((p)=>p + 1), 5000);
         return ()=>{
             clearInterval(timer);
             clearInterval(refreshInterval);
         };
     }, []);
-    // Memoizing all data fetching and calculations to prevent unnecessary re-renders.
+    // 3. SAARE USE-MEMO (Return null se PEHLE aane chahiye)
     const allUsersArray = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>Object.values((0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getUsers"])()), [
         refreshKey
     ]);
@@ -4656,123 +4635,62 @@ function AdminDashboard({ currentUser, data, onNavigate }) {
         monthlyGrowth,
         conversionRate
     ]);
-    // Handlers for approving/rejecting organizers and camps. These update the data store and trigger a re-render.
+    // 4. CONDITIONAL RETURN (Hooks ke BAAD aur JSX se PEHLE)
+    if (!mounted) return null;
+    // 5. EVENT HANDLERS
     const handleOrgAction = (email, action, reason)=>{
         const allUsers = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getUsers"])();
         const userToUpdate = allUsers[email.toLowerCase()];
-        if (!userToUpdate) {
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"])({
-                variant: "destructive",
-                title: "Error",
-                description: "User not found."
-            });
-            return;
-        }
+        if (!userToUpdate) return;
         const updatedUser = {
             ...userToUpdate
         };
         if (action === 'approve') {
             updatedUser.isApproved = true;
-            updatedUser.isRejected = false;
-            updatedUser.rejectionReason = '';
             updatedUser.status = 'active';
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["addUserNotification"])(updatedUser.email, {
-                id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["uid"])(),
-                type: 'approval',
-                title: 'Application Approved!',
-                message: 'Congrats! Your organizer account is active.',
-                time: new Date().toISOString(),
-                read: false
-            });
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"])({
                 title: 'Partner Verified'
             });
         } else {
-            if (!reason) {
-                (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"])({
-                    variant: "destructive",
-                    title: "Error",
-                    description: "A reason is required for rejection."
-                });
-                return;
-            }
-            updatedUser.isApproved = false;
             updatedUser.isRejected = true;
             updatedUser.rejectionReason = reason;
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["addUserNotification"])(updatedUser.email, {
-                id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["uid"])(),
-                type: 'approval',
-                title: 'Application Update',
-                message: `Your application was rejected. Reason: ${reason}`,
-                time: new Date().toISOString(),
-                read: false
-            });
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"])({
                 variant: 'destructive',
                 title: 'Partner Rejected'
             });
         }
-        const updatedUsers = {
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["saveUsers"])({
             ...allUsers,
             [email.toLowerCase()]: updatedUser
-        };
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["saveUsers"])(updatedUsers);
+        });
         setIsRejectDialogOpen(false);
-        setRejectionReason('');
-        setUserToProcess(null);
         setRefreshKey((p)=>p + 1);
     };
     const handleCampAction = (campId, action)=>{
         const pending = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getPendingCamps"])();
-        const campIndex = pending.findIndex((c)=>c.id === campId);
-        if (campIndex === -1) return;
-        const campToProcess = pending[campIndex];
-        const updatedPending = pending.filter((c)=>c.id !== campId);
-        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["savePendingCamps"])(updatedPending);
+        const camp = pending.find((c)=>c.id === campId);
+        if (!camp) return;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["savePendingCamps"])(pending.filter((c)=>c.id !== campId));
         if (action === 'approve') {
-            campToProcess.status = 'approved';
-            campToProcess.isHidden = false;
-            const approved = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAllApprovedCamps"])();
+            camp.status = 'approved';
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["saveApprovedCamps"])([
-                campToProcess,
-                ...approved
+                camp,
+                ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getAllApprovedCamps"])()
             ]);
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["addUserNotification"])(campToProcess.addedBy, {
-                id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["uid"])(),
-                type: 'approval',
-                title: 'Your Camp is Live!',
-                message: `Congrats! "${campToProcess.name}" is approved.`,
-                time: new Date().toISOString(),
-                read: false
-            });
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"])({
                 title: 'Camp Approved'
             });
         } else {
-            campToProcess.status = 'rejected';
-            const rejected = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getRejectedCamps"])();
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["saveRejectedCamps"])([
-                campToProcess,
-                ...rejected
+                camp,
+                ...(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getRejectedCamps"])()
             ]);
-            (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$store$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["addUserNotification"])(campToProcess.addedBy, {
-                id: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["uid"])(),
-                type: 'approval',
-                title: 'Camp Submission Update',
-                message: `"${campToProcess.name}" was rejected.`,
-                time: new Date().toISOString(),
-                read: false
-            });
             (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"])({
                 variant: 'destructive',
                 title: 'Camp Rejected'
             });
         }
         setRefreshKey((p)=>p + 1);
-    };
-    const handleRejectOrg = (user)=>{
-        setUserToProcess(user);
-        setIsRejectDialogOpen(true);
     };
     const formattedDate = dateTime.toLocaleDateString('en-US', {
         weekday: 'long',
@@ -4785,264 +4703,148 @@ function AdminDashboard({ currentUser, data, onNavigate }) {
         minute: '2-digit',
         hour12: true
     });
-    const activeTrips = camps.length;
+    // 6. FINAL JSX RETURN
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "space-y-8 pb-12 font-sans font-normal animate-in fade-in duration-500",
+        className: "px-4 md:px-8 space-y-8 pb-12 font-sans font-normal animate-in fade-in duration-500",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "bg-gradient-to-br from-green-800 to-green-600 rounded-3xl p-6 md:p-8 text-white shadow-2xl relative overflow-hidden",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "absolute inset-0 bg-grid-pattern opacity-10"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1391,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "relative z-10",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex flex-wrap justify-between items-start mb-6",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "text-xs font-medium flex items-center gap-2",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "relative z-10",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex flex-wrap justify-between items-start mb-6",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "text-xs font-medium flex items-center gap-2",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "w-2 h-2 rounded-full bg-green-400 animate-pulse"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                                        lineNumber: 1366,
+                                        columnNumber: 15
+                                    }, this),
+                                    "Operations live - ",
+                                    formattedDate,
+                                    " - ",
+                                    formattedTime
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                                lineNumber: 1365,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                            lineNumber: 1364,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "grid grid-cols-1 md:grid-cols-2 gap-6 items-center",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "w-2 h-2 rounded-full bg-green-400 animate-pulse"
-                                        }, void 0, false, {
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                            className: "text-4xl font-bold tracking-tighter mb-2",
+                                            children: [
+                                                "Good morning, ",
+                                                currentUser.firstName,
+                                                " 👋"
+                                            ]
+                                        }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                            lineNumber: 1395,
+                                            lineNumber: 1372,
                                             columnNumber: 15
                                         }, this),
-                                        "Operations live - ",
-                                        formattedDate,
-                                        " - ",
-                                        formattedTime
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-green-200 max-w-lg",
+                                            children: "Here what moving across the Wildhaven platform today."
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                                            lineNumber: 1373,
+                                            columnNumber: 15
+                                        }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 1394,
+                                    lineNumber: 1371,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "grid grid-cols-2 sm:grid-cols-4 gap-4 text-center",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderStat, {
+                                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mountain$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mountain$3e$__["Mountain"],
+                                            label: "Active Trips",
+                                            value: totalCamps
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                                            lineNumber: 1376,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderStat, {
+                                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$book$2d$open$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__BookOpenCheck$3e$__["BookOpenCheck"],
+                                            label: "Live Bookings",
+                                            value: liveBookings
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                                            lineNumber: 1377,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderStat, {
+                                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$dollar$2d$sign$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CircleDollarSign$3e$__["CircleDollarSign"],
+                                            label: "Revenue Today",
+                                            value: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmt"])(revenueToday)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                                            lineNumber: 1378,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderStat, {
+                                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__["AlertTriangle"],
+                                            label: "Pending",
+                                            value: auditTotal,
+                                            isHighlighted: true
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                                            lineNumber: 1379,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                                    lineNumber: 1375,
                                     columnNumber: 13
                                 }, this)
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1393,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "grid grid-cols-1 md:grid-cols-2 gap-6 items-center",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                                className: "text-4xl font-bold tracking-tighter mb-2",
-                                                children: [
-                                                    "Good morning, ",
-                                                    currentUser.firstName,
-                                                    " ",
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: "wave-hand",
-                                                        children: "👋"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                        lineNumber: 1401,
-                                                        columnNumber: 110
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1401,
-                                                columnNumber: 15
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-green-200 max-w-lg",
-                                                children: [
-                                                    "Here what moving across the Wildhaven platform today — ",
-                                                    pendingOrganizers.length,
-                                                    " organizers awaiting approval, ",
-                                                    pendingCamps.length,
-                                                    " camps in moderation, and 2 weather advisories near active expeditions."
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1402,
-                                                columnNumber: 15
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1400,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "grid grid-cols-2 sm:grid-cols-4 gap-4 text-center",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderStat, {
-                                                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mountain$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mountain$3e$__["Mountain"],
-                                                label: "Active Trips",
-                                                value: activeTrips
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1405,
-                                                columnNumber: 15
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderStat, {
-                                                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$book$2d$open$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__BookOpenCheck$3e$__["BookOpenCheck"],
-                                                label: "Live Bookings",
-                                                value: liveBookings
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1406,
-                                                columnNumber: 15
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderStat, {
-                                                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$dollar$2d$sign$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__CircleDollarSign$3e$__["CircleDollarSign"],
-                                                label: "Revenue Today",
-                                                value: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["fmt"])(revenueToday)
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1407,
-                                                columnNumber: 15
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(HeaderStat, {
-                                                icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__["AlertTriangle"],
-                                                label: "Pending",
-                                                value: auditTotal,
-                                                isHighlighted: true
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1408,
-                                                columnNumber: 15
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1404,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1399,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mt-8 pt-4 border-t border-white/10 text-xs font-medium flex flex-wrap gap-x-6 gap-y-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$cloud$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Cloud$3e$__["Cloud"], {
-                                                size: 14
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1412,
-                                                columnNumber: 54
-                                            }, this),
-                                            " Patagonia - Storm advisory - 6 camps"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1412,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-2",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mountain$2d$snow$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__MountainSnow$3e$__["MountainSnow"], {
-                                                size: 14
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1413,
-                                                columnNumber: 54
-                                            }, this),
-                                            " Himalayan zone - 24 active trips"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1413,
-                                        columnNumber: 13
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-2 ml-auto",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$server$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Server$3e$__["Server"], {
-                                                size: 14
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                                lineNumber: 1414,
-                                                columnNumber: 62
-                                            }, this),
-                                            " API uptime 99.98% - p95 142ms"
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1414,
-                                        columnNumber: 13
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1411,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1392,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                            lineNumber: 1370,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                    lineNumber: 1363,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1390,
+                lineNumber: 1362,
                 columnNumber: 8
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "space-y-6",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                className: "text-2xl font-bold text-slate-800",
-                                children: "Platform overview"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1421,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-slate-500 mt-1",
-                                children: "Key performance indicators across the marketplace"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1422,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6",
+                children: platformStats.map((stat)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(StatCard, {
+                        ...stat
+                    }, stat.title, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1420,
-                        columnNumber: 9
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr",
-                        children: platformStats.map((stat)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(StatCard, {
-                                ...stat
-                            }, stat.title, false, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1425,
-                                columnNumber: 38
-                            }, this))
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1424,
-                        columnNumber: 9
-                    }, this)
-                ]
-            }, void 0, true, {
+                        lineNumber: 1386,
+                        columnNumber: 36
+                    }, this))
+            }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1419,
+                lineNumber: 1385,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5054,12 +4856,12 @@ function AdminDashboard({ currentUser, data, onNavigate }) {
                             bookings: globalData.allBookings
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                            lineNumber: 1430,
+                            lineNumber: 1390,
                             columnNumber: 40
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1430,
+                        lineNumber: 1390,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5068,18 +4870,18 @@ function AdminDashboard({ currentUser, data, onNavigate }) {
                             camps: camps
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                            lineNumber: 1431,
+                            lineNumber: 1391,
                             columnNumber: 40
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1431,
+                        lineNumber: 1391,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1429,
+                lineNumber: 1389,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5089,152 +4891,81 @@ function AdminDashboard({ currentUser, data, onNavigate }) {
                         bookings: globalData.allBookings
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1435,
+                        lineNumber: 1395,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(UserGrowthChart, {
                         users: allUsersArray
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1436,
+                        lineNumber: 1396,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(RevenueVsBookingsChart, {
                         bookings: globalData.allBookings
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1437,
+                        lineNumber: 1397,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1434,
+                lineNumber: 1394,
                 columnNumber: 8
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(TopOrganizers, {
-                        organizers: approvedOrganizers,
-                        bookings: globalData.allBookings
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1441,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(TopPerformingCamps, {
-                        camps: camps,
-                        bookings: globalData.allBookings
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1442,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(LiveWeatherWatch, {}, void 0, false, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1443,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1440,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "space-y-6",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex flex-wrap justify-between items-center gap-4",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "text-2xl font-bold text-slate-800",
-                                        children: "Moderation queues"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1449,
-                                        columnNumber: 19
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-slate-500 mt-1",
-                                        children: "Awaiting your review — act fast to keep operations flowing"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                        lineNumber: 1450,
-                                        columnNumber: 19
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1448,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                                variant: "outline",
-                                onClick: ()=>onNavigate('approvals'),
-                                children: "Open moderation hub →"
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "grid grid-cols-1 lg:grid-cols-12 gap-6",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "lg:col-span-8",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ModerationQueues, {
+                                pendingOrganizers: pendingOrganizers,
+                                pendingCamps: pendingCamps,
+                                onApproveOrg: (email)=>handleOrgAction(email, 'approve'),
+                                onRejectOrg: (user)=>{
+                                    setUserToProcess(user);
+                                    setIsRejectDialogOpen(true);
+                                },
+                                onApproveCamp: (id)=>handleCampAction(id, 'approve'),
+                                onRejectCamp: (id)=>handleCampAction(id, 'reject'),
+                                onNavigate: onNavigate
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1452,
-                                columnNumber: 15
+                                lineNumber: 1403,
+                                columnNumber: 19
                             }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1447,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "grid grid-cols-1 lg:grid-cols-12 gap-6",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "lg:col-span-8",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ModerationQueues, {
-                                    pendingOrganizers: pendingOrganizers,
-                                    pendingCamps: pendingCamps,
-                                    onApproveOrg: (email)=>handleOrgAction(email, 'approve'),
-                                    onRejectOrg: handleRejectOrg,
-                                    onApproveCamp: (id)=>handleCampAction(id, 'approve'),
-                                    onRejectCamp: (id)=>handleCampAction(id, 'reject'),
-                                    onNavigate: onNavigate
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 1456,
-                                    columnNumber: 19
-                                }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                            lineNumber: 1402,
+                            columnNumber: 15
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "lg:col-span-4",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(LiveActivityFeed, {
+                                activities: allActivities,
+                                onNavigate: onNavigate
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1455,
-                                columnNumber: 15
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "lg:col-span-4",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(LiveActivityFeed, {
-                                    activities: allActivities,
-                                    onNavigate: onNavigate
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 1467,
-                                    columnNumber: 19
-                                }, this)
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1466,
-                                columnNumber: 15
+                                lineNumber: 1414,
+                                columnNumber: 19
                             }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1454,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, void 0, true, {
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                            lineNumber: 1413,
+                            columnNumber: 15
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                    lineNumber: 1401,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1446,
+                lineNumber: 1400,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(RecentBookings, {
@@ -5242,7 +4973,7 @@ function AdminDashboard({ currentUser, data, onNavigate }) {
                 users: allUsersArray
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1475,
+                lineNumber: 1419,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5252,20 +4983,20 @@ function AdminDashboard({ currentUser, data, onNavigate }) {
                         bookings: globalData.allBookings
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1478,
+                        lineNumber: 1422,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(SystemHealth, {
                         bookings: globalData.allBookings
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                        lineNumber: 1479,
+                        lineNumber: 1423,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1477,
+                lineNumber: 1421,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -5274,41 +5005,32 @@ function AdminDashboard({ currentUser, data, onNavigate }) {
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogContent"], {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogHeader"], {
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogTitle"], {
-                                    children: "Reason for Rejection"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 1485,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogDescription"], {
-                                    children: "Please provide a clear reason for rejecting this organizer. This will be sent to them."
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 1486,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogTitle"], {
+                                children: "Reason for Rejection"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
+                                lineNumber: 1428,
+                                columnNumber: 25
+                            }, this)
+                        }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                            lineNumber: 1484,
+                            lineNumber: 1428,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "py-4",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Textarea"], {
-                                placeholder: "e.g., Business license is not valid...",
+                                placeholder: "Reason...",
                                 value: rejectionReason,
                                 onChange: (e)=>setRejectionReason(e.target.value)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                lineNumber: 1488,
+                                lineNumber: 1429,
                                 columnNumber: 33
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                            lineNumber: 1488,
+                            lineNumber: 1429,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DialogFooter"], {
@@ -5319,40 +5041,39 @@ function AdminDashboard({ currentUser, data, onNavigate }) {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 1490,
+                                    lineNumber: 1431,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                                     variant: "destructive",
                                     onClick: ()=>userToProcess && handleOrgAction(userToProcess.email, 'reject', rejectionReason),
-                                    disabled: !rejectionReason.trim(),
                                     children: "Confirm Rejection"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                                    lineNumber: 1491,
+                                    lineNumber: 1432,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                            lineNumber: 1489,
+                            lineNumber: 1430,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 1483,
+                    lineNumber: 1427,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1482,
+                lineNumber: 1426,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-        lineNumber: 1389,
+        lineNumber: 1360,
         columnNumber: 5
     }, this);
 }
@@ -5366,12 +5087,12 @@ const HeaderStat = ({ icon: Icon, label, value, isHighlighted = false })=>/*#__P
                     className: "text-white"
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                    lineNumber: 1509,
+                    lineNumber: 1450,
                     columnNumber: 7
                 }, ("TURBOPACK compile-time value", void 0))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1508,
+                lineNumber: 1449,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5379,7 +5100,7 @@ const HeaderStat = ({ icon: Icon, label, value, isHighlighted = false })=>/*#__P
                 children: value
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1511,
+                lineNumber: 1452,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -5387,13 +5108,13 @@ const HeaderStat = ({ icon: Icon, label, value, isHighlighted = false })=>/*#__P
                 children: label
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-                lineNumber: 1512,
+                lineNumber: 1453,
                 columnNumber: 5
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/admin/AdminDashboard.tsx",
-        lineNumber: 1507,
+        lineNumber: 1448,
         columnNumber: 3
     }, ("TURBOPACK compile-time value", void 0));
 }),
