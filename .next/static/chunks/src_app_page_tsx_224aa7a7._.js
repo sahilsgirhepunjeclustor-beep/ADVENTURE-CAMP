@@ -18,13 +18,15 @@
   "static/chunks/src_components_forms_19eb519f._.js",
   "static/chunks/src_components_marketplace_67d18b38._.js",
   "static/chunks/src_77346c5c._.js",
-  "static/chunks/node_modules_lucide-react_dist_esm_0d4cad04._.js",
+  "static/chunks/node_modules_lucide-react_dist_esm_f6971c70._.js",
   "static/chunks/node_modules_@radix-ui_c016da84._.js",
   "static/chunks/node_modules_lodash_0ce7be08._.js",
   "static/chunks/node_modules_recharts_es6_43204bee._.js",
+  "static/chunks/node_modules_motion-dom_dist_es_8b3c32ce._.js",
+  "static/chunks/node_modules_framer-motion_dist_es_f5e44c6d._.js",
   "static/chunks/node_modules_@radix-ui_afaf6ed2._.js",
   "static/chunks/node_modules_@floating-ui_1b6e7b6d._.js",
-  "static/chunks/node_modules_63326e5a._.js"
+  "static/chunks/node_modules_ce73d43f._.js"
 ],
     source: "dynamic"
 });
