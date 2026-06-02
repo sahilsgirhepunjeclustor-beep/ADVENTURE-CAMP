@@ -242,60 +242,69 @@ export default function AdminUsers({ onBack, initialTab }: AdminUsersProps) {
   return (
     <div className="space-y-6 font-sans animate-in fade-in duration-500 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-2">
-        <div className="flex items-center gap-4">
-          {onBack && (
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={onBack}
-              className="rounded-full h-10 w-10 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0"
-            >
-              <ArrowLeft size={18} className="text-slate-600" />
-            </Button>
-          )}
-          <div>
-            <h2 className="text-xl font-black text-slate-900 uppercase tracking-tighter leading-none">Identity Management</h2>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1.5 opacity-70">Administrative User Directory</p>
+      <div className="space-y-6">
+        <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
+          <div className="max-w-2xl space-y-3">
+            <div className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-[10px] font-black uppercase tracking-[0.35em] text-slate-500">
+              Users
+            </div>
+            <div>
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight">All Users</h2>
+              <p className="mt-2 text-sm text-slate-500">Manage marketplace travelers, memberships, verification status, and account health in one place.</p>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center justify-end gap-3">
+            <Button variant="outline" size="sm" className="rounded-full px-4 h-10">Import CSV</Button>
+            <Button variant="outline" size="sm" className="rounded-full px-4 h-10">Export</Button>
+            <Button size="sm" className="rounded-full px-4 h-10">Invite User</Button>
           </div>
         </div>
-        {/* User Role Statistics */}
-        <div className="flex items-center gap-2">
-           <div className="bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-2">
-              <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">Admins</div>
-              <div className="text-xs font-black text-orange-600">{stats.admins}</div>
-           </div>
-           <div className="bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-2">
-              <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">Partners</div>
-              <div className="text-xs font-black text-primary">{stats.organizers}</div>
-           </div>
-           <div className="bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-2">
-              <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none">Explorers</div>
-              <div className="text-xs font-black text-slate-900">{stats.users}</div>
-           </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-[10px] uppercase tracking-[0.35em] font-black text-slate-400 mb-2">Total Users</p>
+            <div className="text-3xl font-black text-slate-900">{stats.total}</div>
+            <p className="mt-2 text-xs text-slate-500">+12.4% vs last month</p>
+          </div>
+          <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-[10px] uppercase tracking-[0.35em] font-black text-slate-400 mb-2">Verified</p>
+            <div className="text-3xl font-black text-slate-900">{verifiedUsers.length}</div>
+            <p className="mt-2 text-xs text-slate-500">+6.1% verified growth</p>
+          </div>
+          <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-[10px] uppercase tracking-[0.35em] font-black text-slate-400 mb-2">Suspended</p>
+            <div className="text-3xl font-black text-slate-900">{suspendedUsers.length}</div>
+            <p className="mt-2 text-xs text-slate-500">-3.2% from last cycle</p>
+          </div>
+          <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+            <p className="text-[10px] uppercase tracking-[0.35em] font-black text-slate-400 mb-2">Pending Reports</p>
+            <div className="text-3xl font-black text-slate-900">{reportUsers.length}</div>
+            <p className="mt-2 text-xs text-slate-500">+{reportUsers.length > 0 ? 8 : 0} recent</p>
+          </div>
         </div>
       </div>
 
       {/* Search Bar */}
-      <div className="flex flex-wrap gap-4 items-center bg-white p-3 rounded-[20px] border border-slate-100 shadow-sm">
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div className="relative flex-1 min-w-[280px]">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
           <Input
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            placeholder="Search by name, email or registry ID..."
-            className="pl-9 h-9 rounded-xl border-slate-100 bg-slate-50/50 font-bold text-[10px] uppercase tracking-tight"
+            placeholder="Search users, email, phone or membership"
+            className="pl-9 h-11 rounded-2xl border-slate-100 bg-slate-50/80 font-bold text-sm"
           />
         </div>
-        <div className="px-4 h-9 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center">
-           <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{filteredUsers.length} Directory Entries</span>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button variant="outline" size="sm" className="rounded-full h-10 px-4">Filter</Button>
+          <span className="text-[10px] font-black uppercase tracking-[0.35em] text-slate-500">Showing {filteredUsers.length} users</span>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 bg-slate-50 p-2 rounded-3xl border border-slate-100">
+      <div className="flex flex-wrap gap-2 bg-slate-50 p-3 rounded-[24px] border border-slate-100">
         {[
           { key: 'all', label: 'All Users', count: usersList.length },
-          { key: 'verified', label: 'Verified Users', count: verifiedUsers.length },
+          { key: 'verified', label: 'Verified', count: verifiedUsers.length },
           { key: 'suspended', label: 'Suspended', count: suspendedUsers.length },
           { key: 'reports', label: 'Reports', count: reportUsers.length },
         ].map(tab => (
@@ -315,13 +324,13 @@ export default function AdminUsers({ onBack, initialTab }: AdminUsersProps) {
       {/* Users Table */}
       <div className="bg-white rounded-[24px] border border-slate-100 shadow-xl overflow-hidden">
         <table className="w-full text-left">
-          <thead className="bg-slate-50/50">
-            <tr className="text-[8px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100">
-              <th className="px-6 py-4">Identity</th>
-              <th className="px-6 py-4">Security Level</th>
-              <th className="px-6 py-4">Registry Status</th>
-              <th className="px-6 py-4">Access Profile</th>
-              <th className="px-6 py-4 text-right">Operations</th>
+          <thead className="bg-slate-50/70">
+            <tr className="text-[9px] font-black text-slate-400 uppercase tracking-[0.22em] border-b border-slate-100">
+              <th className="px-6 py-4">USER</th>
+              <th className="px-6 py-4">PHONE</th>
+              <th className="px-6 py-4">MEMBERSHIP</th>
+              <th className="px-6 py-4">STATUS</th>
+              <th className="px-6 py-4 text-right">ACTIONS</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-50">
@@ -331,41 +340,30 @@ export default function AdminUsers({ onBack, initialTab }: AdminUsersProps) {
               filteredUsers.map(u => (
                 <tr key={u.email} className="group hover:bg-slate-50/30 transition-colors">
                   {/* User Identity Column */}
-                  <td className="px-6 py-3">
+                  <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black uppercase text-[10px] border border-white shadow-sm overflow-hidden">
-                        {u.avatar ? <img src={u.avatar} className="w-full h-full object-cover" /> : u.firstName[0]}
-                      </div>
+                      <div className="w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-black uppercase text-sm border border-white shadow-sm overflow-hidden">
+                        {u.avatar ? <img src={u.avatar} className="w-full h-full object-cover" /> : u.firstName[0]}</div>
                       <div className="min-w-0">
-                        <div className="text-[10px] font-black text-slate-900 uppercase tracking-tighter leading-none mb-1">{u.firstName} {u.lastName}</div>
-                        <div className="text-[8px] text-slate-400 font-bold flex items-center gap-1 uppercase truncate"><Mail size={10} className="text-primary" /> {u.email}</div>
+                        <div className="text-sm font-black text-slate-900 tracking-tight leading-none">{u.firstName} {u.lastName}</div>
+                        <div className="text-[10px] text-slate-400 font-bold truncate">{u.email}</div>
                       </div>
                     </div>
                   </td>
-                  {/* Role (Security Level) Column */}
-                  <td className="px-6 py-3">
+                  <td className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.15em] text-slate-500">{u.phone || '—'}</td>
+                  <td className="px-6 py-4">
                     <Badge variant="outline" className={cn(
-                      "text-[8px] font-black uppercase px-2 py-0.5 rounded-lg border-none",
-                      u.role === 'admin' ? 'text-orange-700 bg-orange-100' :
-                      u.role === 'organizer' ? 'text-blue-700 bg-blue-100' :
-                      'text-green-700 bg-green-100'
+                      'text-[9px] font-black uppercase px-2 py-1 rounded-lg border-none',
+                      u.membership?.status === 'active' ? 'text-green-700 bg-green-100' :
+                      u.membership?.status === 'pending' ? 'text-amber-700 bg-amber-100' :
+                      'text-slate-700 bg-slate-100'
                     )}>
-                      {u.role}
+                      {u.membership?.planName || 'Standard'}
                     </Badge>
                   </td>
-                  {/* Verification Status Column */}
-                  <td className="px-6 py-3">
-                    <div className="flex items-center gap-2">
-                      <div className={cn("w-1.5 h-1.5 rounded-full", u.isApproved ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : "bg-amber-500")} />
-                      <span className={cn("text-[9px] font-black uppercase tracking-tight", u.isApproved ? "text-green-600" : "text-amber-600")}>
-                        {u.isApproved ? 'Verified Identity' : 'Registry Pending'}
-                      </span>
-                    </div>
-                  </td>
-                  {/* Account Status Column */}
-                  <td className="px-6 py-3">
+                  <td className="px-6 py-4">
                     <Badge variant="outline" className={cn(
-                      "text-[8px] font-black uppercase px-2 py-0.5 rounded-lg border-none",
+                      'text-[9px] font-black uppercase px-2 py-1 rounded-lg border-none',
                       u.status === 'suspended' ? 'text-amber-700 bg-amber-100' :
                       u.status === 'blocked' ? 'text-red-700 bg-red-100' :
                       'text-primary bg-primary/10'
@@ -373,13 +371,12 @@ export default function AdminUsers({ onBack, initialTab }: AdminUsersProps) {
                       {u.status || 'active'}
                     </Badge>
                   </td>
-                  {/* Actions Column */}
-                  <td className="px-6 py-3 text-right">
+                  <td className="px-6 py-4 text-right">
                     <div className="flex justify-end gap-1.5">
-                      <Button variant="outline" size="icon" onClick={() => handleEditClick(u)} className="h-7 w-7 rounded-lg bg-slate-50 hover:bg-primary hover:text-white border-slate-100 shadow-sm transition-all"><Pencil size={12} /></Button>
+                      <Button variant="outline" size="icon" onClick={() => handleEditClick(u)} className="h-8 w-8 rounded-lg bg-slate-50 hover:bg-primary hover:text-white border-slate-100 shadow-sm transition-all"><Pencil size={14} /></Button>
                       <DropdownMenu>
-                        <DropdownMenuTrigger asChild><Button variant="outline" size="icon" className="h-7 w-7 rounded-lg"><UserCog size={12} /></Button></DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="rounded-2xl min-w-[200px] shadow-2xl border-none p-2 font-sans">
+                        <DropdownMenuTrigger asChild><Button variant="outline" size="icon" className="h-8 w-8 rounded-lg"><UserCog size={14} /></Button></DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="rounded-2xl min-w-[220px] shadow-2xl border-none p-2 font-sans">
                           <DropdownMenuLabel className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400 px-3 py-2">Account Registry</DropdownMenuLabel>
                           <DropdownMenuItem onClick={() => toggleApproval(u)} className="text-[9px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer">
                              {u.isApproved ? <Ban size={14} className="text-amber-500" /> : <UserCheck size={14} className="text-primary" />}

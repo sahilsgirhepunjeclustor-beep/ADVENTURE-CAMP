@@ -28,7 +28,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$b
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$hooks$2f$use$2d$toast$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/hooks/use-toast.ts [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/trash-2.js [app-ssr] (ecmascript) <export default as Trash2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$cog$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCog$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user-cog.js [app-ssr] (ecmascript) <export default as UserCog>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/mail.js [app-ssr] (ecmascript) <export default as Mail>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield.js [app-ssr] (ecmascript) <export default as Shield>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-ssr] (ecmascript) <export default as User>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/building-2.js [app-ssr] (ecmascript) <export default as Building2>");
@@ -36,7 +35,6 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$alert$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldAlert$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield-alert.js [app-ssr] (ecmascript) <export default as ShieldAlert>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$key$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Key$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/key.js [app-ssr] (ecmascript) <export default as Key>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pencil$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Pencil$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/pencil.js [app-ssr] (ecmascript) <export default as Pencil>");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/arrow-left.js [app-ssr] (ecmascript) <export default as ArrowLeft>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$ban$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Ban$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/ban.js [app-ssr] (ecmascript) <export default as Ban>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$pause$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__PauseCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-pause.js [app-ssr] (ecmascript) <export default as PauseCircle>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$play$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__PlayCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-play.js [app-ssr] (ecmascript) <export default as PlayCircle>");
@@ -231,42 +229,79 @@ function AdminUsers({ onBack, initialTab }) {
         className: "space-y-6 font-sans animate-in fade-in duration-500 max-w-7xl mx-auto",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-2",
+                className: "space-y-6",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center gap-4",
+                        className: "flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between",
                         children: [
-                            onBack && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
-                                variant: "outline",
-                                size: "icon",
-                                onClick: onBack,
-                                className: "rounded-full h-10 w-10 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0",
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$left$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowLeft$3e$__["ArrowLeft"], {
-                                    size: 18,
-                                    className: "text-slate-600"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 254,
-                                    columnNumber: 15
-                                }, this)
-                            }, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "max-w-2xl space-y-3",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1 text-[10px] font-black uppercase tracking-[0.35em] text-slate-500",
+                                        children: "Users"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 248,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                                className: "text-3xl md:text-4xl font-black text-slate-900 tracking-tight",
+                                                children: "All Users"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                                lineNumber: 252,
+                                                columnNumber: 15
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                className: "mt-2 text-sm text-slate-500",
+                                                children: "Manage marketplace travelers, memberships, verification status, and account health in one place."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                                lineNumber: 253,
+                                                columnNumber: 15
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 251,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 248,
-                                columnNumber: 13
+                                lineNumber: 247,
+                                columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-wrap items-center justify-end gap-3",
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                        className: "text-xl font-black text-slate-900 uppercase tracking-tighter leading-none",
-                                        children: "Identity Management"
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                        variant: "outline",
+                                        size: "sm",
+                                        className: "rounded-full px-4 h-10",
+                                        children: "Import CSV"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 257,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                        variant: "outline",
+                                        size: "sm",
+                                        className: "rounded-full px-4 h-10",
+                                        children: "Export"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
                                         lineNumber: 258,
                                         columnNumber: 13
                                     }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1.5 opacity-70",
-                                        children: "Administrative User Directory"
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                        size: "sm",
+                                        className: "rounded-full px-4 h-10",
+                                        children: "Invite User"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
                                         lineNumber: 259,
@@ -275,7 +310,7 @@ function AdminUsers({ onBack, initialTab }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 257,
+                                lineNumber: 256,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -285,82 +320,143 @@ function AdminUsers({ onBack, initialTab }) {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex items-center gap-2",
+                        className: "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-2",
+                                className: "rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm",
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none",
-                                        children: "Admins"
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-[10px] uppercase tracking-[0.35em] font-black text-slate-400 mb-2",
+                                        children: "Total Users"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
                                         lineNumber: 265,
-                                        columnNumber: 15
+                                        columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-xs font-black text-orange-600",
-                                        children: stats.admins
+                                        className: "text-3xl font-black text-slate-900",
+                                        children: stats.total
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
                                         lineNumber: 266,
-                                        columnNumber: 15
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "mt-2 text-xs text-slate-500",
+                                        children: "+12.4% vs last month"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 267,
+                                        columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
                                 lineNumber: 264,
-                                columnNumber: 12
+                                columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-2",
+                                className: "rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm",
                                 children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none",
-                                        children: "Partners"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 269,
-                                        columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-xs font-black text-primary",
-                                        children: stats.organizers
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-[10px] uppercase tracking-[0.35em] font-black text-slate-400 mb-2",
+                                        children: "Verified"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
                                         lineNumber: 270,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 268,
-                                columnNumber: 12
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none",
-                                        children: "Explorers"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 273,
-                                        columnNumber: 15
+                                        columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "text-xs font-black text-slate-900",
-                                        children: stats.users
+                                        className: "text-3xl font-black text-slate-900",
+                                        children: verifiedUsers.length
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 274,
-                                        columnNumber: 15
+                                        lineNumber: 271,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "mt-2 text-xs text-slate-500",
+                                        children: "+6.1% verified growth"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 272,
+                                        columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 272,
-                                columnNumber: 12
+                                lineNumber: 269,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-[10px] uppercase tracking-[0.35em] font-black text-slate-400 mb-2",
+                                        children: "Suspended"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 275,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "text-3xl font-black text-slate-900",
+                                        children: suspendedUsers.length
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 276,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "mt-2 text-xs text-slate-500",
+                                        children: "-3.2% from last cycle"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 277,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                lineNumber: 274,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "text-[10px] uppercase tracking-[0.35em] font-black text-slate-400 mb-2",
+                                        children: "Pending Reports"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 280,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "text-3xl font-black text-slate-900",
+                                        children: reportUsers.length
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 281,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "mt-2 text-xs text-slate-500",
+                                        children: [
+                                            "+",
+                                            reportUsers.length > 0 ? 8 : 0,
+                                            " recent"
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                        lineNumber: 282,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                lineNumber: 279,
+                                columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
@@ -375,7 +471,7 @@ function AdminUsers({ onBack, initialTab }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex flex-wrap gap-4 items-center bg-white p-3 rounded-[20px] border border-slate-100 shadow-sm",
+                className: "flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "relative flex-1 min-w-[280px]",
@@ -385,51 +481,64 @@ function AdminUsers({ onBack, initialTab }) {
                                 className: "absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 282,
+                                lineNumber: 290,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
                                 value: searchQuery,
                                 onChange: (e)=>setSearchQuery(e.target.value),
-                                placeholder: "Search by name, email or registry ID...",
-                                className: "pl-9 h-9 rounded-xl border-slate-100 bg-slate-50/50 font-bold text-[10px] uppercase tracking-tight"
+                                placeholder: "Search users, email, phone or membership",
+                                className: "pl-9 h-11 rounded-2xl border-slate-100 bg-slate-50/80 font-bold text-sm"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 283,
+                                lineNumber: 291,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 281,
+                        lineNumber: 289,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "px-4 h-9 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-center",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            className: "text-[9px] font-black text-slate-400 uppercase tracking-widest",
-                            children: [
-                                filteredUsers.length,
-                                " Directory Entries"
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 291,
-                            columnNumber: 12
-                        }, this)
-                    }, void 0, false, {
+                        className: "flex flex-wrap items-center gap-2",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                variant: "outline",
+                                size: "sm",
+                                className: "rounded-full h-10 px-4",
+                                children: "Filter"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                lineNumber: 299,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-[10px] font-black uppercase tracking-[0.35em] text-slate-500",
+                                children: [
+                                    "Showing ",
+                                    filteredUsers.length,
+                                    " users"
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                lineNumber: 300,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 290,
+                        lineNumber: 298,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 280,
+                lineNumber: 288,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex flex-wrap gap-2 bg-slate-50 p-2 rounded-3xl border border-slate-100",
+                className: "flex flex-wrap gap-2 bg-slate-50 p-3 rounded-[24px] border border-slate-100",
                 children: [
                     {
                         key: 'all',
@@ -438,7 +547,7 @@ function AdminUsers({ onBack, initialTab }) {
                     },
                     {
                         key: 'verified',
-                        label: 'Verified Users',
+                        label: 'Verified',
                         count: verifiedUsers.length
                     },
                     {
@@ -462,12 +571,12 @@ function AdminUsers({ onBack, initialTab }) {
                         ]
                     }, tab.key, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 302,
+                        lineNumber: 311,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 295,
+                lineNumber: 304,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -476,59 +585,59 @@ function AdminUsers({ onBack, initialTab }) {
                     className: "w-full text-left",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("thead", {
-                            className: "bg-slate-50/50",
+                            className: "bg-slate-50/70",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                className: "text-[8px] font-black text-slate-400 uppercase tracking-widest border-b border-slate-100",
+                                className: "text-[9px] font-black text-slate-400 uppercase tracking-[0.22em] border-b border-slate-100",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                         className: "px-6 py-4",
-                                        children: "Identity"
+                                        children: "USER"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 320,
+                                        lineNumber: 329,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                         className: "px-6 py-4",
-                                        children: "Security Level"
+                                        children: "PHONE"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 321,
+                                        lineNumber: 330,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                         className: "px-6 py-4",
-                                        children: "Registry Status"
+                                        children: "MEMBERSHIP"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 322,
+                                        lineNumber: 331,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                         className: "px-6 py-4",
-                                        children: "Access Profile"
+                                        children: "STATUS"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 323,
+                                        lineNumber: 332,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                         className: "px-6 py-4 text-right",
-                                        children: "Operations"
+                                        children: "ACTIONS"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 324,
+                                        lineNumber: 333,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 319,
+                                lineNumber: 328,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 318,
+                            lineNumber: 327,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -540,41 +649,41 @@ function AdminUsers({ onBack, initialTab }) {
                                     children: "No active directory entries"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 329,
+                                    lineNumber: 338,
                                     columnNumber: 19
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 329,
+                                lineNumber: 338,
                                 columnNumber: 15
                             }, this) : filteredUsers.map((u)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                     className: "group hover:bg-slate-50/30 transition-colors",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "px-6 py-3",
+                                            className: "px-6 py-4",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "flex items-center gap-3",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: "w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-black uppercase text-[10px] border border-white shadow-sm overflow-hidden",
+                                                        className: "w-10 h-10 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-black uppercase text-sm border border-white shadow-sm overflow-hidden",
                                                         children: u.avatar ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                                             src: u.avatar,
                                                             className: "w-full h-full object-cover"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 337,
+                                                            lineNumber: 346,
                                                             columnNumber: 37
                                                         }, this) : u.firstName[0]
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 336,
+                                                        lineNumber: 345,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         className: "min-w-0",
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "text-[10px] font-black text-slate-900 uppercase tracking-tighter leading-none mb-1",
+                                                                className: "text-sm font-black text-slate-900 tracking-tight leading-none",
                                                                 children: [
                                                                     u.firstName,
                                                                     " ",
@@ -582,110 +691,76 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 340,
+                                                                lineNumber: 348,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "text-[8px] text-slate-400 font-bold flex items-center gap-1 uppercase truncate",
-                                                                children: [
-                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$mail$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Mail$3e$__["Mail"], {
-                                                                        size: 10,
-                                                                        className: "text-primary"
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 341,
-                                                                        columnNumber: 121
-                                                                    }, this),
-                                                                    " ",
-                                                                    u.email
-                                                                ]
-                                                            }, void 0, true, {
+                                                                className: "text-[10px] text-slate-400 font-bold truncate",
+                                                                children: u.email
+                                                            }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 341,
+                                                                lineNumber: 349,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 339,
+                                                        lineNumber: 347,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 335,
+                                                lineNumber: 344,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 334,
+                                            lineNumber: 343,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "px-6 py-3",
+                                            className: "px-6 py-4 text-[10px] font-black uppercase tracking-[0.15em] text-slate-500",
+                                            children: u.phone || '—'
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
+                                            lineNumber: 353,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                            className: "px-6 py-4",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
                                                 variant: "outline",
-                                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("text-[8px] font-black uppercase px-2 py-0.5 rounded-lg border-none", u.role === 'admin' ? 'text-orange-700 bg-orange-100' : u.role === 'organizer' ? 'text-blue-700 bg-blue-100' : 'text-green-700 bg-green-100'),
-                                                children: u.role
+                                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])('text-[9px] font-black uppercase px-2 py-1 rounded-lg border-none', u.membership?.status === 'active' ? 'text-green-700 bg-green-100' : u.membership?.status === 'pending' ? 'text-amber-700 bg-amber-100' : 'text-slate-700 bg-slate-100'),
+                                                children: u.membership?.planName || 'Standard'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 347,
+                                                lineNumber: 355,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 346,
+                                            lineNumber: 354,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "px-6 py-3",
-                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "flex items-center gap-2",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("w-1.5 h-1.5 rounded-full", u.isApproved ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : "bg-amber-500")
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 359,
-                                                        columnNumber: 23
-                                                    }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                        className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("text-[9px] font-black uppercase tracking-tight", u.isApproved ? "text-green-600" : "text-amber-600"),
-                                                        children: u.isApproved ? 'Verified Identity' : 'Registry Pending'
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 360,
-                                                        columnNumber: 23
-                                                    }, this)
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 358,
-                                                columnNumber: 21
-                                            }, this)
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 357,
-                                            columnNumber: 19
-                                        }, this),
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "px-6 py-3",
+                                            className: "px-6 py-4",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
                                                 variant: "outline",
-                                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])("text-[8px] font-black uppercase px-2 py-0.5 rounded-lg border-none", u.status === 'suspended' ? 'text-amber-700 bg-amber-100' : u.status === 'blocked' ? 'text-red-700 bg-red-100' : 'text-primary bg-primary/10'),
+                                                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$utils$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["cn"])('text-[9px] font-black uppercase px-2 py-1 rounded-lg border-none', u.status === 'suspended' ? 'text-amber-700 bg-amber-100' : u.status === 'blocked' ? 'text-red-700 bg-red-100' : 'text-primary bg-primary/10'),
                                                 children: u.status || 'active'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 367,
+                                                lineNumber: 365,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 366,
+                                            lineNumber: 364,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                            className: "px-6 py-3 text-right",
+                                            className: "px-6 py-4 text-right",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 className: "flex justify-end gap-1.5",
                                                 children: [
@@ -693,17 +768,17 @@ function AdminUsers({ onBack, initialTab }) {
                                                         variant: "outline",
                                                         size: "icon",
                                                         onClick: ()=>handleEditClick(u),
-                                                        className: "h-7 w-7 rounded-lg bg-slate-50 hover:bg-primary hover:text-white border-slate-100 shadow-sm transition-all",
+                                                        className: "h-8 w-8 rounded-lg bg-slate-50 hover:bg-primary hover:text-white border-slate-100 shadow-sm transition-all",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$pencil$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Pencil$3e$__["Pencil"], {
-                                                            size: 12
+                                                            size: 14
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 379,
+                                                            lineNumber: 376,
                                                             columnNumber: 215
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 379,
+                                                        lineNumber: 376,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenu"], {
@@ -713,34 +788,34 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
                                                                     variant: "outline",
                                                                     size: "icon",
-                                                                    className: "h-7 w-7 rounded-lg",
+                                                                    className: "h-8 w-8 rounded-lg",
                                                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$cog$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCog$3e$__["UserCog"], {
-                                                                        size: 12
+                                                                        size: 14
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 381,
+                                                                        lineNumber: 378,
                                                                         columnNumber: 123
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                    lineNumber: 381,
+                                                                    lineNumber: 378,
                                                                     columnNumber: 54
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 381,
+                                                                lineNumber: 378,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuContent"], {
                                                                 align: "end",
-                                                                className: "rounded-2xl min-w-[200px] shadow-2xl border-none p-2 font-sans",
+                                                                className: "rounded-2xl min-w-[220px] shadow-2xl border-none p-2 font-sans",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuLabel"], {
                                                                         className: "text-[8px] font-black uppercase tracking-[0.2em] text-slate-400 px-3 py-2",
                                                                         children: "Account Registry"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 383,
+                                                                        lineNumber: 380,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -752,28 +827,28 @@ function AdminUsers({ onBack, initialTab }) {
                                                                                 className: "text-amber-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 385,
+                                                                                lineNumber: 382,
                                                                                 columnNumber: 46
                                                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserCheck$3e$__["UserCheck"], {
                                                                                 size: 14,
                                                                                 className: "text-primary"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 385,
+                                                                                lineNumber: 382,
                                                                                 columnNumber: 93
                                                                             }, this),
                                                                             u.isApproved ? 'Revoke Verification' : 'Verify Identity'
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 384,
+                                                                        lineNumber: 381,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuSeparator"], {
                                                                         className: "bg-slate-50"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 388,
+                                                                        lineNumber: 385,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuLabel"], {
@@ -781,7 +856,7 @@ function AdminUsers({ onBack, initialTab }) {
                                                                         children: "Access Control"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 390,
+                                                                        lineNumber: 387,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -793,14 +868,14 @@ function AdminUsers({ onBack, initialTab }) {
                                                                                 className: "text-green-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 392,
+                                                                                lineNumber: 389,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             " Activate Account"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 391,
+                                                                        lineNumber: 388,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -812,14 +887,14 @@ function AdminUsers({ onBack, initialTab }) {
                                                                                 className: "text-amber-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 395,
+                                                                                lineNumber: 392,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             " Suspend Access"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 394,
+                                                                        lineNumber: 391,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -831,21 +906,21 @@ function AdminUsers({ onBack, initialTab }) {
                                                                                 className: "text-red-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 398,
+                                                                                lineNumber: 395,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             " Block Account"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 397,
+                                                                        lineNumber: 394,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuSeparator"], {
                                                                         className: "bg-slate-50"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 401,
+                                                                        lineNumber: 398,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuLabel"], {
@@ -853,7 +928,7 @@ function AdminUsers({ onBack, initialTab }) {
                                                                         children: "Authorization Scale"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 402,
+                                                                        lineNumber: 399,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -865,14 +940,14 @@ function AdminUsers({ onBack, initialTab }) {
                                                                                 className: "text-green-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 403,
+                                                                                lineNumber: 400,
                                                                                 columnNumber: 158
                                                                             }, this),
                                                                             " Explorer Level"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 403,
+                                                                        lineNumber: 400,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -884,14 +959,14 @@ function AdminUsers({ onBack, initialTab }) {
                                                                                 className: "text-blue-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 404,
+                                                                                lineNumber: 401,
                                                                                 columnNumber: 163
                                                                             }, this),
                                                                             " Partner Access"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 404,
+                                                                        lineNumber: 401,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -903,21 +978,21 @@ function AdminUsers({ onBack, initialTab }) {
                                                                                 className: "text-orange-500"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 405,
+                                                                                lineNumber: 402,
                                                                                 columnNumber: 159
                                                                             }, this),
                                                                             " Platform Staff"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 405,
+                                                                        lineNumber: 402,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuSeparator"], {
                                                                         className: "bg-slate-50"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 407,
+                                                                        lineNumber: 404,
                                                                         columnNumber: 27
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dropdown$2d$menu$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["DropdownMenuItem"], {
@@ -928,59 +1003,59 @@ function AdminUsers({ onBack, initialTab }) {
                                                                                 size: 14
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                                lineNumber: 409,
+                                                                                lineNumber: 406,
                                                                                 columnNumber: 30
                                                                             }, this),
                                                                             " Terminate Record"
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                        lineNumber: 408,
+                                                                        lineNumber: 405,
                                                                         columnNumber: 27
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 382,
+                                                                lineNumber: 379,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 380,
+                                                        lineNumber: 377,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 378,
+                                                lineNumber: 375,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 377,
+                                            lineNumber: 374,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, u.email, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 332,
+                                    lineNumber: 341,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 327,
+                            lineNumber: 336,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                    lineNumber: 317,
+                    lineNumber: 326,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 316,
+                lineNumber: 325,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -997,7 +1072,7 @@ function AdminUsers({ onBack, initialTab }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 424,
+                        lineNumber: 421,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1010,7 +1085,7 @@ function AdminUsers({ onBack, initialTab }) {
                                 children: "Prev"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 428,
+                                lineNumber: 425,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1018,7 +1093,7 @@ function AdminUsers({ onBack, initialTab }) {
                                 children: "Page 1 of 1"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 429,
+                                lineNumber: 426,
                                 columnNumber: 12
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1028,19 +1103,19 @@ function AdminUsers({ onBack, initialTab }) {
                                 children: "Next"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 432,
+                                lineNumber: 429,
                                 columnNumber: 12
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                        lineNumber: 427,
+                        lineNumber: 424,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 423,
+                lineNumber: 420,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Dialog"], {
@@ -1055,12 +1130,12 @@ function AdminUsers({ onBack, initialTab }) {
                                 children: "Identity Audit"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                lineNumber: 439,
+                                lineNumber: 436,
                                 columnNumber: 45
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 439,
+                            lineNumber: 436,
                             columnNumber: 11
                         }, this),
                         editingUser && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -1080,12 +1155,12 @@ function AdminUsers({ onBack, initialTab }) {
                                                         className: "w-full h-full object-cover"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 445,
+                                                        lineNumber: 442,
                                                         columnNumber: 46
                                                     }, this) : editingUser.firstName[0]
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                    lineNumber: 444,
+                                                    lineNumber: 441,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1099,7 +1174,7 @@ function AdminUsers({ onBack, initialTab }) {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 448,
+                                                            lineNumber: 445,
                                                             columnNumber: 24
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1107,32 +1182,32 @@ function AdminUsers({ onBack, initialTab }) {
                                                             children: editingUser.email
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 449,
+                                                            lineNumber: 446,
                                                             columnNumber: 24
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                    lineNumber: 447,
+                                                    lineNumber: 444,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 443,
+                                            lineNumber: 440,
                                             columnNumber: 18
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "absolute top-0 right-0 w-32 h-full bg-white/5 skew-x-[-25deg] translate-x-12"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 452,
+                                            lineNumber: 449,
                                             columnNumber: 18
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 442,
+                                    lineNumber: 439,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$scroll$2d$area$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ScrollArea"], {
@@ -1151,7 +1226,7 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 children: "First Name"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 459,
+                                                                lineNumber: 456,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1163,13 +1238,13 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 className: "rounded-xl h-10 font-bold text-xs"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 460,
+                                                                lineNumber: 457,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 458,
+                                                        lineNumber: 455,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1180,7 +1255,7 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 children: "Last Name"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 463,
+                                                                lineNumber: 460,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1192,19 +1267,19 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 className: "rounded-xl h-10 font-bold text-xs"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 464,
+                                                                lineNumber: 461,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 462,
+                                                        lineNumber: 459,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 457,
+                                                lineNumber: 454,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1218,7 +1293,7 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 children: "Security Credentials"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 470,
+                                                                lineNumber: 467,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1228,13 +1303,13 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 children: showPassword ? 'Hide Key' : 'Reveal Key'
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 471,
+                                                                lineNumber: 468,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 469,
+                                                        lineNumber: 466,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1246,12 +1321,12 @@ function AdminUsers({ onBack, initialTab }) {
                                                                     size: 14
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                    lineNumber: 481,
+                                                                    lineNumber: 478,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 480,
+                                                                lineNumber: 477,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Input"], {
@@ -1262,19 +1337,19 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 placeholder: "Registry Password"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 483,
+                                                                lineNumber: 480,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 479,
+                                                        lineNumber: 476,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 468,
+                                                lineNumber: 465,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1286,12 +1361,12 @@ function AdminUsers({ onBack, initialTab }) {
                                                             size: 16
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                            lineNumber: 495,
+                                                            lineNumber: 492,
                                                             columnNumber: 25
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 494,
+                                                        lineNumber: 491,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1302,7 +1377,7 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 children: "System Clearance"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 498,
+                                                                lineNumber: 495,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1313,13 +1388,13 @@ function AdminUsers({ onBack, initialTab }) {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                                lineNumber: 499,
+                                                                lineNumber: 496,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 497,
+                                                        lineNumber: 494,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1327,24 +1402,24 @@ function AdminUsers({ onBack, initialTab }) {
                                                         children: editingUser.isApproved ? 'Verified' : 'Pending'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                        lineNumber: 501,
+                                                        lineNumber: 498,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                                lineNumber: 493,
+                                                lineNumber: 490,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                        lineNumber: 456,
+                                        lineNumber: 453,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 455,
+                                    lineNumber: 452,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1358,7 +1433,7 @@ function AdminUsers({ onBack, initialTab }) {
                                             children: "Cancel"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 512,
+                                            lineNumber: 509,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -1367,30 +1442,30 @@ function AdminUsers({ onBack, initialTab }) {
                                             children: "Save Changes"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                            lineNumber: 513,
+                                            lineNumber: 510,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                                    lineNumber: 511,
+                                    lineNumber: 508,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                            lineNumber: 441,
+                            lineNumber: 438,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                    lineNumber: 438,
+                    lineNumber: 435,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/admin/AdminUsers.tsx",
-                lineNumber: 437,
+                lineNumber: 434,
                 columnNumber: 7
             }, this)
         ]
