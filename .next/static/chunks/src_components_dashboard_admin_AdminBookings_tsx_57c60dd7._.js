@@ -1299,7 +1299,7 @@ function AdminBookings(param) {
         columnNumber: 5
     }, this);
 }
-_s(AdminBookings, "YRVytNVZ0VTPCsuTWW8e0hzjdrY=");
+_s(AdminBookings, "LOf4yaq3VFIF1uCLWttJ4t8IYEc=");
 _c = AdminBookings;
 var _c;
 __turbopack_context__.k.register(_c, "AdminBookings");
