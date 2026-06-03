@@ -1,18 +1,12 @@
+# Dependency Changes
+
+This document lists the original dependencies and the requested dependencies.
+
+## Original Dependencies
+
+```json
 {
-  "name": "nextn",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack -p 9002",
-    "genkit:dev": "genkit start -- tsx src/ai/dev.ts",
-    "genkit:watch": "genkit start -- tsx --watch src/ai/dev.ts",
-    "build": "NODE_ENV=production next build",
-    "start": "next start",
-    "lint": "next lint",
-    "typecheck": "tsc --noEmit"
-  },
   "dependencies": {
-    "@genkit-ai/google-genai": "^1.28.0",
     "@hookform/resolvers": "^4.1.3",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -38,18 +32,15 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
-    "dotenv": "^16.5.0",
     "embla-carousel-react": "^8.6.0",
     "firebase": "^11.9.1",
     "framer-motion": "^12.40.0",
-    "genkit": "^1.28.0",
     "lucide-react": "^0.475.0",
-    "next": "15.5.9",
-    "patch-package": "^8.0.0",
     "react": "^19.2.1",
     "react-day-picker": "^9.11.3",
     "react-dom": "^19.2.1",
     "react-hook-form": "^7.54.2",
+    "react-router-dom": "^6.23.0",
     "recharts": "^2.15.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
@@ -57,11 +48,57 @@
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^19.2.1",
-    "@types/react-dom": "^19.2.1",
-    "genkit-cli": "^1.28.0",
-    "postcss": "^8",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "postcss": "^8.4.38",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
   }
 }
+```
+
+## Requested Dependencies
+
+```json
+{
+  "dependencies": {
+    "@tanstack/react-query": "5.66.0",
+    "@tanstack/react-table": "8.21.3",
+    "axios": "1.16.1",
+    "clsx": "2.1.1",
+    "date-fns": "4.1.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-hook-form": "7.54.0",
+    "react-hot-toast": "2.5.1",
+    "react-icons": "5.5.0",
+    "react-router-dom": "^7.15.1",
+    "recharts": "2.15.0",
+    "yup": "1.6.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.2.0",
+    "@types/react": "18.3.18",
+    "@types/react-dom": "18.3.5",
+    "@vitejs/plugin-react": "4.3.4",
+    "autoprefixer": "10.4.21",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react": "7.37.5",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "jsdom": "26.0.0",
+    "postcss": "^8.5.15",
+    "prettier": "3.8.3",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.6.3",
+    "vite": "^5.4.21",
+    "vitest": "3.0.8"
+  }
+}
+```
