@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { User, AppData, Booking, Review, Activity, Camp } from '@/lib/types';
 import { 
@@ -54,9 +52,8 @@ import { X, Search, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { fmtDate, cn, uid } from '@/lib/utils';
 import { Badge } from '@/components/ui/badge';
-import { useRouter } from 'next/navigation'; // For client-side navigation
 
-export default function Home() {
+export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [pageParams, setPageParams] = useState<any>(null);
@@ -611,4 +608,3 @@ export default function Home() {
     </div>
   );  
 }
-

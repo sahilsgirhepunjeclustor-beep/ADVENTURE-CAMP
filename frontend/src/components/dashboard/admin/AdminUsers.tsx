@@ -7,7 +7,7 @@ import { User } from '@/lib/types';
 import { 
   Search, Users as UsersIcon, Ban, UserCheck, MoreHorizontal, FileText, Filter, UsersRound, 
   ChevronLeft, ChevronRight, ShieldAlert, Clock, ShieldCheck, Check, X, Shield, UserCog, Eye, EyeOff, Briefcase, Trash2,
-  AlertTriangle, Calendar, CheckCircle2, FileBadge
+  AlertTriangle, Calendar, CheckCircle2, FileBadge, ArrowLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -75,8 +75,13 @@ const formatDate = (dateString?: string | Date) => {
     return new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 };
 
-export default function AdminUsers() {
-  const [view, setView] = useState('all'); 
+interface AdminUsersProps {
+    onBack?: () => void;
+    initialTab?: string;
+}
+
+export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersProps) {
+  const [view, setView] = useState(initialTab); 
   const [allUsers, setAllUsers] = useState<Record<string, User>>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState('all'); 
@@ -239,9 +244,12 @@ export default function AdminUsers() {
     return (
         <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
             <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">{title}</h1>
-                    <p className="mt-1 text-sm sm:text-base text-gray-500 font-medium">{desc}</p>
+                <div className="flex items-center gap-4">
+                    {onBack && <Button variant="outline" size="icon" className="rounded-full h-12 w-12" onClick={onBack}><ArrowLeft size={18}/></Button>}
+                    <div>
+                        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">{title}</h1>
+                        <p className="mt-1 text-sm sm:text-base text-gray-500 font-medium">{desc}</p>
+                    </div>
                 </div>
                 <div className="flex w-full md:w-auto items-center gap-2 sm:gap-3">
                     <Button 

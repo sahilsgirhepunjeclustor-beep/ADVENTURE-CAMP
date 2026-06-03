@@ -12,19 +12,14 @@ import {
   User as UserIcon, 
   Shield, 
   Building2, 
-  FileUp,
   CheckCircle2,
   Lock,
   Mail,
   Smartphone,
-  MapPin,
   Mountain,
-  Camera,
-  ChevronRight,
   ArrowLeft,
   Search,
   Key,
-  AlertCircle,
   CreditCard,
   Hash,
   Briefcase,
@@ -58,21 +53,21 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
-  const [location, setLocation] = useState('');
-  const [dob, setDob] = useState('');
+  const [, setLocation] = useState('');
+  const [, setDob] = useState('');
   
   // Organizer Specific Fields
   const [businessName, setBusinessName] = useState('');
   const [businessAddress, setBusinessAddress] = useState('');
-  const [pincode, setPincode] = useState('');
+  const [, setPincode] = useState('');
   const [stateName, setStateName] = useState('');
   const [established, setEstablished] = useState('');
-  const [website, setWebsite] = useState('');
+  const [, setWebsite] = useState('');
   const [regNumber, setRegNumber] = useState('');
   const [gstNumber, setGstNumber] = useState('');
   const [panNumber, setPanNumber] = useState('');
-  const [primaryLocations, setPrimaryLocations] = useState('');
-  const [batchCapacity, setBatchCapacity] = useState('30');
+  const [, setPrimaryLocations] = useState('');
+  const [, setBatchCapacity] = useState('30');
   const [bankAccount, setBankAccount] = useState('');
   const [ifscCode, setIfscCode] = useState('');
   const [bankName, setBankName] = useState('');
@@ -83,8 +78,8 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
   const [regDoc, setRegDoc] = useState<UploadedDoc | undefined>();
   const [panDoc, setPanDoc] = useState<UploadedDoc | undefined>();
   const [bankDoc, setBankDoc] = useState<UploadedDoc | undefined>();
-  const [safetyDoc, setSafetyDoc] = useState<UploadedDoc | undefined>();
-  const [avatar, setAvatar] = useState<string | undefined>();
+  const [, setSafetyDoc] = useState<UploadedDoc | undefined>();
+  const [, setAvatar] = useState<string | undefined>();
 
   const logoIcon = PlaceHolderImages.find(img => img.id === 'logo-icon');
 
@@ -182,11 +177,11 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
       firstName,
       lastName,
       phone,
-      location,
-      dob,
+      location: '',
+      dob: '',
       password,
       role,
-      avatar,
+      avatar: '',
       createdAt: new Date().toISOString(),
       isApproved: role !== 'organizer',
       isRejected: false,
@@ -194,16 +189,16 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
       organizerProfile: role === 'organizer' ? {
         businessName,
         businessAddress,
-        businessPincode: pincode,
+        businessPincode: '',
         businessState: stateName,
-        website,
+        website: '',
         establishedYear: established,
         registrationNumber: regNumber,
         gstNumber,
         panNumber,
-        locations: primaryLocations,
+        locations: '',
         activities,
-        batchCapacity: parseInt(batchCapacity),
+        batchCapacity: 30,
         bankAccount,
         ifscCode,
         bankName,
@@ -211,7 +206,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
         registrationDoc: regDoc,
         panDoc,
         bankDoc,
-        safetyDoc
+        safetyDoc: undefined
       } : undefined
     };
 
@@ -457,7 +452,11 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                 <div className="space-y-3">
                    <Label className="text-sm font-black uppercase text-white/80">Select Identity Role *</Label>
                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      {['User','Organizer','Admin'].map(r => ({id: r.toLowerCase(), label: r, icon: r === 'User' ? UserIcon : r === 'Organizer' ? Mountain : Shield})).map(r => (
+                      {[
+                        {id: 'user', label: 'User', icon: UserIcon},
+                        {id: 'organizer', label: 'Organizer', icon: Mountain},
+                        {id: 'admin', label: 'Admin', icon: Shield}
+                      ].map(r => (
                         <div 
                           key={r.id} 
                           onClick={() => setRole(r.id as Role)}
