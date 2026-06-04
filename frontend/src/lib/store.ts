@@ -1,4 +1,5 @@
-import { User, AppData, Camp, Role, Booking, Review, Notification, MembershipPlan, Coupon, CMSContent, SupportTicket } from './types';
+import { User, AppData, Camp, Role, Booking, Review, Notification, MembershipPlan, Coupon, CMSContent, SupportTicket, Activity } from './types';
+import { addActivityLog } from './activity-log';
 
 const USERS_KEY = 'ac_users';
 const SESSION_KEY = 'ac_session';
@@ -221,6 +222,30 @@ export function addAdminNotification(notif: Notification) {
   admins.forEach(admin => {
     addUserNotification(admin.email, notif);
   });
+}
+
+export function logAdminAction(adminUser: User, action: string, details: string) {
+  const activity: Activity = {
+    id: `act_${Date.now()}`,
+    timestamp: new Date().toISOString(),
+    user: {
+      id: adminUser.id,
+      name: `${adminUser.firstName} ${adminUser.lastName}`,
+      email: adminUser.email,
+    },
+    action,
+    details
+  };
+  addActivityLog(activity);
+  
+  const notification: Notification = {
+      id: `notif_${Date.now()}`,
+      message: `${adminUser.firstName} ${action}: ${details}`,
+      timestamp: new Date().toISOString(),
+      read: false,
+      type: 'admin_action'
+  };
+  addAdminNotification(notification);
 }
 
 export function getGlobalAppData() {

@@ -221,10 +221,11 @@ export default function Sidebar({ currentUser, currentPage, pageParams, onNaviga
         ]
       },
       { page: 'organizers', label: 'Organizers', icon: Shield, children: [
-          { page: 'organizers', tab: 'pending', label: 'Pending Approvals', icon: ClipboardCheck },
-          { page: 'organizers', tab: 'approved', label: 'Approved', icon: CheckCircle2 },
+          { page: 'organizers', tab: 'all', label: 'All Organizers', icon: Users },
+          { page: 'organizers', tab: 'pending', label: 'Pending', icon: ClipboardCheck },
+          { page: 'organizers', tab: 'verified', label: 'Verified', icon: CheckCircle2 },
           { page: 'organizers', tab: 'suspended', label: 'Suspended', icon: PauseCircle },
-          { page: 'organizers', tab: 'documents', label: 'Documents', icon: FileText },
+          { page: 'organizers', tab: 'rejected', label: 'Rejected', icon: X },
         ]
       },
       { page: 'approvals', label: 'Camps', icon: Mountain, children: [
