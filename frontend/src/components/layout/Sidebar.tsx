@@ -71,7 +71,7 @@ const NavItem = ({ item, isCollapsed, currentPage, currentParams, onNavigate }: 
   onNavigate: (page: string, params?: any) => void;
 }) => {
   const Icon = item.icon;
-  const isActive = currentPage === item.page && (!item.tab || currentParams?.tab === item.tab);
+  const isActive = currentPage === item.page && (!item.tab || (currentParams?.tab || 'all') === item.tab);
 
   const navItemContent = (
     <div className={cn(
@@ -90,7 +90,7 @@ const NavItem = ({ item, isCollapsed, currentPage, currentParams, onNavigate }: 
     return (
       <Tooltip>
         <TooltipTrigger asChild>
-          <button onClick={() => onNavigate(item.page)} className="w-full">
+          <button onClick={() => onNavigate(item.page, item.tab ? { tab: item.tab } : { tab: 'all' })} className="w-full">
             {navItemContent}
           </button>
         </TooltipTrigger>
@@ -171,7 +171,7 @@ const NavGroup = ({ item, isCollapsed, currentPage, currentParams, onNavigate, t
       {!isCollapsed && isOpen && (
         <div className="space-y-1 pl-10 pr-2">
           {item.children.map((child: any) => {
-            const isChildActive = currentPage === child.page && currentParams?.tab === child.tab;
+            const isChildActive = currentPage === child.page && (currentParams?.tab || 'all') === child.tab;
             const ChildIcon = child.icon;
             return (
               <button
@@ -198,13 +198,15 @@ const NavGroup = ({ item, isCollapsed, currentPage, currentParams, onNavigate, t
 export default function Sidebar({ currentUser, currentPage, pageParams, onNavigate, onLogout, toggleSidebar, isMobile, isCollapsed }: SidebarProps) {
   const role = currentUser.role;
   const logoIcon = PlaceHolderImages.find(img => img.id === 'logo-icon');
-  const [openGroup, setOpenGroup] = useState<string | null>(['approvals','organizers','users','bookings','payments','memberships','marketing','cms','support','reports','security'].includes(currentPage) ? currentPage : null);
+  const [openGroup, setOpenGroup] = useState<string | null>(null);
 
   useEffect(() => {
-    if (['approvals','organizers','users','bookings','payments','memberships','marketing','cms','support','reports','security'].includes(currentPage)) {
+    const groupPages = ['approvals', 'organizers', 'users', 'bookings', 'payments', 'memberships', 'marketing', 'cms', 'support', 'reports', 'security'];
+    if (groupPages.includes(currentPage)) {
       setOpenGroup(currentPage);
     }
-  }, [currentPage]);
+  }, [currentPage, pageParams?.tab]);
+  
   const brandText = PlaceHolderImages.find(img => img.id === 'brand-text');
 
   const adminItems = [
@@ -212,9 +214,10 @@ export default function Sidebar({ currentUser, currentPage, pageParams, onNaviga
       { page: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
       { page: 'users', label: 'Users', icon: Users, children: [
           { page: 'users', tab: 'all', label: 'All Users', icon: Users },
+          { page: 'users', tab: 'pending', label: 'Pending', icon: Clock },
           { page: 'users', tab: 'verified', label: 'Verified Users', icon: CheckCircle2 },
           { page: 'users', tab: 'suspended', label: 'Suspended', icon: PauseCircle },
-          { page: 'users', tab: 'reports', label: 'Reports', icon: BarChart3 },
+          { page: 'users', tab: 'reports', label: 'Reports', icon: ShieldAlert },
         ]
       },
       { page: 'organizers', label: 'Organizers', icon: Shield, children: [
@@ -363,7 +366,7 @@ export default function Sidebar({ currentUser, currentPage, pageParams, onNaviga
                   </div>
                 ))
               ) : (
-                (role === 'organizer' ? organizerItems : userItems).map(item => <NavItem key={item.page} item={item} isCollapsed={!!isCollapsed} currentPage={currentPage} onNavigate={onNavigate} />)
+                (role === 'organizer' ? organizerItems : userItems).map(item => <NavItem key={item.page} item={item} isCollapsed={!!isCollapsed} currentPage={currentPage} currentParams={pageParams} onNavigate={onNavigate} />)
               )}
             </div>
           </ScrollArea>

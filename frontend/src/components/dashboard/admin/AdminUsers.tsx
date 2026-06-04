@@ -78,9 +78,10 @@ const formatDate = (dateString?: string | Date) => {
 interface AdminUsersProps {
     onBack?: () => void;
     initialTab?: string;
+    onNavigate?: (page: string, params?: any) => void;
 }
 
-export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersProps) {
+export default function AdminUsers({ onBack, initialTab = 'all', onNavigate }: AdminUsersProps) {
   const [view, setView] = useState(initialTab); 
   const [allUsers, setAllUsers] = useState<Record<string, User>>({});
   const [searchQuery, setSearchQuery] = useState('');
@@ -97,13 +98,21 @@ export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersPro
     setAllUsers(usersData || {});
   }, []);
 
+  useEffect(() => {
+    setView(initialTab);
+  }, [initialTab]);
+
   const { usersList, verifiedUsers, suspendedUsers, pendingUsers, reportUsers } = useMemo(() => {
     const users = Object.values(allUsers);
+    
+    // Admin should be considered verified if active. Other roles need approval.
+    const verified = users.filter(u => u.status === 'active' && (u.role === 'admin' || u.isApproved));
+
     return {
       usersList: users,
-      verifiedUsers: users.filter(u => u.isApproved && u.status === 'active'),
+      verifiedUsers: verified,
       suspendedUsers: users.filter(u => u.status === 'suspended'),
-      pendingUsers: users.filter(u => !u.isApproved && !u.isRejected && u.status !== 'suspended'),
+      pendingUsers: users.filter(u => !u.isApproved && !u.isRejected && u.status !== 'suspended' && u.status !== 'blocked'),
       reportUsers: users.filter(u => u.isRejected || u.status === 'blocked'), 
     };
   }, [allUsers]);
@@ -231,6 +240,7 @@ export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersPro
         { id: 'pending', label: 'Pending', icon: <Clock size={16}/> },
         { id: 'verified', label: 'Verified', icon: <UserCheck size={16}/> },
         { id: 'suspended', label: 'Suspended', icon: <Ban size={16}/> },
+        { id: 'reports', label: 'Reports', icon: <ShieldAlert size={16}/> },
     ];
 
     const titles: Record<string, { title: string, desc: string }> = {
@@ -238,6 +248,7 @@ export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersPro
       pending: { title: 'Pending Verifications', desc: 'Review users awaiting approval.' },
       verified: { title: 'Verified Users', desc: 'Approved users with active accounts.' },
       suspended: { title: 'Suspended Users', desc: 'Accounts temporarily blocked by administrators.' },
+      reports: { title: 'User Reports', desc: 'Users who have been reported or blocked.' },
     };
     const { title, desc } = titles[view] || titles['all'];
 
@@ -269,7 +280,14 @@ export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersPro
                 {navItems.map(item => (
                     <button 
                         key={item.id} 
-                        onClick={() => { setView(item.id); setRoleFilter('all'); }} 
+                        onClick={() => { 
+                            setRoleFilter('all');
+                            if (onNavigate) {
+                                onNavigate('users', { tab: item.id });
+                            } else {
+                                setView(item.id);
+                            }
+                        }} 
                         className={cn(
                             "relative flex items-center whitespace-nowrap gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-sm font-semibold transition-all duration-300", 
                             view === item.id ? "text-white shadow-md" : "text-gray-500 bg-white border border-gray-200 hover:bg-gray-50 hover:text-gray-800"
@@ -278,7 +296,7 @@ export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersPro
                         {view === item.id && (
                             <motion.div 
                                 layoutId="activeTab" 
-                                className="absolute inset-0 bg-gray-900 rounded-xl" 
+                                className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl" 
                                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
                             />
                         )}
@@ -342,6 +360,14 @@ export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersPro
                     <Card title="S. USERS" value={suspendedUsers.filter(u => !u.role || u.role === 'User').length} icon={<UsersIcon size={20} />} accent="pink" />
                 </motion.div>
             );
+        case 'reports':
+            return (
+                <motion.div key="reports" initial="hidden" animate="visible" variants={containerVariants} className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-6 sm:mb-8">
+                    <Card title="REPORTS" value={commonStats.reports} icon={<ShieldAlert size={20} />} accent="red" />
+                    <Card title="BLOCKED" value={reportUsers.filter(u => u.status === 'blocked').length} icon={<Ban size={20} />} accent="orange" />
+                    <Card title="REJECTED" value={reportUsers.filter(u => u.isRejected).length} icon={<X size={20} />} accent="pink" />
+                </motion.div>
+            );
         case 'all':
         default:
             return (
@@ -361,6 +387,7 @@ export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersPro
         pending: ['User Details', 'Registered Date', 'Role', 'Status'],
         verified: ['User Details', 'Verified On', 'Role', 'Status'],
         suspended: ['User Details', 'Reason/Notes', 'Suspended Date', 'Status'],
+        reports: ['User Details', 'Reason/Notes', 'Reported Date', 'Status'],
     };
 
     const renderRowContent = (user: User) => {
@@ -405,6 +432,13 @@ export default function AdminUsers({ onBack, initialTab = 'all' }: AdminUsersPro
                 </>
             );
             case 'suspended': return (
+                <>
+                    <td className="px-4 sm:px-6 py-4 text-sm font-medium text-gray-600 max-w-[150px] sm:max-w-[200px] truncate" title={notesStr}>{notesStr}</td>
+                    <td className="px-4 sm:px-6 py-4 text-sm font-medium text-gray-600 whitespace-nowrap">{formatDate(user.updatedAt)}</td>
+                    <td className="px-4 sm:px-6 py-4 whitespace-nowrap">{statusBadge}</td>
+                </>
+            );
+            case 'reports': return (
                 <>
                     <td className="px-4 sm:px-6 py-4 text-sm font-medium text-gray-600 max-w-[150px] sm:max-w-[200px] truncate" title={notesStr}>{notesStr}</td>
                     <td className="px-4 sm:px-6 py-4 text-sm font-medium text-gray-600 whitespace-nowrap">{formatDate(user.updatedAt)}</td>
