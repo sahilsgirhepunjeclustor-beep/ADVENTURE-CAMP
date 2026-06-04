@@ -1,6 +1,8 @@
 export type Role = 'admin' | 'organizer' | 'user';
 
 export interface User {
+  reviews: any;
+  camps: any;
   email: string;
   firstName: string;
   lastName: string;

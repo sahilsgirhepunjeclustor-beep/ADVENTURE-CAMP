@@ -350,7 +350,7 @@ const RecentBookings: FC<RecentBookingsProps> = ({ bookings, users }) => {
         ];
         return row.map(toCsv).join(',');
     });
-    const csvContent = [headers.join(','), ...csvRows].join('\n');
+    const csvContent = [headers.join(','), ...csvRows].join('\\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -420,25 +420,25 @@ const RecentBookings: FC<RecentBookingsProps> = ({ bookings, users }) => {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-6 lg:p-8 border border-slate-100 shadow-sm">
+    <div className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 border border-slate-100 shadow-sm">
         <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
             <div>
                 <h3 className="text-xl font-bold text-slate-800">Recent Bookings</h3>
                 <p className="text-sm text-slate-500 mt-1">{bookings.length} bookings • updated {timeAgo(new Date(Date.now() - 120000))}</p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
                 <div className="relative">
                     <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"/>
-                    <Input placeholder="Search bookings..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-9 w-40 md:w-48 h-9 rounded-lg"/>
+                    <Input placeholder="Search bookings..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-9 w-full sm:w-40 md:w-48 h-9 rounded-lg"/>
                 </div>
                 <Button variant="outline" onClick={handleFilterClick} className="h-9 gap-1.5"><Filter size={14}/> Filter</Button>
                 <Button variant="outline" onClick={handleExportCSV} className="h-9 gap-1.5"><File size={14}/> CSV</Button>
                 <Button onClick={handleExportPDF} className="h-9 gap-1.5 bg-slate-800 hover:bg-slate-700 text-white"><FileText size={14}/> PDF</Button>
             </div>
         </div>
-        <div className="flex gap-4 border-b border-slate-200 mb-2">
+        <div className="flex gap-4 border-b border-slate-200 mb-2 overflow-x-auto">
             {Object.entries(statusCounts).map(([status, count]) => (
-                <button key={status} onClick={() => setFilter(status)} className={cn("py-2.5 px-1 text-sm font-semibold border-b-2", filter === status ? "text-primary border-primary" : "text-slate-500 border-transparent hover:text-slate-700")}>
+                <button key={status} onClick={() => setFilter(status)} className={cn("py-2.5 px-1 text-sm font-semibold border-b-2 whitespace-nowrap", filter === status ? "text-primary border-primary" : "text-slate-500 border-transparent hover:text-slate-700")}>
                     {status} <span className="text-slate-400 font-medium ml-1">{count}</span>
                 </button>
             ))}
@@ -449,12 +449,12 @@ const RecentBookings: FC<RecentBookingsProps> = ({ bookings, users }) => {
                     <tr className="text-xs text-slate-400 uppercase bg-slate-50/50">
                         <th className="p-3 w-8 font-medium"><Checkbox /></th>
                         <th className="p-3 font-medium">Booking</th>
-                        <th className="p-3 font-medium">User</th>
+                        <th className="p-3 font-medium hidden md:table-cell">User</th>
                         <th className="p-3 font-medium">Camp</th>
-                        <th className="p-3 font-medium">Date</th>
+                        <th className="p-3 font-medium hidden lg:table-cell">Date</th>
                         <th className="p-3 font-medium cursor-pointer" onClick={() => setSort(s => ({ key: 'amount', order: s.order === 'asc' ? 'desc' : 'asc' }))}>Amount <span className={cn("text-slate-400", {'text-primary': sort.key === 'amount'})}>{sort.key === 'amount' ? (sort.order === 'asc' ? '↑' : '↓') : ''}</span></th>
                         <th className="p-3 font-medium">Status</th>
-                        <th className="p-3 font-medium">Payment</th>
+                        <th className="p-3 font-medium hidden sm:table-cell">Payment</th>
                         <th className="p-3 font-medium text-right">Actions</th>
                     </tr>
                 </thead>
@@ -466,25 +466,25 @@ const RecentBookings: FC<RecentBookingsProps> = ({ bookings, users }) => {
                             <tr key={b.id} className="border-b border-slate-100 hover:bg-slate-50/50">
                                 <td className="p-3"><Checkbox /></td>
                                 <td className="p-3 font-semibold text-slate-700">{`BK-${b.id.substring(0,5).toUpperCase()}`}</td>
-                                <td className="p-3">
+                                <td className="p-3 hidden md:table-cell">
                                     <div className="flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-full bg-green-100 text-green-700 flex items-center justify-center font-bold text-xs shrink-0">{user ? `${user.firstName[0]}${user.lastName[0]}` : '??'}</div>
                                         <span className="font-medium text-slate-800 truncate">{b.customer}</span>
                                     </div>
                                 </td>
                                 <td className="p-3 text-slate-600 max-w-xs truncate">{b.camp}</td>
-                                <td className="p-3 text-slate-600">{fmtDate(b.addedAt, {month: 'short', day: 'numeric', year: 'numeric'})}</td>
+                                <td className="p-3 text-slate-600 hidden lg:table-cell">{fmtDate(b.addedAt, {month: 'short', day: 'numeric', year: 'numeric'})}</td>
                                 <td className="p-3 font-semibold text-slate-800">{fmt(b.amount)}</td>
                                 <td className="p-3">
                                     <Badge className={cn("font-semibold border-none text-xs", `bg-${b.status === 'Confirmed' ? 'green' : b.status === 'Pending' ? 'amber' : b.status === 'Cancelled' ? 'slate' : 'red'}-100`, `text-${b.status === 'Confirmed' ? 'green' : b.status === 'Pending' ? 'amber' : b.status === 'Cancelled' ? 'slate' : 'red'}-700`)}>{b.status}</Badge>
                                 </td>
-                                <td className="p-3"><Badge className={cn("font-semibold border-none text-xs", payment.color)}>{payment.text}</Badge></td>
+                                <td className="p-3 hidden sm:table-cell"><Badge className={cn("font-semibold border-none text-xs", payment.color)}>{payment.text}</Badge></td>
                                 <td className="p-3">
                                     <div className="flex gap-1 justify-end">
                                         <Button variant="ghost" size="icon" className="w-8 h-8"><Eye size={16}/></Button>
-                                        <Button variant="ghost" size="icon" className="w-8 h-8"><RefreshCw size={16}/></Button>
-                                        <Button variant="ghost" size="icon" className="w-8 h-8 text-red-500"><X size={16}/></Button>
-                                        <Button variant="ghost" size="icon" className="w-8 h-8"><Download size={16}/></Button>
+                                        <Button variant="ghost" size="icon" className="w-8 h-8 hidden sm:flex"><RefreshCw size={16}/></Button>
+                                        <Button variant="ghost" size="icon" className="w-8 h-8 text-red-500 hidden md:flex"><X size={16}/></Button>
+                                        <Button variant="ghost" size="icon" className="w-8 h-8 hidden lg:flex"><Download size={16}/></Button>
                                         <Button variant="ghost" size="icon" className="w-8 h-8"><MoreHorizontal size={16}/></Button>
                                     </div>
                                 </td>
@@ -554,9 +554,9 @@ const ModerationQueues: FC<ModerationQueuesProps> = ({ pendingOrganizers, pendin
                            <Badge className="bg-amber-100 text-amber-700 font-semibold border-none px-1.5 py-0.5 text-[10px] shrink-0">PENDING</Badge>
                         </div>
                         <div className="flex items-center gap-2 text-xs text-slate-500 mt-1 flex-wrap">
-                            <span>{org.firstName} {org.lastName}</span><span className="text-slate-300">•</span>
-                            <span className="flex items-center gap-1"><MapPin size={12}/>{org.location}</span><span className="text-slate-300">•</span>
-                            <span className="flex items-center gap-1"><FileText size={12}/>{org.organizerProfile?.documents?.length || 0} docs</span><span className="text-slate-300">•</span>
+                            <span>{org.firstName} {org.lastName}</span><span className="text-slate-300"> • </span>
+                            <span className="flex items-center gap-1"><MapPin size={12}/>{org.location}</span><span className="text-slate-300"> • </span>
+                            <span className="flex items-center gap-1"><FileText size={12}/>{org.organizerProfile?.documents?.length || 0} docs</span><span className="text-slate-300"> • </span>
                             <span>{timeAgo(org.createdAt)}</span>
                         </div>
                     </div>
@@ -586,8 +586,8 @@ const ModerationQueues: FC<ModerationQueuesProps> = ({ pendingOrganizers, pendin
                     <div className="flex-1">
                         <p className="font-semibold text-sm text-slate-900 truncate">{camp.name}</p>
                         <div className="flex items-center gap-3 text-xs text-slate-500 mt-1 flex-wrap">
-                            <span className="truncate">{camp.organizer}</span><span className="text-slate-300">•</span>
-                            <span className="flex items-center gap-1"><MapPin size={12}/>{camp.location}</span><span className="text-slate-300">•</span>
+                            <span className="truncate">{camp.organizer}</span><span className="text-slate-300"> • </span>
+                            <span className="flex items-center gap-1"><MapPin size={12}/>{camp.location}</span><span className="text-slate-300"> • </span>
                             <Badge variant="outline" className="border-green-200 bg-green-50 text-green-700 font-medium">{camp.category}</Badge>
                         </div>
                     </div>
@@ -684,9 +684,7 @@ const StatCard: FC<StatCardProps> = ({ icon: Icon, title, value, trend, trendDir
         <div className="flex justify-between items-end mt-2">
           <p className="text-xs text-slate-400">{subtext}</p>
           <div className="w-24 h-10 -mr-2">
-            <ResponsiveContainer width="100%" height="100%"id={`rc-${gradId}`}>
-            <AreaChart data={chartData} id={`chart-${gradId}`}>
-            <defs><linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={color.stop} stopOpacity={0.3} /><stop offset="95%" stopColor={color.stop} stopOpacity={0} /></linearGradient></defs>
+            <ResponsiveContainer width="100%" height="100%"id={`rc-${gradId}`}>\n            <AreaChart data={chartData} id={`chart-${gradId}`}>\n            <defs><linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={color.stop} stopOpacity={0.3} /><stop offset="95%" stopColor={color.stop} stopOpacity={0} /></linearGradient></defs>
             <Area type="monotone" dataKey="value" stroke={color.hex} strokeWidth={2} fillOpacity={1} fill={`url(#${gradId})`} /></AreaChart>
             </ResponsiveContainer>
           </div>
@@ -1357,8 +1355,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
 
   // 6. FINAL JSX RETURN
   return (
-    <div className="px-4 md:px-8 space-y-8 pb-12 font-sans font-normal animate-in fade-in duration-500">
-       {/* Aapka Dashboard UI yahan continue hoga... */}
+    <div className="px-4 sm:px-6 lg:px-8 space-y-8 pb-12 font-sans font-normal animate-in fade-in duration-500">
        <div className="bg-gradient-to-br from-green-800 to-green-600 rounded-3xl p-6 md:p-8 text-white shadow-2xl relative overflow-hidden">
         <div className="relative z-10">
           <div className="flex flex-wrap justify-between items-start mb-6">
@@ -1369,8 +1366,8 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div>
-              <h2 className="text-4xl font-bold tracking-tighter mb-2">Good morning, {currentUser.firstName} 👋</h2>
-              <p className="text-green-200 max-w-lg">Here what moving across the Wildhaven platform today.</p>
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter mb-2">Good morning, {currentUser.firstName} 👋</h2>
+              <p className="text-green-200 max-w-lg">Here's what's moving across the Wildhaven platform today.</p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
               <HeaderStat icon={Mountain} label="Active Trips" value={totalCamps} />
@@ -1382,8 +1379,8 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {platformStats.map(stat => <StatCard key={stat.title} {...stat} />)}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {platformStats.slice(0, 12).map(stat => <StatCard key={stat.title} {...stat} />)}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
