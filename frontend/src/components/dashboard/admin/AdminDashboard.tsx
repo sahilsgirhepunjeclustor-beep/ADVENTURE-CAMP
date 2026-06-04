@@ -1,4 +1,4 @@
-
+ 
 "use client";
 
 import React, { useMemo, useState, useEffect, FC, ReactNode } from 'react';
@@ -103,6 +103,7 @@ import {
   ComposedChart,
   LegendProps,
 } from 'recharts';
+import AdminOrganizers from './AdminOrganizers';
 
 interface AdminDashboardProps {
   currentUser: User;
@@ -350,7 +351,7 @@ const RecentBookings: FC<RecentBookingsProps> = ({ bookings, users }) => {
         ];
         return row.map(toCsv).join(',');
     });
-    const csvContent = [headers.join(','), ...csvRows].join('\\n');
+    const csvContent = [headers.join(','), ...csvRows].join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -684,7 +685,7 @@ const StatCard: FC<StatCardProps> = ({ icon: Icon, title, value, trend, trendDir
         <div className="flex justify-between items-end mt-2">
           <p className="text-xs text-slate-400">{subtext}</p>
           <div className="w-24 h-10 -mr-2">
-            <ResponsiveContainer width="100%" height="100%"id={`rc-${gradId}`}>\n            <AreaChart data={chartData} id={`chart-${gradId}`}>\n            <defs><linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={color.stop} stopOpacity={0.3} /><stop offset="95%" stopColor={color.stop} stopOpacity={0} /></linearGradient></defs>
+            <ResponsiveContainer width="100%" height="100%"id={`rc-${gradId}`}>           <AreaChart data={chartData} id={`chart-${gradId}`}>\n            <defs><linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={color.stop} stopOpacity={0.3} /><stop offset="95%" stopColor={color.stop} stopOpacity={0} /></linearGradient></defs>
             <Area type="monotone" dataKey="value" stroke={color.hex} strokeWidth={2} fillOpacity={1} fill={`url(#${gradId})`} /></AreaChart>
             </ResponsiveContainer>
           </div>
@@ -1123,7 +1124,7 @@ const SystemHealth: FC<SystemHealthProps> = ({ bookings }) => {
   const failedPaymentsPercentage = useMemo(() => {
     const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     const recentBookings = bookings.filter(b => new Date(b.addedAt) > twentyFourHoursAgo);
-    if (recentBookings.length === 0) return 0;
+    if (recentBookings.length === 0) return .0;
     const failed = recentBookings.filter(b => b.status === 'Disputed').length;
     return (failed / recentBookings.length) * 100;
   }, [bookings]);
@@ -1199,6 +1200,14 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
   const [userToProcess, setUserToProcess] = useState<User | null>(null);
   const [dateTime, setDateTime] = useState(new Date());
   const [mounted, setMounted] = useState(false);
+  const [activeView, setActiveView] = useState('dashboard');
+  const [viewParams, setViewParams] = useState<any>({});
+
+  const handleNavigate = (page: string, params: any) => {
+    setActiveView(page);
+    setViewParams(params);
+  }
+
 
   // 2. USE-EFFECT (EK HI BLOCK MEIN)
   useEffect(() => {
@@ -1312,6 +1321,11 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
   ], [totalRevenue, totalCommission, totalUsersCount, approvedUsersList.length, activeOrganizers, totalCamps, liveBookings, refundRequests, auditTotal, activeMembers, monthlyGrowth, conversionRate]);
 
   // 4. CONDITIONAL RETURN (Hooks ke BAAD aur JSX se PEHLE)
+
+  if (activeView === 'approvals') {
+    return <AdminOrganizers onBack={() => setActiveView('dashboard')} initialTab={viewParams?.tab} />
+  }
+
   if (!mounted) return null;
 
   // 5. EVENT HANDLERS
@@ -1404,7 +1418,7 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
                       onRejectOrg={(user) => { setUserToProcess(user); setIsRejectDialogOpen(true); }}
                       onApproveCamp={(id) => handleCampAction(id, 'approve')}
                       onRejectCamp={(id) => handleCampAction(id, 'reject')}
-                      onNavigate={onNavigate}
+                      onNavigate={handleNavigate}
                   />
               </div>
               <div className="lg:col-span-4">
