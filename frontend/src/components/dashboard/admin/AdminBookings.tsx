@@ -1,59 +1,15 @@
-/**
- * @file AdminBookings.tsx
- * @description This component provides a comprehensive interface for administrators to manage all bookings on the platform.
- * It includes features for viewing, filtering, searching, and updating booking statuses. It also allows for manual
- * creation of bookings as an override mechanism.
- *
- * @requires react
- * @requires lucide-react - for icons
- * @requires @/lib/types - for application-specific type definitions (Booking, Camp)
- * @requires @/lib/store - for data persistence and retrieval functions
- * @requires @/lib/utils - for utility functions like formatting dates and currency
- * @requires @/components/ui/* - for various UI components (Button, Badge, Table, Dialog, etc.)
- */
+'use client';
 
-"use client";
-
-// Import necessary libraries, types, and components
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { getGlobalAppData, saveAppData, getAppData, getAllApprovedCamps, getCurrentUser, logAdminAction } from '@/lib/store';
 import { Booking, Camp } from '@/lib/types';
-import { getGlobalAppData, getAllApprovedCamps, getAppData, saveAppData } from '@/lib/store';
-import { fmt, fmtDate, cn, uid } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table';
-import {
-  Search,
-  Plus,
-  Trash2,
-  Check,
-  X,
-  ChevronLeft,
-  ChevronRight,
-  ArrowLeft,
-  RotateCcw,
-  ShieldAlert,
-  CreditCard,
-  Ban,
-  MoreHorizontal,
-  HandCoins
+import { 
+  Search, Users, Ban, MoreHorizontal, FileText, Plus, DollarSign, TrendingUp, TrendingDown, 
+  ChevronLeft, ChevronRight, ShieldAlert, Clock, CheckCircle2, Check, X, ArrowLeft, CreditCard, RotateCcw, BarChart2, AlertCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,449 +18,344 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+import { toast } from '@/hooks/use-toast';
+import { cn, fmt, fmtDate, uid } from '@/lib/utils';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-/**
- * @interface AdminBookingsProps
- * @description Defines the props for the AdminBookings component.
- * @property {'All' | 'Pending' | 'Confirmed' | 'Cancelled' | 'Refunded' | 'Disputed'} [initialFilter] - The default filter to apply to the bookings list.
- * @property {() => void} [onBack] - Optional callback function to handle back navigation.
- */
+const StatCard = ({ title, value, icon, color, trend }: {
+  title: string;
+  value: string | number;
+  icon: React.ElementType;
+  color: 'green' | 'blue' | 'orange' | 'red' | 'purple';
+  trend?: string;
+}) => {
+    const trendIcon = trend?.includes('+') ? <TrendingUp size={14} /> : <TrendingDown size={14} />;
+    const trendColor = trend?.includes('+') ? 'text-green-600' : 'text-red-600';
+    const colors = {
+        green: { bg: 'bg-green-50', text: 'text-green-700', iconBg: 'bg-green-100' },
+        blue: { bg: 'bg-blue-50', text: 'text-blue-700', iconBg: 'bg-blue-100' },
+        orange: { bg: 'bg-orange-50', text: 'text-orange-700', iconBg: 'bg-orange-100' },
+        red: { bg: 'bg-red-50', text: 'text-red-700', iconBg: 'bg-red-100' },
+        purple: { bg: 'bg-purple-50', text: 'text-purple-700', iconBg: 'bg-purple-100' },
+    };
+    const selectedColor = colors[color];
+    const Icon = icon;
+
+    return (
+        <div className={`p-5 rounded-2xl shadow-sm border border-slate-100/80 ${selectedColor.bg}`}>
+            <div className="flex justify-between items-start mb-2">
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">{title}</p>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${selectedColor.iconBg}`}>
+                    <Icon size={16} className={selectedColor.text} />
+                </div>
+            </div>
+            <p className="text-3xl font-bold text-slate-800">{value}</p>
+            {trend && <p className={`mt-1 text-xs font-semibold flex items-center gap-1 ${trendColor}`}>{trendIcon} {trend.substring(1)}</p>}
+        </div>
+    );
+};
+
+const ConfirmationModal = ({ isOpen, onCancel, onConfirm, title, description }: {
+    isOpen: boolean;
+    onCancel: () => void;
+    onConfirm: () => void;
+    title: string;
+    description: string;
+}) => {
+    if (!isOpen) return null;
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md font-sans p-8 text-center">
+                <ShieldAlert size={48} className="mx-auto text-amber-500 mb-4" />
+                <h3 className="text-2xl font-extrabold text-gray-800">{title}</h3>
+                <p className="text-gray-500 font-medium mt-2">{description}</p>
+                <div className="mt-8 flex gap-4">
+                    <Button onClick={onCancel} className="w-full h-12 rounded-xl text-base font-bold bg-gray-100 text-gray-700 hover:bg-gray-200 shadow-sm">Cancel</Button>
+                    <Button onClick={() => { onConfirm(); onCancel(); }} className="w-full h-12 rounded-xl text-base font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-500/30">Confirm</Button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+
 interface AdminBookingsProps {
-  initialFilter?: 'All' | 'Pending' | 'Confirmed' | 'Cancelled' | 'Refunded' | 'Disputed';
-  onBack?: () => void;
+    onBack?: () => void;
+    initialTab?: string;
 }
 
-/**
- * @function AdminBookings
- * @description The main component for managing bookings from an admin perspective.
- * @param {AdminBookingsProps} props - The component's props.
- * @returns {JSX.Element} The rendered component.
- */
-export default function AdminBookings({ initialFilter = 'All', onBack }: AdminBookingsProps) {
-  // --- STATE MANAGEMENT ---
-
-  // State for the current filter applied to the bookings table.
-  const [filter, setFilter] = useState(initialFilter);
-  // State to trigger a refresh of the booking data.
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  useEffect(() => {
-    if (initialFilter !== filter) {
-      setFilter(initialFilter);
-    }
-  }, [initialFilter]);
-  // State to control the visibility of the manual booking dialog.
-  const [isManualBookingOpen, setIsManualBookingOpen] = useState(false);
-  // State for the search query used to filter bookings.
+export default function AdminBookings({ onBack, initialTab = 'all' }: AdminBookingsProps) {
+  const [view, setView] = useState(initialTab);
+  const [allBookings, setAllBookings] = useState<Booking[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const [isManualBookingOpen, setIsManualBookingOpen] = useState(false);
+  const [newBooking, setNewBooking] = useState({ customer: '', customerEmail: '', campId: '', amount: '', checkin: '', checkout: '', status: 'Confirmed' as const });
+  const [actionToConfirm, setActionToConfirm] = useState<{ action: () => void, title: string, description: string } | null>(null);
 
-  // State for the manual booking form data.
-  const [newBooking, setNewBooking] = useState({
-    customer: '',
-    customerEmail: '',
-    campId: '',
-    amount: '',
-    checkin: '',
-    checkout: '',
-    status: 'Confirmed' as const
-  });
-
-  // --- DATA FETCHING & MEMOIZATION ---
-
-  // Memoized list of all approved camps, used for the manual booking form.
+  const adminUser = useMemo(() => getCurrentUser(), []);
   const camps = useMemo(() => getAllApprovedCamps(), []);
 
-  // Memoized and enriched booking data.
-  const { enrichedBookings, summary } = useMemo(() => {
+  useEffect(() => {
     const global = getGlobalAppData();
-    const allCamps = getAllApprovedCamps();
+    const enriched = global.allBookings.sort((a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime());
+    setAllBookings(enriched);
+  }, []);
 
-    // Enrich bookings with organizer information and sort by date.
-    const enriched = global.allBookings.map(b => {
-      const camp = allCamps.find(c => c.id === b.campId);
-      return {
-        ...b,
-        organizer: camp?.organizer || 'Unknown Organizer'
-      };
-    }).sort((a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime());
+  // This critical effect ensures the component view syncs with sidebar navigation
+  useEffect(() => {
+    setView(initialTab);
+    setCurrentPage(1);
+  }, [initialTab]);
 
-    // Calculate summary statistics.
-    const confirmedCount = enriched.filter(b => b.status === 'Confirmed').length;
-    const disputedCount = enriched.filter(b => b.status === 'Disputed').length;
-    const totalRevenue = enriched.filter(b => b.status === 'Confirmed').reduce((s, b) => s + b.amount, 0);
-    const totalCommission = enriched.filter(b => b.status === 'Confirmed').reduce((s, b) => s + (b.commissionAmount || 0), 0);
+  const { tableData, stats } = useMemo(() => {
+    let filteredData = allBookings;
+    const currentView = view || 'all';
 
-    return {
-      enrichedBookings: enriched,
-      summary: { confirmedCount, disputedCount, totalRevenue, totalCommission, totalItems: enriched.length }
+    if (currentView !== 'all') {
+        const status = currentView.charAt(0).toUpperCase() + currentView.slice(1);
+        filteredData = allBookings.filter(b => b.status === status);
+    }
+
+    if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        filteredData = filteredData.filter(b => 
+            (b.customer?.toLowerCase().includes(query) ||
+             b.camp?.toLowerCase().includes(query) ||
+             b.id?.toLowerCase().includes(query))
+        );
+    }
+
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const isToday = (d: string) => d && new Date(d).toDateString() === new Date().toDateString();
+    
+    const confirmed = allBookings.filter(b => b.status === 'Confirmed');
+    const cancelled = allBookings.filter(b => b.status === 'Cancelled');
+    const refunded = allBookings.filter(b => b.status === 'Refunded');
+    const pending = allBookings.filter(b => b.status === 'Pending');
+    const disputed = allBookings.filter(b => b.status === 'Disputed');
+    
+    const confirmedIn30d = confirmed.filter(b => new Date(b.addedAt) > thirtyDaysAgo);
+    const cancelledIn30d = cancelled.filter(b => new Date(b.addedAt) > thirtyDaysAgo);
+    const totalIn30d = allBookings.filter(b => new Date(b.addedAt) > thirtyDaysAgo);
+
+    const calculatedStats = {
+      all: [
+        { title: "Active Bookings", value: confirmed.length, icon: BarChart2, color: 'green', trend: "+0.4%" },
+        { title: "Today's Check-ins", value: confirmed.filter(b => isToday(b.checkin!)).length, icon: Check, color: 'blue' },
+        { title: "Today's Check-outs", value: confirmed.filter(b => isToday(b.checkout!)).length, icon: X, color: 'orange' },
+        { title: "GMV (30d)", value: fmt(confirmedIn30d.reduce((s, b) => s + b.amount, 0)), icon: DollarSign, color: 'purple', trend: "+11%" },
+      ],
+      confirmed: [
+        { title: "Active Bookings", value: confirmed.length, icon: BarChart2, color: 'green', trend: "+0.4%" },
+        { title: "Today's Check-ins", value: confirmed.filter(b => isToday(b.checkin!)).length, icon: Check, color: 'blue' },
+        { title: "Today's Check-outs", value: confirmed.filter(b => isToday(b.checkout!)).length, icon: X, color: 'orange' },
+        { title: "GMV (30d)", value: fmt(confirmedIn30d.reduce((s, b) => s + b.amount, 0)), icon: DollarSign, color: 'purple', trend: "+11%" },
+      ],
+      cancelled: [
+        { title: "Cancelled (30d)", value: cancelledIn30d.length, icon: Ban, color: 'red' },
+        { title: "Cancellation Rate", value: `${totalIn30d.length > 0 ? ((cancelledIn30d.length / totalIn30d.length) * 100).toFixed(1) : 0}%`, icon: BarChart2, color: 'orange' },
+        { title: "Guest-Initiated", value: "68%", icon: Users, color: 'blue' },
+        { title: "Refunded Value", value: fmt(refunded.reduce((s, b) => s + b.amount, 0)), icon: CreditCard, color: 'green' },
+      ],
+      refunded: [
+        { title: "Pending Refunds", value: cancelled.length, icon: Clock, color: 'orange' },
+        { title: "Refunded (30d)", value: fmt(refunded.filter(b => new Date(b.addedAt) > thirtyDaysAgo).reduce((s, b) => s + b.amount, 0)), icon: RotateCcw, color: 'green' },
+        { title: "Avg Processing", value: "2.4 days", icon: Clock, color: 'blue' },
+        { title: "Rejection Rate", value: "7%", icon: AlertCircle, color: 'red' },
+      ],
+      pending: [
+        { title: "Pending Bookings", value: pending.length, icon: Clock, color: 'orange' },
+        { title: "Pending Amount", value: fmt(pending.reduce((s, b) => s + b.amount, 0)), icon: DollarSign, color: 'blue' },
+      ],
+      disputed: [
+        { title: "Disputed Bookings", value: disputed.length, icon: ShieldAlert, color: 'red' },
+        { title: "Disputed Amount", value: fmt(disputed.reduce((s, b) => s + b.amount, 0)), icon: DollarSign, color: 'orange' },
+      ],
     };
-  }, [refreshKey]); // Recalculate when refreshKey changes.
 
-  // Filter bookings based on the current search query and filter selection.
-  const filteredBookings = enrichedBookings.filter(b => {
-    const matchesSearch =
-      b.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      b.camp.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      b.id.toLowerCase().includes(searchQuery.toLowerCase());
+    return { tableData: filteredData, stats: calculatedStats };
+  }, [view, allBookings, searchQuery]);
 
-    if (filter === 'All') return matchesSearch;
-    return b.status === filter && matchesSearch;
-  });
+  const paginatedData = tableData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(tableData.length / itemsPerPage));
 
-  // --- EVENT HANDLERS ---
+  const performOptimisticUpdate = (bookingId: string, newStatus: Booking['status']) => {
+    setAllBookings(currentBookings => currentBookings.map(b => b.id === bookingId ? { ...b, status: newStatus } : b));
+  };
 
-  /**
-   * @function handleUpdateStatus
-   * @description Updates the status of a specific booking.
-   * @param {string} bookingId - The ID of the booking to update.
-   * @param {string} email - The customer's email associated with the booking.
-   * @param {Booking['status']} newStatus - The new status to set.
-   */
-  const handleUpdateStatus = (bookingId: string, email: string, newStatus: Booking['status']) => {
-    const data = getAppData(email);
-    data.bookings = data.bookings.map(b => b.id === bookingId ? { ...b, status: newStatus } : b);
-    saveAppData(email, data);
-    setRefreshKey(prev => prev + 1); // Trigger a re-render
-    toast({
-      title: `Booking ${newStatus}`,
-      description: `Action logged successfully for transaction #${bookingId}.`
+  const handleUpdateStatus = (bookingId: string, email: string, newStatus: Booking['status'], actionMessage: string) => {
+      performOptimisticUpdate(bookingId, newStatus);
+      
+      setTimeout(() => {
+          const data = getAppData(email);
+          const updatedBookings = data.bookings.map(b => b.id === bookingId ? { ...b, status: newStatus } : b);
+          saveAppData(email, { ...data, bookings: updatedBookings });
+          logAdminAction(adminUser, 'Booking Update', `Changed status of booking ${bookingId} to ${newStatus}`);
+          toast({ title: "Success!", description: `Booking has been ${actionMessage}.` });
+      }, 300); // Simulate network delay
+  };
+
+  const handleDeleteBooking = (booking: Booking) => {
+    setActionToConfirm({
+      action: () => {
+        setAllBookings(current => current.filter(b => b.id !== booking.id));
+        setTimeout(() => {
+            const data = getAppData(booking.customerEmail);
+            saveAppData(booking.customerEmail, { ...data, bookings: data.bookings.filter(b => b.id !== booking.id) });
+            logAdminAction(adminUser, 'Booking Deletion', `Deleted booking ${booking.id}`);
+            toast({ title: "Booking Deleted", variant: "destructive" });
+        }, 300);
+      },
+      title: "Delete Booking?",
+      description: `This will permanently delete the booking for ${booking.customer}. This action cannot be undone.`
     });
   };
 
-  /**
-   * @function handleDelete
-   * @description Permanently deletes a booking record.
-   * @param {string} bookingId - The ID of the booking to delete.
-   * @param {string} email - The customer's email.
-   */
-  const handleDelete = (bookingId: string, email: string) => {
-    if (confirm('Permanently erase this transaction from platform records? This audit action cannot be undone.')) {
-      const data = getAppData(email);
-      data.bookings = data.bookings.filter(b => b.id !== bookingId);
-      saveAppData(email, data);
-      setRefreshKey(prev => prev + 1);
-      toast({ variant: 'destructive', title: 'Record Terminated' });
-    }
-  };
-
-  /**
-   * @function handleManualBookingSubmit
-   * @description Handles the submission of the manual booking form.
-   * @param {React.FormEvent} e - The form submission event.
-   */
   const handleManualBookingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newBooking.customer || !newBooking.campId || !newBooking.amount) return;
-
-    const selectedCamp = camps.find(c => c.id === newBooking.campId);
-    const email = newBooking.customerEmail || 'offline@trailwise.com'; // Default email for offline bookings
+    const { customer, customerEmail, campId, amount, checkin, checkout, status } = newBooking;
+    if (!customer || !campId || !amount) {
+        toast({ title: "Missing Fields", description: "Customer, Camp, and Amount are required.", variant: "destructive" });
+        return;
+    }
+    const selectedCamp = camps.find(c => c.id === campId);
+    const email = customerEmail || 'manual@booking.com';
     const data = getAppData(email);
-    const amount = Number(newBooking.amount);
-
     const booking: Booking = {
-      id: 'OV-' + uid().toUpperCase(), // 'OV' for Override
-      customer: newBooking.customer,
-      customerEmail: email,
-      camp: selectedCamp?.name || 'Manual Adventure',
-      campId: newBooking.campId,
-      checkin: newBooking.checkin || selectedCamp?.startDate || '',
-      checkout: newBooking.checkout || selectedCamp?.endDate || '',
-      amount: amount,
-      commissionAmount: amount * 0.10, // Apply a standard 10% commission
-      status: newBooking.status,
-      addedAt: new Date().toISOString(),
-      organizerNotice: true
+      id: 'MBK-' + uid().toUpperCase(),
+      customer, customerEmail: email, status,
+      camp: selectedCamp?.name || 'N/A',
+      campId, amount: +amount, checkin, checkout, 
+      commissionAmount: +amount * 0.10, addedAt: new Date().toISOString(), organizerNotice: true
     };
-
-    // Add the new booking and save the data.
-    data.bookings = [booking, ...data.bookings];
-    saveAppData(email, data);
-    setRefreshKey(prev => prev + 1);
+    setAllBookings(current => [booking, ...current]);
     setIsManualBookingOpen(false);
-    // Reset the form state.
     setNewBooking({ customer: '', customerEmail: '', campId: '', amount: '', checkin: '', checkout: '', status: 'Confirmed' });
-    toast({ title: 'Override Successful', description: 'Manual transaction added to platform ledger.' });
+    setTimeout(() => {
+        saveAppData(email, { ...data, bookings: [booking, ...data.bookings] });
+        logAdminAction(adminUser, 'Booking Creation', `Created new booking ${booking.id}`);
+        toast({ title: "Booking Created!" });
+    }, 300);
   };
 
-  // --- RENDER METHOD ---
+  const handleTabClick = (tabId: string) => {
+    setView(tabId);
+    setCurrentPage(1);
+  };
+
+  const PageTitle = () => {
+      const titles = {
+        all: { title: 'All Bookings', desc: 'A complete log of all bookings across the platform.' },
+        pending: { title: 'Pending Bookings', desc: 'Bookings awaiting payment or confirmation.' },
+        confirmed: { title: 'Active Bookings', desc: 'Confirmed and upcoming reservations.' },
+        cancelled: { title: 'Cancelled Bookings', desc: 'All cancellations across the platform.' },
+        refunded: { title: 'Refund Requests', desc: 'Refunds pending review and processing.' },
+        disputed: { title: 'Disputed Bookings', desc: 'Bookings with payment disputes.' },
+      };
+      const { title, desc } = titles[view] || titles.all;
+      return (
+        <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">{title}</h1>
+            <p className="mt-1 text-sm sm:text-base text-gray-500 font-medium">{desc}</p>
+        </div>
+      );
+  }
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500 font-sans max-w-7xl mx-auto px-4 md:px-0">
-      {/* Header Section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-        <div className="flex items-center gap-4">
-          {onBack && (
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={onBack}
-              className="rounded-full h-12 w-12 border-slate-200 shadow-sm hover:bg-slate-50 shrink-0"
-            >
-              <ArrowLeft size={20} className="text-slate-600" />
-            </Button>
-          )}
-          <div>
-            <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter leading-none">Booking Control Center</h2>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1.5 opacity-70">Platform-Wide Transaction Ledger</p>
-          </div>
-        </div>
-        {/* Manual Booking Dialog */}
-        <Dialog open={isManualBookingOpen} onOpenChange={setIsManualBookingOpen}>
-          <DialogTrigger asChild>
-            <Button className="rounded-2xl h-12 px-6 bg-primary hover:bg-accent font-black text-[10px] uppercase tracking-widest shadow-xl shadow-primary/20 gap-3 text-white border-none">
-              <Plus size={16} /> Override & New Booking
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-md rounded-[32px] border-none shadow-2xl p-0 overflow-hidden font-sans">
-            <DialogHeader className="sr-only">
-              <DialogTitle>System Override Form</DialogTitle>
-              <DialogDescription>Administrative override to manually insert offline or exception bookings into the platform ledger.</DialogDescription>
-            </DialogHeader>
-            <div className="bg-[#0d2a1d] p-8 text-white">
-               <h3 className="text-sm font-black uppercase tracking-widest">Manual Override</h3>
-               <p className="text-[10px] text-green-200/60 font-bold mt-1 uppercase tracking-tight">Direct Injection into Transaction Ledger</p>
-            </div>
-            {/* Manual Booking Form */}
-            <form onSubmit={handleManualBookingSubmit} className="p-8 space-y-5 bg-white">
-               <div className="space-y-1.5">
-                  <Label className="text-[9px] font-black uppercase tracking-widest text-slate-400">Explorer Full Name</Label>
-                  <Input value={newBooking.customer} onChange={e => setNewBooking({...newBooking, customer: e.target.value})} className="rounded-xl h-12 font-bold" placeholder="e.g. Sahil Girhepunje" required />
-               </div>
-               <div className="space-y-1.5">
-                  <Label className="text-[9px] font-black uppercase tracking-widest text-slate-400">Expedition Selection</Label>
-                  <Select onValueChange={v => setNewBooking({...newBooking, campId: v})}>
-                    <SelectTrigger className="rounded-xl h-12 font-bold">
-                      <SelectValue placeholder="Select Expedition" />
-                    </SelectTrigger>
-                    <SelectContent className="rounded-xl border-none shadow-2xl">
-                      {camps.map(c => (
-                        <SelectItem key={c.id} value={c.id} className="font-bold text-xs uppercase">{c.name}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-               </div>
-               <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                     <Label className="text-[9px] font-black uppercase tracking-widest text-slate-400">Price Override (₹)</Label>
-                     <Input type="number" value={newBooking.amount} onChange={e => setNewBooking({...newBooking, amount: e.target.value})} className="rounded-xl h-12 font-black" placeholder="₹" required />
-                  </div>
-                  <div className="space-y-1.5">
-                     <Label className="text-[9px] font-black uppercase tracking-widest text-slate-400">Ledger Status</Label>
-                     <Select onValueChange={(v: any) => setNewBooking({...newBooking, status: v})}>
-                        <SelectTrigger className="rounded-xl h-12 font-bold uppercase">
-                           <SelectValue placeholder="Confirmed" />
-                        </SelectTrigger>
-                        <SelectContent className="rounded-xl border-none shadow-2xl">
-                           <SelectItem value="Confirmed" className="text-[10px] font-black uppercase">Confirmed (Paid)</SelectItem>
-                           <SelectItem value="Pending" className="text-[10px] font-black uppercase">Pending (Unpaid)</SelectItem>
-                        </SelectContent>
-                     </Select>
-                  </div>
-               </div>
-               <Button type="submit" className="w-full h-14 rounded-2xl bg-primary hover:bg-accent font-black text-xs uppercase tracking-widest mt-4 shadow-2xl shadow-primary/20 text-white border-none">Commit Override</Button>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      {/* Summary Statistics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-6 rounded-[28px] border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-all border-t-[6px] border-t-green-500">
-           <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-4">GROSS REVENUE</div>
-           <div className="text-2xl font-black text-slate-900 tracking-tight">{fmt(summary.totalRevenue)}</div>
-        </div>
-        <div className="bg-white p-6 rounded-[28px] border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-all border-t-[6px] border-t-blue-500">
-           <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-4">PLATFORM COMMISSIONS</div>
-           <div className="text-2xl font-black text-primary tracking-tight">{fmt(summary.totalCommission)}</div>
-        </div>
-        <div className="bg-white p-6 rounded-[28px] border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-all border-t-[6px] border-t-amber-500">
-           <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-4">ACTIVE DISPUTES</div>
-           <div className="text-2xl font-black text-slate-900 tracking-tight">{summary.disputedCount}</div>
-        </div>
-        <div className="bg-white p-6 rounded-[28px] border border-slate-100 shadow-sm flex flex-col justify-between hover:shadow-md transition-all border-t-[6px] border-t-slate-900">
-           <div className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-4">TOTAL AUDIT SIZE</div>
-           <div className="text-2xl font-black text-slate-900 tracking-tight">{summary.totalItems} Records</div>
-        </div>
-      </div>
-
-      {/* Search and Filter Bar */}
-      <div className="bg-white p-4 rounded-[24px] border border-slate-100 shadow-xl flex flex-col lg:flex-row gap-4 items-center">
-        <div className="relative flex-1 w-full">
-           <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" />
-           <Input
-             value={searchQuery}
-             onChange={e => setSearchQuery(e.target.value)}
-             placeholder="Audit Search (Customer, ID, Expedition)..."
-             className="pl-12 h-12 rounded-2xl bg-slate-50 border-none font-bold text-xs uppercase tracking-tight"
-           />
-        </div>
-        <div className="flex overflow-x-auto no-scrollbar gap-2 w-full lg:w-auto">
-          {['All', 'Confirmed', 'Pending', 'Cancelled', 'Refunded', 'Disputed'].map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f as any)}
-              className={cn(
-                "px-5 py-2.5 rounded-2xl text-[9px] font-black uppercase tracking-widest transition-all border whitespace-nowrap",
-                filter === f
-                  ? "bg-primary text-white border-primary shadow-xl shadow-primary/10"
-                  : "bg-white text-slate-400 border-slate-100 hover:bg-slate-50 hover:text-slate-600"
-              )}
-            >
-              {f === 'All' ? 'Full Ledger' : f}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Bookings Table */}
-      <div className="bg-white rounded-[32px] border border-slate-100 shadow-2xl overflow-hidden">
-        <div className="overflow-x-auto custom-scrollbar">
-          <Table>
-            <TableHeader className="bg-slate-50/80">
-              <TableRow className="border-b border-slate-100">
-                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] text-left">Expedition Identity</th>
-                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] text-left">Explorer</th>
-                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] text-left">Timeline</th>
-                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] text-left">Financials</th>
-                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] text-left">Audit State</th>
-                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-[0.15em] text-right">Operations</th>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredBookings.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={6} className="py-32 text-center">
-                    <div className="w-20 h-20 bg-slate-50 rounded-[28px] flex items-center justify-center mx-auto mb-6 text-slate-200">
-                       <CreditCard size={40} />
+    <>
+        <div className="w-full bg-slate-50 min-h-screen p-4 sm:p-6 lg:p-8 font-sans">
+            <div className="max-w-screen-xl mx-auto space-y-6">
+                <header>
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div className="flex items-center gap-4">
+                            {onBack && <Button variant="outline" size="icon" className="rounded-full h-10 w-10 sm:h-12 sm:w-12" onClick={onBack}><ArrowLeft size={18}/></Button>}
+                            <PageTitle />
+                        </div>
+                        <div className="flex w-full md:w-auto items-center gap-2 sm:gap-3">
+                            <Button onClick={() => setIsManualBookingOpen(true)} className="w-full md:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-bold shadow-sm rounded-lg sm:rounded-xl text-sm">
+                                <Plus size={16} className="mr-2"/> New Booking
+                            </Button>
+                        </div>
                     </div>
-                    <p className="text-base font-black text-slate-300 uppercase tracking-[0.2em] italic">No Transactions Found</p>
-                  </TableCell>
-                </TableRow>
-              ) : (
-                filteredBookings.map((b) => (
-                  <TableRow key={b.id} className="group hover:bg-slate-50/50 transition-colors border-b border-slate-50">
-                    {/* Camp Information */}
-                    <TableCell className="px-8 py-6">
-                       <div className="text-xs font-black text-slate-900 uppercase tracking-tighter leading-none mb-1.5">{b.camp}</div>
-                       <div className="text-[8px] text-slate-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
-                          <Badge variant="outline" className="px-1 py-0 rounded text-[7px] border-slate-200 text-slate-400 bg-white">ID: {b.id}</Badge>
-                       </div>
-                    </TableCell>
-                    {/* Customer Information */}
-                    <TableCell className="px-8 py-6">
-                      <div className="text-xs font-black text-slate-900 uppercase tracking-tighter">{b.customer}</div>
-                      <div className="text-[9px] text-slate-400 font-medium lowercase truncate max-w-[150px] mt-0.5">{b.customerEmail}</div>
-                    </TableCell>
-                    {/* Booking Dates */}
-                    <TableCell className="px-8 py-6">
-                      <div className="text-[10px] font-bold text-slate-700 uppercase tracking-tight">
-                        {fmtDate(b.checkin)}
-                        <span className="mx-2 text-slate-300">→</span>
-                        {fmtDate(b.checkout)}
-                      </div>
-                    </TableCell>
-                    {/* Financial Information */}
-                    <TableCell className="px-8 py-6">
-                      <div className="text-xs font-black text-slate-900 tracking-tight leading-none mb-1">{fmt(b.amount)}</div>
-                      <div className="text-[8px] font-bold text-green-500 uppercase tracking-widest">Comm: {fmt(b.commissionAmount || 0)}</div>
-                    </TableCell>
-                    {/* Booking Status */}
-                    <TableCell className="px-8 py-6">
-                      <Badge variant="outline" className={cn(
-                        "text-[9px] font-black uppercase px-3 py-1 rounded-xl border-none shadow-sm",
-                        b.status === 'Confirmed' ? "bg-green-100 text-green-700" :
-                        b.status === 'Cancelled' ? "bg-red-50 text-red-600" :
-                        b.status === 'Refunded' ? "bg-rose-50 text-rose-600" :
-                        b.status === 'Disputed' ? "bg-amber-100 text-amber-700" :
-                        "bg-orange-100 text-orange-700"
-                      )}>
-                        {b.status}
-                      </Badge>
-                    </TableCell>
-                    {/* Action Buttons */}
-                    <TableCell className="px-8 py-6 text-right">
-                      <div className="flex justify-end items-center gap-2">
-                        {/* Approve Pending Booking */}
-                        {b.status === 'Pending' && (
-                          <button
-                            onClick={() => handleUpdateStatus(b.id, b.customerEmail, 'Confirmed')}
-                            className="w-9 h-9 rounded-xl bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-500 hover:text-white transition-all shadow-sm"
-                            title="Verify Payment"
-                          >
-                            <Check size={16} />
-                          </button>
-                        )}
+                    <nav className="mt-6 flex overflow-x-auto pb-2 scrollbar-hide gap-2">
+                        {[
+                            { id: 'all', label: 'All Bookings', icon: Users },
+                            { id: 'pending', label: 'Pending', icon: Clock },
+                            { id: 'confirmed', label: 'Active', icon: CheckCircle2 },
+                            { id: 'cancelled', label: 'Cancelled', icon: Ban },
+                            { id: 'refunded', label: 'Refunded', icon: RotateCcw },
+                            { id: 'disputed', label: 'Disputed', icon: ShieldAlert },
+                        ].map(item => (
+                                <button key={item.id} onClick={() => handleTabClick(item.id)} className={cn("flex items-center whitespace-nowrap gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-colors", view === item.id ? "text-white bg-emerald-500 shadow-md" : "text-gray-600 bg-white hover:bg-gray-100 border")}>
+                                    <item.icon size={16} /> {item.label}
+                                </button>
+                        ))}
+                    </nav>
+                </header>
 
-                        {/* Dropdown Menu for more actions */}
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="w-9 h-9 rounded-xl hover:bg-slate-100"><MoreHorizontal size={18} /></Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="rounded-2xl min-w-[180px] shadow-2xl border-none p-2 font-sans">
-                            <DropdownMenuLabel className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400 px-3 py-2">Security Ops</DropdownMenuLabel>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                    {(stats[view] || stats.all).map(card => <StatCard key={card.title} {...card} />)}
+                </div>
 
-                            {/* Cancel Booking */}
-                            {b.status !== 'Cancelled' && b.status !== 'Refunded' && (
-                              <DropdownMenuItem onClick={() => handleUpdateStatus(b.id, b.customerEmail, 'Cancelled')} className="text-[10px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer">
-                                <Ban size={14} className="text-red-500" /> Cancel Booking
-                              </DropdownMenuItem>
-                            )}
-
-                            {/* Process Refund */}
-                            {b.status === 'Cancelled' && (
-                              <DropdownMenuItem onClick={() => handleUpdateStatus(b.id, b.customerEmail, 'Refunded')} className="text-[10px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer">
-                                <CreditCard size={14} className="text-rose-500" /> Process Refund
-                              </DropdownMenuItem>
-                            )}
-
-                            {/* Mark as Disputed */}
-                            {b.status !== 'Disputed' && (
-                              <DropdownMenuItem onClick={() => handleUpdateStatus(b.id, b.customerEmail, 'Disputed')} className="text-[10px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer">
-                                <ShieldAlert size={14} className="text-amber-500" /> Mark Disputed
-                              </DropdownMenuItem>
-                            )}
-
-                            {/* Resolve Dispute */}
-                            {b.status === 'Disputed' && (
-                              <DropdownMenuItem onClick={() => handleUpdateStatus(b.id, b.customerEmail, 'Confirmed')} className="text-[10px] font-bold gap-3 rounded-xl py-2 px-3 cursor-pointer">
-                                <RotateCcw size={14} className="text-green-500" /> Resolve Dispute
-                              </DropdownMenuItem>
-                            )}
-
-                            <DropdownMenuSeparator className="bg-slate-50" />
-                            {/* Terminate Record */}
-                            <DropdownMenuItem onClick={() => handleDelete(b.id, b.customerEmail)} className="text-[10px] font-bold gap-3 rounded-xl py-2 px-3 text-destructive hover:bg-red-50 cursor-pointer">
-                               <Trash2 size={14} /> Terminate Record
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div className="p-4 flex justify-between items-center bg-gray-50/50 border-b border-gray-100">
+                        <div className="relative w-full max-w-sm">
+                            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+                            <Input value={searchQuery} onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1); }} placeholder="Search by customer, camp, or ID..." className="pl-10 w-full rounded-xl bg-white" />
+                        </div>
+                    </div>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left min-w-[700px]">
+                            <thead><tr className="text-xs font-bold text-gray-400 uppercase tracking-wider border-b border-gray-100">
+                                <th className="px-6 py-3">Customer</th><th className="px-6 py-3">Camp</th><th className="px-6 py-3">Dates</th><th className="px-6 py-3">Amount</th><th className="px-6 py-3">Status</th><th className="px-6 py-3 text-right">Actions</th>
+                            </tr></thead>
+                            <tbody className="divide-y divide-gray-100">
+                                {paginatedData.map(b => (
+                                    <tr key={b.id} className="hover:bg-gray-50">
+                                        <td className="px-6 py-4"><div className="font-bold text-sm text-gray-800">{b.customer}</div><div className="text-xs text-gray-500">{b.customerEmail}</div></td>
+                                        <td className="px-6 py-4 text-sm text-gray-700 font-medium">{b.camp}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-600">{fmtDate(b.checkin)} - {fmtDate(b.checkout)}</td>
+                                        <td className="px-6 py-4 text-sm text-gray-800 font-bold">{fmt(b.amount)}</td>
+                                        <td className="px-6 py-4"><Badge className={cn({'bg-emerald-100 text-emerald-700': b.status === 'Confirmed','bg-orange-100 text-orange-700': b.status === 'Pending','bg-red-100 text-red-700': b.status === 'Cancelled','bg-purple-100 text-purple-700': b.status === 'Refunded','bg-amber-100 text-amber-700': b.status === 'Disputed',})}>{b.status}</Badge></td>
+                                        <td className="px-6 py-4 text-right">
+                                            <DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" size="icon" className="text-gray-400"><MoreHorizontal size={18} /></Button></DropdownMenuTrigger><DropdownMenuContent align="end" className="w-48 rounded-xl p-1 shadow-xl">
+                                                {b.status === 'Pending' && <DropdownMenuItem onClick={() => handleUpdateStatus(b.id, b.customerEmail, 'Confirmed', 'confirmed')}><Check size={14} className="mr-2"/>Confirm Payment</DropdownMenuItem>}
+                                                {b.status === 'Confirmed' && <DropdownMenuItem onClick={() => handleUpdateStatus(b.id, b.customerEmail, 'Cancelled', 'cancelled')}><Ban size={14} className="mr-2"/>Cancel</DropdownMenuItem>}
+                                                {b.status === 'Cancelled' && <DropdownMenuItem onClick={() => handleUpdateStatus(b.id, b.customerEmail, 'Refunded', 'refunded')}><RotateCcw size={14} className="mr-2"/>Process Refund</DropdownMenuItem>}
+                                                {b.status !== 'Disputed' && <DropdownMenuItem onClick={() => handleUpdateStatus(b.id, b.customerEmail, 'Disputed', 'marked as disputed')}><ShieldAlert size={14} className="mr-2"/>Mark Disputed</DropdownMenuItem>}
+                                                <DropdownMenuSeparator/>
+                                                <DropdownMenuItem onClick={() => handleDeleteBooking(b)} className="text-red-600"><X size={14} className="mr-2"/>Delete</DropdownMenuItem>
+                                            </DropdownMenuContent></DropdownMenu>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="px-6 py-3 flex items-center justify-between bg-gray-50/50 border-t border-gray-100">
+                        <span className="text-sm text-gray-600">Showing {paginatedData.length > 0 ? (currentPage - 1) * itemsPerPage + 1 : 0}-{Math.min(currentPage * itemsPerPage, tableData.length)} of {tableData.length}</span>
+                        <div className="flex items-center gap-2">
+                            <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1}><ChevronLeft size={16} /> Prev</Button>
+                            <Button variant="outline" size="sm" onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>Next <ChevronRight size={16} /></Button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      {/* Pagination Controls */}
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-4 px-2 pb-20">
-        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-          Platform Audit Log: showing {filteredBookings.length} of {summary.totalItems} entries
-        </p>
-        <div className="flex items-center gap-3">
-           {/* Note: Pagination is currently static. Implementation would require state for current page. */}
-           <Button variant="outline" size="sm" className="rounded-xl h-10 px-5 font-black uppercase text-[10px] tracking-widest border-slate-200">Prev</Button>
-           <div className="px-5 h-10 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center text-[10px] font-black uppercase tracking-tight">
-             Page 1 of 1
-           </div>
-           <Button variant="outline" size="sm" className="rounded-xl h-10 px-5 font-black uppercase text-[10px] tracking-widest border-slate-200">Next</Button>
-        </div>
-      </div>
-    </div>
+        {isManualBookingOpen && <Dialog open onOpenChange={setIsManualBookingOpen}><DialogContent><DialogHeader><DialogTitle>Create Manual Booking</DialogTitle></DialogHeader><form onSubmit={handleManualBookingSubmit} className="p-1 space-y-4">
+            <Label>Customer Name <span className="text-red-500">*</span></Label><Input required value={newBooking.customer} onChange={e => setNewBooking({...newBooking, customer: e.target.value})} />
+            <Label>Customer Email</Label><Input type="email" value={newBooking.customerEmail} onChange={e => setNewBooking({...newBooking, customerEmail: e.target.value})} />
+            <Label>Camp <span className="text-red-500">*</span></Label><Select onValueChange={v => setNewBooking({...newBooking, campId: v})}><SelectTrigger><SelectValue placeholder="Select camp" /></SelectTrigger><SelectContent>{camps.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent></Select>
+            <div className="grid grid-cols-2 gap-4"><div><Label>Amount <span className="text-red-500">*</span></Label><Input required type="number" value={newBooking.amount} onChange={e => setNewBooking({...newBooking, amount: e.target.value})} /></div><div><Label>Status</Label><Select onValueChange={(v: any) => setNewBooking({...newBooking, status: v})} defaultValue="Confirmed"><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="Confirmed">Confirmed</SelectItem><SelectItem value="Pending">Pending</SelectItem></SelectContent></Select></div></div>
+            <div className="grid grid-cols-2 gap-4"><div><Label>Check-in</Label><Input type="date" value={newBooking.checkin} onChange={e => setNewBooking({...newBooking, checkin: e.target.value})} /></div><div><Label>Check-out</Label><Input type="date" value={newBooking.checkout} onChange={e => setNewBooking({...newBooking, checkout: e.target.value})} /></div></div>
+            <div className="pt-2 flex gap-3"><Button type="button" variant="outline" onClick={() => setIsManualBookingOpen(false)}>Cancel</Button><Button type="submit">Create Booking</Button></div>
+        </form></DialogContent></Dialog>}
+        {actionToConfirm && <ConfirmationModal isOpen onCancel={() => setActionToConfirm(null)} onConfirm={actionToConfirm.action} title={actionToConfirm.title} description={actionToConfirm.description} />}
+    </>
   );
 }

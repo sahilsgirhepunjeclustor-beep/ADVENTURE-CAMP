@@ -44,7 +44,8 @@ import {
   EyeOff,
   Lock,
   IndianRupee,
-  ClipboardList
+  ClipboardList,
+  RotateCcw
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -235,13 +236,15 @@ export default function Sidebar({ currentUser, currentPage, pageParams, onNaviga
           { page: 'approvals', tab: 'featured', label: 'Featured', icon: Star },
         ]
       },
-      { page: 'bookings', label: 'Bookings', icon: ClipboardCheck, children: [
-          { page: 'bookings', tab: 'Confirmed', label: 'Active', icon: CheckCircle2 },
-          { page: 'bookings', tab: 'Cancelled', label: 'Cancelled', icon: X },
-          { page: 'bookings', tab: 'Refunded', label: 'Refund Requests', icon: CreditCard },
-          { page: 'bookings', tab: 'Disputed', label: 'Disputes', icon: ShieldAlert },
-        ]
-      },
+      { page: 'bookings', label: 'Bookings', icon: ClipboardList, children: [
+        { page: 'bookings', tab: 'all', label: 'All Bookings', icon: ClipboardList },
+        { page: 'bookings', tab: 'pending', label: 'Pending', icon: Clock },
+        { page: 'bookings', tab: 'confirmed', label: 'Confirmed', icon: CheckCircle2 },
+        { page: 'bookings', tab: 'cancelled', label: 'Cancelled', icon: X },
+        { page: 'bookings', tab: 'refunded', label: 'Refunded', icon: RotateCcw },
+        { page: 'bookings', tab: 'disputed', label: 'Disputed', icon: ShieldAlert },
+      ]
+    },
       { page: 'payments', label: 'Payments', icon: CreditCard, children: [
           { page: 'payments', tab: 'transactions', label: 'Transactions', icon: Wallet },
           { page: 'payments', tab: 'refunds', label: 'Refunds', icon: CreditCard },

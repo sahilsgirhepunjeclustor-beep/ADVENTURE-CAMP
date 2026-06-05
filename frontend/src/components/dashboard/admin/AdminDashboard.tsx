@@ -104,6 +104,8 @@ import {
   LegendProps,
 } from 'recharts';
 import AdminOrganizers from './AdminOrganizers';
+import AdminUsers from './AdminUsers';
+import AdminBookings from './AdminBookings';
 
 interface AdminDashboardProps {
   currentUser: User;
@@ -319,9 +321,10 @@ const LiveWeatherWatch: FC = () => {
 interface RecentBookingsProps {
     bookings: Booking[];
     users: User[];
+    onNavigateToBookings: () => void;
 }
 
-const RecentBookings: FC<RecentBookingsProps> = ({ bookings, users }) => {
+const RecentBookings: FC<RecentBookingsProps> = ({ bookings, users, onNavigateToBookings }) => {
   const [filter, setFilter] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(1);
@@ -434,7 +437,7 @@ const RecentBookings: FC<RecentBookingsProps> = ({ bookings, users }) => {
                 </div>
                 <Button variant="outline" onClick={handleFilterClick} className="h-9 gap-1.5"><Filter size={14}/> Filter</Button>
                 <Button variant="outline" onClick={handleExportCSV} className="h-9 gap-1.5"><File size={14}/> CSV</Button>
-                <Button onClick={handleExportPDF} className="h-9 gap-1.5 bg-slate-800 hover:bg-slate-700 text-white"><FileText size={14}/> PDF</Button>
+                <Button onClick={onNavigateToBookings} className="h-9 gap-1.5 bg-slate-800 hover:bg-slate-700 text-white"><ClipboardList size={14}/> View All</Button>
             </div>
         </div>
         <div className="flex gap-4 border-b border-slate-200 mb-2 overflow-x-auto">
@@ -658,9 +661,10 @@ interface StatCardProps {
     subtext: string;
     chartData: {value: number}[];
     iconBgColor: string;
+    onClick?: () => void;
 }
 
-const StatCard: FC<StatCardProps> = ({ icon: Icon, title, value, trend, trendDirection, subtext, chartData, iconBgColor }) => {
+const StatCard: FC<StatCardProps> = ({ icon: Icon, title, value, trend, trendDirection, subtext, chartData, iconBgColor, onClick }) => {
   const trendColor = trendDirection === 'up' ? 'text-green-600' : (trendDirection === 'down' ? 'text-red-600' : 'text-amber-600');
   const trendBgColor = trendDirection === 'up' ? 'bg-green-100' : (trendDirection === 'down' ? 'bg-red-100' : 'bg-amber-100');
   const TrendIcon = trendDirection === 'up' ? TrendingUp : (trendDirection === 'down' ? TrendingDown : TrendingUp);
@@ -669,7 +673,7 @@ const StatCard: FC<StatCardProps> = ({ icon: Icon, title, value, trend, trendDir
   const color = chartColors[iconBgColor] || chartColors['bg-green-500'];
 
   return (
-    <div className="group bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col relative overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
+    <div onClick={onClick} className={cn("group bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col relative overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1", onClick && "cursor-pointer")}>
       <div className={`absolute -top-1/4 -right-1/4 w-1/2 h-1/2 rounded-full ${iconBgColor} opacity-10 group-hover:opacity-20 transition-opacity duration-300`}></div>
       <div className="flex justify-between items-start z-10">
         <div className={cn("w-10 h-10 rounded-lg flex items-center justify-center shrink-0", iconBgColor)}>
@@ -1026,9 +1030,10 @@ const RevenueVsBookingsChart: FC<RevenueVsBookingsChartProps> = ({ bookings }) =
 };
 interface RecentTransactionsProps {
     bookings: Booking[];
+    onNavigateToBookings: () => void;
 }
 
-const RecentTransactions: FC<RecentTransactionsProps> = ({ bookings }) => {
+const RecentTransactions: FC<RecentTransactionsProps> = ({ bookings, onNavigateToBookings }) => {
     const { recentTransactions, totalProcessed, successRate, refundRate, totalCommission } = useMemo(() => {
         const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
         const relevantBookings = bookings.filter(b => new Date(b.addedAt) > twentyFourHoursAgo);
@@ -1064,7 +1069,7 @@ const RecentTransactions: FC<RecentTransactionsProps> = ({ bookings }) => {
           <h3 className="font-semibold text-slate-800">Recent Transactions</h3>
           <p className="text-sm text-slate-500">Last 24 hours - {fmt(totalProcessed)} processed</p>
         </div>
-        <a href="#" className="text-sm font-medium text-primary hover:underline">All →</a>
+        <button onClick={onNavigateToBookings} className="text-sm font-medium text-primary hover:underline">All →</button>
       </div>
       <div className="space-y-4">
         {recentTransactions.map((t) => (
@@ -1306,24 +1311,30 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
   };
 
   const platformStats: StatCardProps[] = useMemo(() => [
-    { title: 'Total Revenue', value: fmt(totalRevenue), subtext: 'vs last 7d', trend: '12.4%', trendDirection: 'up', icon: DollarSign, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalRevenue/7, 7, 0.3) },
-    { title: 'Platform Earnings', value: fmt(totalCommission), subtext: '15% commission', trend: '9.1%', trendDirection: 'up', icon: CreditCard, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalCommission/7, 7, 0.3) },
-    { title: 'Total Users', value: totalUsersCount, subtext: '', trend: '6.2%', trendDirection: 'up', icon: Users, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(totalUsersCount/7, 7, 0.2) },
-    { title: 'Verified Users', value: approvedUsersList.length, subtext: `${totalUsersCount > 0 ? Math.round((approvedUsersList.length/totalUsersCount)*100) : 0}% verified`, trend: '4.7%', trendDirection: 'up', icon: ShieldCheck, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(approvedUsersList.length/7, 7, 0.2) },
-    { title: 'Active Organizers', value: activeOrganizers, subtext: '', trend: '3.1%', trendDirection: 'up', icon: Briefcase, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(activeOrganizers/7, 7, 0.1) },
-    { title: 'Total Camps', value: totalCamps, subtext: '', trend: '8.4%', trendDirection: 'up', icon: Mountain, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalCamps/7, 7, 0.1) },
-    { title: 'Active Bookings', value: liveBookings, subtext: '', trend: '18.6%', trendDirection: 'up', icon: CalendarCheck, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(liveBookings/7, 7, 0.4) },
-    { title: 'Refund Requests', value: refundRequests, subtext: '3 urgent', trend: '14.2%', trendDirection: 'down', icon: ArrowLeftRight, iconBgColor: 'bg-red-500', chartData: generateDynamicChartData(refundRequests/7, 7, 0.8) },
-    { title: 'Pending Approvals', value: auditTotal, subtext: 'Action required', trend: '2%', trendDirection: 'stale', icon: Clock, iconBgColor: 'bg-amber-500', chartData: generateDynamicChartData(auditTotal/7, 7, 0.5) },
-    { title: 'Membership Subs', value: activeMembers, subtext: '', trend: '7.3%', trendDirection: 'stale', icon: Gem, iconBgColor: 'bg-amber-500', chartData: generateDynamicChartData(activeMembers/7, 7, 0.2) },
+    { title: 'Total Revenue', value: fmt(totalRevenue), subtext: 'vs last 7d', trend: '12.4%', trendDirection: 'up', icon: DollarSign, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalRevenue/7, 7, 0.3), onClick: () => handleNavigate('bookings', { tab: 'all' }) },
+    { title: 'Platform Earnings', value: fmt(totalCommission), subtext: '15% commission', trend: '9.1%', trendDirection: 'up', icon: CreditCard, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalCommission/7, 7, 0.3), onClick: () => handleNavigate('bookings', { tab: 'all' }) },
+    { title: 'Total Users', value: totalUsersCount, subtext: '', trend: '6.2%', trendDirection: 'up', icon: Users, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(totalUsersCount/7, 7, 0.2), onClick: () => handleNavigate('users', { tab: 'all' }) },
+    { title: 'Verified Users', value: approvedUsersList.length, subtext: `${totalUsersCount > 0 ? Math.round((approvedUsersList.length/totalUsersCount)*100) : 0}% verified`, trend: '4.7%', trendDirection: 'up', icon: ShieldCheck, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(approvedUsersList.length/7, 7, 0.2), onClick: () => handleNavigate('users', { tab: 'verified' }) },
+    { title: 'Active Organizers', value: activeOrganizers, subtext: '', trend: '3.1%', trendDirection: 'up', icon: Briefcase, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(activeOrganizers/7, 7, 0.1), onClick: () => handleNavigate('organizers', { tab: 'verified' }) },
+    { title: 'Total Camps', value: totalCamps, subtext: '', trend: '8.4%', trendDirection: 'up', icon: Mountain, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(totalCamps/7, 7, 0.1), onClick: () => handleNavigate('approvals', { tab: 'approved' }) },
+    { title: 'Active Bookings', value: liveBookings, subtext: '', trend: '18.6%', trendDirection: 'up', icon: CalendarCheck, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(liveBookings/7, 7, 0.4), onClick: () => handleNavigate('bookings', { tab: 'confirmed' }) },
+    { title: 'Refund Requests', value: refundRequests, subtext: '3 urgent', trend: '14.2%', trendDirection: 'down', icon: ArrowLeftRight, iconBgColor: 'bg-red-500', chartData: generateDynamicChartData(refundRequests/7, 7, 0.8), onClick: () => handleNavigate('bookings', { tab: 'refunded' }) },
+    { title: 'Pending Approvals', value: auditTotal, subtext: 'Action required', trend: '2%', trendDirection: 'stale', icon: Clock, iconBgColor: 'bg-amber-500', chartData: generateDynamicChartData(auditTotal/7, 7, 0.5), onClick: () => handleNavigate('approvals', { tab: 'pending' }) },
+    { title: 'Membership Subs', value: activeMembers, subtext: '', trend: '7.3%', trendDirection: 'stale', icon: Gem, iconBgColor: 'bg-amber-500', chartData: generateDynamicChartData(activeMembers/7, 7, 0.2), onClick: () => handleNavigate('memberships', { tab: 'subscribers' }) },
     { title: 'Monthly Growth', value: monthlyGrowth, subtext: '', trend: '2.4%', trendDirection: 'up', icon: TrendingUp, iconBgColor: 'bg-green-500', chartData: generateDynamicChartData(50, 7, 0.6) },
     { title: 'Conversion Rate', value: conversionRate, subtext: '', trend: '0.8%', trendDirection: 'up', icon: Target, iconBgColor: 'bg-blue-500', chartData: generateDynamicChartData(5, 7, 0.1) },
-  ], [totalRevenue, totalCommission, totalUsersCount, approvedUsersList.length, activeOrganizers, totalCamps, liveBookings, refundRequests, auditTotal, activeMembers, monthlyGrowth, conversionRate]);
+  ], [totalRevenue, totalCommission, totalUsersCount, approvedUsersList.length, activeOrganizers, totalCamps, liveBookings, refundRequests, auditTotal, activeMembers, monthlyGrowth, conversionRate, handleNavigate]);
 
   // 4. CONDITIONAL RETURN (Hooks ke BAAD aur JSX se PEHLE)
 
   if (activeView === 'approvals') {
     return <AdminOrganizers onBack={() => setActiveView('dashboard')} initialTab={viewParams?.tab} />
+  }
+  if (activeView === 'users') {
+    return <AdminUsers onBack={() => setActiveView('dashboard')} initialTab={viewParams?.tab} />
+  }
+  if (activeView === 'bookings') {
+    return <AdminBookings onBack={() => setActiveView('dashboard')} initialTab={viewParams?.tab} />
   }
 
   if (!mounted) return null;
@@ -1427,10 +1438,10 @@ export default function AdminDashboard({ currentUser, data, onNavigate }: AdminD
           </div>
       </div>
 
-      <RecentBookings bookings={globalData.allBookings} users={allUsersArray} />
+      <RecentBookings bookings={globalData.allBookings} users={allUsersArray} onNavigateToBookings={() => handleNavigate('bookings', { tab: 'all' })} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
-        <RecentTransactions bookings={globalData.allBookings} />
+        <RecentTransactions bookings={globalData.allBookings} onNavigateToBookings={() => handleNavigate('bookings', { tab: 'all' })}/>
         <SystemHealth bookings={globalData.allBookings} />
       </div>
 
