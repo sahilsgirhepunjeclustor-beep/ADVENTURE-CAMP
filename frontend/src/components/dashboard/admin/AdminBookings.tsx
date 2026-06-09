@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, useEffect, useMemo } from 'react';
 import { getGlobalAppData, saveAppData, getAppData, getAllApprovedCamps, getCurrentUser, logAdminAction } from '@/lib/store';
 import { Booking, Camp } from '@/lib/types';
@@ -52,7 +50,7 @@ const StatCard = ({ title, value, icon, color, trend }: {
                 </div>
             </div>
             <p className="text-3xl font-bold text-slate-800">{value}</p>
-            {trend && <p className={`mt-1 text-xs font-semibold flex items-center gap-1 ${trendColor}`}>{trendIcon} {trend.substring(1)}</p>}
+            {trend && <p className={`mt-1 text-xs font-semibold flex items-center gap-1 ${trendColor}`}>{trendIcon} {trend}</p>}
         </div>
     );
 };
@@ -84,9 +82,10 @@ const ConfirmationModal = ({ isOpen, onCancel, onConfirm, title, description }: 
 interface AdminBookingsProps {
     onBack?: () => void;
     initialTab?: string;
+    onNavigate?: (page: string, params?: any) => void;
 }
 
-export default function AdminBookings({ onBack, initialTab = 'all' }: AdminBookingsProps) {
+export default function AdminBookings({ onBack, initialTab = 'all', onNavigate }: AdminBookingsProps) {
   const [view, setView] = useState(initialTab);
   const [allBookings, setAllBookings] = useState<Booking[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -105,7 +104,6 @@ export default function AdminBookings({ onBack, initialTab = 'all' }: AdminBooki
     setAllBookings(enriched);
   }, []);
 
-  // This critical effect ensures the component view syncs with sidebar navigation
   useEffect(() => {
     setView(initialTab);
     setCurrentPage(1);
@@ -131,6 +129,8 @@ export default function AdminBookings({ onBack, initialTab = 'all' }: AdminBooki
 
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const sixtyDaysAgo = new Date();
+    sixtyDaysAgo.setDate(sixtyDaysAgo.getDate() - 60);
     const isToday = (d: string) => d && new Date(d).toDateString() === new Date().toDateString();
     
     const confirmed = allBookings.filter(b => b.status === 'Confirmed');
@@ -139,34 +139,48 @@ export default function AdminBookings({ onBack, initialTab = 'all' }: AdminBooki
     const pending = allBookings.filter(b => b.status === 'Pending');
     const disputed = allBookings.filter(b => b.status === 'Disputed');
     
+    const newIn30d = allBookings.filter(b => new Date(b.addedAt) > thirtyDaysAgo);
+    const newInPrev30d = allBookings.filter(b => new Date(b.addedAt) > sixtyDaysAgo && new Date(b.addedAt) <= thirtyDaysAgo);
+    
     const confirmedIn30d = confirmed.filter(b => new Date(b.addedAt) > thirtyDaysAgo);
+    const confirmedInPrev30d = confirmed.filter(b => new Date(b.addedAt) > sixtyDaysAgo && new Date(b.addedAt) <= thirtyDaysAgo);
+
     const cancelledIn30d = cancelled.filter(b => new Date(b.addedAt) > thirtyDaysAgo);
-    const totalIn30d = allBookings.filter(b => new Date(b.addedAt) > thirtyDaysAgo);
+    const refundedIn30d = refunded.filter(b => new Date(b.addedAt) > thirtyDaysAgo);
+
+    const gmv30d = confirmedIn30d.reduce((s, b) => s + b.amount, 0);
+    const gmvPrev30d = confirmedInPrev30d.reduce((s, b) => s + b.amount, 0);
+
+    const calculateTrend = (current: number, previous: number) => {
+        if (previous === 0) return current > 0 ? '+100.0%' : '+0.0%';
+        const percentage = ((current - previous) / previous) * 100;
+        return `${percentage >= 0 ? '+' : ''}${percentage.toFixed(1)}%`;
+    }
 
     const calculatedStats = {
       all: [
-        { title: "Active Bookings", value: confirmed.length, icon: BarChart2, color: 'green', trend: "+0.4%" },
+        { title: "Active Bookings", value: confirmed.length, icon: BarChart2, color: 'green', trend: calculateTrend(newIn30d.length, newInPrev30d.length) },
         { title: "Today's Check-ins", value: confirmed.filter(b => isToday(b.checkin!)).length, icon: Check, color: 'blue' },
         { title: "Today's Check-outs", value: confirmed.filter(b => isToday(b.checkout!)).length, icon: X, color: 'orange' },
-        { title: "GMV (30d)", value: fmt(confirmedIn30d.reduce((s, b) => s + b.amount, 0)), icon: DollarSign, color: 'purple', trend: "+11%" },
+        { title: "GMV (30d)", value: fmt(gmv30d), icon: DollarSign, color: 'purple', trend: calculateTrend(gmv30d, gmvPrev30d) },
       ],
       confirmed: [
-        { title: "Active Bookings", value: confirmed.length, icon: BarChart2, color: 'green', trend: "+0.4%" },
+        { title: "Active Bookings", value: confirmed.length, icon: BarChart2, color: 'green', trend: calculateTrend(newIn30d.length, newInPrev30d.length) },
         { title: "Today's Check-ins", value: confirmed.filter(b => isToday(b.checkin!)).length, icon: Check, color: 'blue' },
         { title: "Today's Check-outs", value: confirmed.filter(b => isToday(b.checkout!)).length, icon: X, color: 'orange' },
-        { title: "GMV (30d)", value: fmt(confirmedIn30d.reduce((s, b) => s + b.amount, 0)), icon: DollarSign, color: 'purple', trend: "+11%" },
+        { title: "GMV (30d)", value: fmt(gmv30d), icon: DollarSign, color: 'purple', trend: calculateTrend(gmv30d, gmvPrev30d) },
       ],
       cancelled: [
         { title: "Cancelled (30d)", value: cancelledIn30d.length, icon: Ban, color: 'red' },
-        { title: "Cancellation Rate", value: `${totalIn30d.length > 0 ? ((cancelledIn30d.length / totalIn30d.length) * 100).toFixed(1) : 0}%`, icon: BarChart2, color: 'orange' },
-        { title: "Guest-Initiated", value: "68%", icon: Users, color: 'blue' },
-        { title: "Refunded Value", value: fmt(refunded.reduce((s, b) => s + b.amount, 0)), icon: CreditCard, color: 'green' },
+        { title: "Cancellation Rate (30d)", value: `${newIn30d.length > 0 ? ((cancelledIn30d.length / newIn30d.length) * 100).toFixed(1) : 0}%`, icon: BarChart2, color: 'orange' },
+        { title: "Total Commission Lost (30d)", value: fmt(cancelledIn30d.reduce((s, b) => s + b.commissionAmount, 0)), icon: DollarSign, color: 'blue' },
+        { title: "Total Value Lost (30d)", value: fmt(cancelledIn30d.reduce((s, b) => s + b.amount, 0)), icon: CreditCard, color: 'green' },
       ],
       refunded: [
-        { title: "Pending Refunds", value: cancelled.length, icon: Clock, color: 'orange' },
-        { title: "Refunded (30d)", value: fmt(refunded.filter(b => new Date(b.addedAt) > thirtyDaysAgo).reduce((s, b) => s + b.amount, 0)), icon: RotateCcw, color: 'green' },
-        { title: "Avg Processing", value: "2.4 days", icon: Clock, color: 'blue' },
-        { title: "Rejection Rate", value: "7%", icon: AlertCircle, color: 'red' },
+        { title: "Cancellations to Refund", value: cancelled.filter(c => !refunded.some(r => r.id === c.id)).length, icon: Clock, color: 'orange' },
+        { title: "Refunded Value (30d)", value: fmt(refundedIn30d.reduce((s, b) => s + b.amount, 0)), icon: RotateCcw, color: 'green' },
+        { title: "Refunded Bookings (30d)", value: refundedIn30d.length, icon: Users, color: 'blue' },
+        { title: "Total Refunded (All Time)", value: fmt(refunded.reduce((s, b) => s + b.amount, 0)), icon: AlertCircle, color: 'red' },
       ],
       pending: [
         { title: "Pending Bookings", value: pending.length, icon: Clock, color: 'orange' },
@@ -197,7 +211,7 @@ export default function AdminBookings({ onBack, initialTab = 'all' }: AdminBooki
           saveAppData(email, { ...data, bookings: updatedBookings });
           logAdminAction(adminUser, 'Booking Update', `Changed status of booking ${bookingId} to ${newStatus}`);
           toast({ title: "Success!", description: `Booking has been ${actionMessage}.` });
-      }, 300); // Simulate network delay
+      }, 300); 
   };
 
   const handleDeleteBooking = (booking: Booking) => {
@@ -231,7 +245,7 @@ export default function AdminBookings({ onBack, initialTab = 'all' }: AdminBooki
       customer, customerEmail: email, status,
       camp: selectedCamp?.name || 'N/A',
       campId, amount: +amount, checkin, checkout, 
-      commissionAmount: +amount * 0.10, addedAt: new Date().toISOString(), organizerNotice: true
+      commissionAmount: +amount * 0.10, addedAt: new Date().toISOString(), organizerNotice: true, userEmail: 'manual', organizerEmail: selectedCamp ? selectedCamp.addedBy : 'N/A'
     };
     setAllBookings(current => [booking, ...current]);
     setIsManualBookingOpen(false);
@@ -244,12 +258,16 @@ export default function AdminBookings({ onBack, initialTab = 'all' }: AdminBooki
   };
 
   const handleTabClick = (tabId: string) => {
-    setView(tabId);
-    setCurrentPage(1);
+    if (onNavigate) {
+      onNavigate('bookings', { tab: tabId });
+    } else {
+      setView(tabId);
+      setCurrentPage(1);
+    }
   };
 
   const PageTitle = () => {
-      const titles = {
+      const titles: {[key: string]: {title: string, desc: string}} = {
         all: { title: 'All Bookings', desc: 'A complete log of all bookings across the platform.' },
         pending: { title: 'Pending Bookings', desc: 'Bookings awaiting payment or confirmation.' },
         confirmed: { title: 'Active Bookings', desc: 'Confirmed and upcoming reservations.' },

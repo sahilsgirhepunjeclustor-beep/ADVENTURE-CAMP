@@ -45,7 +45,8 @@ import {
   Lock,
   IndianRupee,
   ClipboardList,
-  RotateCcw
+  RotateCcw,
+  AlertCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -245,12 +246,15 @@ export default function Sidebar({ currentUser, currentPage, pageParams, onNaviga
         { page: 'bookings', tab: 'disputed', label: 'Disputed', icon: ShieldAlert },
       ]
     },
-      { page: 'payments', label: 'Payments', icon: CreditCard, children: [
-          { page: 'payments', tab: 'transactions', label: 'Transactions', icon: Wallet },
-          { page: 'payments', tab: 'refunds', label: 'Refunds', icon: CreditCard },
-          { page: 'payments', tab: 'disputes', label: 'Disputes', icon: ShieldAlert },
-        ]
-      },
+    { page: 'payments', label: 'Payments', icon: CreditCard, children: [
+        { page: 'payments', tab: 'all', label: 'All Payments', icon: Users },
+        { page: 'payments', tab: 'paid', label: 'Paid', icon: CheckCircle2 },
+        { page: 'payments', tab: 'pending', label: 'Pending', icon: Clock },
+        { page: 'payments', tab: 'failed', label: 'Failed', icon: AlertCircle },
+        { page: 'payments', tab: 'refunded', label: 'Refunded', icon: RotateCcw },
+        { page: 'payments', tab: 'disputed', label: 'Disputed', icon: ShieldAlert },
+      ]
+    },
       { page: 'memberships', label: 'Memberships', icon: Gem, children: [
           { page: 'memberships', tab: 'plans', label: 'Plans', icon: LayoutGrid },
           { page: 'memberships', tab: 'subscribers', label: 'Subscribers', icon: Users },
